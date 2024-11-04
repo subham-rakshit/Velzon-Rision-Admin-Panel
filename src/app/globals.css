@@ -11,3 +11,13 @@
 body {
   min-height: 100vh;
 }
+
+@layer utilities {
+  .text-soft {
+    @apply text-[#878A99] font-hk-grotesk;
+  }
+
+  .text-dark {
+    @apply text-[#212529] font-hk-grotesk;
+  }
+}
