@@ -15,15 +15,25 @@ export const mailTransport = () => {
   return transporter;
 };
 
+//NOTE: 6 digits OTP generator
+export const generateOTP = () => {
+  let otp = "";
+  for (let i = 0; i <= 5; i++) {
+    const randomValue = Math.round(Math.random() * 9);
+    otp += randomValue;
+  }
+  return otp;
+};
+
 //NOTE: Verification email function
-export const sendVerificationEmail = async (email, username, verifyCode) => {
+export const sendVerificationEmail = async (email, username, otp) => {
   try {
     // Email Send
     mailTransport().sendMail({
       from: process.env.SMTP_MAIL,
       to: email,
       subject: "Velzon Admin Verification Code",
-      html: generateOTPEmailTemplate({ code: verifyCode, name: username }),
+      html: generateOTPEmailTemplate(otp, username),
     });
 
     // Response

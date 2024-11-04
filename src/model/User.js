@@ -20,11 +20,6 @@ const UserSchema = new Schema(
       required: [true, "Password is required"],
       trim: true,
     },
-    confirmPassword: {
-      type: String,
-      required: [true, "Confirm password is required"],
-      trim: true,
-    },
     verifyCode: {
       type: String,
       required: [true, "Verify code is required"],
