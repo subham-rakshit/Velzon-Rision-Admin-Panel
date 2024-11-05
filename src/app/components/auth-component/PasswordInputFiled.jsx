@@ -5,6 +5,7 @@ import Link from "next/link";
 
 import { IoAlertCircleOutline, IoEye, IoEyeOff } from "react-icons/io5";
 import { Label, TextInput } from "flowbite-react";
+import { usePathname } from "next/navigation";
 
 const PasswordInputFiled = ({
   labelText,
@@ -17,6 +18,7 @@ const PasswordInputFiled = ({
   const [passwordInput, setPasswordInput] = useState("");
   const [isVisible, setIsVisible] = useState(false);
   const [isBlank, setIsBlank] = useState(false);
+  const pathname = usePathname();
 
   //NOTE: Handle Blur Effects
   const handleBlur = () => {
@@ -40,17 +42,23 @@ const PasswordInputFiled = ({
   return (
     <div>
       <div className="flex items-center justify-between mb-2">
-        <Label
-          htmlFor={inputId}
-          value={labelText}
-          className={`${labelClasses} font-hk-grotesk text-dark text-[18px] font-medium`}
-        />
-
-        <Link href="/forgot-password">
-          <span className="font-hk-grotesk text-[18px] text-soft font-medium">
-            Forgot password?
-          </span>
-        </Link>
+        <div>
+          <Label
+            htmlFor={inputId}
+            value={labelText}
+            className={`${labelClasses} font-hk-grotesk text-dark text-[18px] font-medium`}
+          />
+          {pathname.includes("register") && (
+            <span className="ml-1 font-bold text-red-500">*</span>
+          )}
+        </div>
+        {pathname.includes("login") && (
+          <Link href="/forgot-password">
+            <span className="font-hk-grotesk text-[18px] text-soft font-medium">
+              Forgot password?
+            </span>
+          </Link>
+        )}
       </div>
       <div className="relative">
         <TextInput
@@ -68,17 +76,22 @@ const PasswordInputFiled = ({
           onBlur={handleBlur}
           helperText={
             isBlank && (
-              <span className="text-sm font-medium text-red-500 font-hk-grotesk">
+              <span className="text-[16px] font-normal text-red-500 font-hk-grotesk">
                 Please enter your {inputName}
               </span>
             )
           }
         />
-        {isBlank ? (
+
+        {/* Alert Icon, always visible if input is blank */}
+        {isBlank && (
           <span className="absolute right-0 pr-3 inset-y-3">
             <IoAlertCircleOutline color="red" size="25" />
           </span>
-        ) : (
+        )}
+
+        {/* Conditional button to toggle visibility, visible only on login page */}
+        {pathname.includes("login") && !isBlank && (
           <button
             type="button"
             onClick={() => setIsVisible(!isVisible)}

@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { Label, TextInput } from "flowbite-react";
 import { IoAlertCircleOutline } from "react-icons/io5";
+import { usePathname } from "next/navigation";
 
 const TextInputFile = ({
   labelText,
@@ -15,6 +16,7 @@ const TextInputFile = ({
 }) => {
   const [textInput, setTextInput] = useState("");
   const [isBlank, setIsBlank] = useState(false);
+  const pathname = usePathname();
 
   //NOTE: Handle Input blank effects
   const handleBlur = () => {
@@ -43,6 +45,9 @@ const TextInputFile = ({
           value={labelText}
           className={`${labelClasses} font-hk-grotesk text-dark text-[18px] font-medium`}
         />
+        {pathname.includes("register") && (
+          <span className="ml-1 font-bold text-red-500">*</span>
+        )}
       </div>
       <div className="relative">
         <TextInput
@@ -59,7 +64,7 @@ const TextInputFile = ({
           onBlur={handleBlur}
           helperText={
             isBlank && (
-              <span className="text-sm font-medium text-red-500 font-hk-grotesk">
+              <span className="text-[16px] font-normal text-red-500 font-hk-grotesk">
                 Please enter your {inputName}
               </span>
             )

@@ -85,6 +85,30 @@ export async function POST(request) {
         existingUserByEmail.verifyCodeExpiry = new Date(Date.now() + 3600000); //INFO: 1 hr
 
         await existingUserByEmail.save();
+
+        //NOTE: Send verification email
+        const emailResponse = await sendVerificationEmail(email, username, otp);
+
+        //NOTE: Response verification email with error
+        if (!emailResponse.success) {
+          return Response.json(
+            {
+              success: false,
+              message: "Unable to send verification email",
+            },
+            { status: 500 }
+          );
+        }
+
+        //NOTE: Response verification email with success message
+        return Response.json(
+          {
+            success: true,
+            message: "User registered successfully. Please verify your email",
+            userId: existingUserByEmail._id,
+          },
+          { status: 201 }
+        );
       }
     } else {
       //NOTE: Create a new user
@@ -108,30 +132,31 @@ export async function POST(request) {
 
       //INFO: Save the new user in DB
       await newUser.save();
-    }
 
-    //NOTE: Send verification email
-    const emailResponse = await sendVerificationEmail(email, username, otp);
+      //NOTE: Send verification email
+      const emailResponse = await sendVerificationEmail(email, username, otp);
 
-    //NOTE: Response verification email with error
-    if (!emailResponse.success) {
+      //NOTE: Response verification email with error
+      if (!emailResponse.success) {
+        return Response.json(
+          {
+            success: false,
+            message: "Unable to send verification email",
+          },
+          { status: 500 }
+        );
+      }
+
+      //NOTE: Response verification email with success message
       return Response.json(
         {
-          success: false,
-          message: "Unable to send verification email",
+          success: true,
+          message: "User registered successfully. Please verify your email",
+          userId: newUser._id,
         },
-        { status: 500 }
+        { status: 201 }
       );
     }
-
-    //NOTE: Response verification email with success message
-    return Response.json(
-      {
-        success: true,
-        message: "User registered successfully. Please verify your email",
-      },
-      { status: 201 }
-    );
   } catch (error) {
     console.error(`Error registering user: ${error}`);
     return Response.json(
