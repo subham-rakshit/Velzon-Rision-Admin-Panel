@@ -1,4 +1,6 @@
 import localFont from "next/font/local";
+import { ToastContainer } from "./nextToast.js";
+import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
 
 const hkGrotesk = localFont({
@@ -15,7 +17,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${hkGrotesk.variable} antialiased`}>{children}</body>
+      <body className={`${hkGrotesk.variable} antialiased`}>
+        {children}
+        <ToastContainer />
+      </body>
     </html>
   );
 }

@@ -1,9 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
-
 import Link from "next/link";
+
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+import { ClipLoader } from "react-spinners";
+
 import {
   AlternateAuthentication,
   PasswordInputFiled,
@@ -12,6 +15,7 @@ import {
 
 const RegistrationForm = () => {
   const [registerationData, setRegistrationData] = useState({});
+  const [isFetching, setIsFetching] = useState(false);
   const router = useRouter();
 
   //NOTE: Handle the all input fields
@@ -26,26 +30,73 @@ const RegistrationForm = () => {
   async function handleFromSubmit(event) {
     event.preventDefault();
 
-    const { email, username, password, confirmPassword } = registerationData;
+    if (Object.keys(registerationData).length > 0) {
+      try {
+        setIsFetching(true);
+        const { email, username, password, confirmPassword } =
+          registerationData;
 
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/register`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, username, password, confirmPassword }),
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/register`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email,
+              username,
+              password,
+              confirmPassword,
+            }),
+          }
+        );
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          toast.success(data.message, {
+            position: "bottom-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+          setRegistrationData({});
+          setIsFetching(false);
+          router.push("/login");
+        } else {
+          setIsFetching(false);
+          Object.values(data.message).map((err, i) =>
+            toast.error(err[0], {
+              position: "bottom-center",
+              autoClose: 3000 * (i + 1),
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+            })
+          );
+        }
+      } catch (error) {
+        setIsFetching(false);
+        console.log(error);
       }
-    );
-
-    if (response.ok) {
-      const data = await response.json();
-      console.log(data);
-
-      router.push(`/verify-account`);
     } else {
-      console.log(data.message);
+      toast.error("Invalid input field", {
+        position: "bottom-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     }
   }
 
@@ -110,9 +161,16 @@ const RegistrationForm = () => {
           {/* Sign up Button */}
           <button
             type="submit"
-            className="bg-[#099885] text-white text-[20px] font-hk-grotesk px-2 py-2 rounded-md"
+            className="bg-[#099885] text-white text-[20px] font-hk-grotesk px-2 py-2 rounded-md flex justify-center items-center"
           >
-            Sign Up
+            {isFetching ? (
+              <span className="flex items-center gap-4">
+                <ClipLoader color="#ffffff" size={16} />
+                <span className="text-light">Processing...</span>
+              </span>
+            ) : (
+              "Sign Up"
+            )}
           </button>
         </div>
         <div className="flex items-center gap-2 my-5">

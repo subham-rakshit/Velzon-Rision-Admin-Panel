@@ -5,6 +5,7 @@ import TextInputFile from "./auth-component/TextInputFile";
 import AlternateAuthentication from "./auth-component/AlternateAuthentication";
 import LoginForm from "./auth-component/login/LoginForm";
 import RegistrationForm from "./auth-component/register/RegistrationForm";
+import VerifyAccount from "./auth-component/register/VerifyAccount";
 
 export {
   CommonAuthLayout,
@@ -14,4 +15,5 @@ export {
   AlternateAuthentication,
   LoginForm,
   RegistrationForm,
+  VerifyAccount,
 };
