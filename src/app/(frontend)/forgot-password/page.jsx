@@ -7,7 +7,18 @@ export const metadata = {
 };
 
 const ForgetPasswordPage = () => {
-  return <div>ForgetPasswordPage</div>;
+  return (
+    <div className="bg-black">
+      <h1>ForgetPasswordPage</h1>
+      <lord-icon
+        src="https://cdn.lordicon.com/rhvddzym.json"
+        trigger="loop"
+        colors="primary:#0ab39c"
+        className="avatar-xl"
+        style={{ width: "120px", height: "120px" }}
+      ></lord-icon>
+    </div>
+  );
 };
 
 export default ForgetPasswordPage;

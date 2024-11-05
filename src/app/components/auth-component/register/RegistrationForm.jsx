@@ -1,29 +1,53 @@
 "use client";
 
 import React, { useState } from "react";
+
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   AlternateAuthentication,
   PasswordInputFiled,
   TextInputFile,
 } from "../..";
-import Link from "next/link";
 
 const RegistrationForm = () => {
-  const [loginData, setLoginData] = useState({});
+  const [registerationData, setRegistrationData] = useState({});
+  const router = useRouter();
 
   //NOTE: Handle the all input fields
   const onHandleInputs = (name, value) => {
-    setLoginData({
-      ...loginData,
+    setRegistrationData({
+      ...registerationData,
       [name]: value,
     });
   };
 
   //NOTE: Handle the SignUp form
-  const handleFromSubmit = (e) => {
-    e.preventDefault();
-    console.log(loginData);
-  };
+  async function handleFromSubmit(event) {
+    event.preventDefault();
+
+    const { email, username, password, confirmPassword } = registerationData;
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/register`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, username, password, confirmPassword }),
+      }
+    );
+
+    if (response.ok) {
+      const data = await response.json();
+      console.log(data);
+
+      router.push(`/verify-account`);
+    } else {
+      console.log(data.message);
+    }
+  }
 
   return (
     <>

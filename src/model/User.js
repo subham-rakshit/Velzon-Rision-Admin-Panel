@@ -1,6 +1,7 @@
 import mongoose, { Schema } from "mongoose";
+import jwt from "jsonwebtoken";
 
-const UserSchema = new Schema(
+const userSchema = new Schema(
   {
     email: {
       type: String,
@@ -20,14 +21,6 @@ const UserSchema = new Schema(
       required: [true, "Password is required"],
       trim: true,
     },
-    verifyCode: {
-      type: String,
-      required: [true, "Verify code is required"],
-    },
-    verifyCodeExpiry: {
-      type: Date,
-      required: [true, "Verify code expiry is required"],
-    },
     isVerified: {
       type: Boolean,
       default: false,
@@ -36,11 +29,23 @@ const UserSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    verifyCode: {
+      type: String,
+    },
+    verifyCodeExpiry: {
+      type: Date,
+    },
+    forgetPasswordCode: {
+      type: String,
+    },
+    forgetPasswordCodeExpiry: {
+      type: Date,
+    },
   },
   { timestamps: true }
 );
 
 //NOTE: In Next.js for creating models are different. First we check if there is a model already exists in DB. If not then we create a new model by adding || and create a new collection by mongoose and return it to us. We ahve to check both cases.
-const UserModel = mongoose.models.User || mongoose.model("User", UserSchema);
+const UserModel = mongoose.models.User || mongoose.model("User", userSchema);
 
 export default UserModel;
