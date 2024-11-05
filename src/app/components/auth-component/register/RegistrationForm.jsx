@@ -197,7 +197,7 @@ const RegistrationForm = () => {
         <AlternateAuthentication />
       </form>
       {/* Sign Up */}
-      <p className="text-dark text-[20px] font-normal">
+      <p className="text-dark text-[20px] font-normal text-center">
         Already have an account?{" "}
         <Link href="/login">
           <span className="underline text-[#405189] font-semibold">Signin</span>

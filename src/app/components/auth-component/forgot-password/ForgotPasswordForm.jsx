@@ -11,8 +11,9 @@ import {
 import Link from "next/link";
 import { ClipLoader } from "react-spinners";
 import { toast } from "react-toastify";
+import Image from "next/image";
 
-const LoginForm = () => {
+const ForgotPasswordForm = () => {
   const router = useRouter();
   const [loginData, setLoginData] = useState({ isRememberMe: false });
   const [isLoginProcessing, setIsLoginProcessing] = useState(false);
@@ -122,34 +123,34 @@ const LoginForm = () => {
         {/* Welcome Text */}
         <div className="mb-6">
           <h1 className="text-center text-[#405189] font-hk-grotesk font-semibold text-lg mb-2">
-            Welcome Back !
+            Forgot Password?
           </h1>
           <p className="text-center text-soft text-[18px]">
-            Sign in to continue to Velzon
+            Reset password with velzon
           </p>
+          <Image
+            src="/assets/auth-images/email.gif"
+            alt="email gif"
+            width={120}
+            height={80}
+            color="grren"
+            className="mx-auto my-4"
+          />
+          <div className="bg-[#FEF4E4] w-full px-3 py-3 rounded shadow-light">
+            <p className="text-[#D49C20] font-hk-grotesk text-center text-[17px]">
+              Enter your email and instructions will be sent to you!
+            </p>
+          </div>
         </div>
 
         {/* Form Element */}
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-5">
           {/* Email Input */}
           <TextInputFile
             labelText="Email"
             inputId="login-email"
             inputName="email"
             inputPlaceholder="Enter email"
-            onHandleInputs={onHandleInputs}
-          />
-          {/* Password Input */}
-          <PasswordInputFiled
-            labelText="Password"
-            inputId="login-password"
-            inputName="password"
-            onHandleInputs={onHandleInputs}
-          />
-          {/* RememberMe Input */}
-          <RememberMe
-            boxId="remember-checkbox"
-            boxName="isRememberMe"
             onHandleInputs={onHandleInputs}
           />
           {/* Sign in Button */}
@@ -163,29 +164,22 @@ const LoginForm = () => {
                 <span className="text-light">Processing...</span>
               </span>
             ) : (
-              "Sign In"
+              "Send Recet Link"
             )}
           </button>
         </div>
-        <div className="flex items-center gap-2 my-5">
-          <hr className="flex-grow border-gray-300 border-dotted border-t-1" />
-          <span className="text-dark font-hk-grotesk text-[18px] font-medium">
-            Sign in with
-          </span>
-          <hr className="flex-grow border-gray-300 border-dotted border-t-1" />
-        </div>
-        {/* Alternate Sign in */}
-        <AlternateAuthentication />
       </form>
       {/* Sign Up */}
       <p className="text-dark text-[20px] font-normal text-center">
-        Don&apos;t have an account?{" "}
-        <Link href="/register">
-          <span className="underline text-[#405189] font-semibold">Signup</span>
+        Wait, I remember my password...{" "}
+        <Link href="/login">
+          <span className="underline text-[#405189] font-semibold">
+            Click here
+          </span>
         </Link>
       </p>
     </>
   );
 };
 
-export default LoginForm;
+export default ForgotPasswordForm;

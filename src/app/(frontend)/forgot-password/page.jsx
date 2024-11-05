@@ -1,4 +1,6 @@
 import React from "react";
+import Image from "next/image";
+import { CommonAuthLayout, ForgotPasswordForm } from "@/app/components";
 
 export const metadata = {
   title: "Reset Password | Velzon - Next Admin & Dashboard Template",
@@ -8,15 +10,15 @@ export const metadata = {
 
 const ForgetPasswordPage = () => {
   return (
-    <div className="bg-black">
-      <h1>ForgetPasswordPage</h1>
-      <lord-icon
-        src="https://cdn.lordicon.com/rhvddzym.json"
-        trigger="loop"
-        colors="primary:#0ab39c"
-        className="avatar-xl"
-        style={{ width: "120px", height: "120px" }}
-      ></lord-icon>
+    <div className="w-full min-h-[100vh] bg-[#F3F3F9]">
+      {/* Common Background */}
+      <CommonAuthLayout />
+      {/* Login Form Section */}
+      <div className="w-full bg-[#F3F3F9] px-2">
+        <div className="relative -top-[100px] sm:-top-[200px] lg:-top-[100px] z-[50] flex flex-col items-center justify-center gap-5">
+          <ForgotPasswordForm />
+        </div>
+      </div>
     </div>
   );
 };
