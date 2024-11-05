@@ -1,33 +1,80 @@
 "use client";
 
+import React, { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+
 import { Button } from "flowbite-react";
-import { usePathname } from "next/navigation";
-import React from "react";
+import { toast } from "react-toastify";
+import { ClipLoader } from "react-spinners";
 
 const VerifyAccount = () => {
+  const [isVerifying, setIsVerifying] = useState(false);
+  const router = useRouter();
   const pathname = usePathname();
   const tokenId = pathname.split("/").pop();
 
+  // NOTE: Handle Verify Button clicks
   const handleVerifyAccount = async (e) => {
     e.preventDefault();
 
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/verify-user?token=${tokenId}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    try {
+      setIsVerifying(true);
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/user/verify-user`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ token: tokenId }),
+        }
+      );
 
-    if (response.ok) {
       const data = await response.json();
-      console.log(data);
 
-      router.push(`/verify-account`);
-    } else {
-      console.log(data.message);
+      if (response.ok && data.success) {
+        setIsVerifying(false);
+        toast.success(data.message, {
+          position: "bottom-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        router.push(`/login`); // Redirect to login page
+      } else {
+        setIsVerifying(false);
+        if (typeof data.message === "string") {
+          toast.error(data.message, {
+            position: "bottom-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        } else if (typeof data.message === "object") {
+          Object.values(data.message).map((err, i) =>
+            toast.error(err[0], {
+              position: "bottom-center",
+              autoClose: 3000 * (i + 1 * 0.0035),
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            })
+          );
+        }
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -45,12 +92,19 @@ const VerifyAccount = () => {
           Please click the below button to proceed
         </p>
         <div className="flex items-center justify-center mt-8">
-          <Button
+          <button
             type="submit"
-            className="bg-[#099885] text-white text-[20px] font-hk-grotesk px-5 rounded-md hover:shadow-light"
+            className="bg-[#099885] text-white text-[20px] font-hk-grotesk px-5 py-2 rounded-md flex justify-center items-center"
           >
-            Verify
-          </Button>
+            {isVerifying ? (
+              <span className="flex items-center gap-4">
+                <ClipLoader color="#ffffff" size={16} />
+                <span className="text-light">Processing...</span>
+              </span>
+            ) : (
+              "Verify"
+            )}
+          </button>
         </div>
       </div>
     </form>

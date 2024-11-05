@@ -1,15 +1,14 @@
 import bcrypt from "bcryptjs";
-
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/model/User";
 import { sendEmail } from "@/helpers/mailer";
-import { RegistrationSchema } from "@/schemas/authSchemas/registrationSchema";
+import { RegistrationSchema } from "@/schemas";
 
 export async function POST(request) {
   await dbConnect(); //INFO: Database connection
 
   try {
-    const { email, username, password, confirmPassword } = await request.json();
+    const { email, username, password, confirmPassword } = await request.json(); // return Promise
 
     //NOTE: Validate the registration schema
     const validatedFields = RegistrationSchema.safeParse({
@@ -99,11 +98,12 @@ export async function POST(request) {
         }
 
         //INFO: Response verification email with success message
+        const { password: pass, ...rest } = saveUpdatedUser._doc; // removing password
         return Response.json(
           {
             success: true,
             message: "User registered successfully. Please verify your email",
-            userData: saveUpdatedUser,
+            userData: rest,
           },
           { status: 201 }
         );
@@ -143,11 +143,12 @@ export async function POST(request) {
       }
 
       //INFO: Response verification email with success message
+      const { password: pass, ...rest } = saveNewUser._doc; // removing password
       return Response.json(
         {
           success: true,
           message: "User registered successfully. Please verify your email",
-          userData: saveNewUser,
+          userData: rest,
         },
         { status: 201 }
       );
@@ -157,7 +158,7 @@ export async function POST(request) {
     return Response.json(
       {
         success: false,
-        message: "Error registering user",
+        message: `Error registering user: ${error.message}`,
       },
       { status: 500 }
     );

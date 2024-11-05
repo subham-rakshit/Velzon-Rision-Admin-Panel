@@ -15,7 +15,8 @@ import {
 
 const RegistrationForm = () => {
   const [registerationData, setRegistrationData] = useState({});
-  const [isFetching, setIsFetching] = useState(false);
+  const [isRegistrationProcessing, setIsRegistrationProcessing] =
+    useState(false);
   const router = useRouter();
 
   //NOTE: Handle the all input fields
@@ -32,12 +33,12 @@ const RegistrationForm = () => {
 
     if (Object.keys(registerationData).length > 0) {
       try {
-        setIsFetching(true);
+        setIsRegistrationProcessing(true);
         const { email, username, password, confirmPassword } =
           registerationData;
 
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/register`,
+          `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/user/register`,
           {
             method: "POST",
             headers: {
@@ -65,25 +66,37 @@ const RegistrationForm = () => {
             theme: "colored",
           });
           setRegistrationData({});
-          setIsFetching(false);
+          setIsRegistrationProcessing(false);
           router.push("/login");
         } else {
-          setIsFetching(false);
-          Object.values(data.message).map((err, i) =>
-            toast.error(err[0], {
+          setIsRegistrationProcessing(false);
+          if (typeof data.message === "string") {
+            toast.error(data.message, {
               position: "bottom-center",
-              autoClose: 3000 * (i + 1),
+              autoClose: 3000,
               hideProgressBar: false,
               closeOnClick: true,
               pauseOnHover: true,
               draggable: true,
               progress: undefined,
               theme: "colored",
-            })
-          );
+            });
+          } else if (typeof data.message === "object") {
+            Object.values(data.message).map((err, i) =>
+              toast.error(err[0], {
+                position: "bottom-center",
+                autoClose: 3000 * (i + 1),
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+              })
+            );
+          }
         }
       } catch (error) {
-        setIsFetching(false);
         console.log(error);
       }
     } else {
@@ -152,7 +165,7 @@ const RegistrationForm = () => {
             <p className="text-soft text-[16px] font-normal italic mt-2">
               By registering you agree to the Velzon{" "}
               <Link href="#">
-                <span className="underline text-[#405189] font-semibold">
+                <span className="underline not-italic text-[#405189] font-semibold">
                   Terms of Use
                 </span>
               </Link>
@@ -163,7 +176,7 @@ const RegistrationForm = () => {
             type="submit"
             className="bg-[#099885] text-white text-[20px] font-hk-grotesk px-2 py-2 rounded-md flex justify-center items-center"
           >
-            {isFetching ? (
+            {isRegistrationProcessing ? (
               <span className="flex items-center gap-4">
                 <ClipLoader color="#ffffff" size={16} />
                 <span className="text-light">Processing...</span>
