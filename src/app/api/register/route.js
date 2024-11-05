@@ -3,12 +3,41 @@ import UserModel from "@/model/User";
 import bcrypt from "bcryptjs";
 import { sendVerificationEmail } from "@/lib/nodeMailer";
 import { generateOTP } from "@/lib/nodeMailer";
+import { RegistrationSchema } from "@/schemas/authSchemas/registrationSchema";
 
 export async function POST(request) {
   await dbConnect(); //INFO: Database connection
 
   try {
-    const { email, username, password } = await request.json();
+    const { email, username, password, confirmPassword } = await request.json();
+
+    //NOTE: Validate the registration schema
+    const validatedFields = RegistrationSchema.safeParse({
+      email,
+      username,
+      password,
+      confirmPassword,
+    });
+    if (!validatedFields.success) {
+      return Response.json(
+        {
+          success: false,
+          message: validatedFields.error.flatten().fieldErrors,
+        },
+        { status: 400 }
+      );
+    }
+
+    //NOTE: Check the password and cofirmPassword
+    if (password !== confirmPassword) {
+      return Response.json(
+        {
+          success: false,
+          message: "Password and confirm password fields must match",
+        },
+        { status: 400 }
+      );
+    }
 
     //NOTE: Generate OTP
     const otp = generateOTP();
@@ -48,10 +77,11 @@ export async function POST(request) {
       } else {
         //INFO: Check if existing user is not verified, then modify the user details
         const hashedPassword = await bcrypt.hash(password, 10);
+        const hashedOTP = await bcrypt.hash(otp, 10);
 
         existingUserByEmail.username = username;
         existingUserByEmail.password = hashedPassword;
-        existingUserByEmail.verifyCode = otp;
+        existingUserByEmail.verifyCode = hashedOTP;
         existingUserByEmail.verifyCodeExpiry = new Date(Date.now() + 3600000); //INFO: 1 hr
 
         await existingUserByEmail.save();
@@ -59,6 +89,7 @@ export async function POST(request) {
     } else {
       //NOTE: Create a new user
       const hashedPassword = await bcrypt.hash(password, 10);
+      const hashedOTP = await bcrypt.hash(otp, 10);
 
       //INFO: Expiry date of verification code
       const expiryDate = new Date(); //INFO: return an object which can be modified by const
@@ -69,7 +100,7 @@ export async function POST(request) {
         email,
         username,
         password: hashedPassword,
-        verifyCode: otp,
+        verifyCode: hashedOTP,
         verifyCodeExpiry: expiryDate,
         isVerified: false,
         isAdmin: false,
