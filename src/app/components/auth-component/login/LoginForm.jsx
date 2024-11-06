@@ -1,21 +1,31 @@
 "use client";
 
 import React, { useState } from "react";
+import { ClipLoader } from "react-spinners";
+import { toast } from "react-toastify";
+
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+
 import {
   AlternateAuthentication,
   PasswordInputFiled,
   RememberMe,
   TextInputFile,
 } from "../..";
-import Link from "next/link";
-import { ClipLoader } from "react-spinners";
-import { toast } from "react-toastify";
+
+import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
+import {
+  signInStart,
+  signInSuccess,
+  signInFailure,
+} from "@/lib/store/features/userDetails/userSlice";
 
 const LoginForm = () => {
-  const router = useRouter();
   const [loginData, setLoginData] = useState({ isRememberMe: false });
-  const [isLoginProcessing, setIsLoginProcessing] = useState(false);
+  const { loading } = useAppSelector((state) => state.user);
+  const router = useRouter();
+  const dispatch = useAppDispatch();
 
   //NOTE: Handle the all input fields
   const onHandleInputs = (name, value) => {
@@ -31,7 +41,7 @@ const LoginForm = () => {
 
     if (Object.keys(loginData).length > 1) {
       try {
-        setIsLoginProcessing(true);
+        dispatch(signInStart());
         const { email, password, isRememberMe } = loginData;
 
         const response = await fetch(
@@ -62,14 +72,10 @@ const LoginForm = () => {
             theme: "light",
           });
           setLoginData({ isRememberMe: false });
-          setIsLoginProcessing(false);
-          if (data.userData.isAdmin) {
-            router.push("/admin/dashboard"); // redirect to Dashboard page
-          } else {
-            router.push("/"); // redirect to Home page
-          }
+          dispatch(signInSuccess(data.userData));
+          router.push("/");
         } else {
-          setIsLoginProcessing(false);
+          dispatch(signInFailure());
           if (typeof data.message === "string") {
             toast.error(data.message, {
               position: "top-right",
@@ -97,6 +103,7 @@ const LoginForm = () => {
           }
         }
       } catch (error) {
+        dispatch(signInFailure());
         console.log(error);
       }
     } else {
@@ -162,7 +169,7 @@ const LoginForm = () => {
             type="submit"
             className="bg-[#099885] text-white text-[20px] font-hk-grotesk px-2 py-2 rounded-md flex justify-center items-center"
           >
-            {isLoginProcessing ? (
+            {loading ? (
               <span className="flex items-center gap-4">
                 <ClipLoader color="#ffffff" size={16} />
                 <span className="text-light">Processing...</span>

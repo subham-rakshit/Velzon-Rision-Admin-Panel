@@ -1,0 +1,30 @@
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+
+import userReducer from "./features/userDetails/userSlice";
+import { persistReducer, persistStore } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+
+// This function creates a new store for per request
+export const makeStore = () => {
+  const rootReducer = combineReducers({
+    user: userReducer,
+  });
+
+  const persisitConfig = {
+    key: "root",
+    storage,
+    version: 1,
+  };
+
+  const persistedReducer = persistReducer(persisitConfig, rootReducer);
+
+  const store = configureStore({
+    reducer: persistedReducer,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({ serializableCheck: false }),
+  });
+
+  const persistor = persistStore(store);
+
+  return { store, persistor };
+};

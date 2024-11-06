@@ -13,10 +13,17 @@ import {
   TextInputFile,
 } from "../..";
 
+import {
+  authenticationStart,
+  authenticationSuccess,
+  authenticationFailure,
+} from "@/lib/store/features/userDetails/userSlice";
+import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
+
 const RegistrationForm = () => {
   const [registerationData, setRegistrationData] = useState({});
-  const [isRegistrationProcessing, setIsRegistrationProcessing] =
-    useState(false);
+  const { loading } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
   const router = useRouter();
 
   //NOTE: Handle the all input fields
@@ -33,7 +40,7 @@ const RegistrationForm = () => {
 
     if (Object.keys(registerationData).length > 0) {
       try {
-        setIsRegistrationProcessing(true);
+        dispatch(authenticationStart());
         const { email, username, password, confirmPassword } =
           registerationData;
 
@@ -66,10 +73,10 @@ const RegistrationForm = () => {
             theme: "light",
           });
           setRegistrationData({});
-          setIsRegistrationProcessing(false);
+          dispatch(authenticationSuccess());
           router.push("/login");
         } else {
-          setIsRegistrationProcessing(false);
+          dispatch(authenticationFailure());
           if (typeof data.message === "string") {
             toast.error(data.message, {
               position: "top-right",
@@ -97,6 +104,7 @@ const RegistrationForm = () => {
           }
         }
       } catch (error) {
+        dispatch(authenticationFailure());
         console.log(error);
       }
     } else {
@@ -188,7 +196,7 @@ const RegistrationForm = () => {
             type="submit"
             className="bg-[#099885] text-white text-[20px] font-hk-grotesk px-2 py-2 rounded-md flex justify-center items-center"
           >
-            {isRegistrationProcessing ? (
+            {loading ? (
               <span className="flex items-center gap-4">
                 <ClipLoader color="#ffffff" size={16} />
                 <span className="text-light">Processing...</span>

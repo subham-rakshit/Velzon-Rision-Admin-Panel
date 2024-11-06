@@ -2,6 +2,7 @@ import localFont from "next/font/local";
 import { ToastContainer } from "./nextToast.js";
 import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
+import StoreProvider from "./StoreProvider.jsx";
 
 const hkGrotesk = localFont({
   src: "./assets/fonts/hkGroteskVF.ttf",
@@ -18,7 +19,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${hkGrotesk.variable} antialiased`}>
-        {children}
+        {/* Server Component wrapped with Client Component can be done */}
+        <StoreProvider>{children}</StoreProvider>
         <ToastContainer
           position="top-right"
           autoClose={5000}

@@ -8,13 +8,21 @@ import { ClipLoader } from "react-spinners";
 import { toast } from "react-toastify";
 import Image from "next/image";
 
+import {
+  authenticationStart,
+  authenticationSuccess,
+  authenticationFailure,
+} from "@/lib/store/features/userDetails/userSlice";
+import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
+
 const ResetPasswordForm = () => {
   const [resetPasswordInput, setResetPasswordInput] = useState({});
-  const [isResetProcessing, setIsResetProcessing] = useState(false);
+  const { loading } = useAppSelector((state) => state.user);
 
   const router = useRouter();
   const pathname = usePathname();
   const resetToken = pathname.split("/").pop();
+  const dispatch = useAppDispatch();
 
   //NOTE: Handle the all input fields
   const onHandleInputs = (name, value) => {
@@ -30,7 +38,7 @@ const ResetPasswordForm = () => {
 
     if (Object.keys(resetPasswordInput).length > 0) {
       try {
-        setIsResetProcessing(true);
+        dispatch(authenticationStart());
         const { newPassword, confirmPassword } = resetPasswordInput;
 
         const response = await fetch(
@@ -61,11 +69,11 @@ const ResetPasswordForm = () => {
             theme: "light",
           });
           setResetPasswordInput({});
-          setIsResetProcessing(false);
+          dispatch(authenticationSuccess());
 
           router.push("/"); // redirect to Home page
         } else {
-          setIsResetProcessing(false);
+          dispatch(authenticationFailure());
           if (typeof data.message === "string") {
             toast.error(data.message, {
               position: "top-right",
@@ -93,6 +101,7 @@ const ResetPasswordForm = () => {
           }
         }
       } catch (error) {
+        dispatch(authenticationFailure());
         console.log(error);
       }
     } else {
@@ -163,7 +172,7 @@ const ResetPasswordForm = () => {
             type="submit"
             className="bg-[#099885] text-white text-[20px] font-hk-grotesk px-2 py-2 rounded-md flex justify-center items-center"
           >
-            {isResetProcessing ? (
+            {loading ? (
               <span className="flex items-center gap-4">
                 <ClipLoader color="#ffffff" size={16} />
                 <span className="text-light">Processing...</span>
