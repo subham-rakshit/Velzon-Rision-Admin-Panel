@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 
-import { Button } from "flowbite-react";
 import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 
@@ -35,33 +34,33 @@ const VerifyAccount = () => {
       if (response.ok && data.success) {
         setIsVerifying(false);
         toast.success(data.message, {
-          position: "bottom-center",
+          position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "colored",
+          theme: "light",
         });
         router.push(`/login`); // Redirect to login page
       } else {
         setIsVerifying(false);
         if (typeof data.message === "string") {
           toast.error(data.message, {
-            position: "bottom-center",
+            position: "top-right",
             autoClose: 3000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
             draggable: true,
             progress: undefined,
-            theme: "colored",
+            theme: "light",
           });
         } else if (typeof data.message === "object") {
           Object.values(data.message).map((err, i) =>
             toast.error(err[0], {
-              position: "bottom-center",
+              position: "top-right",
               autoClose: 3000 * (i + 1 * 0.0035),
               hideProgressBar: false,
               closeOnClick: true,

@@ -10,6 +10,7 @@ const TextInputFile = ({
   labelClasses,
   inputId,
   inputName,
+  inputValue,
   inputPlaceholder,
   inputExtraClasses,
   onHandleInputs,
@@ -53,6 +54,7 @@ const TextInputFile = ({
         <TextInput
           id={inputId}
           name={inputName}
+          value={inputValue}
           type="text"
           placeholder={inputPlaceholder}
           className={`font-hk-grotesk text-dark text-[20px] font-medium w-full rounded-lg ${

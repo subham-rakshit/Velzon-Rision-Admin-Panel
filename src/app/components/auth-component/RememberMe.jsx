@@ -6,6 +6,7 @@ import React, { useState } from "react";
 const RememberMe = ({
   boxId,
   boxName,
+  checkedStatus,
   checkboxExtraClasses,
   onHandleInputs,
 }) => {
@@ -23,7 +24,7 @@ const RememberMe = ({
       <Checkbox
         id={boxId}
         name={boxName}
-        checked={isChecked}
+        checked={checkedStatus}
         className="w-3 h-3 focus:border-none focus:ring-0"
         onChange={handleCheckboxChange}
       />

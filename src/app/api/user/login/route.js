@@ -9,7 +9,7 @@ export async function POST(request) {
   await dbConnect(); //INFO: Database connection
 
   try {
-    const { email, password } = await request.json(); // return Promise
+    const { email, password, isRememberMe } = await request.json(); // return Promise
 
     //NOTE: Validate the registration schema
     const validatedFields = SignInSchema.safeParse({
@@ -33,7 +33,7 @@ export async function POST(request) {
       return Response.json(
         {
           success: false,
-          message: `Credentials invalid`,
+          message: `User not found! Please register your account`,
         },
         { status: 400 }
       );
@@ -61,8 +61,22 @@ export async function POST(request) {
       username: userDetails.username,
       email: userDetails.email,
     };
+
+    // Set token expiration according to rememberMe checkbox [days * hr * min * sec * milliseconds]
+    const expireToken = isRememberMe
+      ? parseInt(process.env.TOKEN_EXPIRATION_REMEMBERED, 10) *
+        24 *
+        60 *
+        60 *
+        1000 // e.g., "10" days
+      : parseInt(process.env.TOKEN_EXPIRATION_NOT_REMEMBERED, 10) *
+        24 *
+        60 *
+        60 *
+        1000; // e.g., "1" day
+
     const authToken = await jwt.sign(tokenData, process.env.TOKEN_SECRET, {
-      expiresIn: "10d",
+      expiresIn: expireToken / 1000, // JWT requires seconds
     });
 
     //INFO: Response
@@ -79,6 +93,7 @@ export async function POST(request) {
     // Set the cookies
     response.cookies.set("token", authToken, {
       httpOnly: true,
+      expires: new Date(Date.now() + expireToken), // Date.now() + expireToken(millisec)
     });
 
     return response; // return the response

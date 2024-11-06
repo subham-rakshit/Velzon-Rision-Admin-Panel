@@ -1,26 +1,25 @@
 "use client";
 
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
-import {
-  AlternateAuthentication,
-  PasswordInputFiled,
-  RememberMe,
-  TextInputFile,
-} from "../..";
+import { usePathname, useRouter } from "next/navigation";
+import { PasswordInputFiled } from "../..";
 import Link from "next/link";
 import { ClipLoader } from "react-spinners";
 import { toast } from "react-toastify";
+import Image from "next/image";
 
-const LoginForm = () => {
+const ResetPasswordForm = () => {
+  const [resetPasswordInput, setResetPasswordInput] = useState({});
+  const [isResetProcessing, setIsResetProcessing] = useState(false);
+
   const router = useRouter();
-  const [loginData, setLoginData] = useState({ isRememberMe: false });
-  const [isLoginProcessing, setIsLoginProcessing] = useState(false);
+  const pathname = usePathname();
+  const resetToken = pathname.split("/").pop();
 
   //NOTE: Handle the all input fields
   const onHandleInputs = (name, value) => {
-    setLoginData({
-      ...loginData,
+    setResetPasswordInput({
+      ...resetPasswordInput,
       [name]: value,
     });
   };
@@ -29,22 +28,22 @@ const LoginForm = () => {
   async function handleFromSubmit(event) {
     event.preventDefault();
 
-    if (Object.keys(loginData).length > 1) {
+    if (Object.keys(resetPasswordInput).length > 0) {
       try {
-        setIsLoginProcessing(true);
-        const { email, password, isRememberMe } = loginData;
+        setIsResetProcessing(true);
+        const { newPassword, confirmPassword } = resetPasswordInput;
 
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/user/login`,
+          `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/user/reset-password`,
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              email,
-              password,
-              isRememberMe,
+              newPassword,
+              confirmPassword,
+              token: resetToken,
             }),
           }
         );
@@ -53,7 +52,7 @@ const LoginForm = () => {
         if (response.ok && data.success) {
           toast.success(data.message, {
             position: "top-right",
-            autoClose: 5000,
+            autoClose: 3000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -61,19 +60,16 @@ const LoginForm = () => {
             progress: undefined,
             theme: "light",
           });
-          setLoginData({ isRememberMe: false });
-          setIsLoginProcessing(false);
-          if (data.userData.isAdmin) {
-            router.push("/admin/dashboard"); // redirect to Dashboard page
-          } else {
-            router.push("/"); // redirect to Home page
-          }
+          setResetPasswordInput({});
+          setIsResetProcessing(false);
+
+          router.push("/"); // redirect to Home page
         } else {
-          setIsLoginProcessing(false);
+          setIsResetProcessing(false);
           if (typeof data.message === "string") {
             toast.error(data.message, {
               position: "top-right",
-              autoClose: 5000,
+              autoClose: 3000,
               hideProgressBar: false,
               closeOnClick: true,
               pauseOnHover: true,
@@ -85,7 +81,7 @@ const LoginForm = () => {
             Object.values(data.message).map((err, i) =>
               toast.error(err[0], {
                 position: "top-right",
-                autoClose: 5000,
+                autoClose: 3000 * (i + 1),
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,
@@ -122,38 +118,43 @@ const LoginForm = () => {
         {/* Welcome Text */}
         <div className="mb-6">
           <h1 className="text-center text-[#405189] font-hk-grotesk font-semibold text-lg mb-2">
-            Welcome Back !
+            Forgot Password?
           </h1>
           <p className="text-center text-soft text-[18px]">
-            Sign in to continue to Velzon
+            Reset password with velzon
           </p>
+          <Image
+            src="/assets/auth-images/lock.png"
+            alt="email gif"
+            width={70}
+            height={70}
+            className="mx-auto my-4"
+          />
         </div>
 
         {/* Form Element */}
         <div className="flex flex-col gap-3">
-          {/* Email Input */}
-          <TextInputFile
-            labelText="Email"
-            inputId="login-email"
-            inputName="email"
-            inputPlaceholder="Enter email"
-            inputValue={loginData.email ? loginData.email : ""}
-            onHandleInputs={onHandleInputs}
-          />
           {/* Password Input */}
           <PasswordInputFiled
-            labelText="Password"
-            inputId="login-password"
-            inputName="password"
-            inputValue={loginData.password ? loginData.password : ""}
+            labelText="New Password"
+            inputId="reset-password"
+            inputName="newPassword"
+            inputValue={
+              resetPasswordInput.newPassword
+                ? resetPasswordInput.newPassword
+                : ""
+            }
             onHandleInputs={onHandleInputs}
           />
-          {/* RememberMe Input */}
-          <RememberMe
-            boxId="remember-checkbox"
-            boxName="isRememberMe"
-            checkedStatus={
-              loginData.isRememberMe ? loginData.isRememberMe : false
+          {/* Confirm Password Input */}
+          <PasswordInputFiled
+            labelText="Confirm Password"
+            inputId="reset-confirm-password"
+            inputName="confirmPassword"
+            inputValue={
+              resetPasswordInput.confirmPassword
+                ? resetPasswordInput.confirmPassword
+                : ""
             }
             onHandleInputs={onHandleInputs}
           />
@@ -162,35 +163,28 @@ const LoginForm = () => {
             type="submit"
             className="bg-[#099885] text-white text-[20px] font-hk-grotesk px-2 py-2 rounded-md flex justify-center items-center"
           >
-            {isLoginProcessing ? (
+            {isResetProcessing ? (
               <span className="flex items-center gap-4">
                 <ClipLoader color="#ffffff" size={16} />
                 <span className="text-light">Processing...</span>
               </span>
             ) : (
-              "Sign In"
+              "Update Password"
             )}
           </button>
         </div>
-        <div className="flex items-center gap-2 my-5">
-          <hr className="flex-grow border-gray-300 border-dotted border-t-1" />
-          <span className="text-dark font-hk-grotesk text-[18px] font-medium">
-            Sign in with
-          </span>
-          <hr className="flex-grow border-gray-300 border-dotted border-t-1" />
-        </div>
-        {/* Alternate Sign in */}
-        <AlternateAuthentication />
       </form>
-      {/* Sign Up */}
+      {/* Sign In */}
       <p className="text-dark text-[20px] font-normal text-center">
-        Don&apos;t have an account?{" "}
-        <Link href="/register">
-          <span className="underline text-[#405189] font-semibold">Signup</span>
+        Wait, I remember my password...{" "}
+        <Link href="/login">
+          <span className="underline text-[#405189] font-semibold">
+            Click here
+          </span>
         </Link>
       </p>
     </>
   );
 };
 
-export default LoginForm;
+export default ResetPasswordForm;

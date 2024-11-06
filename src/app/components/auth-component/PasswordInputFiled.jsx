@@ -12,6 +12,7 @@ const PasswordInputFiled = ({
   labelClasses,
   inputId,
   inputName,
+  inputValue,
   inputExtraClasses,
   onHandleInputs,
 }) => {
@@ -65,7 +66,7 @@ const PasswordInputFiled = ({
           type={isVisible ? "text" : "password"}
           id={inputId}
           name={inputName}
-          value={passwordInput}
+          value={inputValue}
           placeholder="******"
           className={`font-hk-grotesk text-dark text-[20px] font-medium w-full rounded-lg ${
             isBlank ? "border-2 border-red-500" : ""

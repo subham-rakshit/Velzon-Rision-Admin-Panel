@@ -93,7 +93,7 @@ export async function POST(request) {
               success: false,
               message: "Unable to send verification email",
             },
-            { status: 500 }
+            { status: 400 }
           );
         }
 

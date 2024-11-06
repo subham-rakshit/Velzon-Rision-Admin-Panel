@@ -56,14 +56,14 @@ const RegistrationForm = () => {
 
         if (response.ok && data.success) {
           toast.success(data.message, {
-            position: "bottom-center",
+            position: "top-right",
             autoClose: 3000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
             draggable: true,
             progress: undefined,
-            theme: "colored",
+            theme: "light",
           });
           setRegistrationData({});
           setIsRegistrationProcessing(false);
@@ -72,26 +72,26 @@ const RegistrationForm = () => {
           setIsRegistrationProcessing(false);
           if (typeof data.message === "string") {
             toast.error(data.message, {
-              position: "bottom-center",
+              position: "top-right",
               autoClose: 3000,
               hideProgressBar: false,
               closeOnClick: true,
               pauseOnHover: true,
               draggable: true,
               progress: undefined,
-              theme: "colored",
+              theme: "light",
             });
           } else if (typeof data.message === "object") {
             Object.values(data.message).map((err, i) =>
               toast.error(err[0], {
-                position: "bottom-center",
+                position: "top-right",
                 autoClose: 3000 * (i + 1),
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,
                 progress: undefined,
-                theme: "colored",
+                theme: "light",
               })
             );
           }
@@ -101,14 +101,14 @@ const RegistrationForm = () => {
       }
     } else {
       toast.error("Invalid input field", {
-        position: "bottom-center",
+        position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "colored",
+        theme: "light",
       });
     }
   }
@@ -137,6 +137,7 @@ const RegistrationForm = () => {
             inputId="sigup-email"
             inputName="email"
             inputPlaceholder="Enter email address"
+            inputValue={registerationData.email ? registerationData.email : ""}
             onHandleInputs={onHandleInputs}
           />
           {/* Username Input */}
@@ -145,6 +146,9 @@ const RegistrationForm = () => {
             inputId="sigup-username"
             inputName="username"
             inputPlaceholder="Enter username"
+            inputValue={
+              registerationData.username ? registerationData.username : ""
+            }
             onHandleInputs={onHandleInputs}
           />
           {/* Password Input */}
@@ -152,6 +156,9 @@ const RegistrationForm = () => {
             labelText="Password"
             inputId="sigup-password"
             inputName="password"
+            inputValue={
+              registerationData.password ? registerationData.password : ""
+            }
             onHandleInputs={onHandleInputs}
           />
           {/* Confirm Password Input */}
@@ -160,6 +167,11 @@ const RegistrationForm = () => {
               labelText="Confirm Password"
               inputId="sigup-confirm-password"
               inputName="confirmPassword"
+              inputValue={
+                registerationData.confirmPassword
+                  ? registerationData.confirmPassword
+                  : ""
+              }
               onHandleInputs={onHandleInputs}
             />
             <p className="text-soft text-[16px] font-normal italic mt-2">
