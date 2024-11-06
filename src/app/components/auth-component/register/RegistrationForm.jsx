@@ -194,7 +194,10 @@ const RegistrationForm = () => {
           {/* Sign up Button */}
           <button
             type="submit"
-            className="bg-[#099885] text-white text-[20px] font-hk-grotesk px-2 py-2 rounded-md flex justify-center items-center"
+            disabled={loading}
+            className={`bg-[#099885] text-white text-[20px] font-hk-grotesk px-2 py-2 rounded-md flex justify-center items-center ${
+              loading ? "cursor-not-allowed" : ""
+            }`}
           >
             {loading ? (
               <span className="flex items-center gap-4">
