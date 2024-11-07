@@ -29,90 +29,6 @@ const LoginForm = () => {
     });
   };
 
-  //NOTE: Handle the Login form
-  // async function handleFromSubmit(event) {
-  //   event.preventDefault();
-
-  //   if (Object.keys(loginData).length > 1) {
-  //     try {
-  //       setIsProcessing(true);
-  //       const { email, password, isRememberMe } = loginData;
-
-  //       const response = await fetch(
-  //         `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/user/login`,
-  //         {
-  //           method: "POST",
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //           },
-  //           body: JSON.stringify({
-  //             email,
-  //             password,
-  //             isRememberMe,
-  //           }),
-  //         }
-  //       );
-  //       const data = await response.json();
-
-  //       if (response.ok && data.success) {
-  //         toast.success(data.message, {
-  //           position: "top-right",
-  //           autoClose: 5000,
-  //           hideProgressBar: false,
-  //           closeOnClick: true,
-  //           pauseOnHover: true,
-  //           draggable: true,
-  //           progress: undefined,
-  //           theme: "light",
-  //         });
-  //         setLoginData({ isRememberMe: false });
-  //         setIsProcessing(false);
-  //         router.push("/");
-  //       } else {
-  //         setIsProcessing(false);
-  //         if (typeof data.message === "string") {
-  //           toast.error(data.message, {
-  //             position: "top-right",
-  //             autoClose: 5000,
-  //             hideProgressBar: false,
-  //             closeOnClick: true,
-  //             pauseOnHover: true,
-  //             draggable: true,
-  //             progress: undefined,
-  //             theme: "light",
-  //           });
-  //         } else if (typeof data.message === "object") {
-  //           Object.values(data.message).map((err, i) =>
-  //             toast.error(err[0], {
-  //               position: "top-right",
-  //               autoClose: 5000,
-  //               hideProgressBar: false,
-  //               closeOnClick: true,
-  //               pauseOnHover: true,
-  //               draggable: true,
-  //               progress: undefined,
-  //               theme: "light",
-  //             })
-  //           );
-  //         }
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   } else {
-  //     toast.error("Invalid input field", {
-  //       position: "top-right",
-  //       autoClose: 3000,
-  //       hideProgressBar: false,
-  //       closeOnClick: true,
-  //       pauseOnHover: true,
-  //       draggable: true,
-  //       progress: undefined,
-  //       theme: "light",
-  //     });
-  //   }
-  // }
-
   //NOTE: Login From NextAuth
   async function handleFromSubmit(event) {
     event.preventDefault();
@@ -139,20 +55,20 @@ const LoginForm = () => {
           progress: undefined,
           theme: "light",
         });
+      } else {
+        toast.success("Login Successful", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+
+        router.replace("/user/profile-details");
       }
-
-      toast.success("Login Successful", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-
-      router.replace("/user/profile-details");
     } catch (error) {
       console.log(error);
     }
