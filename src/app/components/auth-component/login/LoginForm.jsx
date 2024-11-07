@@ -13,19 +13,13 @@ import {
   RememberMe,
   TextInputFile,
 } from "../..";
-
-import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
-import {
-  signInStart,
-  signInSuccess,
-  signInFailure,
-} from "@/lib/store/features/userDetails/userSlice";
+import { signIn } from "next-auth/react";
 
 const LoginForm = () => {
   const [loginData, setLoginData] = useState({ isRememberMe: false });
-  const { loading } = useAppSelector((state) => state.user);
+  const [isProcessing, setIsProcessing] = useState(false);
+
   const router = useRouter();
-  const dispatch = useAppDispatch();
 
   //NOTE: Handle the all input fields
   const onHandleInputs = (name, value) => {
@@ -36,78 +30,118 @@ const LoginForm = () => {
   };
 
   //NOTE: Handle the Login form
+  // async function handleFromSubmit(event) {
+  //   event.preventDefault();
+
+  //   if (Object.keys(loginData).length > 1) {
+  //     try {
+  //       setIsProcessing(true);
+  //       const { email, password, isRememberMe } = loginData;
+
+  //       const response = await fetch(
+  //         `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/user/login`,
+  //         {
+  //           method: "POST",
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //           },
+  //           body: JSON.stringify({
+  //             email,
+  //             password,
+  //             isRememberMe,
+  //           }),
+  //         }
+  //       );
+  //       const data = await response.json();
+
+  //       if (response.ok && data.success) {
+  //         toast.success(data.message, {
+  //           position: "top-right",
+  //           autoClose: 5000,
+  //           hideProgressBar: false,
+  //           closeOnClick: true,
+  //           pauseOnHover: true,
+  //           draggable: true,
+  //           progress: undefined,
+  //           theme: "light",
+  //         });
+  //         setLoginData({ isRememberMe: false });
+  //         setIsProcessing(false);
+  //         router.push("/");
+  //       } else {
+  //         setIsProcessing(false);
+  //         if (typeof data.message === "string") {
+  //           toast.error(data.message, {
+  //             position: "top-right",
+  //             autoClose: 5000,
+  //             hideProgressBar: false,
+  //             closeOnClick: true,
+  //             pauseOnHover: true,
+  //             draggable: true,
+  //             progress: undefined,
+  //             theme: "light",
+  //           });
+  //         } else if (typeof data.message === "object") {
+  //           Object.values(data.message).map((err, i) =>
+  //             toast.error(err[0], {
+  //               position: "top-right",
+  //               autoClose: 5000,
+  //               hideProgressBar: false,
+  //               closeOnClick: true,
+  //               pauseOnHover: true,
+  //               draggable: true,
+  //               progress: undefined,
+  //               theme: "light",
+  //             })
+  //           );
+  //         }
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   } else {
+  //     toast.error("Invalid input field", {
+  //       position: "top-right",
+  //       autoClose: 3000,
+  //       hideProgressBar: false,
+  //       closeOnClick: true,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //       progress: undefined,
+  //       theme: "light",
+  //     });
+  //   }
+  // }
+
+  //NOTE: Login From NextAuth
   async function handleFromSubmit(event) {
     event.preventDefault();
 
-    if (Object.keys(loginData).length > 1) {
-      try {
-        dispatch(signInStart());
-        const { email, password, isRememberMe } = loginData;
+    try {
+      setIsProcessing(true);
+      const result = await signIn("credentials", {
+        redirect: false,
+        identifier: loginData.email,
+        password: loginData.password,
+      });
 
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/user/login`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              email,
-              password,
-              isRememberMe,
-            }),
-          }
-        );
-        const data = await response.json();
+      console.log("NextAuth Login: ", result); //TODO: REMOVE
 
-        if (response.ok && data.success) {
-          toast.success(data.message, {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-          setLoginData({ isRememberMe: false });
-          dispatch(signInSuccess(data.userData));
-          router.push("/");
-        } else {
-          dispatch(signInFailure());
-          if (typeof data.message === "string") {
-            toast.error(data.message, {
-              position: "top-right",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
-          } else if (typeof data.message === "object") {
-            Object.values(data.message).map((err, i) =>
-              toast.error(err[0], {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-              })
-            );
-          }
-        }
-      } catch (error) {
-        dispatch(signInFailure());
-        console.log(error);
+      if (result.error || !result.ok) {
+        setIsProcessing(false);
+        toast.error(result.error, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       }
-    } else {
-      toast.error("Invalid input field", {
+
+      toast.success("Login Successful", {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -117,6 +151,10 @@ const LoginForm = () => {
         progress: undefined,
         theme: "light",
       });
+
+      router.replace("/user/profile-details");
+    } catch (error) {
+      console.log(error);
     }
   }
 
@@ -167,12 +205,12 @@ const LoginForm = () => {
           {/* Sign in Button */}
           <button
             type="submit"
-            disabled={loading}
+            disabled={isProcessing}
             className={`bg-[#099885] text-white text-[20px] font-hk-grotesk px-2 py-2 rounded-md flex justify-center items-center ${
-              loading ? "cursor-not-allowed" : ""
+              isProcessing ? "cursor-not-allowed" : ""
             }`}
           >
-            {loading ? (
+            {isProcessing ? (
               <span className="flex items-center gap-4">
                 <ClipLoader color="#ffffff" size={16} />
                 <span className="text-light">Processing...</span>
@@ -190,7 +228,7 @@ const LoginForm = () => {
           <hr className="flex-grow border-gray-300 border-dotted border-t-1" />
         </div>
         {/* Alternate Sign in */}
-        <AlternateAuthentication />
+        <AlternateAuthentication isRememberMe={loginData.isRememberMe} />
       </form>
       {/* Sign Up */}
       <p className="text-dark text-[20px] font-normal text-center">

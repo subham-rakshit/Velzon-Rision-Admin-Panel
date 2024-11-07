@@ -13,17 +13,10 @@ import {
   TextInputFile,
 } from "../..";
 
-import {
-  authenticationStart,
-  authenticationSuccess,
-  authenticationFailure,
-} from "@/lib/store/features/userDetails/userSlice";
-import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
-
 const RegistrationForm = () => {
   const [registerationData, setRegistrationData] = useState({});
-  const { loading } = useAppSelector((state) => state.user);
-  const dispatch = useAppDispatch();
+  const [isProcessing, setIsProcessing] = useState(false);
+
   const router = useRouter();
 
   //NOTE: Handle the all input fields
@@ -40,7 +33,7 @@ const RegistrationForm = () => {
 
     if (Object.keys(registerationData).length > 0) {
       try {
-        dispatch(authenticationStart());
+        setIsProcessing(true);
         const { email, username, password, confirmPassword } =
           registerationData;
 
@@ -59,9 +52,10 @@ const RegistrationForm = () => {
             }),
           }
         );
+
         const data = await response.json();
 
-        if (response.ok && data.success) {
+        if (data.success) {
           toast.success(data.message, {
             position: "top-right",
             autoClose: 3000,
@@ -73,10 +67,10 @@ const RegistrationForm = () => {
             theme: "light",
           });
           setRegistrationData({});
-          dispatch(authenticationSuccess());
+          setIsProcessing(false);
           router.push("/login");
         } else {
-          dispatch(authenticationFailure());
+          setIsProcessing(false);
           if (typeof data.message === "string") {
             toast.error(data.message, {
               position: "top-right",
@@ -104,7 +98,6 @@ const RegistrationForm = () => {
           }
         }
       } catch (error) {
-        dispatch(authenticationFailure());
         console.log(error);
       }
     } else {
@@ -194,12 +187,12 @@ const RegistrationForm = () => {
           {/* Sign up Button */}
           <button
             type="submit"
-            disabled={loading}
+            disabled={isProcessing}
             className={`bg-[#099885] text-white text-[20px] font-hk-grotesk px-2 py-2 rounded-md flex justify-center items-center ${
-              loading ? "cursor-not-allowed" : ""
+              isProcessing ? "cursor-not-allowed" : ""
             }`}
           >
-            {loading ? (
+            {isProcessing ? (
               <span className="flex items-center gap-4">
                 <ClipLoader color="#ffffff" size={16} />
                 <span className="text-light">Processing...</span>

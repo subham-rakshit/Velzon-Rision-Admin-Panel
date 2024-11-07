@@ -8,21 +8,13 @@ import { ClipLoader } from "react-spinners";
 import { toast } from "react-toastify";
 import Image from "next/image";
 
-import {
-  authenticationStart,
-  authenticationSuccess,
-  authenticationFailure,
-} from "@/lib/store/features/userDetails/userSlice";
-import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
-
 const ResetPasswordForm = () => {
   const [resetPasswordInput, setResetPasswordInput] = useState({});
-  const { loading } = useAppSelector((state) => state.user);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const router = useRouter();
   const pathname = usePathname();
   const resetToken = pathname.split("/").pop();
-  const dispatch = useAppDispatch();
 
   //NOTE: Handle the all input fields
   const onHandleInputs = (name, value) => {
@@ -38,7 +30,7 @@ const ResetPasswordForm = () => {
 
     if (Object.keys(resetPasswordInput).length > 0) {
       try {
-        dispatch(authenticationStart());
+        setIsProcessing(true);
         const { newPassword, confirmPassword } = resetPasswordInput;
 
         const response = await fetch(
@@ -69,11 +61,11 @@ const ResetPasswordForm = () => {
             theme: "light",
           });
           setResetPasswordInput({});
-          dispatch(authenticationSuccess());
+          setIsProcessing(false);
 
-          router.push("/"); // redirect to Home page
+          router.push("/"); //INFO: redirect to Home page
         } else {
-          dispatch(authenticationFailure());
+          setIsProcessing(false);
           if (typeof data.message === "string") {
             toast.error(data.message, {
               position: "top-right",
@@ -101,7 +93,6 @@ const ResetPasswordForm = () => {
           }
         }
       } catch (error) {
-        dispatch(authenticationFailure());
         console.log(error);
       }
     } else {
@@ -170,12 +161,12 @@ const ResetPasswordForm = () => {
           {/* Sign in Button */}
           <button
             type="submit"
-            disabled={loading}
+            disabled={isProcessing}
             className={`bg-[#099885] text-white text-[20px] font-hk-grotesk px-2 py-2 rounded-md flex justify-center items-center ${
-              loading ? "cursor-not-allowed" : ""
+              isProcessing ? "cursor-not-allowed" : ""
             }`}
           >
-            {loading ? (
+            {isProcessing ? (
               <span className="flex items-center gap-4">
                 <ClipLoader color="#ffffff" size={16} />
                 <span className="text-light">Processing...</span>

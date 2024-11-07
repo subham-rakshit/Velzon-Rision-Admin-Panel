@@ -11,18 +11,10 @@ import { Player } from "@lordicon/react";
 
 import ICON from "../../../assets/jsonData/animate-mail-2.json"; // Mail Icon JSON file
 
-import {
-  authenticationStart,
-  authenticationSuccess,
-  authenticationFailure,
-} from "@/lib/store/features/userDetails/userSlice";
-import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
-
 const ForgotPasswordForm = () => {
   const playerRef = useRef(null);
   const [userEmail, setUserEmail] = useState({});
-  const { loading } = useAppSelector((state) => state.user);
-  const dispatch = useAppDispatch();
+  const [isProcessing, setIsProcessing] = useState(false);
 
   useEffect(() => {
     playerRef.current?.playFromBeginning();
@@ -42,7 +34,7 @@ const ForgotPasswordForm = () => {
 
     if (Object.keys(userEmail).length > 0) {
       try {
-        dispatch(authenticationStart());
+        setIsProcessing(true);
         const { email } = userEmail;
 
         const response = await fetch(
@@ -71,9 +63,9 @@ const ForgotPasswordForm = () => {
             theme: "light",
           });
           setUserEmail({});
-          dispatch(authenticationSuccess());
+          setIsProcessing(false);
         } else {
-          dispatch(authenticationFailure());
+          setIsProcessing(false);
           if (typeof data.message === "string") {
             toast.error(data.message, {
               position: "top-right",
@@ -101,7 +93,6 @@ const ForgotPasswordForm = () => {
           }
         }
       } catch (error) {
-        dispatch(authenticationFailure());
         console.log(error);
       }
     } else {
@@ -164,12 +155,12 @@ const ForgotPasswordForm = () => {
           {/* Sign in Button */}
           <button
             type="submit"
-            disabled={loading}
+            disabled={isProcessing}
             className={`bg-[#099885] text-white text-[20px] font-hk-grotesk px-2 py-2 rounded-md flex justify-center items-center ${
-              loading ? "cursor-not-allowed" : ""
+              isProcessing ? "cursor-not-allowed" : ""
             }`}
           >
-            {loading ? (
+            {isProcessing ? (
               <span className="flex items-center gap-4">
                 <ClipLoader color="#ffffff" size={16} />
                 <span className="text-light">Processing...</span>

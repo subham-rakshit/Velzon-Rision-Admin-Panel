@@ -1,23 +1,28 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useState } from "react";
 import { Provider } from "react-redux";
 import { makeStore } from "../lib/store/store";
-// import { initialRender } from "@/lib/store/features/userDetails/userSlice";
 import { PersistGate } from "redux-persist/integration/react";
 
 //NOTE: When StoreProvide render in client side only then makeStore() will call. (Safe for SSR)
 export default function StoreProvider({ children }) {
-  const storeRef = useRef(); // store data has to be store here, because not to re-render
+  const [storeReady, setStoreReady] = useState(false);
+  const [storeData, setStoreData] = useState(null);
 
-  //INFO: When storeRef is null, then store data has to be stored.
-  if (!storeRef.current) {
-    storeRef.current = makeStore();
+  useEffect(() => {
+    const store = makeStore();
+    setStoreData(store); // Set the store when it's ready
+    setStoreReady(true); // Mark store as ready once it's initialized
+  }, []);
+
+  if (!storeReady || !storeData) {
+    return null; // Optionally return a loader here while waiting for the store to initialize
   }
 
   return (
-    <PersistGate persistor={storeRef.current.persistor}>
-      <Provider store={storeRef.current.store}>{children}</Provider>
+    <PersistGate persistor={storeData.persistor} loading={null}>
+      <Provider store={storeData.store}>{children}</Provider>
     </PersistGate>
   );
 }

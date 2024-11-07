@@ -1,8 +1,12 @@
 // Auth ---
 import CommonAuthLayout from "./auth-component/CommonAuthLayout";
+
+// Auth Input Fields --
 import PasswordInputFiled from "./auth-component/PasswordInputFiled";
 import TextInputFile from "./auth-component/TextInputFile";
 import RememberMe from "./auth-component/RememberMe";
+
+// Auth Froms --
 import RegistrationForm from "./auth-component/register/RegistrationForm";
 import VerifyAccount from "./auth-component/verify-email/VerifyAccount";
 import LoginForm from "./auth-component/login/LoginForm";

@@ -1,21 +1,14 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 
 import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 
-import {
-  authenticationStart,
-  authenticationSuccess,
-  authenticationFailure,
-} from "@/lib/store/features/userDetails/userSlice";
-import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
-
 const VerifyAccount = () => {
-  const { loading } = useAppSelector((state) => state.user);
-  const dispatch = useAppDispatch();
+  const [isProcessing, setIsProcessing] = useState(false);
+
   const router = useRouter();
   const pathname = usePathname();
   const tokenId = pathname.split("/").pop();
@@ -25,7 +18,7 @@ const VerifyAccount = () => {
     e.preventDefault();
 
     try {
-      dispatch(authenticationStart());
+      setIsProcessing(true);
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/user/verify-user`,
         {
@@ -50,10 +43,10 @@ const VerifyAccount = () => {
           progress: undefined,
           theme: "light",
         });
-        dispatch(authenticationSuccess());
+        setIsProcessing(false);
         router.push(`/login`); // Redirect to login page
       } else {
-        dispatch(authenticationFailure());
+        setIsProcessing(false);
         if (typeof data.message === "string") {
           toast.error(data.message, {
             position: "top-right",
@@ -81,7 +74,6 @@ const VerifyAccount = () => {
         }
       }
     } catch (error) {
-      dispatch(authenticationFailure());
       console.log(error);
     }
   };
@@ -102,12 +94,12 @@ const VerifyAccount = () => {
         <div className="flex items-center justify-center mt-8">
           <button
             type="submit"
-            disabled={loading}
+            disabled={isProcessing}
             className={`bg-[#099885] text-white text-[20px] font-hk-grotesk px-5 py-2 rounded-md flex justify-center items-center ${
-              loading ? "cursor-not-allowed" : ""
+              isProcessing ? "cursor-not-allowed" : ""
             }`}
           >
-            {loading ? (
+            {isProcessing ? (
               <span className="flex items-center gap-4">
                 <ClipLoader color="#ffffff" size={16} />
                 <span className="text-light">Processing...</span>

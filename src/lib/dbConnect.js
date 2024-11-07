@@ -8,7 +8,7 @@ async function dbConnect() {
   //NOTE: Check for already existing connection
   if (connection.isConnected) {
     console.log("Already connected to database");
-    return;
+    return mongoose.connection;
   }
 
   //NOTE: For new connection
@@ -18,6 +18,7 @@ async function dbConnect() {
     connection.isConnected = db.connections[0].readyState;
 
     console.log("Database connection established successfully");
+    return db;
   } catch (error) {
     console.log(`Database connection error: ${error}`);
     process.exit(1);

@@ -10,13 +10,13 @@ export const makeStore = () => {
     user: userReducer,
   });
 
-  const persisitConfig = {
+  const persistConfig = {
     key: "root",
     storage,
     version: 1,
   };
 
-  const persistedReducer = persistReducer(persisitConfig, rootReducer);
+  const persistedReducer = persistReducer(persistConfig, rootReducer);
 
   const store = configureStore({
     reducer: persistedReducer,
