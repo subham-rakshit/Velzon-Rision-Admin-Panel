@@ -16,7 +16,7 @@ import {
 import { signIn } from "next-auth/react";
 
 const LoginForm = () => {
-  const [loginData, setLoginData] = useState({ isRememberMe: false });
+  const [loginData, setLoginData] = useState({ rememberMe: false });
   const [isProcessing, setIsProcessing] = useState(false);
 
   const router = useRouter();
@@ -35,16 +35,17 @@ const LoginForm = () => {
 
     try {
       setIsProcessing(true);
+
       const result = await signIn("credentials", {
         redirect: false,
         identifier: loginData.email,
         password: loginData.password,
+        rememberMe: loginData.rememberMe,
       });
-
-      console.log("NextAuth Login: ", result); //TODO: REMOVE
 
       if (result.error || !result.ok) {
         setIsProcessing(false);
+
         toast.error(result.error, {
           position: "top-right",
           autoClose: 3000,
@@ -67,7 +68,10 @@ const LoginForm = () => {
           theme: "light",
         });
 
-        router.replace("/user/profile-details");
+        setIsProcessing(false);
+        setLoginData({ rememberMe: false });
+
+        router.replace("/"); // Redirect to Home Page
       }
     } catch (error) {
       console.log(error);
@@ -112,10 +116,8 @@ const LoginForm = () => {
           {/* RememberMe Input */}
           <RememberMe
             boxId="remember-checkbox"
-            boxName="isRememberMe"
-            checkedStatus={
-              loginData.isRememberMe ? loginData.isRememberMe : false
-            }
+            boxName="rememberMe"
+            checkedStatus={loginData.rememberMe ? loginData.rememberMe : false}
             onHandleInputs={onHandleInputs}
           />
           {/* Sign in Button */}

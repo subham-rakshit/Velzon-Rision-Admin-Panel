@@ -1,42 +1,56 @@
-import { NextResponse, NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 
 //NOTE: default means run the middleware in every route
-export { default } from "next-auth/middleware";
+// export { default } from "next-auth/middleware";
 
 //NOTE: This function can be marked `async` if using `await` inside
 export async function middleware(request) {
-  const token = await getToken({ req: request });
+  const token = await getToken({
+    req: request,
+    secret: process.env.NEXTAUTH_SECRET,
+  });
 
-  const url = request.nextUrl;
+  console.log("Middleware called. Token -> ", token); //TODO
 
-  console.log("Middleware token: ", token); //IDEA: LOG
+  const { pathname } = request.nextUrl;
 
-  //INFO: Checks for redirections
+  // Redirect logged-in users away from auth pages
   if (
-    token &&
-    (url.pathname.startsWith("/login") ||
-      url.pathname.startsWith("/register") ||
-      url.pathname.startsWith("/reset-password") ||
-      url.pathname.startsWith("/verify-account") ||
-      url.pathname.startsWith("/"))
+    pathname.startsWith("/forgot-password") ||
+    pathname.startsWith("/login") ||
+    pathname.startsWith("/register") ||
+    pathname.startsWith("/reset-password") ||
+    pathname.startsWith("/verify-account")
   ) {
-    return NextResponse.redirect(new URL("/user/profile-details", request.url));
+    if (token && token.isAdmin) {
+      return NextResponse.redirect(new URL("/dashboard", request.url));
+    } else if (token && !token.isAdmin) {
+      return NextResponse.redirect(new URL("/profile", request.url));
+    }
   }
 
-  if (!token && url.pathname.startsWith("/admin")) {
-    return NextResponse.redirect(new URL("/login", request.url));
+  // Redirect unauthenticated users trying to access admin pages
+  if (pathname.startsWith("/dashboard")) {
+    if (!token) {
+      return NextResponse.redirect(new URL("/login", request.url));
+    } else if (token && !token.isAdmin) {
+      return NextResponse.redirect(new URL("/profile", request.url));
+    }
   }
+
+  // Allow the request to proceed if no conditions matched
+  return NextResponse.next();
 }
 
 //NOTE: See "Matching Paths" below to learn more
 export const config = {
   matcher: [
-    "/",
+    "/forgot-password/:path*",
     "/login",
     "/register",
-    "/reset-password/:path*", // further all routes of /reset-password
-    "/verify-account/:path*", // further all routes of /verify-account
-    "/admin/:path*", // further all routes of /verify-account
+    "/reset-password/:path*",
+    "/verify-account/:path*",
+    "/dashboard/:path*",
   ],
 };

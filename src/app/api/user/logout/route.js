@@ -1,11 +1,11 @@
 import dbConnect from "@/lib/dbConnect";
-import { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 
 export async function GET() {
   await dbConnect(); //INFO: Database connection
 
   try {
-    const response = NextRequest.json(
+    const response = NextResponse.json(
       {
         success: true,
         message: `Logout successfully`,
@@ -13,15 +13,16 @@ export async function GET() {
       { status: 200 }
     );
 
-    response.cookies.set("token", "", {
+    response.cookies.set("next-auth.session-token", "", {
       httpOnly: true,
-      expiresIn: new Date(0), // delete cookies imediately
+      expiresIn: new Date(-1), // delete cookies imediately
+      path: "/",
     });
 
     return response;
   } catch (error) {
     console.error(`Error logining out user: ${error}`);
-    return Response.json(
+    return NextResponse.json(
       {
         success: false,
         message: `Error logining out user: ${error.message}`,

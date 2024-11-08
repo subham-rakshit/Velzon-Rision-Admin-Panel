@@ -1,12 +1,17 @@
-import CredentialsProvider from "next-auth/providers/credentials";
-import GoogleProvider from "next-auth/providers/google";
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/model/User";
 import bcrypt from "bcryptjs";
 import { SignInSchema } from "@/schemas";
 
+import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
+import GitHubProvider from "next-auth/providers/github";
+import TwitterProvider from "next-auth/providers/twitter";
+import FacebookProvider from "next-auth/providers/facebook";
+
 export const authOptions = {
   providers: [
+    // Credentials provider for email and password login
     CredentialsProvider({
       id: "credentials",
       name: "Credentials",
@@ -17,18 +22,19 @@ export const authOptions = {
           type: "password",
           placeholder: "Enter email",
         },
+        rememberMe: { label: "Remember Me", type: "checkbox" },
       },
       async authorize(credentials) {
-        console.log(credentials); //TODO: REMOVE
-
         const email = credentials.identifier;
         const password = credentials.password;
+        const rememberMe = credentials.rememberMe;
 
-        //NOTE: Validate the registration schema
+        // Validate the credentials against the schema
         const validatedFields = SignInSchema.safeParse({
           email,
           password,
         });
+
         if (!validatedFields.success) {
           throw new Error("Invalid credentials filed");
         }
@@ -36,61 +42,74 @@ export const authOptions = {
         await dbConnect();
 
         try {
-          const user = await UserModel.findOne({ email });
-          console.log(user); //TODO: REMOVE
-
-          if (!user) {
+          const dbUser = await UserModel.findOne({ email });
+          if (!dbUser) {
             throw new Error("User not found");
           }
 
-          if (!user.isVerified) {
+          if (!dbUser.isVerified) {
             throw new Error("Please verify your email address");
           }
 
           const isPasswordMatched = await bcrypt.compare(
             password,
-            user.password
+            dbUser.password
           );
-
           if (!isPasswordMatched) {
             throw new Error("Password incorrect");
-          } else {
-            return user;
           }
+
+          // Return user data along with rememberMe flag
+          return { ...dbUser.toObject(), rememberMe };
         } catch (error) {
           throw new Error(error);
         }
       },
     }),
+
+    // Google provider for OAuth authentication
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
+
+    // Github provider for OAuth authentication
+    GitHubProvider({
+      clientId: process.env.GITHUB_ID,
+      clientSecret: process.env.GITHUB_SECRET,
+    }),
+
+    // Twitter provider for OAuth authentication
+    TwitterProvider({
+      clientId: process.env.TWITTER_CLIENT_ID,
+      clientSecret: process.env.TWITTER_CLIENT_SECRET,
+    }),
+
+    // Facebook provider for OAuth authentication
+    FacebookProvider({
+      clientId: process.env.FACEBOOK_CLIENT_ID,
+      clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+    }),
   ],
+
   callbacks: {
+    // Handle the sign-in process, create new user if not found
     async signIn({ user, account, profile }) {
-      //NOTE: Connect database
       await dbConnect();
 
       try {
-        //NOTE:: Find the user in db
         const dbUser = await UserModel.findOne({ email: user.email });
 
         if (!dbUser) {
-          //INFO: Generate new hashed password (use email as a unique password)
+          // Generate hashed password and create new user
           const generateNewHashedPassword = await bcrypt.hash(user.email, 12);
-
-          //INFO: Create a unique username
           const username = `${user.name
             .trim()
             .toLowerCase()
             .replace(/\s+/g, "")}${Math.random().toString(36).slice(-4)}`;
-
-          //INFO: Email verification status
           const isVerified =
             account.provider === "google" && profile.email_verified;
 
-          //INFO: Create a new user instance
           const newUser = new UserModel({
             email: user.email,
             username,
@@ -99,9 +118,9 @@ export const authOptions = {
             isAdmin: false,
           });
 
-          await newUser.save(); //INFO: Save the new User
+          await newUser.save();
 
-          //INFO: Set user info in session
+          // Set user details in session
           user._id = newUser._id.toString();
           user.username = newUser.username;
           user.email = newUser.email;
@@ -111,12 +130,12 @@ export const authOptions = {
           return true;
         }
 
-        //INFO: Handle existing user verification check
+        // Handle existing user verification check
         if (!dbUser.isVerified) {
           throw new Error("Please verify your email address");
         }
 
-        //INFO: User data for session
+        // Set user details in session for existing users
         user._id = dbUser._id.toString();
         user.username = dbUser.username;
         user.email = dbUser.email;
@@ -129,6 +148,8 @@ export const authOptions = {
         throw new Error(error.message || "Login failed");
       }
     },
+
+    // Handle JWT token creation and update
     async jwt({ token, user }) {
       if (user) {
         // Remove unnecessary properties from the token
@@ -145,9 +166,9 @@ export const authOptions = {
 
       return token;
     },
-    async session({ session, token }) {
-      console.log(token);
 
+    // Populate session with JWT token details
+    async session({ session, token }) {
       if (token) {
         session.user._id = token._id;
         session.user.username = token.username;
@@ -158,8 +179,16 @@ export const authOptions = {
       return session;
     },
   },
+
+  pages: {
+    signIn: "/login",
+  },
+
+  // Use JWT for session strategy
   session: {
     strategy: "jwt",
   },
+
+  // Security key for encrypting JWT tokens
   secret: process.env.NEXTAUTH_SECRET,
 };
