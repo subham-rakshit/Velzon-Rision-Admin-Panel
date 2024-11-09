@@ -68,7 +68,7 @@ const RegistrationForm = () => {
           });
           setRegistrationData({});
           setIsProcessing(false);
-          router.push("/login");
+          router.push("/auth-twostep"); // Redirect to OTP Verification page
         } else {
           setIsProcessing(false);
           if (typeof data.message === "string") {

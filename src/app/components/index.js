@@ -8,10 +8,11 @@ import RememberMe from "./auth-component/RememberMe";
 
 // Auth Froms --
 import RegistrationForm from "./auth-component/register/RegistrationForm";
-import VerifyAccount from "./auth-component/verify-email/VerifyAccount";
+import VerifyAccount from "./auth-component/auth-towstep/VerifyAccount";
 import LoginForm from "./auth-component/login/LoginForm";
 import ForgotPasswordForm from "./auth-component/forgot-password/ForgotPasswordForm";
-import ResetPasswordForm from "./auth-component/forgot-password/ResetPasswordFrom";
+import ResetPasswordForm from "./auth-component/auth-pass-change/ResetPasswordFrom";
+import ResendOtpForm from "./auth-component/auth-otp-resend/ResendOtpForm";
 import AlternateAuthentication from "./auth-component/AlternateAuthentication";
 
 export {
@@ -25,4 +26,5 @@ export {
   LoginForm,
   ForgotPasswordForm,
   ResetPasswordForm,
+  ResendOtpForm,
 };

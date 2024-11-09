@@ -29,52 +29,139 @@ const LoginForm = () => {
     });
   };
 
-  //NOTE: Login From NextAuth
+  // //NOTE: Login From NextAuth
+  // async function handleFromSubmit(event) {
+  //   event.preventDefault();
+
+  //   try {
+  //     setIsProcessing(true);
+
+  //     const result = await signIn("credentials", {
+  //       redirect: "/dashboard",
+  //       identifier: loginData.email,
+  //       password: loginData.password,
+  //       rememberMe: loginData.rememberMe,
+  //     });
+
+  //     if (result.error || !result.ok) {
+  //       setIsProcessing(false);
+
+  //       toast.error(result.error, {
+  //         position: "top-right",
+  //         autoClose: 3000,
+  //         hideProgressBar: false,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: true,
+  //         progress: undefined,
+  //         theme: "light",
+  //       });
+  //     } else {
+  //       toast.success("Login Successful", {
+  //         position: "top-right",
+  //         autoClose: 3000,
+  //         hideProgressBar: false,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: true,
+  //         progress: undefined,
+  //         theme: "light",
+  //       });
+
+  //       setIsProcessing(false);
+  //       setLoginData({ rememberMe: false });
+
+  //       // router.redirect("/dashboard"); // Redirect to Home Page
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
+
+  //NOTE: Login from basic API hit
   async function handleFromSubmit(event) {
     event.preventDefault();
 
-    try {
-      setIsProcessing(true);
+    if (Object.keys(loginData).length > 1) {
+      try {
+        setIsProcessing(true);
+        const { email, password, rememberMe } = loginData;
 
-      const result = await signIn("credentials", {
-        redirect: false,
-        identifier: loginData.email,
-        password: loginData.password,
-        rememberMe: loginData.rememberMe,
-      });
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/user/login`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email,
+              password,
+              rememberMe,
+            }),
+          }
+        );
 
-      if (result.error || !result.ok) {
-        setIsProcessing(false);
+        const data = await response.json();
 
-        toast.error(result.error, {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-      } else {
-        toast.success("Login Successful", {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        if (data.success) {
+          toast.success(data.message, {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
 
-        setIsProcessing(false);
-        setLoginData({ rememberMe: false });
+          setLoginData({ rememberMe: false });
+          setIsProcessing(false);
 
-        router.replace("/"); // Redirect to Home Page
+          router.push("/dashboard"); // Redirect to dashboard page
+        } else {
+          setIsProcessing(false);
+          if (typeof data.message === "string") {
+            toast.error(data.message, {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+          } else if (typeof data.message === "object") {
+            Object.values(data.message).map((err, i) =>
+              toast.error(err[0], {
+                position: "top-right",
+                autoClose: 3000 * (i + 1),
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+              })
+            );
+          }
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
+    } else {
+      toast.error("Invalid input field", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   }
 

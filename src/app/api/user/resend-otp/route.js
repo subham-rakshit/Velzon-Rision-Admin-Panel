@@ -1,7 +1,7 @@
+import UserModel from "@/model/User";
 import dbConnect from "@/lib/dbConnect";
 import { sendEmail } from "@/helpers/mailer";
 import { EmailSchema } from "@/schemas";
-import UserModel from "@/model/User";
 
 export async function POST(request) {
   await dbConnect();
@@ -38,7 +38,7 @@ export async function POST(request) {
     //INFO: Send verification email
     const emailResponse = await sendEmail({
       email: userDetails.email,
-      emailType: "RESET",
+      emailType: "RESEND",
       username: userDetails.username,
       userId: userDetails._id,
     });
@@ -48,7 +48,7 @@ export async function POST(request) {
       return Response.json(
         {
           success: false,
-          message: "Unable to send reset password link",
+          message: "Unable to send the OTP",
         },
         { status: 400 }
       );
@@ -58,16 +58,16 @@ export async function POST(request) {
     return Response.json(
       {
         success: true,
-        message: "Reset link has been successfully sent to your email.",
+        message: "OTP has been successfully sent to your email.",
       },
       { status: 200 }
     );
   } catch (error) {
-    console.error(`Error forgot password send email error: ${error}`);
+    console.error(`Error resending otp: ${error}`);
     return Response.json(
       {
         success: false,
-        message: `Error forgot password send email error: ${error.message}`,
+        message: `Error to resend otp: ${error.message}`,
       },
       { status: 500 }
     );

@@ -63,7 +63,7 @@ const ResetPasswordForm = () => {
           setResetPasswordInput({});
           setIsProcessing(false);
 
-          router.push("/"); //INFO: redirect to Home page
+          router.push("/"); //INFO: redirect to Root page
         } else {
           setIsProcessing(false);
           if (typeof data.message === "string") {

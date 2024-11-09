@@ -9,7 +9,7 @@ export const metadata = {
 
 const VerifyEmailAccount = () => {
   return (
-    <div className="w-full min-h-[100vh] border border-black bg-[#F3F3F9]">
+    <div className="w-full min-h-[100vh] bg-[#F3F3F9]">
       {/* Common Background */}
       <CommonAuthLayout />
       {/* Verify Form Section */}

@@ -12,7 +12,7 @@ import { Player } from "@lordicon/react";
 import ICON from "../../../assets/jsonData/animate-mail-2.json"; // Mail Icon JSON file
 import { useRouter } from "next/navigation";
 
-const ForgotPasswordForm = () => {
+const ResendOtpForm = () => {
   const playerRef = useRef(null);
   const [userEmail, setUserEmail] = useState({});
   const [isProcessing, setIsProcessing] = useState(false);
@@ -40,7 +40,7 @@ const ForgotPasswordForm = () => {
         const { email } = userEmail;
 
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/user/forgot-password`,
+          `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/user/resend-otp`,
           {
             method: "POST",
             headers: {
@@ -66,7 +66,7 @@ const ForgotPasswordForm = () => {
           });
           setUserEmail({});
           setIsProcessing(false);
-          router.replace("/login"); // Redirect Login page
+          router.replace("/auth-twostep"); // Redirect Login page
         } else {
           setIsProcessing(false);
           if (typeof data.message === "string") {
@@ -121,10 +121,10 @@ const ForgotPasswordForm = () => {
         {/* Welcome Text */}
         <div className="flex flex-col items-center mb-6">
           <h1 className="text-center text-[#405189] font-hk-grotesk font-semibold text-lg mb-2">
-            Forgot Password?
+            Resend OTP?
           </h1>
           <p className="text-center text-soft text-[18px] mb-4">
-            Reset password with velzon
+            Resend otp with velzon
           </p>
 
           <Player
@@ -139,7 +139,7 @@ const ForgotPasswordForm = () => {
 
           <div className="bg-[#FEF4E4] w-full px-3 py-3 rounded shadow-light mt-4">
             <p className="text-[#D49C20] font-hk-grotesk text-center text-[17px]">
-              Enter your email and instructions will be sent to you!
+              Enter your email and otp will be sent to you!
             </p>
           </div>
         </div>
@@ -149,7 +149,7 @@ const ForgotPasswordForm = () => {
           {/* Email Input */}
           <TextInputFile
             labelText="Email"
-            inputId="forgot-password-email"
+            inputId="resend-otp-email"
             inputName="email"
             inputValue={userEmail.email ? userEmail.email : ""}
             inputPlaceholder="Enter email"
@@ -169,15 +169,15 @@ const ForgotPasswordForm = () => {
                 <span className="text-light">Processing...</span>
               </span>
             ) : (
-              "Send Reset Link"
+              "Send OTP"
             )}
           </button>
         </div>
       </form>
 
       <p className="text-dark text-[20px] font-normal text-center">
-        Wait, I remember my password...{" "}
-        <Link href="/login">
+        Hold on, I just received my code...{" "}
+        <Link href="/auth-twostep">
           <span className="underline text-[#405189] font-semibold">
             Click here
           </span>
@@ -187,4 +187,4 @@ const ForgotPasswordForm = () => {
   );
 };
 
-export default ForgotPasswordForm;
+export default ResendOtpForm;

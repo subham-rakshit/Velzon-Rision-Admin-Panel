@@ -250,6 +250,9 @@ import PageBlogOverview from "../pages/Pages/Blogs/Overview";
 # NOTE: AUTH PROTECTED ROUTES --------
 
 const authProtectedRoutes = [
+
+# // Working Start -->
+
 { path: "/dashboard-analytics", component: <DashboardAnalytics /> },
 { path: "/dashboard-crm", component: <DashboardCrm /> },
 { path: "/dashboard", component: <DashboardEcommerce /> },
@@ -259,6 +262,8 @@ const authProtectedRoutes = [
 { path: "/dashboard-nft", component: <DashboardNFT /> },
 { path: "/dashboard-job", component: <DashboardJob /> },
 { path: "/dashboard-blog", component: <DashboardBlog /> },
+
+# // Working End -->
 
 { path: "/apps-calendar", component: <Calendar /> },
 { path: "/apps-calendar-month-grid", component: <MonthGrid /> },
@@ -468,8 +473,10 @@ component: <EcommerceSellerDetail />,
 //User Profile
 { path: "/profile", component: <UserProfile /> },
 
-// this route should be at the end of all other routes
-// eslint-disable-next-line react/display-name
+# // this route should be at the end of all other routes
+
+# // eslint-disable-next-line react/display-name
+
 {
 path: "/",
 exact: true,
@@ -487,7 +494,8 @@ const publicRoutes = [
 { path: "/forgot-password", component: <ForgetPasswordPage /> },
 { path: "/register", component: <Register /> },
 
-//AuthenticationInner pages
+# //AuthenticationInner pages
+
 { path: "/auth-signin-basic", component: <BasicSignIn /> },
 { path: "/auth-signin-cover", component: <CoverSignIn /> },
 { path: "/auth-signup-basic", component: <BasicSignUp /> },
@@ -509,8 +517,8 @@ const publicRoutes = [
 { path: "/pages-maintenance", component: <Maintenance /> },
 { path: "/pages-coming-soon", component: <ComingSoon /> },
 
-{ path: "/landing", component: <OnePage /> },
-{ path: "/nft-landing", component: <NFTLanding /> },
+{ path: "/landing", component: <OnePage /> }, # TODO
+
 { path: "/job-landing", component: <JobLanding /> },
 
 { path: "/auth-pass-change-basic", component: <BasicPasswCreate /> }, # TODO

@@ -8,11 +8,9 @@ import { VscGithub } from "react-icons/vsc";
 const AlternateAuthentication = () => {
   // Handle OAuth authentications
   const handleOAuthLogin = async (providerName) => {
-    // await signIn("github");
-    // await signIn("twitter");
-
     try {
       const result = await signIn(providerName, {
+        // redirect: "/dashboard",
         redirect: false,
       });
 

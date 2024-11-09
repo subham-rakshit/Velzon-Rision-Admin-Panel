@@ -9,7 +9,9 @@ export async function POST(request) {
   await dbConnect(); //INFO: Database connection
 
   try {
-    const { email, password, isRememberMe } = await request.json(); // return Promise
+    const { email, password, rememberMe } = await request.json(); // return Promise
+
+    console.log("API Login data ---", rememberMe);
 
     //NOTE: Validate the registration schema
     const validatedFields = SignInSchema.safeParse({
@@ -57,13 +59,15 @@ export async function POST(request) {
 
     //INFO: Generate JWT token
     const tokenData = {
-      userId: userDetails._id,
+      _id: userDetails._id,
       username: userDetails.username,
       email: userDetails.email,
+      isVerified: userDetails.isVerified,
+      isAdmin: userDetails.isAdmin,
     };
 
     // Set token expiration according to rememberMe checkbox [days * hr * min * sec * milliseconds]
-    const expireToken = isRememberMe
+    const expireToken = rememberMe
       ? parseInt(process.env.TOKEN_EXPIRATION_REMEMBERED, 10) *
         24 *
         60 *
@@ -91,7 +95,7 @@ export async function POST(request) {
     );
 
     // Set the cookies
-    response.cookies.set("token", authToken, {
+    response.cookies.set("access-token", authToken, {
       httpOnly: true,
       expires: new Date(Date.now() + expireToken), // Date.now() + expireToken(millisec)
     });

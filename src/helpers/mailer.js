@@ -19,24 +19,21 @@ export const mailTransport = () => {
   return transporter;
 };
 
-//NOTE: 6 digits OTP generator
+//NOTE: 4 digits OTP generator
 export const generateOTP = () => {
-  let otp = "";
-  for (let i = 0; i <= 5; i++) {
-    const randomValue = Math.round(Math.random() * 9);
-    otp += randomValue;
-  }
-  return otp;
+  return Math.floor(1000 + Math.random() * 9000); // Ex - 1000 + 0.6789 * 9000
 };
 
 //NOTE: Verification email function
 export const sendEmail = async ({ email, emailType, username, userId }) => {
   try {
     //INFO: Create tokenCode and save in DB according to email type
+    const otp = generateOTP();
     const verifyToken = uuidv4();
-    if (emailType === "VERIFY") {
+
+    if (emailType === "VERIFY" || emailType === "RESEND") {
       await UserModel.findByIdAndUpdate(userId, {
-        verifyCode: verifyToken,
+        verifyCode: otp,
         verifyCodeExpiry: Date.now() + 3600000, // 1hr
       });
     } else if (emailType === "RESET") {
@@ -61,12 +58,12 @@ export const sendEmail = async ({ email, emailType, username, userId }) => {
       from: process.env.SMTP_MAIL,
       to: email,
       subject:
-        emailType === "VERIFY"
+        emailType === "VERIFY" || emailType === "RESEND"
           ? "Velzon Admin Verification Code"
           : "Rest Your Password",
       html:
-        emailType === "VERIFY"
-          ? verificationEmailTemplate({ token: verifyToken, username })
+        emailType === "VERIFY" || "RESEND"
+          ? verificationEmailTemplate({ otp, username })
           : resetPasswordTokenEmailTemplate({ token: verifyToken, username }),
     };
 
