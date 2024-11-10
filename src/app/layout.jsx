@@ -65,6 +65,18 @@ const workSans = localFont({
   weight: "100 300 400 500 600 700 900",
 });
 
+const poppinsMd = localFont({
+  src: "./assets/fonts/poppinsMd.ttf",
+  variable: "--font-poppins-md",
+  weight: "500",
+});
+
+const poppinsRg = localFont({
+  src: "./assets/fonts/poppinsRg.ttf",
+  variable: "--font-poppins-rg",
+  weight: "500",
+});
+
 export const metadata = {
   title: "Velzon - Next Admin & Dashboard Template",
   description: "A general dashboard template for websites.",
@@ -74,7 +86,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${hkGrotesk.variable} ${inter.variable} ${jost.variable} ${montserrat.variable} ${nunito.variable} ${openSans.variable} ${outfit.variable} ${publicSans.variable} ${saira.variable} ${workSans.variable} antialiased`}
+        className={`${hkGrotesk.variable} ${inter.variable} ${jost.variable} ${montserrat.variable} ${nunito.variable} ${openSans.variable} ${outfit.variable} ${publicSans.variable} ${saira.variable} ${workSans.variable} ${poppinsRg.variable} ${poppinsMd.variable} antialiased`}
       >
         {/* Server Component wrapped with Client Component can be done */}
         <AuthProvider>

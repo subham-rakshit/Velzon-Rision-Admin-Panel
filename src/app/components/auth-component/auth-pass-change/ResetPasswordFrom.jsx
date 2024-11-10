@@ -6,7 +6,6 @@ import { PasswordInputFiled } from "../..";
 import Link from "next/link";
 import { ClipLoader } from "react-spinners";
 import { toast } from "react-toastify";
-import Image from "next/image";
 
 const ResetPasswordForm = () => {
   const [resetPasswordInput, setResetPasswordInput] = useState({});
@@ -25,7 +24,7 @@ const ResetPasswordForm = () => {
   };
 
   //NOTE: Handle the Login form
-  async function handleFromSubmit(event) {
+  const handleFromSubmit = async (event) => {
     event.preventDefault();
 
     if (Object.keys(resetPasswordInput).length > 0) {
@@ -107,7 +106,7 @@ const ResetPasswordForm = () => {
         theme: "light",
       });
     }
-  }
+  };
 
   return (
     <>
@@ -117,10 +116,8 @@ const ResetPasswordForm = () => {
       >
         {/* Welcome Text */}
         <div className="mb-6">
-          <h1 className="text-center text-[#405189] font-hk-grotesk font-semibold text-lg mb-2">
-            Create new password
-          </h1>
-          <p className="text-center text-soft text-[18px]">
+          <h1 className="mb-2 text-center auth-heading">Create new password</h1>
+          <p className="text-center auth-description">
             Your new password must be different from pervious used password.
           </p>
         </div>
@@ -160,7 +157,7 @@ const ResetPasswordForm = () => {
           <button
             type="submit"
             disabled={isProcessing}
-            className={`bg-[#099885] text-white text-[20px] font-hk-grotesk px-2 py-2 rounded-md flex justify-center items-center ${
+            className={`auth-button mt-3 ${
               isProcessing ? "cursor-not-allowed" : ""
             }`}
           >
@@ -176,12 +173,10 @@ const ResetPasswordForm = () => {
         </div>
       </form>
       {/* Sign In */}
-      <p className="text-dark text-[20px] font-normal text-center">
+      <p className="text-center auth-direction-text">
         Wait, I remember my password...{" "}
         <Link href="/login">
-          <span className="underline text-[#405189] font-semibold">
-            Click here
-          </span>
+          <span className="underline text-[#405189]">Click here</span>
         </Link>
       </p>
     </>

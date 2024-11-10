@@ -50,7 +50,7 @@ const PasswordInputFiled = ({
           <Label
             htmlFor={inputId}
             value={labelText}
-            className={`${labelClasses} font-hk-grotesk text-dark text-[18px] font-medium`}
+            className={`${labelClasses} auth-label-text`}
           />
           {pathname.includes("register") && (
             <span className="ml-1 font-bold text-red-500">*</span>
@@ -58,7 +58,7 @@ const PasswordInputFiled = ({
         </div>
         {pathname.includes("login") && (
           <Link href="/forgot-password">
-            <span className="font-hk-grotesk text-[18px] text-soft font-medium">
+            <span className="text-[#878A99] font-poppins-rg text-sm">
               Forgot password?
             </span>
           </Link>
@@ -71,7 +71,7 @@ const PasswordInputFiled = ({
           name={inputName}
           value={inputValue}
           placeholder={placeholderText}
-          className={`font-hk-grotesk text-dark text-[20px] font-medium w-full rounded-lg ${
+          className={`auth-input-text w-full rounded-lg ${
             isBlank ? "border-2 border-red-500" : ""
           } ${inputExtraClasses}`}
           sizes="sm"
@@ -80,7 +80,7 @@ const PasswordInputFiled = ({
           onBlur={handleBlur}
           helperText={
             isBlank && (
-              <span className="text-[16px] font-normal text-red-500 font-hk-grotesk">
+              <span className="text-[16px] font-normal text-red-500 font-poppins-rg">
                 {helperText}
               </span>
             )
@@ -118,7 +118,7 @@ const PasswordInputFiled = ({
           )}
       </div>
       {pathname.includes("auth-pass-change") && userInfo && !isBlank && (
-        <span className="text-[16px] font-normal text-soft font-hk-grotesk">
+        <span className="text-[15px] font-normal text-soft font-poppins-rg">
           {userInfo}
         </span>
       )}

@@ -173,13 +173,13 @@ const VerifyAccount = () => {
           </div>
 
           <div className="text-center font-hk-grotesk">
-            <h1 className="text-center text-[#495057] font-hk-grotesk font-bold text-xl mb-2">
+            <h1 className="text-center text-[#495057] font-poppins-md font-semibold text-lg mb-2">
               Verify Your Email
             </h1>
-            <p className="text-soft text-[17px]">
+            <p className="auth-description">
               Please click the below button to proceed
             </p>
-            <p className="text-[#878A99] font-bold text-[20px]">
+            <p className="text-[#878A99] text-[18px] font-poppins-md">
               example@abc.com
             </p>
           </div>
@@ -203,7 +203,7 @@ const VerifyAccount = () => {
           <button
             type="submit"
             disabled={isProcessing}
-            className={`bg-[#099885] text-white text-[20px] font-hk-grotesk px-5 py-2 rounded-[6px] flex justify-center items-center w-full ${
+            className={`auth-button w-full ${
               isProcessing ? "cursor-not-allowed" : ""
             }`}
           >
@@ -219,12 +219,10 @@ const VerifyAccount = () => {
         </div>
       </form>
 
-      <p className="text-dark text-[20px] font-normal text-center">
+      <p className="text-center auth-direction-text">
         Didn&apos;t receive a code ?{" "}
         <Link href="/auth-otp-resend">
-          <span className="underline text-[#405189] font-base hover:font-semibold">
-            Resend
-          </span>
+          <span className="underline text-[#405189]">Resend</span>
         </Link>
       </p>
     </>

@@ -65,6 +65,8 @@ module.exports = {
         "work-sans": ["var(--font-work-sans)"],
         outfit: ["var(--font-outfit)"],
         saira: ["var(--font-saira)"],
+        "poppins-md": ["var(--font-poppins-md)"],
+        "poppins-rg": ["var(--font-poppins-rg)"],
       },
       boxShadow: {
         light: "0 2px 4px rgba(0, 0, 0, 0.1)",

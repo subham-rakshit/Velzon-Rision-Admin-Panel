@@ -122,10 +122,8 @@ const RegistrationForm = () => {
       >
         {/* Create Text */}
         <div className="mb-6">
-          <h1 className="text-center text-[#405189] font-hk-grotesk font-semibold text-lg mb-2">
-            Create New Account
-          </h1>
-          <p className="text-center text-soft text-[18px]">
+          <h1 className="mb-2 text-center auth-heading">Create New Account</h1>
+          <p className="text-center auth-description">
             Get your free velzon account now
           </p>
         </div>
@@ -181,10 +179,10 @@ const RegistrationForm = () => {
               placeholderText="Confirm Password"
               onHandleInputs={onHandleInputs}
             />
-            <p className="text-soft text-[16px] font-normal italic mt-2">
+            <p className="text-soft text-[15px] font-normal italic mt-2">
               By registering you agree to the Velzon{" "}
               <Link href="#">
-                <span className="underline not-italic text-[#405189] font-semibold">
+                <span className="underline not-italic text-[#405189] font-poppins-md">
                   Terms of Use
                 </span>
               </Link>
@@ -194,7 +192,7 @@ const RegistrationForm = () => {
           <button
             type="submit"
             disabled={isProcessing}
-            className={`bg-[#099885] text-white text-[20px] font-hk-grotesk px-2 py-2 rounded-md flex justify-center items-center ${
+            className={`auth-button mt-3 ${
               isProcessing ? "cursor-not-allowed" : ""
             }`}
           >
@@ -210,19 +208,17 @@ const RegistrationForm = () => {
         </div>
         <div className="flex items-center gap-2 my-5">
           <hr className="flex-grow border-gray-300 border-dotted border-t-1" />
-          <span className="text-soft font-hk-grotesk text-[18px] font-medium">
-            Create account with
-          </span>
+          <span className="auth-direction-text">Create account with</span>
           <hr className="flex-grow border-gray-300 border-dotted border-t-1" />
         </div>
         {/* Alternate Sign in */}
         <AlternateAuthentication />
       </form>
       {/* Sign Up */}
-      <p className="text-dark text-[20px] font-normal text-center">
+      <p className="auth-direction-text">
         Already have an account?{" "}
         <Link href="/login">
-          <span className="underline text-[#405189] font-semibold">Signin</span>
+          <span className="underline text-[#405189]">Signin</span>
         </Link>
       </p>
     </>

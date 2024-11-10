@@ -14,11 +14,39 @@ body {
 
 @layer utilities {
   .text-soft {
-    @apply text-[#878A99] font-hk-grotesk;
+    @apply text-[#878A99] font-poppins-rg;
   }
 
   .text-dark {
-    @apply text-[#212529] font-hk-grotesk;
+    @apply text-[#212529] font-poppins-md;
+  }
+
+  .auth-banner-text {
+    @apply font-semibold text-[#A6ADC4] text-center text-[16px] sm:text-[20px] font-poppins-rg;
+  }
+
+  .auth-heading {
+    @apply text-[#405189] text-lg font-poppins-md;
+  }
+
+  .auth-description {
+    @apply text-[#878A99] font-poppins-rg text-sm;
+  }
+
+  .auth-label-text {
+    @apply font-poppins-md text-[17px] text-[#212529];
+  }
+
+  .auth-input-text {
+    @apply font-poppins-rg text-[15px] text-[#212529];
+  }
+
+  .auth-button {
+    @apply bg-[#099885] text-white text-[18px] font-poppins-rg px-2 py-2 rounded-md flex justify-center items-center;
+  }
+
+  .auth-direction-text {
+    @apply text-dark font-poppins-md text-[17px] text-[#212529];
   }
 }
 

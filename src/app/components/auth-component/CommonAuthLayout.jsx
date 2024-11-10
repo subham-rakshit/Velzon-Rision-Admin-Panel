@@ -16,7 +16,7 @@ const CommonAuthLayout = () => {
             className="bg-cover"
             style={{ width: "auto", height: "auto" }}
           />
-          <h1 className="font-hk-grotesk font-semibold text-[#A6ADC4] text-base text-center text-[16px] sm:text-[20px]">
+          <h1 className="auth-banner-text">
             Premium Admin & Dashboard Template
           </h1>
         </div>

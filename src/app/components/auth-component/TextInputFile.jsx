@@ -45,7 +45,7 @@ const TextInputFile = ({
         <Label
           htmlFor={inputId}
           value={labelText}
-          className={`${labelClasses} font-hk-grotesk text-dark text-[18px] font-medium`}
+          className={`${labelClasses} auth-label-text`}
         />
         {pathname.includes("register") && (
           <span className="ml-1 font-bold text-red-500">*</span>
@@ -58,7 +58,7 @@ const TextInputFile = ({
           value={inputValue}
           type="text"
           placeholder={inputPlaceholder}
-          className={`font-hk-grotesk text-dark text-[20px] font-medium w-full rounded-lg ${
+          className={`auth-input-text w-full rounded-lg ${
             isBlank ? "border-2 border-red-500" : ""
           } ${inputExtraClasses}`}
           sizes="sm"
@@ -67,7 +67,7 @@ const TextInputFile = ({
           onBlur={handleBlur}
           helperText={
             isBlank && (
-              <span className="text-[16px] font-normal text-red-500 font-hk-grotesk">
+              <span className="text-[16px] font-normal text-red-500 font-poppins-rg">
                 {helperText}
               </span>
             )

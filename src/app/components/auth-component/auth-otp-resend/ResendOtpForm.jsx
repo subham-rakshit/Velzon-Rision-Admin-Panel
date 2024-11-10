@@ -120,10 +120,8 @@ const ResendOtpForm = () => {
       >
         {/* Welcome Text */}
         <div className="flex flex-col items-center mb-6">
-          <h1 className="text-center text-[#405189] font-hk-grotesk font-semibold text-lg mb-2">
-            Resend OTP?
-          </h1>
-          <p className="text-center text-soft text-[18px] mb-4">
+          <h1 className="mb-2 text-center auth-heading">Resend OTP?</h1>
+          <p className="mb-4 text-center auth-description">
             Resend otp with velzon
           </p>
 
@@ -138,7 +136,7 @@ const ResendOtpForm = () => {
           />
 
           <div className="bg-[#FEF4E4] w-full px-3 py-3 rounded shadow-light mt-4">
-            <p className="text-[#D49C20] font-hk-grotesk text-center text-[17px]">
+            <p className="text-[#D49C20] font-poppins-rg text-center text-[17px]">
               Enter your email and otp will be sent to you!
             </p>
           </div>
@@ -160,7 +158,7 @@ const ResendOtpForm = () => {
           <button
             type="submit"
             disabled={isProcessing}
-            className={`bg-[#099885] text-white text-[20px] font-hk-grotesk px-2 py-2 rounded-md flex justify-center items-center ${
+            className={`auth-button ${
               isProcessing ? "cursor-not-allowed" : ""
             }`}
           >
@@ -176,12 +174,10 @@ const ResendOtpForm = () => {
         </div>
       </form>
 
-      <p className="text-dark text-[20px] font-normal text-center">
+      <p className="text-center auth-direction-text">
         Hold on, I just received my code...{" "}
         <Link href="/auth-twostep">
-          <span className="underline text-[#405189] font-semibold">
-            Click here
-          </span>
+          <span className="underline text-[#405189]">Click here</span>
         </Link>
       </p>
     </>

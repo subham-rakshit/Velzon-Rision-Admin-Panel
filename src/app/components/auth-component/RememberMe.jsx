@@ -30,7 +30,7 @@ const RememberMe = ({
       />
       <Label
         htmlFor={boxId}
-        className={`font-hk-grotesk text-dark text-[18px] font-medium ${checkboxExtraClasses}`}
+        className={`auth-label-text ${checkboxExtraClasses}`}
       >
         Remember me
       </Label>

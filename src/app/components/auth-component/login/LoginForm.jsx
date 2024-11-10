@@ -123,10 +123,8 @@ const LoginForm = () => {
       >
         {/* Welcome Text */}
         <div className="mb-6">
-          <h1 className="text-center text-[#405189] font-hk-grotesk font-semibold text-lg mb-2">
-            Welcome Back !
-          </h1>
-          <p className="text-center text-soft text-[18px]">
+          <h1 className="mb-2 text-center auth-heading">Welcome Back !</h1>
+          <p className="text-center auth-description">
             Sign in to continue to Velzon
           </p>
         </div>
@@ -164,12 +162,12 @@ const LoginForm = () => {
           <button
             type="submit"
             disabled={isProcessing}
-            className={`bg-[#099885] text-white text-[20px] font-hk-grotesk px-2 py-2 rounded-md flex justify-center items-center ${
+            className={`auth-button mt-3 ${
               isProcessing ? "cursor-not-allowed" : ""
             }`}
           >
             {isProcessing ? (
-              <span className="flex items-center gap-4">
+              <span className="flex items-center gap-4 font-poppins-rg">
                 <ClipLoader color="#ffffff" size={16} />
                 <span className="text-light">Processing...</span>
               </span>
@@ -180,19 +178,17 @@ const LoginForm = () => {
         </div>
         <div className="flex items-center gap-2 my-5">
           <hr className="flex-grow border-gray-300 border-dotted border-t-1" />
-          <span className="text-dark font-hk-grotesk text-[18px] font-medium">
-            Sign in with
-          </span>
+          <span className="auth-direction-text">Sign in with</span>
           <hr className="flex-grow border-gray-300 border-dotted border-t-1" />
         </div>
         {/* Alternate Sign in */}
-        <AlternateAuthentication isRememberMe={loginData.isRememberMe} />
+        <AlternateAuthentication isRememberMe={loginData.rememberMe} />
       </form>
       {/* Sign Up */}
-      <p className="text-dark text-[20px] font-normal text-center">
+      <p className="text-center auth-direction-text">
         Don&apos;t have an account?{" "}
         <Link href="/register">
-          <span className="underline text-[#405189] font-semibold">Signup</span>
+          <span className="underline text-[#405189]">Signup</span>
         </Link>
       </p>
     </>
