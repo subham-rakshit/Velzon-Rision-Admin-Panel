@@ -3,6 +3,7 @@ import dbConnect from "@/lib/db/dbConnect";
 import UserModel from "@/model/User";
 import { RegistrationSchema } from "@/schemas";
 import { sendEmail } from "@/lib/utils/mailer";
+import handleResponse from "@/lib/middleware/responseMiddleware";
 
 export async function POST(request) {
   await dbConnect(); //INFO: Database connection
@@ -29,13 +30,12 @@ export async function POST(request) {
 
     //NOTE: Check the password and cofirmPassword
     if (password !== confirmPassword) {
-      return Response.json(
-        {
-          success: false,
-          message: "Password and confirm password fields must match",
-        },
-        { status: 400 }
-      );
+      return handleResponse({
+        res: Response,
+        status: 400,
+        success: false,
+        message: "Password and confirm password fields must match",
+      });
     }
 
     //NOTE: Check if verified user already exists with username
@@ -45,13 +45,12 @@ export async function POST(request) {
     });
     if (existingUserVerifiedByUsername) {
       //INFO: Send Response
-      return Response.json(
-        {
-          success: false,
-          message: "Username is already taken",
-        },
-        { status: 400 }
-      );
+      return handleResponse({
+        res: Response,
+        status: 400,
+        success: false,
+        message: "Username is already taken",
+      });
     }
 
     //NOTE: Check if user is already existing by email address but not verified
@@ -61,13 +60,12 @@ export async function POST(request) {
     if (existingUserByEmail) {
       //INFO: Check if existing user is verified
       if (existingUserByEmail.isVerified) {
-        return Response.json(
-          {
-            success: false,
-            message: "Username is already taken",
-          },
-          { status: 400 }
-        );
+        return handleResponse({
+          res: Response,
+          status: 400,
+          success: false,
+          message: "Username is already taken",
+        });
       } else {
         //INFO: Check if existing user is not verified, then modify the user details
         const salt = await bcrypt.genSalt(10);
@@ -88,25 +86,24 @@ export async function POST(request) {
 
         //INFO: Response verification email with error
         if (!emailResponse.success) {
-          return Response.json(
-            {
-              success: false,
-              message: "Unable to send verification email",
-            },
-            { status: 400 }
-          );
+          return handleResponse({
+            res: Response,
+            status: 400,
+            success: false,
+            message: "Unable to send verification email",
+          });
         }
 
         //INFO: Response verification email with success message
         const { password: pass, ...rest } = saveUpdatedUser._doc; // removing password
-        return Response.json(
-          {
-            success: true,
-            message: "User registered successfully. Please verify your email",
-            userData: rest,
-          },
-          { status: 201 }
-        );
+
+        return handleResponse({
+          res: Response,
+          status: 201,
+          success: true,
+          message: "User registered successfully. Please verify your email",
+          userData: rest,
+        });
       }
     } else {
       //NOTE: Create a new user
@@ -133,34 +130,32 @@ export async function POST(request) {
 
       //INFO: Response verification email with error
       if (!emailResponse.success) {
-        return Response.json(
-          {
-            success: false,
-            message: "Unable to send verification email",
-          },
-          { status: 500 }
-        );
+        return handleResponse({
+          res: Response,
+          status: 500,
+          success: false,
+          message: "Unable to send verification email",
+        });
       }
 
       //INFO: Response verification email with success message
       const { password: pass, ...rest } = saveNewUser._doc; // removing password
-      return Response.json(
-        {
-          success: true,
-          message: "User registered successfully. Please verify your email",
-          userData: rest,
-        },
-        { status: 201 }
-      );
+
+      return handleResponse({
+        res: Response,
+        status: 201,
+        success: true,
+        message: "User registered successfully. Please verify your email",
+        userData: rest,
+      });
     }
   } catch (error) {
     console.error(`Error registering user: ${error}`);
-    return Response.json(
-      {
-        success: false,
-        message: `Error registering user: ${error.message}`,
-      },
-      { status: 500 }
-    );
+    return handleResponse({
+      res: Response,
+      status: 500,
+      success: false,
+      message: `Error registering user: ${error.message}`,
+    });
   }
 }

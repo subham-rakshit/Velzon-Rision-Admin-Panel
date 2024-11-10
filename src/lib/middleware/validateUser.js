@@ -7,7 +7,8 @@ export const validateUserFromToken = (request) => {
 
     // Decode the token
     const decodedToken = jwt.verify(cookiesToken, process.env.TOKEN_SECRET);
-    console.log("Hi", decodedToken);
+
+    console.log("Hi", decodedToken); //TODO REMOVE
 
     return decodedToken.userId;
   } catch (error) {

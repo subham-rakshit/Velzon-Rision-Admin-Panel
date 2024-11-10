@@ -1,5 +1,3 @@
-"use client";
-
 import { signIn } from "next-auth/react";
 import React from "react";
 import { FaFacebookF, FaGoogle, FaTwitter } from "react-icons/fa";

@@ -2,6 +2,7 @@ import UserModel from "@/model/User";
 import dbConnect from "@/lib/db/dbConnect";
 import { ResetPasswordSchema } from "@/schemas";
 import bcrypt from "bcryptjs";
+import handleResponse from "@/lib/middleware/responseMiddleware";
 
 export async function POST(request) {
   await dbConnect();
@@ -11,10 +12,12 @@ export async function POST(request) {
 
     //INFO: Handle not getting token
     if (!token) {
-      return Response.json(
-        { success: false, message: "Token not found" },
-        { status: 404 }
-      );
+      return handleResponse({
+        res: Response,
+        status: 404,
+        success: false,
+        message: "Token not found",
+      });
     }
 
     //INFO: Validate the verification schema
@@ -34,13 +37,12 @@ export async function POST(request) {
 
     //INFO: Check the password and cofirmPassword
     if (newPassword !== confirmPassword) {
-      return Response.json(
-        {
-          success: false,
-          message: "New password and Confirm password must be same.",
-        },
-        { status: 400 }
-      );
+      return handleResponse({
+        res: Response,
+        status: 400,
+        success: false,
+        message: "New password and Confirm password must be same.",
+      });
     }
 
     //INFO: If token is present ****
@@ -50,23 +52,24 @@ export async function POST(request) {
     });
 
     if (!userDetails) {
-      return Response.json(
-        { success: false, message: "Reset password session expired" },
-        { status: 400 }
-      );
+      return handleResponse({
+        res: Response,
+        status: 400,
+        success: false,
+        message: "Reset password session expired",
+      });
     }
     const passwordCompareStatus = bcrypt.compareSync(
       newPassword,
       userDetails.password
     );
     if (passwordCompareStatus) {
-      return Response.json(
-        {
-          success: false,
-          message: "New password cannot be the same as the old password",
-        },
-        { status: 400 }
-      );
+      return handleResponse({
+        res: Response,
+        status: 400,
+        success: false,
+        message: "New password cannot be the same as the old password",
+      });
     }
 
     const hashedPassword = await bcrypt.hash(newPassword, 10);
@@ -77,21 +80,19 @@ export async function POST(request) {
     await userDetails.save(); // Save the updated verified user details.
 
     //INFO: Response
-    return Response.json(
-      {
-        success: true,
-        message: `Password reset successful. Please Login`,
-      },
-      { status: 200 }
-    );
+    return handleResponse({
+      res: Response,
+      status: 200,
+      success: true,
+      message: `Password reset successful. Please Login`,
+    });
   } catch (error) {
     console.error(`Password reset error: ${error}`);
-    return Response.json(
-      {
-        success: false,
-        message: `Password reset error: ${error.message}`,
-      },
-      { status: 500 }
-    );
+    return handleResponse({
+      res: Response,
+      status: 500,
+      success: false,
+      message: `Password reset error: ${error.message}`,
+    });
   }
 }

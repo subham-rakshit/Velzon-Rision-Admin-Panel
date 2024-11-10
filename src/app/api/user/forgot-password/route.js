@@ -2,6 +2,7 @@ import dbConnect from "@/lib/db/dbConnect";
 import { EmailSchema } from "@/schemas";
 import UserModel from "@/model/User";
 import { sendEmail } from "@/lib/utils/mailer";
+import handleResponse from "@/lib/middleware/responseMiddleware";
 
 export async function POST(request) {
   await dbConnect();
@@ -26,13 +27,12 @@ export async function POST(request) {
     //INFO: Fetch the user details
     const userDetails = await UserModel.findOne({ email });
     if (!userDetails) {
-      return Response.json(
-        {
-          success: false,
-          message: `Invalid email address. Please provide your registered email address`,
-        },
-        { status: 400 }
-      );
+      return handleResponse({
+        res: Response,
+        status: 400,
+        success: false,
+        message: `Invalid email address. Please provide your registered email address`,
+      });
     }
 
     //INFO: Send verification email
@@ -45,31 +45,28 @@ export async function POST(request) {
 
     //INFO: Response send email with error
     if (!emailResponse.success) {
-      return Response.json(
-        {
-          success: false,
-          message: "Unable to send reset password link",
-        },
-        { status: 400 }
-      );
+      return handleResponse({
+        res: Response,
+        status: 400,
+        success: false,
+        message: `Unable to send reset password link`,
+      });
     }
 
     //INFO: Response send email with success
-    return Response.json(
-      {
-        success: true,
-        message: "Reset link has been successfully sent to your email.",
-      },
-      { status: 200 }
-    );
+    return handleResponse({
+      res: Response,
+      status: 200,
+      success: true,
+      message: `Reset link has been successfully sent to your email`,
+    });
   } catch (error) {
     console.error(`Error forgot password send email error: ${error}`);
-    return Response.json(
-      {
-        success: false,
-        message: `Error forgot password send email error: ${error.message}`,
-      },
-      { status: 500 }
-    );
+    return handleResponse({
+      res: Response,
+      status: 500,
+      success: false,
+      message: `Error forgot password send email error: ${error.message}`,
+    });
   }
 }

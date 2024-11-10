@@ -143,7 +143,7 @@ message: `Error logining out user: ${error.message}`,
 
 # Login From NextAuth
 
-// async function handleFromSubmit(event) {
+<!-- async function handleFromSubmit(event) {
 // event.preventDefault();
 
 // try {
@@ -189,4 +189,4 @@ message: `Error logining out user: ${error.message}`,
 // } catch (error) {
 // console.log(error);
 // }
-// }
+// } -->

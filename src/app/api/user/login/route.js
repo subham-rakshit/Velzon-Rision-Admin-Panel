@@ -4,6 +4,7 @@ import dbConnect from "@/lib/db/dbConnect";
 import UserModel from "@/model/User";
 import { SignInSchema } from "@/schemas";
 import { NextResponse } from "next/server";
+import handleResponse from "@/lib/middleware/responseMiddleware";
 
 export async function POST(request) {
   await dbConnect(); //INFO: Database connection
@@ -32,13 +33,12 @@ export async function POST(request) {
     const userDetails = await UserModel.findOne({ email });
 
     if (!userDetails) {
-      return Response.json(
-        {
-          success: false,
-          message: `User not found! Please register your account`,
-        },
-        { status: 400 }
-      );
+      return handleResponse({
+        res: Response,
+        status: 400,
+        success: false,
+        message: "User not found! Please register your account",
+      });
     }
 
     //INFO: Compare both passwords
@@ -48,13 +48,12 @@ export async function POST(request) {
     );
 
     if (!validPasswordCheck) {
-      return Response.json(
-        {
-          success: false,
-          message: `Credentials doesn't match`,
-        },
-        { status: 400 }
-      );
+      return handleResponse({
+        res: Response,
+        status: 400,
+        success: false,
+        message: "Credentials doesn't match",
+      });
     }
 
     //INFO: Generate JWT token
@@ -72,12 +71,12 @@ export async function POST(request) {
         24 *
         60 *
         60 *
-        1000 // e.g., "10" days
+        1000
       : parseInt(process.env.TOKEN_EXPIRATION_NOT_REMEMBERED, 10) *
         24 *
         60 *
         60 *
-        1000; // e.g., "1" day
+        1000;
 
     const authToken = await jwt.sign(tokenData, process.env.TOKEN_SECRET, {
       expiresIn: expireToken / 1000, // JWT requires seconds
@@ -94,21 +93,20 @@ export async function POST(request) {
       { status: 200 }
     );
 
-    // Set the cookies
+    // Set cookies
     response.cookies.set("access-token", authToken, {
       httpOnly: true,
-      expires: new Date(Date.now() + expireToken), // Date.now() + expireToken(millisec)
+      expires: new Date(Date.now() + expireToken),
     });
 
-    return response; // return the response
+    return response;
   } catch (error) {
     console.error(`Error login user: ${error}`);
-    return Response.json(
-      {
-        success: false,
-        message: `Error login user: ${error.message}`,
-      },
-      { status: 500 }
-    );
+    return handleResponse({
+      res: Response,
+      status: 500,
+      success: false,
+      message: `Error login user: ${error.message}`,
+    });
   }
 }
