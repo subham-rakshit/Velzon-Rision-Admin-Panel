@@ -1,11 +1,11 @@
+import { titlesObject } from "@/app/assets/titlesData/titles";
 import { CommonAuthLayout, LoginForm } from "@/app/components";
 import React from "react";
 
 //NOTE: Login Page meta data
 export const metadata = {
-  title: "Basic SignIn | Velzon - Next Admin & Dashboard Template",
-  description:
-    "To identify the SignIn page for Velzon Admin & Dashboard Template",
+  title: titlesObject.login.title,
+  description: titlesObject.login.description,
 };
 
 const Login = () => {

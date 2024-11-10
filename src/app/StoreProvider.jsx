@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Provider } from "react-redux";
-import { makeStore } from "../lib/store/store";
+import { makeStore } from "../store/store";
 import { PersistGate } from "redux-persist/integration/react";
 
 //NOTE: When StoreProvide render in client side only then makeStore() will call. (Safe for SSR)

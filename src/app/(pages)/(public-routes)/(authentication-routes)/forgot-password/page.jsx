@@ -1,11 +1,10 @@
 import React from "react";
-import Image from "next/image";
 import { CommonAuthLayout, ForgotPasswordForm } from "@/app/components";
+import { titlesObject } from "@/app/assets/titlesData/titles";
 
 export const metadata = {
-  title: "Reset Password | Velzon - Next Admin & Dashboard Template",
-  description:
-    "To identify the Forget Password page for Velzon Admin & Dashboard Template",
+  title: titlesObject.forgotPassword.title,
+  description: titlesObject.forgotPassword.description,
 };
 
 const ForgetPasswordPage = () => {

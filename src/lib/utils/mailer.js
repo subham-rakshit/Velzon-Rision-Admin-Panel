@@ -1,10 +1,10 @@
-import {
-  resetPasswordTokenEmailTemplate,
-  verificationEmailTemplate,
-} from "../../emails/mail-html-templates";
 import UserModel from "@/model/User";
 import nodemailer from "nodemailer";
 import { v4 as uuidv4 } from "uuid";
+import {
+  resetPasswordTokenEmailTemplate,
+  verificationEmailTemplate,
+} from "../../../emails/mail-html-templates";
 
 //NOTE: Nodemailer transporter with MailTrap SMTP
 export const mailTransport = () => {
@@ -62,7 +62,7 @@ export const sendEmail = async ({ email, emailType, username, userId }) => {
           ? "Velzon Admin Verification Code"
           : "Rest Your Password",
       html:
-        emailType === "VERIFY" || "RESEND"
+        emailType === "VERIFY" || emailType === "RESEND"
           ? verificationEmailTemplate({ otp, username })
           : resetPasswordTokenEmailTemplate({ token: verifyToken, username }),
     };

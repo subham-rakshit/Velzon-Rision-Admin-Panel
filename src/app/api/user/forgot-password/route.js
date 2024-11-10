@@ -1,7 +1,7 @@
-import dbConnect from "@/lib/dbConnect";
-import { sendEmail } from "@/helpers/mailer";
+import dbConnect from "@/lib/db/dbConnect";
 import { EmailSchema } from "@/schemas";
 import UserModel from "@/model/User";
+import { sendEmail } from "@/lib/utils/mailer";
 
 export async function POST(request) {
   await dbConnect();

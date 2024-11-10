@@ -1,8 +1,8 @@
 import bcrypt from "bcryptjs";
-import dbConnect from "@/lib/dbConnect";
+import dbConnect from "@/lib/db/dbConnect";
 import UserModel from "@/model/User";
-import { sendEmail } from "@/helpers/mailer";
 import { RegistrationSchema } from "@/schemas";
+import { sendEmail } from "@/lib/utils/mailer";
 
 export async function POST(request) {
   await dbConnect(); //INFO: Database connection

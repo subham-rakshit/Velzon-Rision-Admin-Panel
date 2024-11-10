@@ -13,6 +13,7 @@ const TextInputFile = ({
   inputValue,
   inputPlaceholder,
   inputExtraClasses,
+  helperText,
   onHandleInputs,
 }) => {
   const [textInput, setTextInput] = useState("");
@@ -67,7 +68,7 @@ const TextInputFile = ({
           helperText={
             isBlank && (
               <span className="text-[16px] font-normal text-red-500 font-hk-grotesk">
-                Please enter your {inputName}
+                {helperText}
               </span>
             )
           }

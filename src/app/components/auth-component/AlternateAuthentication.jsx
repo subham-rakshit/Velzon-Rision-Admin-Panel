@@ -10,11 +10,8 @@ const AlternateAuthentication = () => {
   const handleOAuthLogin = async (providerName) => {
     try {
       const result = await signIn(providerName, {
-        // redirect: "/dashboard",
         redirect: false,
       });
-
-      console.log(result); //TODO
     } catch (error) {
       console.error("Error during Google login:", error);
     }

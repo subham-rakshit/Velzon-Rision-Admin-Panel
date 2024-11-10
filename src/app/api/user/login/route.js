@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import dbConnect from "@/lib/dbConnect";
+import dbConnect from "@/lib/db/dbConnect";
 import UserModel from "@/model/User";
 import { SignInSchema } from "@/schemas";
 import { NextResponse } from "next/server";

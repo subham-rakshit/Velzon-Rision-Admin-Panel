@@ -1,10 +1,10 @@
+import { titlesObject } from "@/app/assets/titlesData/titles";
 import { CommonAuthLayout, VerifyAccount } from "@/app/components";
 import React from "react";
 
 export const metadata = {
-  title: "Basic Verify Account | Velzon - Next Admin & Dashboard Template",
-  description:
-    "To identify the verify account page for Velzon Admin & Dashboard Template",
+  title: titlesObject.authTwoStep.title,
+  description: titlesObject.authTwoStep.description,
 };
 
 const VerifyEmailAccount = () => {

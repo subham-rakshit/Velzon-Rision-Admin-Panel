@@ -1,10 +1,10 @@
+import { titlesObject } from "@/app/assets/titlesData/titles";
 import { CommonAuthLayout, ResetPasswordForm } from "@/app/components";
 import React from "react";
 
 export const metadata = {
-  title: "Basic Password Reset | Velzon - Next Admin & Dashboard Template",
-  description:
-    "To identify the reset password page for Velzon Admin & Dashboard Template",
+  title: titlesObject.authPassChange.title,
+  description: titlesObject.authPassChange.description,
 };
 
 const ResetPassword = () => {

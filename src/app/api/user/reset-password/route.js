@@ -1,5 +1,5 @@
 import UserModel from "@/model/User";
-import dbConnect from "@/lib/dbConnect";
+import dbConnect from "@/lib/db/dbConnect";
 import { ResetPasswordSchema } from "@/schemas";
 import bcrypt from "bcryptjs";
 
@@ -37,7 +37,7 @@ export async function POST(request) {
       return Response.json(
         {
           success: false,
-          message: "New password and Confirm password do not match.",
+          message: "New password and Confirm password must be same.",
         },
         { status: 400 }
       );
@@ -55,9 +55,21 @@ export async function POST(request) {
         { status: 400 }
       );
     }
+    const passwordCompareStatus = bcrypt.compareSync(
+      newPassword,
+      userDetails.password
+    );
+    if (passwordCompareStatus) {
+      return Response.json(
+        {
+          success: false,
+          message: "New password cannot be the same as the old password",
+        },
+        { status: 400 }
+      );
+    }
 
     const hashedPassword = await bcrypt.hash(newPassword, 10);
-
     userDetails.password = hashedPassword;
     userDetails.forgetPasswordCode = undefined;
     userDetails.forgetPasswordCodeExpiry = undefined;

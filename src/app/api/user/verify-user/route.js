@@ -1,5 +1,5 @@
 import UserModel from "@/model/User";
-import dbConnect from "@/lib/dbConnect";
+import dbConnect from "@/lib/db/dbConnect";
 
 export async function POST(request) {
   await dbConnect();
@@ -23,7 +23,10 @@ export async function POST(request) {
 
     if (!userDetails) {
       return Response.json(
-        { success: false, message: "Invalid OTP || Token session has been expired" },
+        {
+          success: false,
+          message: "Invalid OTP || Token session has been expired",
+        },
         { status: 400 }
       );
     }

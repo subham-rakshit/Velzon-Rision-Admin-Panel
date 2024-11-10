@@ -139,6 +139,7 @@ const RegistrationForm = () => {
             inputName="email"
             inputPlaceholder="Enter email address"
             inputValue={registerationData.email ? registerationData.email : ""}
+            helperText="Please Enter Your Email"
             onHandleInputs={onHandleInputs}
           />
           {/* Username Input */}
@@ -150,6 +151,7 @@ const RegistrationForm = () => {
             inputValue={
               registerationData.username ? registerationData.username : ""
             }
+            helperText="Please Enter Your Username"
             onHandleInputs={onHandleInputs}
           />
           {/* Password Input */}
@@ -160,6 +162,8 @@ const RegistrationForm = () => {
             inputValue={
               registerationData.password ? registerationData.password : ""
             }
+            helperText="Please enter your password"
+            placeholderText="Enter Password"
             onHandleInputs={onHandleInputs}
           />
           {/* Confirm Password Input */}
@@ -173,6 +177,8 @@ const RegistrationForm = () => {
                   ? registerationData.confirmPassword
                   : ""
               }
+              helperText="Please confirm your password"
+              placeholderText="Confirm Password"
               onHandleInputs={onHandleInputs}
             />
             <p className="text-soft text-[16px] font-normal italic mt-2">
@@ -204,7 +210,7 @@ const RegistrationForm = () => {
         </div>
         <div className="flex items-center gap-2 my-5">
           <hr className="flex-grow border-gray-300 border-dotted border-t-1" />
-          <span className="text-dark font-hk-grotesk text-[18px] font-medium">
+          <span className="text-soft font-hk-grotesk text-[18px] font-medium">
             Create account with
           </span>
           <hr className="flex-grow border-gray-300 border-dotted border-t-1" />

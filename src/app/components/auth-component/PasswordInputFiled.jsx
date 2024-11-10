@@ -14,6 +14,9 @@ const PasswordInputFiled = ({
   inputName,
   inputValue,
   inputExtraClasses,
+  helperText,
+  placeholderText,
+  userInfo,
   onHandleInputs,
 }) => {
   const [passwordInput, setPasswordInput] = useState("");
@@ -67,7 +70,7 @@ const PasswordInputFiled = ({
           id={inputId}
           name={inputName}
           value={inputValue}
-          placeholder="******"
+          placeholder={placeholderText}
           className={`font-hk-grotesk text-dark text-[20px] font-medium w-full rounded-lg ${
             isBlank ? "border-2 border-red-500" : ""
           } ${inputExtraClasses}`}
@@ -78,7 +81,7 @@ const PasswordInputFiled = ({
           helperText={
             isBlank && (
               <span className="text-[16px] font-normal text-red-500 font-hk-grotesk">
-                Please enter your {inputName}
+                {helperText}
               </span>
             )
           }
@@ -92,26 +95,33 @@ const PasswordInputFiled = ({
         )}
 
         {/* Conditional button to toggle visibility, visible only on login page */}
-        {pathname.includes("login") && !isBlank && (
-          <button
-            type="button"
-            onClick={() => setIsVisible(!isVisible)}
-            className="absolute inset-y-0 right-0 flex items-center pr-3"
-          >
-            {isVisible ? (
-              <IoEyeOff
-                color="#878A99"
-                className="w-4 h-4 text-gray-500 dark:text-gray-400"
-              />
-            ) : (
-              <IoEye
-                color="#878A99"
-                className="w-4 h-4 text-gray-500 dark:text-gray-400"
-              />
-            )}
-          </button>
-        )}
+        {!isBlank &&
+          (pathname.includes("login") ||
+            pathname.includes("auth-pass-change")) && (
+            <button
+              type="button"
+              onClick={() => setIsVisible(!isVisible)}
+              className="absolute right-0 flex items-center pr-3 inset-y-2"
+            >
+              {isVisible ? (
+                <IoEyeOff
+                  color="#878A99"
+                  className="w-4 h-4 text-gray-500 dark:text-gray-400"
+                />
+              ) : (
+                <IoEye
+                  color="#878A99"
+                  className="w-4 h-4 text-gray-500 dark:text-gray-400"
+                />
+              )}
+            </button>
+          )}
       </div>
+      {pathname.includes("auth-pass-change") && userInfo && !isBlank && (
+        <span className="text-[16px] font-normal text-soft font-hk-grotesk">
+          {userInfo}
+        </span>
+      )}
     </div>
   );
 };

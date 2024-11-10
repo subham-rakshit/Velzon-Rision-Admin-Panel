@@ -42,7 +42,7 @@ export const resetPasswordTokenEmailTemplate = ({ token, username }) => {
       <div style="max-width: 600px; margin: 0 auto; background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
           <h2 style="color: #333;"><strong>${username}</strong> Your Password Reset Link</h2>
           <p>You have requested to reset your password. Please click the link below to reset your password:</p>
-          <p style="margin-bottom: 20px;"><a href="${process.env.DOMAIN_URL}/reset-password/${token}" style="background-color: #007bff; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 4px;">Click Here</a></p>
+          <p style="margin-bottom: 20px;"><a href="${process.env.DOMAIN_URL}/auth-pass-change/${token}" style="background-color: #007bff; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 4px;">Click Here</a></p>
           <p>This link will expire in one hour.</p>
           <p>If you did not request a password reset, please ignore this email.</p>
           <p>Thank you!</p>

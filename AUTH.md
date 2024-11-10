@@ -140,3 +140,53 @@ message: `Error logining out user: ${error.message}`,
 );
 }
 } -->
+
+# Login From NextAuth
+
+// async function handleFromSubmit(event) {
+// event.preventDefault();
+
+// try {
+// setIsProcessing(true);
+
+// const result = await signIn("credentials", {
+// redirect: "/dashboard",
+// identifier: loginData.email,
+// password: loginData.password,
+// rememberMe: loginData.rememberMe,
+// });
+
+// if (result.error || !result.ok) {
+// setIsProcessing(false);
+
+// toast.error(result.error, {
+// position: "top-right",
+// autoClose: 3000,
+// hideProgressBar: false,
+// closeOnClick: true,
+// pauseOnHover: true,
+// draggable: true,
+// progress: undefined,
+// theme: "light",
+// });
+// } else {
+// toast.success("Login Successful", {
+// position: "top-right",
+// autoClose: 3000,
+// hideProgressBar: false,
+// closeOnClick: true,
+// pauseOnHover: true,
+// draggable: true,
+// progress: undefined,
+// theme: "light",
+// });
+
+// setIsProcessing(false);
+// setLoginData({ rememberMe: false });
+
+// // router.redirect("/dashboard"); // Redirect to Home Page
+// }
+// } catch (error) {
+// console.log(error);
+// }
+// }

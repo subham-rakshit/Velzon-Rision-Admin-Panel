@@ -29,55 +29,6 @@ const LoginForm = () => {
     });
   };
 
-  // //NOTE: Login From NextAuth
-  // async function handleFromSubmit(event) {
-  //   event.preventDefault();
-
-  //   try {
-  //     setIsProcessing(true);
-
-  //     const result = await signIn("credentials", {
-  //       redirect: "/dashboard",
-  //       identifier: loginData.email,
-  //       password: loginData.password,
-  //       rememberMe: loginData.rememberMe,
-  //     });
-
-  //     if (result.error || !result.ok) {
-  //       setIsProcessing(false);
-
-  //       toast.error(result.error, {
-  //         position: "top-right",
-  //         autoClose: 3000,
-  //         hideProgressBar: false,
-  //         closeOnClick: true,
-  //         pauseOnHover: true,
-  //         draggable: true,
-  //         progress: undefined,
-  //         theme: "light",
-  //       });
-  //     } else {
-  //       toast.success("Login Successful", {
-  //         position: "top-right",
-  //         autoClose: 3000,
-  //         hideProgressBar: false,
-  //         closeOnClick: true,
-  //         pauseOnHover: true,
-  //         draggable: true,
-  //         progress: undefined,
-  //         theme: "light",
-  //       });
-
-  //       setIsProcessing(false);
-  //       setLoginData({ rememberMe: false });
-
-  //       // router.redirect("/dashboard"); // Redirect to Home Page
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
-
   //NOTE: Login from basic API hit
   async function handleFromSubmit(event) {
     event.preventDefault();
@@ -190,6 +141,7 @@ const LoginForm = () => {
             inputName="email"
             inputPlaceholder="Enter email"
             inputValue={loginData.email ? loginData.email : ""}
+            helperText="Please Enter Your Email"
             onHandleInputs={onHandleInputs}
           />
           {/* Password Input */}
@@ -198,6 +150,8 @@ const LoginForm = () => {
             inputId="login-password"
             inputName="password"
             inputValue={loginData.password ? loginData.password : ""}
+            helperText="Please Enter Your Password"
+            placeholderText="Enter password"
             onHandleInputs={onHandleInputs}
           />
           {/* RememberMe Input */}

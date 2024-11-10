@@ -118,25 +118,18 @@ const ResetPasswordForm = () => {
         {/* Welcome Text */}
         <div className="mb-6">
           <h1 className="text-center text-[#405189] font-hk-grotesk font-semibold text-lg mb-2">
-            Forgot Password?
+            Create new password
           </h1>
           <p className="text-center text-soft text-[18px]">
-            Reset password with velzon
+            Your new password must be different from pervious used password.
           </p>
-          <Image
-            src="/assets/auth-images/lock.png"
-            alt="email gif"
-            width={70}
-            height={70}
-            className="mx-auto my-4"
-          />
         </div>
 
         {/* Form Element */}
         <div className="flex flex-col gap-3">
           {/* Password Input */}
           <PasswordInputFiled
-            labelText="New Password"
+            labelText="Password"
             inputId="reset-password"
             inputName="newPassword"
             inputValue={
@@ -144,6 +137,9 @@ const ResetPasswordForm = () => {
                 ? resetPasswordInput.newPassword
                 : ""
             }
+            helperText="This field is required"
+            placeholderText="Enter password"
+            userInfo="Must be at least 6 characters."
             onHandleInputs={onHandleInputs}
           />
           {/* Confirm Password Input */}
@@ -156,6 +152,8 @@ const ResetPasswordForm = () => {
                 ? resetPasswordInput.confirmPassword
                 : ""
             }
+            helperText="Confirm Password Required"
+            placeholderText="Confirm password"
             onHandleInputs={onHandleInputs}
           />
           {/* Sign in Button */}

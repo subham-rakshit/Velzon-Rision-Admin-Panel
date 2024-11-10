@@ -153,6 +153,7 @@ const ForgotPasswordForm = () => {
             inputName="email"
             inputValue={userEmail.email ? userEmail.email : ""}
             inputPlaceholder="Enter email"
+            helperText="Please Enter Your Email"
             onHandleInputs={onHandleInputs}
           />
           {/* Sign in Button */}

@@ -15,8 +15,6 @@ const VerifyAccount = () => {
 
   const router = useRouter();
 
-  console.log(otpInputs.join(""));
-
   //NOTE: Initial set the focus on the first input box
   useEffect(() => {
     if (inputBoxRef.current[0]) {
@@ -111,10 +109,12 @@ const VerifyAccount = () => {
           });
           setIsProcessing(false);
           setOtpInputs(new Array(4).fill(""));
+          inputBoxRef.current[0].focus();
           router.push(`/login`); // Redirect to login page
         } else {
           setIsProcessing(false);
           setOtpInputs(new Array(4).fill(""));
+          inputBoxRef.current[0].focus();
           if (typeof data.message === "string") {
             toast.error(data.message, {
               position: "top-right",
@@ -145,6 +145,9 @@ const VerifyAccount = () => {
         console.log(error);
       }
     } else {
+      setOtpInputs(new Array(4).fill(""));
+      inputBoxRef.current[0].focus();
+
       toast.error("Please fill the inputs value properly", {
         position: "top-right",
         autoClose: 3000,
@@ -157,9 +160,6 @@ const VerifyAccount = () => {
       });
     }
   };
-
-  //NOTE: Handle Resend otp
-  const handleRenedOTP = async () => {};
 
   return (
     <>
