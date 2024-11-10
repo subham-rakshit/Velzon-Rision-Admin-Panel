@@ -13,7 +13,6 @@ import {
   RememberMe,
   TextInputFile,
 } from "../..";
-import { signIn } from "next-auth/react";
 
 const LoginForm = () => {
   const [loginData, setLoginData] = useState({ rememberMe: false });

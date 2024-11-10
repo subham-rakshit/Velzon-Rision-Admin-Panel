@@ -1,10 +1,11 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 
-import userReducer from "./slices/userSlice";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
-// This function creates a new store for per request
+import userReducer from "./features/user/userSlice";
+
+// This function creates a new persist store for per request which data will store in localstorage
 export const makeStore = () => {
   const rootReducer = combineReducers({
     user: userReducer,

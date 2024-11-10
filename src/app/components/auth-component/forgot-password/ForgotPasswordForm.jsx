@@ -176,7 +176,7 @@ const ForgotPasswordForm = () => {
         </div>
       </form>
 
-      <p className="text-dark text-[20px] font-normal text-center">
+      <p className="text-dark text-[18px] sm:text-[20px] font-normal text-center">
         Wait, I remember my password...{" "}
         <Link href="/login">
           <span className="underline text-[#405189] font-semibold">

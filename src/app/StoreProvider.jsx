@@ -1,28 +1,51 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Provider } from "react-redux";
-import { makeStore } from "../store/store";
+import { Provider as PersistedProvider } from "react-redux";
+import { Provider as CommonProvider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
+
+import { makeStore as makePersistedStore } from "../lib/store/persistedStore";
+import { makeStore as makeCommonStore } from "@/lib/store/commonStore";
 
 //NOTE: When StoreProvide render in client side only then makeStore() will call. (Safe for SSR)
 export default function StoreProvider({ children }) {
-  const [storeReady, setStoreReady] = useState(false);
-  const [storeData, setStoreData] = useState(null);
+  const [persistedStoreReady, setPersistedStoreReady] = useState(false);
+  const [commonStoreReady, setCommonStoreReady] = useState(false);
 
+  const [storePersistedData, setStorePersistedData] = useState(null);
+  const [storeCommonData, setStoreCommonData] = useState(null);
+
+  // Make store in every request
   useEffect(() => {
-    const store = makeStore();
-    setStoreData(store); // Set the store when it's ready
-    setStoreReady(true); // Mark store as ready once it's initialized
+    const persistedStore = makePersistedStore();
+    const commonStore = makeCommonStore();
+
+    if (persistedStore && commonStore) {
+      // Set the store when it's ready
+      setStorePersistedData(persistedStore);
+      setStoreCommonData(commonStore);
+
+      // Mark store as ready once it's initialized
+      setPersistedStoreReady(true);
+      setCommonStoreReady(true);
+    }
   }, []);
 
-  if (!storeReady || !storeData) {
-    return null; // Optionally return a loader here while waiting for the store to initialize
+  // Not to ready state
+  if (
+    (!persistedStoreReady && !commonStoreReady) ||
+    (!storePersistedData && !storeCommonData)
+  ) {
+    return null;
   }
 
+  // Ready state
   return (
-    <PersistGate persistor={storeData.persistor} loading={null}>
-      <Provider store={storeData.store}>{children}</Provider>
-    </PersistGate>
+    <PersistedProvider store={storePersistedData.store}>
+      <PersistGate loading={null} persistor={storePersistedData.persistor}>
+        <CommonProvider store={storeCommonData}>{children}</CommonProvider>
+      </PersistGate>
+    </PersistedProvider>
   );
 }
