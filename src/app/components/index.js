@@ -15,6 +15,9 @@ import ResetPasswordForm from "./auth-component/auth-pass-change/ResetPasswordFr
 import ResendOtpForm from "./auth-component/auth-otp-resend/ResendOtpForm";
 import AlternateAuthentication from "./auth-component/AlternateAuthentication";
 
+// not-found page -->
+import ErrorImage from "./ErrorImage";
+
 export {
   CommonAuthLayout,
   PasswordInputFiled,
@@ -27,4 +30,5 @@ export {
   ForgotPasswordForm,
   ResetPasswordForm,
   ResendOtpForm,
+  ErrorImage,
 };

@@ -31,17 +31,23 @@ export const titlesObject = {
   // Public Pages
   landing: {
     title: "Landing | Velzon - NEXT.js Admin & Dashboard Template",
-    description: "__TODO__",
+    description: "Main landing page",
   },
   pagesCommingSoon: {
     title: "Coming Soon | Velzon - NEXT.js Admin & Dashboard Template",
-    description: "__TODO__",
+    description: "To mention that page will come soon.",
+  },
+  error404: {
+    title: "404 Error Basic | Velzon - NEXT.js Admin & Dashboard Template",
+    description:
+      "User will redirect to this page when they want to visit non-existing pages",
   },
 
   // Protected Pages
   profile: {
     title: "Profile | Velzon - NEXT.js Admin & Dashboard Template",
-    description: "__TODO__",
+    description:
+      "Register user's info and user can change their profile details in this page.",
   },
 
   // Admin Pages
