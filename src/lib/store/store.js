@@ -4,23 +4,24 @@ import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
 import userReducer from "./features/user/userSlice";
+import layoutReducer from "./features/layoutCustomizer/layoutCustomizerSlice";
 
 // This function creates a new persist store for per request which data will store in localstorage
 export const makeStore = () => {
   const rootReducer = combineReducers({
-    user: userReducer,
+    user: persistReducer(
+      {
+        key: "user",
+        storage,
+        verision: 1,
+      },
+      userReducer // Persist reducer
+    ),
+    layout: layoutReducer, // Non-persist reducer
   });
 
-  const persistConfig = {
-    key: "root",
-    storage,
-    version: 1,
-  };
-
-  const persistedReducer = persistReducer(persistConfig, rootReducer);
-
   const store = configureStore({
-    reducer: persistedReducer,
+    reducer: rootReducer,
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({ serializableCheck: false }),
   });

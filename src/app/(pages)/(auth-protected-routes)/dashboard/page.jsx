@@ -7,7 +7,7 @@ export const metadata = {
 };
 
 const DashboardEcommerce = () => {
-  return <div>DashboardEcommerce</div>;
+  return <div className="bg-pink-500 min-h-[100vh]">DashboardEcommerce</div>;
 };
 
 export default DashboardEcommerce;
