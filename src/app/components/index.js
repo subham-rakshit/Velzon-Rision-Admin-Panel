@@ -21,7 +21,16 @@ import ErrorImage from "./ErrorImage";
 // Auth Protected Pages -->
 import AuthProtectedLayoutProvider from "./auth-protected-components/AuthProtectedLayoutProvider";
 import LeftSidebar from "./auth-protected-components/LeftSidebar";
-import Navbar from "./auth-protected-components/Navbar";
+import LeftTwoColumnSidebar from "./auth-protected-components/LeftTwoColumnSidebar";
+
+//NOTE Navbar components
+import Navbar from "./auth-protected-components/navbar/Navbar";
+import ToggleButton from "./auth-protected-components/navbar/ToggleButton";
+import NavSearchBox from "./auth-protected-components/navbar/NavSearchBox";
+import NavSearchBoxRecentSearches from "./auth-protected-components/navbar/NavSearchBoxRecentSearches";
+import NavbarLanguages from "./auth-protected-components/navbar/NavbarLanguages";
+import NavbarWebApps from "./auth-protected-components/navbar/NavbarWebApps";
+
 import RightSidebar from "./auth-protected-components/RightSidebar";
 import Footer from "./auth-protected-components/Footer";
 
@@ -40,7 +49,13 @@ export {
   ErrorImage,
   AuthProtectedLayoutProvider,
   LeftSidebar,
+  LeftTwoColumnSidebar,
   RightSidebar,
   Navbar,
+  ToggleButton,
+  NavSearchBox,
+  NavSearchBoxRecentSearches,
+  NavbarLanguages,
+  NavbarWebApps,
   Footer,
 };

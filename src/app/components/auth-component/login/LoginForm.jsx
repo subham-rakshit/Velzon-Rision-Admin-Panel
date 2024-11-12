@@ -20,7 +20,7 @@ const LoginForm = () => {
 
   const router = useRouter();
 
-  //NOTE: Handle the all input fields
+  //NOTE Handle the all input fields
   const onHandleInputs = (name, value) => {
     setLoginData({
       ...loginData,
@@ -28,7 +28,7 @@ const LoginForm = () => {
     });
   };
 
-  //NOTE: Login from basic API hit
+  //NOTE Login from basic API hit
   async function handleFromSubmit(event) {
     event.preventDefault();
 
@@ -118,7 +118,7 @@ const LoginForm = () => {
   return (
     <>
       <form
-        className="bg-white w-full max-w-[450px] px-5 sm:px-8 py-6 rounded-md shadow-light"
+        className="bg-white w-full max-w-[450px] px-5 sm:px-8 py-8 rounded-md shadow-light"
         onSubmit={handleFromSubmit}
       >
         {/* Welcome Text */}
@@ -130,7 +130,7 @@ const LoginForm = () => {
         </div>
 
         {/* Form Element */}
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-5">
           {/* Email Input */}
           <TextInputFile
             labelText="Email"

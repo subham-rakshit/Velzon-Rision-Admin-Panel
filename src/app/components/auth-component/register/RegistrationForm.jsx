@@ -117,7 +117,7 @@ const RegistrationForm = () => {
   return (
     <>
       <form
-        className="bg-white w-full max-w-[450px] px-5 sm:px-8 py-6 rounded-md shadow-light"
+        className="bg-white w-full max-w-[450px] px-5 sm:px-8 py-8 rounded-md shadow-light"
         onSubmit={handleFromSubmit}
       >
         {/* Create Text */}
@@ -129,7 +129,7 @@ const RegistrationForm = () => {
         </div>
 
         {/* Form Element */}
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-5">
           {/* Email Input */}
           <TextInputFile
             labelText="Email"

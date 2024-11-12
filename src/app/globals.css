@@ -12,6 +12,22 @@ body {
   min-height: 100vh;
 }
 
+.scrollbar-custom::-webkit-scrollbar {
+  width: 5px;
+  height: 12px;
+}
+.scrollbar-custom::-webkit-scrollbar-track {
+  background-color: transparent; /* Background of the scrollbar track */
+  border-radius: 4px;
+}
+.scrollbar-custom::-webkit-scrollbar-thumb {
+  background-color: #d0d6db; /* Color of the scrollbar thumb */
+  border-radius: 4px;
+}
+.scrollbar-custom::-webkit-scrollbar-hover {
+  cursor: pointer;
+}
+
 @layer utilities {
   .text-soft {
     @apply text-[#878A99] font-poppins-rg;
@@ -21,6 +37,7 @@ body {
     @apply text-[#212529] font-poppins-md;
   }
 
+  /* NOTE Auth Class */
   .auth-banner-text {
     @apply font-semibold text-[#A6ADC4] text-center text-[16px] sm:text-[20px] font-poppins-rg;
   }
@@ -48,9 +65,14 @@ body {
   .auth-direction-text {
     @apply text-dark font-poppins-md text-[17px] text-[#212529];
   }
+
+  /* Navbar classes */
+  .custom-scrollbar {
+    @apply scrollbar-custom;
+  }
 }
 
-@layer base {
+/* @layer base {
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
@@ -113,4 +135,4 @@ body {
   body {
     @apply bg-background text-foreground;
   }
-}
+} */

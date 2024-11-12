@@ -1,19 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  layoutType: "vertical",
-  layoutThemeType: "default",
-  layoutThemeColorType: "default",
-  leftSidebarType: "dark",
-  layoutModeType: "light",
-  layoutWidthType: "lg",
-  layoutPositionType: "fixed",
-  topbarThemeType: "light",
-  leftsidbarSizeType: "lg",
-  leftSidebarViewType: "default",
-  leftSidebarImageType: "none",
-  preloader: "disable",
-  sidebarVisibilitytype: "show",
+  layoutType: "vertical", // horizontal, two-column, semi-box
+  sidebarUserProfileAvtarType: "show", // hide
+  layoutThemeType: "default", // sass, corporate, galaxy, material, creative, minimal, mordern, interactive, classic, vintage
+  layoutModeType: "light", // dark
+  layoutWidthType: "fluid", // boxed
+  layoutPositionType: "fixed", // scrollable
+  topbarColorType: "light", // dark
+  leftsidbarSizeType: "default", // compact, small-icon-view, small-hover-view
+  leftSidebarViewType: "default", // detached
+  leftSidebarColorType: "dark", // light, gradient
+  leftSidebarImageType: "none", // TODO
+  layoutThemePrimaryColorType: "default",
+  preloader: "disable", // enable
 };
 
 export const layoutCustomizerSlice = createSlice({

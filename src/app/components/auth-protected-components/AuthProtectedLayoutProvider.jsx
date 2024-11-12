@@ -1,28 +1,78 @@
 "use client";
 
 import React from "react";
-import { Footer, LeftSidebar, Navbar, RightSidebar } from "..";
+import {
+  Footer,
+  LeftSidebar,
+  LeftTwoColumnSidebar,
+  Navbar,
+  RightSidebar,
+} from "..";
 import { useAppSelector } from "@/lib/store/hooks";
 
 const AuthProtectedLayoutProvider = ({ children }) => {
-  const userDetails = useAppSelector((state) => state.user);
-  const layout = useAppSelector((state) => state.layout);
-  console.log(userDetails);
-  console.log(layout);
+  const { layoutType } = useAppSelector((state) => state.layout);
 
-  return (
-    <>
-      <div className="flex w-full bg-red-400">
-        <LeftSidebar />
-        <div className="flex-[4]">
+  //TODO: Create Semi Box Layout
+
+  // Vertical Layout
+  const handleVerticalLayout = () => {
+    return (
+      <>
+        <div className="flex w-full bg-red-400">
+          <LeftSidebar />
+          <div className="w-full">
+            <Navbar />
+            {children}
+            <Footer />
+          </div>
+        </div>
+        {/* <RightSidebar /> */}
+      </>
+    );
+  };
+
+  // Horizontal Leyout
+  const handleHorizontalLayout = () => {
+    return (
+      <>
+        <div className="flex flex-col w-full bg-red-400">
           <Navbar />
+          <LeftSidebar />
           {children}
           <Footer />
         </div>
-      </div>
-      <RightSidebar />
-    </>
-  );
+        <RightSidebar />
+      </>
+    );
+  };
+
+  // Two Column Layout
+  const handleTwoColumnLayout = () => {
+    return (
+      <>
+        <div className="flex w-full bg-red-400">
+          <LeftTwoColumnSidebar />
+          <div className="flex-[4]">
+            <Navbar />
+            {children}
+            <Footer />
+          </div>
+        </div>
+        <RightSidebar />
+      </>
+    );
+  };
+
+  //INFO: Switch cases according to Layout Types
+  switch (layoutType) {
+    case "vertical":
+      return handleVerticalLayout();
+    case "horizontal":
+      return handleHorizontalLayout();
+    case "two-column":
+      return handleTwoColumnLayout();
+  }
 };
 
 export default AuthProtectedLayoutProvider;
