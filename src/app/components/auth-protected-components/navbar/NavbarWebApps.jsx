@@ -2,49 +2,10 @@ import { Dropdown } from "flowbite-react";
 import Image from "next/image";
 import React from "react";
 
-import github from "../../../assets/images/brands/github.png";
-import bitbucket from "../../../assets/images/brands/bitbucket.png";
-import dribbble from "../../../assets/images/brands/dribbble.png";
-import dropbox from "../../../assets/images/brands/dropbox.png";
-import mail_chimp from "../../../assets/images/brands/mail_chimp.png";
-import slack from "../../../assets/images/brands/slack.png";
-
 import { BiCategoryAlt } from "react-icons/bi";
 import { IoIosArrowForward } from "react-icons/io";
 
-//NOTE Web App's Array Data
-const webAppsData = [
-  {
-    id: "github_webapp",
-    appName: "Github",
-    appImage: github,
-  },
-  {
-    id: "bitbucket_webapp",
-    appName: "Bitbucket",
-    appImage: bitbucket,
-  },
-  {
-    id: "dribble_webapp",
-    appName: "Dribble",
-    appImage: dribbble,
-  },
-  {
-    id: "dropbox_webapp",
-    appName: "Dropbox",
-    appImage: dropbox,
-  },
-  {
-    id: "mailchimp_webapp",
-    appName: "Mail Chimp",
-    appImage: mail_chimp,
-  },
-  {
-    id: "slack_webapp",
-    appName: "Slack",
-    appImage: slack,
-  },
-];
+import { webAppsData } from "@/app/assets/navData/navData";
 
 const NavbarWebApps = () => {
   return (

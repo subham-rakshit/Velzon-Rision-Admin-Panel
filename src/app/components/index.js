@@ -30,6 +30,10 @@ import NavSearchBox from "./auth-protected-components/navbar/NavSearchBox";
 import NavSearchBoxRecentSearches from "./auth-protected-components/navbar/NavSearchBoxRecentSearches";
 import NavbarLanguages from "./auth-protected-components/navbar/NavbarLanguages";
 import NavbarWebApps from "./auth-protected-components/navbar/NavbarWebApps";
+import NavbarMyCart from "./auth-protected-components/navbar/NavbarMyCart";
+import NavFullScreenToggleButton from "./auth-protected-components/navbar/NavFullScreenToggleButton";
+import NavbarThemeSwitcher from "./auth-protected-components/navbar/NavbarThemeSwitcher";
+import NavbarNotification from "./auth-protected-components/navbar/NavbarNotification";
 
 import RightSidebar from "./auth-protected-components/RightSidebar";
 import Footer from "./auth-protected-components/Footer";
@@ -57,5 +61,9 @@ export {
   NavSearchBoxRecentSearches,
   NavbarLanguages,
   NavbarWebApps,
+  NavbarMyCart,
+  NavFullScreenToggleButton,
+  NavbarThemeSwitcher,
+  NavbarNotification,
   Footer,
 };

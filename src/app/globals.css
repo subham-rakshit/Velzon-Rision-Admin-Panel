@@ -30,11 +30,11 @@ body {
 
 @layer utilities {
   .text-soft {
-    @apply text-[#878A99] font-poppins-rg;
+    @apply text-[#8A8D9C] font-poppins-rg;
   }
 
   .text-dark {
-    @apply text-[#212529] font-poppins-md;
+    @apply text-[#545A61] font-poppins-md;
   }
 
   /* NOTE Auth Class */
