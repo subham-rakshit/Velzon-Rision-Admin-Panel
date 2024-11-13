@@ -11,7 +11,11 @@ import {
   NavSearchBox,
   ToggleButton,
 } from "../..";
-import { languagesDetails, myCartData } from "../../../assets/navData/navData";
+import {
+  languagesDetails,
+  myCartData,
+  notificationsData,
+} from "../../../assets/navData/navData";
 
 const Navbar = () => {
   // Left navabr
@@ -26,6 +30,9 @@ const Navbar = () => {
   const [cartData, setCartData] = useState(myCartData);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [isDark, setIsDark] = useState(false);
+  const [selectedNotification, setSelectedNotification] = useState(
+    notificationsData[0]
+  );
 
   //NOTE Toggle button functionality
   const handleToggle = () => {
@@ -69,7 +76,10 @@ const Navbar = () => {
         <NavbarThemeSwitcher isDark={isDark} setIsDark={setIsDark} />
 
         {/* Notification */}
-        <NavbarNotification />
+        <NavbarNotification
+          selectedNotification={selectedNotification}
+          setSelectedNotification={setSelectedNotification}
+        />
       </div>
       {/* User Profile Avatar Sidebar */}
     </div>

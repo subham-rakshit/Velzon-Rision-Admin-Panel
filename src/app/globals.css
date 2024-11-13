@@ -70,6 +70,10 @@ body {
   .custom-scrollbar {
     @apply scrollbar-custom;
   }
+
+  .notification-dropdown ul {
+    @apply py-0;
+  }
 }
 
 /* @layer base {
