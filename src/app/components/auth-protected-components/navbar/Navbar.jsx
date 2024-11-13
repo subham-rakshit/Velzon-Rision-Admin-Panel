@@ -8,6 +8,7 @@ import {
   NavbarThemeSwitcher,
   NavbarWebApps,
   NavFullScreenToggleButton,
+  NavProfile,
   NavSearchBox,
   ToggleButton,
 } from "../..";
@@ -53,7 +54,7 @@ const Navbar = () => {
       </div>
 
       {/* Nav Buttons */}
-      <div className="flex items-center gap-1">
+      <div className="flex items-center gap-[5px] h-full">
         {/* Languages */}
         <NavbarLanguages
           selectedLanguage={selectedLanguage}
@@ -80,8 +81,10 @@ const Navbar = () => {
           selectedNotification={selectedNotification}
           setSelectedNotification={setSelectedNotification}
         />
+
+        {/* User Profile Avatar Sidebar NOTE need to fetch the register user data */}
+        <NavProfile />
       </div>
-      {/* User Profile Avatar Sidebar */}
     </div>
   );
 };

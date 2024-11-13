@@ -34,6 +34,7 @@ import NavbarMyCart from "./auth-protected-components/navbar/NavbarMyCart";
 import NavFullScreenToggleButton from "./auth-protected-components/navbar/NavFullScreenToggleButton";
 import NavbarThemeSwitcher from "./auth-protected-components/navbar/NavbarThemeSwitcher";
 import NavbarNotification from "./auth-protected-components/navbar/NavbarNotification";
+import NavProfile from "./auth-protected-components/navbar/NavProfile";
 
 import RightSidebar from "./auth-protected-components/RightSidebar";
 import Footer from "./auth-protected-components/Footer";
@@ -65,5 +66,6 @@ export {
   NavFullScreenToggleButton,
   NavbarThemeSwitcher,
   NavbarNotification,
+  NavProfile,
   Footer,
 };
