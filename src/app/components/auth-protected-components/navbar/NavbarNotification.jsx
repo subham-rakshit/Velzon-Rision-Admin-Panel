@@ -11,7 +11,6 @@ import bellSvg from "../../../assets/images/svg/bell.svg";
 
 // TODO Working on this file
 const NavbarNotification = () => {
-  console.log("I am Navbar Noti Button");
   const [selectedNotification, setSelectedNotification] = useState(
     notificationsData[0]
   );

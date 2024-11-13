@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { IoMoonOutline, IoSunnyOutline } from "react-icons/io5";
 
 const NavbarThemeSwitcher = () => {
-  console.log("I am Navbar Theme Button");
   const [isDark, setIsDark] = useState(false);
 
   return (

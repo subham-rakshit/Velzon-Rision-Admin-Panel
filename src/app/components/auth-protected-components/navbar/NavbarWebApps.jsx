@@ -1,14 +1,11 @@
 import { Dropdown } from "flowbite-react";
 import Image from "next/image";
 import React from "react";
-
 import { BiCategoryAlt } from "react-icons/bi";
 import { IoIosArrowForward } from "react-icons/io";
-
 import { webAppsData } from "@/app/assets/navData/navData";
 
 const NavbarWebApps = () => {
-  console.log("I am Navbar WebApps");
   return (
     <Dropdown
       arrowIcon={false}

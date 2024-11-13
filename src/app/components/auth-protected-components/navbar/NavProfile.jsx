@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import { Avatar, Dropdown } from "flowbite-react";
@@ -13,9 +15,49 @@ import { BiTask } from "react-icons/bi";
 import { RiLifebuoyLine } from "react-icons/ri";
 import { IoMdWallet } from "react-icons/io";
 import { IoSettingsOutline } from "react-icons/io5";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 const NavProfile = () => {
-  console.log("I am Navbar Profile Button");
+  const router = useRouter();
+
+  //NOTE: Logout functionality
+  const handleLogout = async () => {
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/user/logout`
+      );
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        toast.success(data.message, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        router.push("/login"); //NOTE: redirect to login page
+      } else {
+        toast.error(data.message, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="relative h-full flex items-center px-[15px] bg-[#f3f3f9] ml-4">
       <Dropdown
@@ -80,7 +122,11 @@ const NavProfile = () => {
           <MdLock size={16} color="#878a99" />
           <span className="text-dark text-[13px] font-light">Lock screen</span>
         </Dropdown.Item>
-        <Dropdown.Item className="flex items-center gap-2">
+        {/* Logout Button */}
+        <Dropdown.Item
+          className="flex items-center gap-2"
+          onClick={handleLogout}
+        >
           <MdLogout size={16} color="#878a99" />
           <span className="text-dark text-[13px] font-light">Logout</span>
         </Dropdown.Item>

@@ -6,7 +6,6 @@ import { languagesDetails } from "../../../assets/navData/navData";
 import Image from "next/image";
 
 const NavbarLanguages = () => {
-  console.log("I am Navbar Language");
   const [selectedLanguage, setSelectedLanguage] = useState(
     Object.values(languagesDetails)[0]
   );

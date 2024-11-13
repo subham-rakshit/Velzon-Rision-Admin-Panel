@@ -12,8 +12,6 @@ import {
 } from "../..";
 
 const Navbar = () => {
-  console.log("I am Main Navbar");
-
   return (
     <div className="bg-white h-[60px] sm:h-[70px] px-5 sm:px-[30px] flex items-center justify-between">
       {/* Toggle Button and Form Section */}

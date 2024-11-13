@@ -10,7 +10,6 @@ import { PiShoppingCartSimpleBold } from "react-icons/pi";
 import { myCartData } from "@/app/assets/navData/navData";
 
 const NavbarMyCart = () => {
-  console.log("I am Navbar MyCart");
   const [cartData, setCartData] = useState(myCartData);
   const totalPrice = cartData.reduce((acc, curr) => {
     return acc + curr.productQuantity * curr.productPrice;

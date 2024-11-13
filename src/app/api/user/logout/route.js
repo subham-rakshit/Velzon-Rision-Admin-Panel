@@ -2,7 +2,7 @@ import dbConnect from "@/lib/db/dbConnect";
 import handleResponse from "@/lib/middleware/responseMiddleware";
 import { NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(request) {
   await dbConnect(); //INFO: Database connection
 
   try {
@@ -14,11 +14,25 @@ export async function GET() {
       { status: 200 }
     );
 
-    response.cookies.set("next-auth.session-token", "", {
-      httpOnly: true,
-      expiresIn: new Date(-1), // delete cookies imediately
-      path: "/",
-    });
+    //NOTE Handle diffrent type of cookies
+    const nextAuthCookie = "next-auth.session-token"; // Handle NextAuth token
+    const apiAuthCookie = "access-token"; // Handle Api Access Token
+
+    if (request.cookies.has(nextAuthCookie)) {
+      response.cookies.set(nextAuthCookie, "", {
+        httpOnly: true,
+        expiresIn: new Date(0), // delete cookies imediately
+        maxAge: 0,
+        path: "/",
+      });
+    } else if (request.cookies.has(apiAuthCookie)) {
+      response.cookies.set(apiAuthCookie, "", {
+        httpOnly: true,
+        expiresIn: new Date(0), // delete cookies imediately
+        maxAge: 0,
+        path: "/",
+      });
+    }
 
     return response;
   } catch (error) {

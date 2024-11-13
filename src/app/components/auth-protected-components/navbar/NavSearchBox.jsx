@@ -7,7 +7,6 @@ import { IoMdCloseCircle } from "react-icons/io";
 import { NavSearchBoxRecentSearches } from "../..";
 
 const NavSearchBox = () => {
-  console.log("I am Navbar Search");
   const [searchInput, setSearchInput] = useState("");
   const [isRecentSearchOpen, setIsRecentSearchOpen] = useState(true);
 

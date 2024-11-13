@@ -4,7 +4,7 @@ import React, { useState } from "react";
 
 const ToggleButton = () => {
   const [isToggle, setIsToggle] = useState(false);
-  console.log("I am Navbar Toggle Button");
+
   return (
     <button
       onClick={() => setIsToggle(!isToggle)}
