@@ -1,3 +1,10 @@
+import {
+  RiDashboard2Fill,
+  RiApps2Line,
+  RiPagesLine,
+  RiRocketLine,
+} from "react-icons/ri";
+
 const leftSidebarData = [
   {
     tabCategory: "Menu",
@@ -5,6 +12,7 @@ const leftSidebarData = [
       {
         id: "Dashboard",
         tabName: "Dashboards",
+        tabIcon: <RiDashboard2Fill />,
         tabDropdownList: [
           {
             id: "dashboard-analytics",
@@ -52,6 +60,7 @@ const leftSidebarData = [
             id: "dashboard-blog",
             tabName: "Blog",
             pathName: "/dashboard-blog",
+            isNew: true,
             tabDropdownList: [],
           },
         ],
@@ -60,6 +69,7 @@ const leftSidebarData = [
       {
         id: "Apps",
         tabName: "Apps",
+        tabIcon: <RiApps2Line />,
         tabDropdownList: [
           {
             id: "calender",
@@ -123,3 +133,5 @@ const leftSidebarData = [
     ],
   },
 ];
+
+export default leftSidebarData;

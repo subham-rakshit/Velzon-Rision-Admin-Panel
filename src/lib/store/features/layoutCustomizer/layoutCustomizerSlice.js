@@ -8,7 +8,7 @@ const initialState = {
   layoutWidthType: "fluid", // boxed
   layoutPositionType: "fixed", // scrollable
   topbarColorType: "light", // dark
-  leftsidbarSizeType: "default", // compact, small-icon-view, small-hover-view
+  leftSidbarSizeType: "default", // compact, small-icon-view, small-hover-view
   leftSidebarViewType: "default", // detached
   leftSidebarColorType: "dark", // light, gradient
   leftSidebarImageType: "none", // TODO
@@ -35,8 +35,12 @@ export const layoutCustomizerSlice = createSlice({
       state.preloader = "disable";
       state.sidebarVisibilitytype = "show";
     },
+    changeLeftSideBarSizeType: (state, action) => {
+      state.leftSidbarSizeType = action.payload || "default";
+    },
   },
 });
 
-export const { initialCustomize } = layoutCustomizerSlice.actions;
+export const { initialCustomize, changeLeftSideBarSizeType } =
+  layoutCustomizerSlice.actions;
 export default layoutCustomizerSlice.reducer;

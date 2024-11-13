@@ -11,7 +11,15 @@ import {
 import { useAppSelector } from "@/lib/store/hooks";
 
 const AuthProtectedLayoutProvider = ({ children }) => {
-  const { layoutType } = useAppSelector((state) => state.layout);
+  const { layoutType, leftSidbarSizeType } = useAppSelector(
+    (state) => state.layout
+  );
+
+  const isSidebarCollapse = leftSidbarSizeType === "small-icon-view";
+  const leftMargin =
+    leftSidbarSizeType === "small-icon-view" ? "ml-[63px]" : "ml-[250px]";
+  const leftSidebarWidth =
+    leftSidbarSizeType === "small-icon-view" ? "w-[63px]" : "w-[250px]";
 
   //TODO: Create Semi Box Layout
 
@@ -19,9 +27,14 @@ const AuthProtectedLayoutProvider = ({ children }) => {
   const handleVerticalLayout = () => {
     return (
       <>
-        <div className="flex w-full bg-red-400">
-          <LeftSidebar />
-          <div className="w-full">
+        <div className="flex w-full min-h-screen">
+          <LeftSidebar
+            width={leftSidebarWidth}
+            isSidebarCollapse={isSidebarCollapse}
+          />
+          <div
+            className={`flex-grow min-h-screen flex flex-col ${leftMargin} transition-style`}
+          >
             <Navbar />
             {children}
             <Footer />
