@@ -1,11 +1,15 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { Avatar, Dropdown } from "flowbite-react";
 import { languagesDetails } from "../../../assets/navData/navData";
 import Image from "next/image";
 
-const NavbarLanguages = ({ selectedLanguage, setSelectedLanguage }) => {
+const NavbarLanguages = () => {
+  console.log("I am Navbar Language");
+  const [selectedLanguage, setSelectedLanguage] = useState(
+    Object.values(languagesDetails)[0]
+  );
   const languageArr = Object.values(languagesDetails);
 
   return (

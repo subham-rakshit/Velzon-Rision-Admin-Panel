@@ -8,6 +8,7 @@ import { IoIosArrowForward } from "react-icons/io";
 import { webAppsData } from "@/app/assets/navData/navData";
 
 const NavbarWebApps = () => {
+  console.log("I am Navbar WebApps");
   return (
     <Dropdown
       arrowIcon={false}

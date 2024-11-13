@@ -1,16 +1,20 @@
-import React from "react";
+"use client";
 
-const ToggleButton = ({ handleToggle, toggleStatus }) => {
+import React, { useState } from "react";
+
+const ToggleButton = () => {
+  const [isToggle, setIsToggle] = useState(false);
+  console.log("I am Navbar Toggle Button");
   return (
     <button
-      onClick={() => handleToggle()}
+      onClick={() => setIsToggle(!isToggle)}
       type="button"
       className="inline-block cursor-pointer"
     >
       {["bar_1", "bar_2", "bar_3"].map((bar) => {
         let dynamicClasses;
 
-        if (toggleStatus) {
+        if (isToggle) {
           switch (bar) {
             case "bar_1":
               dynamicClasses =

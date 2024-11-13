@@ -1,12 +1,17 @@
+"use client";
+
 import { Button, Dropdown } from "flowbite-react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { MdClose } from "react-icons/md";
 import { RiShoppingBagLine } from "react-icons/ri";
 import { PiShoppingCartSimpleBold } from "react-icons/pi";
+import { myCartData } from "@/app/assets/navData/navData";
 
-const NavbarMyCart = ({ cartData, setCartData }) => {
+const NavbarMyCart = () => {
+  console.log("I am Navbar MyCart");
+  const [cartData, setCartData] = useState(myCartData);
   const totalPrice = cartData.reduce((acc, curr) => {
     return acc + curr.productQuantity * curr.productPrice;
   }, 0);

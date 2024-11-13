@@ -1,7 +1,12 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import { MdFullscreen, MdFullscreenExit } from "react-icons/md";
 
-const NavFullScreenToggleButton = ({ isFullScreen, setIsFullScreen }) => {
+const NavFullScreenToggleButton = () => {
+  console.log("I am Navbar Screen Button");
+  const [isFullScreen, setIsFullScreen] = useState(false);
+
   //NOTE: Handle fullscreen
   const handleFullScreen = () => {
     // Extract that elem which want to convert in fullscreen

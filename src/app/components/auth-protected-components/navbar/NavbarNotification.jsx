@@ -1,6 +1,8 @@
+"use client";
+
 import { Checkbox, Dropdown, Label } from "flowbite-react";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import { FaRegBell } from "react-icons/fa6";
 import { MdArrowForward } from "react-icons/md";
 
@@ -8,10 +10,12 @@ import { notificationsData } from "@/app/assets/navData/navData";
 import bellSvg from "../../../assets/images/svg/bell.svg";
 
 // TODO Working on this file
-const NavbarNotification = ({
-  selectedNotification,
-  setSelectedNotification,
-}) => {
+const NavbarNotification = () => {
+  console.log("I am Navbar Noti Button");
+  const [selectedNotification, setSelectedNotification] = useState(
+    notificationsData[0]
+  );
+
   return (
     <Dropdown
       label={

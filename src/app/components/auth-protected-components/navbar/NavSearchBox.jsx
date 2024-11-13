@@ -1,15 +1,16 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 
 import { MdSearch } from "react-icons/md";
 import { IoMdCloseCircle } from "react-icons/io";
 import { NavSearchBoxRecentSearches } from "../..";
 
-const NavSearchBox = ({
-  searchInput,
-  setSearchInput,
-  isRecentSearchOpen,
-  setIsRecentSearchOpen,
-}) => {
+const NavSearchBox = () => {
+  console.log("I am Navbar Search");
+  const [searchInput, setSearchInput] = useState("");
+  const [isRecentSearchOpen, setIsRecentSearchOpen] = useState(true);
+
   return (
     <form className="relative min-w-[270px] px-4 bg-[#f3f3f9] text-soft flex items-center rounded-[3px]">
       <MdSearch size={18} />

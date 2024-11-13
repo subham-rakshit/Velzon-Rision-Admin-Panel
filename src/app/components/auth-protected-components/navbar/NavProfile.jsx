@@ -15,6 +15,7 @@ import { IoMdWallet } from "react-icons/io";
 import { IoSettingsOutline } from "react-icons/io5";
 
 const NavProfile = () => {
+  console.log("I am Navbar Profile Button");
   return (
     <div className="relative h-full flex items-center px-[15px] bg-[#f3f3f9] ml-4">
       <Dropdown
