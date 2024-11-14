@@ -72,8 +72,8 @@ const leftSidebarData = [
         tabIcon: <RiApps2Line />,
         tabDropdownList: [
           {
-            id: "calender",
-            tabName: "Calender",
+            id: "calendar",
+            tabName: "Calendar",
             pathName: "",
             tabDropdownList: [
               {
@@ -97,7 +97,7 @@ const leftSidebarData = [
             tabDropdownList: [],
           },
           {
-            id: "mailbox",
+            id: "email",
             tabName: "Email",
             pathName: "",
             tabDropdownList: [
@@ -108,7 +108,7 @@ const leftSidebarData = [
                 tabDropdownList: [],
               },
               {
-                id: "email-basic",
+                id: "apps-email",
                 tabName: "Email Templates",
                 pathName: "",
                 tabDropdownList: [
@@ -125,6 +125,100 @@ const leftSidebarData = [
                     tabDropdownList: [],
                   },
                 ],
+              },
+            ],
+          },
+
+          {
+            id: "ecommerce",
+            tabName: "Ecommerce",
+            pathName: "",
+            tabDropdownList: [
+              {
+                id: "apps-ecommerce-products",
+                tabName: "Products",
+                pathName: "/apps-ecommerce-products",
+                tabDropdownList: [],
+              },
+              {
+                id: "apps-ecommerce-product-details",
+                tabName: "Product Details",
+                pathName: "/apps-ecommerce-product-details",
+                tabDropdownList: [],
+              },
+              {
+                id: "apps-ecommerce-add-product",
+                tabName: "Create Product",
+                pathName: "/apps-ecommerce-add-product",
+                tabDropdownList: [],
+              },
+              {
+                id: "apps-ecommerce-orders",
+                tabName: "Orders",
+                pathName: "/apps-ecommerce-orders",
+                tabDropdownList: [],
+              },
+              {
+                id: "apps-ecommerce-order-details",
+                tabName: "Order Details",
+                pathName: "/apps-ecommerce-order-details",
+                tabDropdownList: [],
+              },
+              {
+                id: "apps-ecommerce-customers",
+                tabName: "Customers",
+                pathName: "/apps-ecommerce-customers",
+                tabDropdownList: [],
+              },
+              {
+                id: "apps-ecommerce-cart",
+                tabName: "Shopping Cart",
+                pathName: "/apps-ecommerce-cart",
+                tabDropdownList: [],
+              },
+              {
+                id: "apps-ecommerce-checkout",
+                tabName: "Checkout",
+                pathName: "/apps-ecommerce-checkout",
+                tabDropdownList: [],
+              },
+              {
+                id: "apps-ecommerce-sellers",
+                tabName: "Sellers",
+                pathName: "/apps-ecommerce-sellers",
+                tabDropdownList: [],
+              },
+              {
+                id: "apps-ecommerce-seller-details",
+                tabName: "Seller Details",
+                pathName: "/apps-ecommerce-seller-details",
+                tabDropdownList: [],
+              },
+            ],
+          },
+          // TODO Need to create pages from here
+          {
+            id: "projects",
+            tabName: "Projects",
+            pathName: "",
+            tabDropdownList: [
+              {
+                id: "apps-projects-list",
+                tabName: "List",
+                pathName: "/apps-projects-list",
+                tabDropdownList: [],
+              },
+              {
+                id: "apps-projects-overview",
+                tabName: "Overview",
+                pathName: "/apps-projects-overview",
+                tabDropdownList: [],
+              },
+              {
+                id: "apps-projects-create",
+                tabName: "Create Project",
+                pathName: "/apps-projects-create",
+                tabDropdownList: [],
               },
             ],
           },

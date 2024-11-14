@@ -15,7 +15,7 @@ import { useAppSelector } from "@/lib/store/hooks";
 const Navbar = () => {
   return (
     <div
-      className={`bg-white h-[60px] sm:h-[70px] px-5 sm:px-[30px] flex items-center justify-between sticky top-0`}
+      className={`bg-white h-[60px] sm:h-[70px] px-5 sm:px-[30px] flex items-center justify-between sticky top-0 shadow-light`}
     >
       {/* Toggle Button and Form Section */}
       <div className="flex items-center gap-2 h-full">

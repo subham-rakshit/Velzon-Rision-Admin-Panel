@@ -28,6 +28,10 @@ body {
   cursor: pointer;
 }
 
+.sidebar-custom::-webkit-scrollbar {
+  display: none;
+}
+
 @layer utilities {
   .text-soft {
     @apply text-[#8A8D9C] font-poppins-rg;
@@ -73,6 +77,11 @@ body {
 
   .notification-dropdown ul {
     @apply py-0;
+  }
+
+  /* Left Sidebar */
+  .custom-left-sidebar-scrollbar {
+    @apply sidebar-custom;
   }
 
   /* Transition style */

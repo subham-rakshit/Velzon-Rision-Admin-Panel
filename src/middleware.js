@@ -11,7 +11,38 @@ const authRoutes = [
   "/auth-otp-resend",
 ];
 const publicRoutes = ["/landing", "/pages-comming-soon"];
-const protectedRoutes = ["/profile", "/dashboard"];
+const protectedRoutes = [
+  "/profile",
+  // Dashboard
+  "/dashboard",
+  "/dashboard-analytics",
+  "/dashboard-blog",
+  "/dashboard-crm",
+  "/dashboard-crypto",
+  "/dashboard-job",
+  "/dashboard-nft",
+  "/dashboard-projects",
+  // Apps
+  "/apps-calendar-month-grid",
+  "/apps-calendar",
+  "/apps-email-basic",
+  "/apps-email-ecommerce",
+  "/apps-mailbox",
+  "/apps-chat",
+  "/apps-ecommerce-add-product",
+  "/apps-ecommerce-cart",
+  "/apps-ecommerce-checkout",
+  "/apps-ecommerce-customers",
+  "/apps-ecommerce-order-details",
+  "/apps-ecommerce-orders",
+  "/apps-ecommerce-product-details",
+  "/apps-ecommerce-products",
+  "/apps-ecommerce-seller-details",
+  "/apps-ecommerce-sellers",
+  "/apps-projects-create",
+  "/apps-projects-list",
+  "/apps-projects-overview",
+];
 
 //SECTION: Web Crypto API Logic for verifying the JWT token
 const verifyToken = async (token, secret) => {
@@ -118,7 +149,10 @@ export async function middleware(request) {
       return NextResponse.redirect(new URL("/login", request.url));
     }
 
-    if (pathname.startsWith("/dashboard") && !token.isAdmin) {
+    if (
+      (pathname.startsWith("/dashboard") || pathname.startsWith("/apps")) &&
+      !token.isAdmin
+    ) {
       return NextResponse.redirect(new URL("/landing", request.url));
     }
 
@@ -156,7 +190,33 @@ export const config = {
     "/pages-comming-soon",
     // Protected
     "/profile",
-    "/dashboard/:path*",
+    "/dashboard",
+    "/dashboard-analytics",
+    "/dashboard-blog",
+    "/dashboard-crm",
+    "/dashboard-crypto",
+    "/dashboard-job",
+    "/dashboard-nft",
+    "/dashboard-projects",
+    "/apps-calendar-month-grid",
+    "/apps-calendar",
+    "/apps-email-basic",
+    "/apps-email-ecommerce",
+    "/apps-mailbox",
+    "/apps-chat",
+    "/apps-ecommerce-add-product",
+    "/apps-ecommerce-cart",
+    "/apps-ecommerce-checkout",
+    "/apps-ecommerce-customers",
+    "/apps-ecommerce-order-details",
+    "/apps-ecommerce-orders",
+    "/apps-ecommerce-product-details",
+    "/apps-ecommerce-products",
+    "/apps-ecommerce-seller-details",
+    "/apps-ecommerce-sellers",
+    "/apps-projects-create",
+    "/apps-projects-list",
+    "/apps-projects-overview",
     // Root
     "/",
   ],
