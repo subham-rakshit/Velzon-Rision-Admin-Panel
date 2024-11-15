@@ -42,6 +42,12 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
   const [secondChildTabDetails, setSecondChildTabDetails] = useState(null);
   const [thirdChildTabDetails, setThirdChildTabDetails] = useState(null);
 
+  //TODO Need To Remove
+  console.log("Parent: ", parentTabDetails);
+  console.log("FirstChild: ", firstChildTabDetails);
+  console.log("SecondChild: ", secondChildTabDetails);
+  console.log("ThirdChild: ", thirdChildTabDetails);
+
   useEffect(() => {
     const mainPath = pathname.split("/")[1];
     const parentObject = { id: "", isOpen: false };
@@ -207,10 +213,13 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
       </div>
 
       {/* NOTE Tab Section */}
-      <div className="px-[20px] py-[20px] text-[#a6b4e4] bg-[#405189] h-full">
+      <div className="px-[20px] text-[#a6b4e4] bg-[#405189] min-h-screen py-2">
         {leftSidebarData.map((tab, index) => {
           return (
-            <div key={tab.tabCategory} className="flex flex-col gap-5">
+            <div
+              key={tab.tabCategory}
+              className="flex flex-col gap-5 pt-[20px]"
+            >
               {/* NOTE Tab category */}
               <span
                 className={`text-soft text-[11px] font-semibold tracking-wider uppercase`}
@@ -227,39 +236,61 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
                       key={tabList.id}
                       className={`font-poppins-rg cursor-pointer transition-style py-2`}
                     >
-                      {/* DEBUG Parent Tab */}
-                      <div
-                        className={`flex items-center gap-2 group ${
-                          pathname.includes(tabList.id.toLowerCase())
-                            ? "text-white"
-                            : ""
-                        }`}
-                        onClick={() => handleParentTabToggle(tabList.id)}
-                      >
-                        {/* NOTE Parent Tab Icon */}
-                        <span
-                          className={`group-hover:text-white transition-style`}
+                      {tabList.tabDropdownList.length > 0 ? (
+                        // DEBUG Parent Tab having child
+                        <div
+                          className={`flex items-center gap-2 group ${
+                            pathname.includes(tabList.id.toLowerCase())
+                              ? "text-white"
+                              : ""
+                          }`}
+                          onClick={() => handleParentTabToggle(tabList.id)}
                         >
-                          {tabList.tabIcon}
-                        </span>
+                          {/* NOTE Parent Tab Icon */}
+                          <span
+                            className={`group-hover:text-white transition-style`}
+                          >
+                            {tabList.tabIcon}
+                          </span>
 
-                        {/* NOTE Parent Tabname and Arrow Icon Container */}
-                        <span
-                          className={`text-[16px] flex items-center justify-between w-full transition-style group-hover:text-white`}
-                        >
-                          {/* NOTE Parent Tabname */}
-                          <span>{tabList.tabName}</span>
+                          {/* NOTE Parent Tabname and Arrow Icon Container */}
+                          <span
+                            className={`text-[15px] flex items-center justify-between w-full transition-style group-hover:text-white`}
+                          >
+                            {/* NOTE Parent Tabname */}
+                            <span>{tabList.tabName}</span>
 
-                          {/* NOTE Parent Arrow Icon */}
-                          <IoIosArrowForward
-                            className={`${
+                            {/* NOTE Parent Arrow Icon */}
+                            <IoIosArrowForward
+                              className={`${
+                                pathname.includes(tabList.id.toLowerCase())
+                                  ? "rotate-[90deg]"
+                                  : ""
+                              }`}
+                            />
+                          </span>
+                        </div>
+                      ) : (
+                        // DEBUG Parent Tab having no child
+                        <Link href={tabList.pathName}>
+                          <div
+                            className={`group ${
                               pathname.includes(tabList.id.toLowerCase())
-                                ? "rotate-[90deg]"
+                                ? "text-white"
                                 : ""
                             }`}
-                          />
-                        </span>
-                      </div>
+                          >
+                            {/* NOTE Parent Tab */}
+                            <span
+                              className={`flex items-center gap-2 group-hover:text-white transition-style`}
+                            >
+                              {tabList.tabIcon}
+                              {/* NOTE Parent Tabname */}
+                              <span>{tabList.tabName}</span>
+                            </span>
+                          </div>
+                        </Link>
+                      )}
 
                       {/* NOTE All Child's Main container */}
                       <ul
@@ -456,8 +487,6 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
                                             >
                                               {secChild.tabDropdownList.map(
                                                 (thirdChild) => {
-                                                  console.log(thirdChild);
-
                                                   return (
                                                     <li
                                                       key={thirdChild.id}
