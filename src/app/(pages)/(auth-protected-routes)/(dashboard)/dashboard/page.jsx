@@ -7,9 +7,7 @@ export const metadata = {
 };
 
 const DashboardEcommerce = () => {
-  console.log("Where I am");
-
-  return <div className="bg-pink-500 min-h-[500vh]">DashboardEcommerce</div>;
+  return <div className="inital-pages-style">DashboardEcommerce</div>;
 };
 
 export default DashboardEcommerce;

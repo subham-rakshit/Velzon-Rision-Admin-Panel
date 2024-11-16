@@ -21,40 +21,15 @@ const AuthProtectedLayoutProvider = ({ children }) => {
   const leftSidebarWidth =
     leftSidbarSizeType === "small-icon-view" ? "w-fit" : "w-[250px]";
 
-  //TODO: Create Semi Box Layout
-
-  // Vertical Layout
-  const handleVerticalLayout = () => {
-    return (
-      <>
-        <div className="flex w-full min-h-screen">
-          <LeftSidebar
-            width={leftSidebarWidth}
-            isSidebarCollapse={isSidebarCollapse}
-          />
-          <div className={`flex-grow min-h-screen flex flex-col ${leftMargin}`}>
-            <Navbar />
-            {children}
-            <Footer />
-          </div>
-        </div>
-        {/* <RightSidebar /> */}
-      </>
-    );
-  };
-
   // Horizontal Leyout
   const handleHorizontalLayout = () => {
     return (
-      <>
-        <div className="flex flex-col w-full bg-red-400">
-          <Navbar />
-          <LeftSidebar />
-          {children}
-          <Footer />
-        </div>
-        <RightSidebar />
-      </>
+      <div>
+        <Navbar />
+        <LeftSidebar />
+        {children}
+        <Footer />
+      </div>
     );
   };
 
@@ -62,28 +37,51 @@ const AuthProtectedLayoutProvider = ({ children }) => {
   const handleTwoColumnLayout = () => {
     return (
       <>
-        <div className="flex w-full bg-red-400">
-          <LeftTwoColumnSidebar />
-          <div className="flex-[4]">
-            <Navbar />
-            {children}
-            <Footer />
-          </div>
+        <LeftTwoColumnSidebar />
+        <div className={`flex-grow min-h-screen flex flex-col`}>
+          <Navbar />
+          {children}
+          <Footer />
         </div>
-        <RightSidebar />
       </>
     );
   };
 
-  //INFO: Switch cases according to Layout Types
-  switch (layoutType) {
-    case "vertical":
-      return handleVerticalLayout();
-    case "horizontal":
-      return handleHorizontalLayout();
-    case "two-column":
-      return handleTwoColumnLayout();
-  }
+  // Vertical Layout
+  const handleVerticalLayout = () => {
+    return (
+      <>
+        <LeftSidebar
+          width={leftSidebarWidth}
+          isSidebarCollapse={isSidebarCollapse}
+        />
+        <div className={`flex-grow min-h-screen flex flex-col ${leftMargin}`}>
+          <Navbar />
+          {children}
+          <Footer />
+        </div>
+      </>
+    );
+  };
+
+  return (
+    <div
+      className={`flex ${
+        layoutType === "horizontal" ? "flex-col" : ""
+      } w-full min-h-screen`}
+    >
+      {layoutType === "horizontal"
+        ? handleHorizontalLayout()
+        : layoutType === "two-column"
+        ? handleTwoColumnLayout()
+        : layoutType === "vertical"
+        ? handleVerticalLayout()
+        : null}
+      <RightSidebar />
+    </div>
+  );
 };
 
 export default AuthProtectedLayoutProvider;
+
+//TODO: Create Semi Box Layout

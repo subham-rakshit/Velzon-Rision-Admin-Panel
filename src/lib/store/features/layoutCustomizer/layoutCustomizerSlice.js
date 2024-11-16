@@ -14,6 +14,7 @@ const initialState = {
   leftSidebarImageType: "none", // TODO
   layoutThemePrimaryColorType: "default",
   preloader: "disable", // enable
+  rightSideBarIsOpen: true, // false
 };
 
 export const layoutCustomizerSlice = createSlice({
@@ -34,13 +35,26 @@ export const layoutCustomizerSlice = createSlice({
       state.leftSidebarImageType = "none";
       state.preloader = "disable";
       state.sidebarVisibilitytype = "show";
+      state.rightSideBarIsOpen = true;
     },
+    changeLayoutType: (state, action) => {
+      state.layoutType = action.payload || "vertical";
+    },
+
     changeLeftSideBarSizeType: (state, action) => {
       state.leftSidbarSizeType = action.payload || "default";
+    },
+
+    changeRightSideBarIsOpen: (state, action) => {
+      state.rightSideBarIsOpen = action.payload;
     },
   },
 });
 
-export const { initialCustomize, changeLeftSideBarSizeType } =
-  layoutCustomizerSlice.actions;
+export const {
+  initialCustomize,
+  changeLayoutType,
+  changeLeftSideBarSizeType,
+  changeRightSideBarIsOpen,
+} = layoutCustomizerSlice.actions;
 export default layoutCustomizerSlice.reducer;

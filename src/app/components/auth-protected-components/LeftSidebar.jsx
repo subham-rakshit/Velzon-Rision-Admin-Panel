@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { twMerge } from "tailwind-merge";
-import leftSidebarData from "@/app/assets/leftSidebarData/leftSidebarData";
+import leftSidebarData from "@/app/components/leftSidebarData/leftSidebarData";
 
 import {
   HiArrowSmRight,
@@ -44,6 +44,7 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
   const [secondChildTabDetails, setSecondChildTabDetails] = useState(null);
   const [thirdChildTabDetails, setThirdChildTabDetails] = useState(null);
 
+  // NOTE Small(Icon View) Sidebar state to manage tab open based on hover
   const [parentTabIsOpen, setParentTabIsOpen] = useState({
     id: "",
     isOpen: false,
@@ -62,10 +63,10 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
   });
 
   //TODO Need To Remove
-  console.log("Parent: ", parentTabDetails);
-  console.log("FirstChild: ", firstChildTabDetails);
-  console.log("SecondChild: ", secondChildTabDetails);
-  console.log("ThirdChild: ", thirdChildTabDetails);
+  // console.log("Parent: ", parentTabDetails);
+  // console.log("FirstChild: ", firstChildTabDetails);
+  // console.log("SecondChild: ", secondChildTabDetails);
+  // console.log("ThirdChild: ", thirdChildTabDetails);
 
   // console.log("Parent: ", parentTabIsOpen);
   // console.log("FirstChild: ", firstChildTabIsOpen);
@@ -216,7 +217,7 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
   // NOTE Vertical Default LeftSidebar View ----
   const verticalDefaultLeftSidebarView = () => {
     return (
-      <ul className="px-[20px] text-[#a6b4e4] bg-[#405189] h-[calc(100vh-70px)] py-2 overflow-y-auto custom-left-sidebar-scrollbar transition-style">
+      <ul className="px-[20px] text-[#a6b4e4] bg-[#405189] h-[calc(100vh-70px)] py-2 overflow-y-auto custom-left-sidebar-scrollbar hide-scrollbar transition-style">
         {leftSidebarData.map((tab, index) => {
           return (
             <li key={tab.tabCategory} className="flex flex-col gap-5 pt-[20px]">
@@ -782,7 +783,6 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
       </div>
 
       {/* NOTE Tab Section */}
-
       {isSidebarCollapse
         ? verticalSmallIconLeftSideView()
         : verticalDefaultLeftSidebarView()}
