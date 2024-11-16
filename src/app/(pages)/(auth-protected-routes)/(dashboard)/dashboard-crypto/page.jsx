@@ -3,7 +3,6 @@ import React from "react";
 
 export const metadata = {
   title: titlesObject.crypto.title,
-  description: titlesObject.crypto.description,
 };
 
 const DashboardCrypto = () => {

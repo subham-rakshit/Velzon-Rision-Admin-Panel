@@ -20,10 +20,12 @@ import ErrorImage from "./ErrorImage";
 
 // Auth Protected Pages -->
 import AuthProtectedLayoutProvider from "./auth-protected-components/AuthProtectedLayoutProvider";
+
+// LeftSidebar --->
 import LeftSidebar from "./auth-protected-components/LeftSidebar";
 import LeftTwoColumnSidebar from "./auth-protected-components/LeftTwoColumnSidebar";
 
-//NOTE Navbar components
+// Navbar components --->
 import Navbar from "./auth-protected-components/navbar/Navbar";
 import ToggleButton from "./auth-protected-components/navbar/ToggleButton";
 import NavSearchBox from "./auth-protected-components/navbar/NavSearchBox";

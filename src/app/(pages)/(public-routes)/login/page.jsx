@@ -5,7 +5,6 @@ import React from "react";
 //NOTE: Login Page meta data
 export const metadata = {
   title: titlesObject.login.title,
-  description: titlesObject.login.description,
 };
 
 const Login = () => {

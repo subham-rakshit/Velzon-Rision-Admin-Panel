@@ -2,6 +2,7 @@
 
 import { useAppSelector } from "@/lib/store/hooks";
 import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { twMerge } from "tailwind-merge";
@@ -28,25 +29,48 @@ import { IoIosArrowForward } from "react-icons/io";
 import { BsDash } from "react-icons/bs";
 import { GoDot, GoDotFill } from "react-icons/go";
 
-import logo from "../../assets/images/logo-sm.png";
+import logoSmall from "../../assets/images/logo-sm.png";
 import logoLight from "../../assets/images/logo-light.png";
 import Link from "next/link";
+import { DefaultLeftSidebar } from "..";
 
 const LeftSidebar = ({ width, isSidebarCollapse }) => {
   const pathname = usePathname();
   const router = useRouter();
 
-  // State to manage open tabs based on pathname
+  // NOTE Default Sidebar State to manage open tabs based on pathname
   const [parentTabDetails, setParentTabDetails] = useState(null);
   const [firstChildTabDetails, setFirstChildTabDetails] = useState(null);
   const [secondChildTabDetails, setSecondChildTabDetails] = useState(null);
   const [thirdChildTabDetails, setThirdChildTabDetails] = useState(null);
+
+  const [parentTabIsOpen, setParentTabIsOpen] = useState({
+    id: "",
+    isOpen: false,
+  });
+  const [firstChildTabIsOpen, setFirstChildTabIsOpen] = useState({
+    id: "",
+    isOpen: false,
+  });
+  const [secondChilTabIsOpen, setSecondChilTabIsOpen] = useState({
+    id: "",
+    isOpen: false,
+  });
+  const [thirdChildTabIsOpen, setThirdChildTabIsOpen] = useState({
+    id: "",
+    isOpen: false,
+  });
 
   //TODO Need To Remove
   console.log("Parent: ", parentTabDetails);
   console.log("FirstChild: ", firstChildTabDetails);
   console.log("SecondChild: ", secondChildTabDetails);
   console.log("ThirdChild: ", thirdChildTabDetails);
+
+  // console.log("Parent: ", parentTabIsOpen);
+  // console.log("FirstChild: ", firstChildTabIsOpen);
+  // console.log("SecondChild: ", secondChilTabIsOpen);
+  // console.log("ThirdChild: ", thirdChildTabIsOpen);
 
   useEffect(() => {
     const mainPath = pathname.split("/")[1];
@@ -151,9 +175,9 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
     setFirstChildTabDetails(firstChildObject);
     setSecondChildTabDetails(secondChildObject);
     setThirdChildTabDetails(thirdChildObject);
-  }, [pathname]);
+  }, [pathname, isSidebarCollapse]);
 
-  //NOTE Handle Parent Tab toggle
+  // Handle Parent Tab toggle
   const handleParentTabToggle = (parentId) => {
     setParentTabDetails((prev) => ({
       ...prev,
@@ -162,7 +186,7 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
     }));
   };
 
-  //NOTE Handle First Child Tab toggle
+  // Handle First Child Tab toggle
   const handleFirstChildTabToggle = (firstChildId) => {
     setFirstChildTabDetails((prev) => ({
       ...prev,
@@ -171,7 +195,7 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
     }));
   };
 
-  //NOTE Handle First Child Tab toggle
+  // Handle First Child Tab toggle
   const handleSecondChildTabToggle = (secondChildId) => {
     setSecondChildTabDetails((prev) => ({
       ...prev,
@@ -180,7 +204,7 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
     }));
   };
 
-  //NOTE Handle First Child Tab toggle
+  // Handle First Child Tab toggle
   const handleThirdChildTabToggle = (thirdChildId) => {
     setThirdChildTabDetails((prev) => ({
       ...prev,
@@ -189,37 +213,13 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
     }));
   };
 
-  return (
-    <div
-      as="div"
-      className={`h-screen fixed left-0 top-0 transition-style ${width} overflow-auto custom-left-sidebar-scrollbar`}
-    >
-      {/* NOTE Sidebar Top Logo Section */}
-      <div
-        className={`h-[70px] bg-[#405189] px-[20px] transition-style sticky left-0 top-0 z-[100] w-full`}
-      >
-        <Link
-          href="/dashboard"
-          className="h-full w-full flex items-center justify-center"
-        >
-          <Image
-            src={logoLight}
-            alt="logo light"
-            width={100}
-            height={20}
-            className="mx-auto my-auto"
-          />
-        </Link>
-      </div>
-
-      {/* NOTE Tab Section */}
-      <div className="px-[20px] text-[#a6b4e4] bg-[#405189] min-h-screen py-2">
+  // NOTE Vertical Default LeftSidebar View ----
+  const verticalDefaultLeftSidebarView = () => {
+    return (
+      <ul className="px-[20px] text-[#a6b4e4] bg-[#405189] h-[calc(100vh-70px)] py-2 overflow-y-auto custom-left-sidebar-scrollbar transition-style">
         {leftSidebarData.map((tab, index) => {
           return (
-            <div
-              key={tab.tabCategory}
-              className="flex flex-col gap-5 pt-[20px]"
-            >
+            <li key={tab.tabCategory} className="flex flex-col gap-5 pt-[20px]">
               {/* NOTE Tab category */}
               <span
                 className={`text-soft text-[11px] font-semibold tracking-wider uppercase`}
@@ -540,10 +540,252 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
                   );
                 })}
               </ul>
-            </div>
+            </li>
           );
         })}
+      </ul>
+    );
+  };
+
+  // NOTE Vertical Small Icon LeftSidebar View ----
+  const verticalSmallIconLeftSideView = () => {
+    return (
+      <ul className="relative text-[#a6b4e4] bg-[#405189] py-2 transition-style h-[100%]">
+        {leftSidebarData.map((category) =>
+          category.tabNameList.map((parentTabIcon) => (
+            // Tab Icon Main Container
+            <li
+              key={parentTabIcon.id}
+              className="relative py-[13px] flex items-center justify-center hover:cursor-pointer"
+              onMouseEnter={() =>
+                setParentTabIsOpen({ id: parentTabIcon.id, isOpen: true })
+              }
+              onMouseLeave={() => setParentTabIsOpen({ id: "", isOpen: false })}
+            >
+              {/* NOTE Parent Icon */}
+              <span
+                className={`text-[22px] ${
+                  pathname.includes(parentTabIcon.id.toLowerCase())
+                    ? "text-white"
+                    : ""
+                }`}
+              >
+                {parentTabIcon.tabIcon}
+              </span>
+
+              {/* NOTE Parent Dropdown Box */}
+              <ul
+                className={`absolute top-0 left-[100%] bg-[#405189] z-[9999] w-[200px] transition-style px-2 py-3 rounded-tr-[5px] rounded-br-[5px] font-poppins-rg ${
+                  parentTabIsOpen.isOpen &&
+                  parentTabIsOpen.id === parentTabIcon.id
+                    ? "visible opacity-100"
+                    : "hidden opacity-0"
+                }`}
+              >
+                {/* Parent Tab Name  */}
+                <span
+                  className={`text-[15px] flex items-center justify-between w-full transition-style group-hover:text-white ${
+                    parentTabIsOpen.id === parentTabIcon.id ? "text-white" : ""
+                  } ${
+                    parentTabIcon.tabDropdownList.length > 0 ? "mb-3" : "mb-0"
+                  }`}
+                >
+                  <span>{parentTabIcon.tabName}</span>
+                  {parentTabIcon.tabDropdownList.length > 0 && (
+                    <IoIosArrowForward
+                      className={`${
+                        parentTabIsOpen.id === parentTabIcon.id
+                          ? "rotate-[90deg]"
+                          : ""
+                      }`}
+                    />
+                  )}
+                </span>
+
+                {/* First Childrens */}
+                {parentTabIcon.tabDropdownList.length > 0 &&
+                  parentTabIcon.tabDropdownList.map((firstChild) => {
+                    return (
+                      <li
+                        key={firstChild.id}
+                        className={`font-poppins-rg cursor-pointer transition-style`}
+                      >
+                        {firstChild.tabDropdownList.length > 0 ? (
+                          // FirstChild Tab having dropdown
+                          <ul
+                            className={`relative flex text-[13px] items-center gap-2 p-2`}
+                            onMouseEnter={() =>
+                              setFirstChildTabIsOpen({
+                                id: firstChild.id,
+                                isOpen: true,
+                              })
+                            }
+                            onMouseLeave={() =>
+                              setFirstChildTabIsOpen({ id: "", isOpen: false })
+                            }
+                          >
+                            <span
+                              className={`text-[13px] flex items-center justify-between w-full transition-style hover:text-white ${
+                                firstChildTabDetails &&
+                                firstChildTabDetails.id === firstChild.id
+                                  ? "text-white"
+                                  : ""
+                              }`}
+                            >
+                              <span>{firstChild.tabName}</span>
+                              <IoIosArrowForward />
+                            </span>
+
+                            {/* Second Children */}
+                            <li
+                              className={`absolute top-0 left-[100%] bg-[#405189] z-[9999] w-[200px] transition-style p-3 rounded-tr-[5px] rounded-br-[5px] font-poppins-rg ${
+                                firstChildTabIsOpen.isOpen &&
+                                firstChildTabIsOpen.id === firstChild.id
+                                  ? "visible opacity-100"
+                                  : "hidden opacity-0"
+                              }`}
+                            >
+                              {firstChild.tabDropdownList.map((secondChild) =>
+                                // Second Child Having Dropdown
+                                secondChild.tabDropdownList.length > 0 ? (
+                                  <ul
+                                    key={secondChild.id}
+                                    className={`relative flex text-[13px] items-center gap-2 p-2`}
+                                    onMouseEnter={() =>
+                                      setSecondChilTabIsOpen({
+                                        id: secondChild.id,
+                                        isOpen: true,
+                                      })
+                                    }
+                                    onMouseLeave={() =>
+                                      setSecondChilTabIsOpen({
+                                        id: "",
+                                        isOpen: false,
+                                      })
+                                    }
+                                  >
+                                    <span
+                                      className={`text-[13px] flex items-center justify-between w-full transition-style hover:text-white ${
+                                        secondChildTabDetails &&
+                                        secondChildTabDetails.id ===
+                                          secondChild.id
+                                          ? "text-white"
+                                          : ""
+                                      }`}
+                                    >
+                                      <span>{secondChild.tabName}</span>
+                                      <IoIosArrowForward />
+                                    </span>
+
+                                    {/* Third Child */}
+                                    <li
+                                      className={`absolute top-0 left-[100%] bg-[#405189] z-[9999] w-[200px] transition-style p-3 rounded-[5px] font-poppins-rg ${
+                                        secondChilTabIsOpen.isOpen &&
+                                        secondChilTabIsOpen.id ===
+                                          secondChild.id
+                                          ? "visible opacity-100"
+                                          : "hidden opacity-0"
+                                      }`}
+                                    >
+                                      {secondChild.tabDropdownList.map(
+                                        (thirdChild) =>
+                                          thirdChild.tabDropdownList >
+                                          0 ? null : (
+                                            <Link
+                                              href={thirdChild.pathName}
+                                              key={thirdChild.id}
+                                            >
+                                              <span
+                                                className={`flex items-center gap-2 hover:text-white text-[13px] p-2 transition-style ${
+                                                  thirdChildTabDetails &&
+                                                  thirdChildTabDetails.id ===
+                                                    thirdChild.id
+                                                    ? "text-white"
+                                                    : ""
+                                                }`}
+                                              >
+                                                {secondChild.tabName}
+                                              </span>
+                                            </Link>
+                                          )
+                                      )}
+                                    </li>
+                                  </ul>
+                                ) : (
+                                  // Second Child Having No Dropdown
+                                  <Link
+                                    href={secondChild.pathName}
+                                    key={secondChild.id}
+                                  >
+                                    <span
+                                      className={`flex items-center gap-2 hover:text-white text-[13px] p-2 transition-style ${
+                                        secondChildTabDetails &&
+                                        secondChildTabDetails.id ===
+                                          secondChild.id
+                                          ? "text-white"
+                                          : ""
+                                      }`}
+                                    >
+                                      {secondChild.tabName}
+                                    </span>
+                                  </Link>
+                                )
+                              )}
+                            </li>
+                          </ul>
+                        ) : (
+                          // FirstChild Tab having no dropdown
+                          <Link href={firstChild.pathName}>
+                            <span
+                              className={`flex items-center gap-2 text-[13px] p-2 hover:text-white transition-style ${
+                                firstChildTabDetails &&
+                                firstChildTabDetails.id === firstChild.id
+                                  ? "text-white"
+                                  : ""
+                              }`}
+                            >
+                              {firstChild.tabName}
+                            </span>
+                          </Link>
+                        )}
+                      </li>
+                    );
+                  })}
+              </ul>
+            </li>
+          ))
+        )}
+      </ul>
+    );
+  };
+
+  return (
+    <div
+      className={`min-h-screen ${
+        isSidebarCollapse ? "sticky" : `fixed`
+      } left-0 top-0 z-[99] ${width}`}
+    >
+      {/* NOTE Sidebar Top Logo Section */}
+      <div
+        className={`h-[70px] bg-[#405189] px-[20px] transition-style sticky left-0 top-0 z-[100] w-full`}
+      >
+        <Link
+          href="/dashboard"
+          className="h-full w-full flex items-center justify-center"
+        >
+          {isSidebarCollapse ? (
+            <Image src={logoSmall} alt="logo small" width={25} height={25} />
+          ) : (
+            <Image src={logoLight} alt="logo light" width={100} height={20} />
+          )}
+        </Link>
       </div>
+
+      {/* NOTE Tab Section */}
+
+      {isSidebarCollapse
+        ? verticalSmallIconLeftSideView()
+        : verticalDefaultLeftSidebarView()}
     </div>
   );
 };

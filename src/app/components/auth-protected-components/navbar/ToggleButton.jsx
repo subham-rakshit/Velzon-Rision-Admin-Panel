@@ -10,14 +10,22 @@ const ToggleButton = () => {
   const dispatch = useAppDispatch();
 
   // NOTE Handle toggle
+  // const handleSidebarToggel = () => {
+  //   if (leftSidbarSizeType && leftSidbarSizeType === "default") {
+  //     dispatch(changeLeftSideBarSizeType("small-icon-view"));
+  //     setIsToggle(!isToggle);
+  //   } else if (leftSidbarSizeType && leftSidbarSizeType === "small-icon-view") {
+  //     dispatch(changeLeftSideBarSizeType("default"));
+  //     setIsToggle(!isToggle);
+  //   }
+  // };
+
   const handleSidebarToggel = () => {
-    if (leftSidbarSizeType && leftSidbarSizeType === "default") {
-      dispatch(changeLeftSideBarSizeType("small-icon-view"));
-      setIsToggle(!isToggle);
-    } else if (leftSidbarSizeType && leftSidbarSizeType === "small-icon-view") {
-      dispatch(changeLeftSideBarSizeType("default"));
-      setIsToggle(!isToggle);
-    }
+    const newSizeType =
+      leftSidbarSizeType === "default" ? "small-icon-view" : "default";
+
+    dispatch(changeLeftSideBarSizeType(newSizeType));
+    setIsToggle((prev) => !prev);
   };
 
   return (

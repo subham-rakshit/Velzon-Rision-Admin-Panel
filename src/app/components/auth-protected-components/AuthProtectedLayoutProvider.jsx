@@ -17,9 +17,9 @@ const AuthProtectedLayoutProvider = ({ children }) => {
 
   const isSidebarCollapse = leftSidbarSizeType === "small-icon-view";
   const leftMargin =
-    leftSidbarSizeType === "small-icon-view" ? "ml-[63px]" : "ml-[250px]";
+    leftSidbarSizeType === "small-icon-view" ? "ml-0" : "ml-[250px]";
   const leftSidebarWidth =
-    leftSidbarSizeType === "small-icon-view" ? "w-[63px]" : "w-[250px]";
+    leftSidbarSizeType === "small-icon-view" ? "w-fit" : "w-[250px]";
 
   //TODO: Create Semi Box Layout
 
@@ -32,9 +32,7 @@ const AuthProtectedLayoutProvider = ({ children }) => {
             width={leftSidebarWidth}
             isSidebarCollapse={isSidebarCollapse}
           />
-          <div
-            className={`flex-grow min-h-screen flex flex-col ${leftMargin} transition-style`}
-          >
+          <div className={`flex-grow min-h-screen flex flex-col ${leftMargin}`}>
             <Navbar />
             {children}
             <Footer />

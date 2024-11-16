@@ -3,7 +3,6 @@ import React from "react";
 
 export const metadata = {
   title: titlesObject.blog.title,
-  description: titlesObject.blog.description,
 };
 
 const DashboardBlog = () => {

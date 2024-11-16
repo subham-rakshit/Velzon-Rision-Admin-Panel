@@ -4,10 +4,11 @@ import React from "react";
 
 export const metadata = {
   title: titlesObject.dashboard.title,
-  description: titlesObject.dashboard.description,
 };
 
 const DashboardEcommerce = () => {
+  console.log("Where I am");
+
   return <div className="bg-pink-500 min-h-[500vh]">DashboardEcommerce</div>;
 };
 

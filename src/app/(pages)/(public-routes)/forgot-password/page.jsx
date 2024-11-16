@@ -4,7 +4,6 @@ import { titlesObject } from "@/app/assets/titlesData/titles";
 
 export const metadata = {
   title: titlesObject.forgotPassword.title,
-  description: titlesObject.forgotPassword.description,
 };
 
 const ForgetPasswordPage = () => {

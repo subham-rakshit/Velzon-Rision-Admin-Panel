@@ -9,7 +9,6 @@ import { ErrorImage } from "./components";
 
 export const metadata = {
   title: titlesObject.error404.title,
-  description: titlesObject.error404.description,
 };
 
 const NotFoundPage = () => {

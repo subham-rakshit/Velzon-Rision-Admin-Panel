@@ -4,7 +4,6 @@ import React from "react";
 
 export const metadata = {
   title: titlesObject.authTwoStep.title,
-  description: titlesObject.authTwoStep.description,
 };
 
 const VerifyEmailAccount = () => {

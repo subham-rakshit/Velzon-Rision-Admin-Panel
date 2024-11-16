@@ -4,7 +4,6 @@ import React from "react";
 
 export const metadata = {
   title: titlesObject.authPassChange.title,
-  description: titlesObject.authPassChange.description,
 };
 
 const ResetPassword = () => {
