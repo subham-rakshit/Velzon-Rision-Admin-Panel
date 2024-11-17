@@ -7,7 +7,7 @@ const initialState = {
   layoutModeType: "light", // dark
   layoutWidthType: "fluid", // boxed
   layoutPositionType: "fixed", // scrollable
-  topbarColorType: "light", // dark
+  topbarColorType: "light-color", // dark-color
   leftSidbarSizeType: "default", // compact, small-icon-view, small-hover-view
   leftSidebarViewType: "default", // detached
   leftSidebarColorType: "dark", // light, gradient
@@ -48,6 +48,34 @@ export const layoutCustomizerSlice = createSlice({
     changeRightSideBarIsOpen: (state, action) => {
       state.rightSideBarIsOpen = action.payload;
     },
+
+    changeSidebarUserProfileAvtarType: (state, action) => {
+      state.sidebarUserProfileAvtarType = action.payload;
+    },
+
+    changeLayoutThemeType: (state, action) => {
+      state.layoutThemeType = action.payload;
+    },
+
+    changeLayoutModeType: (state, action) => {
+      state.layoutModeType = action.payload;
+    },
+
+    changeLayoutWidthType: (state, action) => {
+      state.layoutWidthType = action.payload;
+    },
+
+    changeLayoutPositionType: (state, action) => {
+      state.layoutPositionType = action.payload;
+    },
+
+    changeTopbarColorType: (state, action) => {
+      state.topbarColorType = action.payload;
+    },
+
+    changeLeftSidbarSizeType: (state, action) => {
+      state.leftSidbarSizeType = action.payload;
+    },
   },
 });
 
@@ -56,5 +84,12 @@ export const {
   changeLayoutType,
   changeLeftSideBarSizeType,
   changeRightSideBarIsOpen,
+  changeSidebarUserProfileAvtarType,
+  changeLayoutThemeType,
+  changeLayoutModeType,
+  changeLayoutWidthType,
+  changeLayoutPositionType,
+  changeTopbarColorType,
+  changeLeftSidbarSizeType,
 } = layoutCustomizerSlice.actions;
 export default layoutCustomizerSlice.reducer;

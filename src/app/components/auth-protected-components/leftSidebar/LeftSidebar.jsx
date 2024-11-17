@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { twMerge } from "tailwind-merge";
-import leftSidebarData from "@/app/components/leftSidebarData/leftSidebarData";
+import Link from "next/link";
 
 import {
   HiArrowSmRight,
@@ -24,15 +24,13 @@ import {
   RiPagesLine,
   RiRocketLine,
 } from "react-icons/ri";
-
 import { IoIosArrowForward } from "react-icons/io";
 import { BsDash } from "react-icons/bs";
 import { GoDot, GoDotFill } from "react-icons/go";
 
-import logoSmall from "../../assets/images/logo-sm.png";
-import logoLight from "../../assets/images/logo-light.png";
-import Link from "next/link";
-import { DefaultLeftSidebar } from "..";
+import leftSidebarData from "../../leftSidebarData/leftSidebarData";
+import logoSmall from "../../../assets/images/logo-sm.png";
+import logoLight from "../../../assets/images/logo-light.png";
 
 const LeftSidebar = ({ width, isSidebarCollapse }) => {
   const pathname = usePathname();

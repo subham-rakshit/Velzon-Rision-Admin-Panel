@@ -8,9 +8,11 @@ import { MdArrowForward } from "react-icons/md";
 
 import { notificationsData } from "@/app/assets/navData/navData";
 import bellSvg from "../../../assets/images/svg/bell.svg";
+import { useAppSelector } from "@/lib/store/hooks";
 
 // TODO Working on this file
 const NavbarNotification = () => {
+  const { topbarColorType } = useAppSelector((state) => state.layout);
   const [selectedNotification, setSelectedNotification] = useState(
     notificationsData[0]
   );
@@ -18,8 +20,19 @@ const NavbarNotification = () => {
   return (
     <Dropdown
       label={
-        <span className="relative p-[9px] rounded-full hover:bg-[#E6EEFD] transition-all duration-300 ease-in-out">
-          <FaRegBell size={20} color="#878A99" />
+        <span
+          className={`relative p-[9px] rounded-full transition-all duration-300 ease-in-out ${
+            topbarColorType === "dark-color"
+              ? "hover:bg-[#4A5A8F]"
+              : "hover:bg-[#E6EEFD]"
+          }`}
+        >
+          <FaRegBell
+            size={20}
+            color={`${
+              topbarColorType === "dark-color" ? "#B0C4D9" : "#878A99"
+            }`}
+          />
           <span className="absolute -top-[7px] left-[50%] bg-[#F06548] text-white font-poppins-md font-semibold text-[10px] rounded-full px-[7px] py-[2px]">
             3
           </span>

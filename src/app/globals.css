@@ -82,6 +82,34 @@ body {
     @apply py-0;
   }
 
+  .nav-bg-dark {
+    @apply bg-[#405189];
+  }
+
+  .nav-search-box-dark {
+    @apply bg-[#4A5A8F];
+  }
+
+  .nav-search-box-light {
+    @apply bg-[#F3F3F9];
+  }
+
+  .nav-profile-bg-dark {
+    @apply bg-[#52639C];
+  }
+
+  .nav-profile-bg-light {
+    @apply bg-[#f3f3f9];
+  }
+
+  .nav-elem-dark {
+    @apply text-[#B0C4D9];
+  }
+
+  .nav-elem-light {
+    @apply text-[#878A99];
+  }
+
   /* Left Sidebar */
   .custom-left-sidebar-scrollbar {
     @apply sidebar-custom;

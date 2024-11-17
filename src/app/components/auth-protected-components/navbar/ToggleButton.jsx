@@ -6,19 +6,10 @@ import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 
 const ToggleButton = () => {
   const [isToggle, setIsToggle] = useState(false);
-  const { leftSidbarSizeType } = useAppSelector((state) => state.layout);
+  const { leftSidbarSizeType, topbarColorType } = useAppSelector(
+    (state) => state.layout
+  );
   const dispatch = useAppDispatch();
-
-  // NOTE Handle toggle
-  // const handleSidebarToggel = () => {
-  //   if (leftSidbarSizeType && leftSidbarSizeType === "default") {
-  //     dispatch(changeLeftSideBarSizeType("small-icon-view"));
-  //     setIsToggle(!isToggle);
-  //   } else if (leftSidbarSizeType && leftSidbarSizeType === "small-icon-view") {
-  //     dispatch(changeLeftSideBarSizeType("default"));
-  //     setIsToggle(!isToggle);
-  //   }
-  // };
 
   const handleSidebarToggel = () => {
     const newSizeType =
@@ -67,7 +58,9 @@ const ToggleButton = () => {
         return (
           <span
             key={bar}
-            className={`block h-[2px] bg-[#878A99] my-[4px] transition-all duration-500 ease-in-out rounded-sm ${dynamicClasses}`}
+            className={`block h-[2px] ${
+              topbarColorType === "dark-color" ? "bg-[#B0C4D9]" : "bg-[#878A99]"
+            } my-[4px] transition-all duration-500 ease-in-out rounded-sm ${dynamicClasses}`}
           ></span>
         );
       })}

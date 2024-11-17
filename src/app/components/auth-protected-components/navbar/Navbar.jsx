@@ -12,10 +12,12 @@ import {
 } from "../..";
 import { useAppSelector } from "@/lib/store/hooks";
 
-const Navbar = () => {
+const Navbar = ({ topbarColorType }) => {
   return (
     <div
-      className={`bg-white h-[60px] sm:h-[70px] px-5 sm:px-[30px] flex items-center justify-between sticky top-0 shadow-light`}
+      className={`h-[60px] sm:h-[70px] px-5 sm:px-[30px] flex items-center justify-between sticky top-0 shadow-light ${
+        topbarColorType === "dark-color" ? "nav-bg-dark" : "bg-white"
+      }`}
     >
       {/* Toggle Button and Form Section */}
       <div className="flex items-center gap-2 h-full">
@@ -29,7 +31,7 @@ const Navbar = () => {
         <NavbarLanguages />
 
         {/* WebApps */}
-        <NavbarWebApps />
+        <NavbarWebApps topbarColorType={topbarColorType} />
 
         {/* My Cart */}
         <NavbarMyCart />

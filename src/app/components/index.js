@@ -22,8 +22,9 @@ import ErrorImage from "./ErrorImage";
 import AuthProtectedLayoutProvider from "./auth-protected-components/AuthProtectedLayoutProvider";
 
 // LeftSidebar --->
-import LeftSidebar from "./auth-protected-components/LeftSidebar";
-import LeftTwoColumnSidebar from "./auth-protected-components/LeftTwoColumnSidebar";
+import LeftSidebar from "./auth-protected-components/leftSidebar/LeftSidebar";
+import LeftTwoColumnSidebar from "./auth-protected-components/leftSidebar/LeftTwoColumnSidebar";
+import LeftHorizontalSidebar from "./auth-protected-components/leftSidebar/LeftHorizontalSidebar";
 
 // Navbar components --->
 import Navbar from "./auth-protected-components/navbar/Navbar";
@@ -57,6 +58,7 @@ export {
   AuthProtectedLayoutProvider,
   LeftSidebar,
   LeftTwoColumnSidebar,
+  LeftHorizontalSidebar,
   RightSidebar,
   Navbar,
   ToggleButton,

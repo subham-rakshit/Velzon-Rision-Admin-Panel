@@ -4,8 +4,10 @@ import React, { useState } from "react";
 import { Avatar, Dropdown } from "flowbite-react";
 import { languagesDetails } from "../../../assets/navData/navData";
 import Image from "next/image";
+import { useAppSelector } from "@/lib/store/hooks";
 
 const NavbarLanguages = () => {
+  const { topbarColorType } = useAppSelector((state) => state.layout);
   const [selectedLanguage, setSelectedLanguage] = useState(
     Object.values(languagesDetails)[0]
   );
@@ -16,7 +18,13 @@ const NavbarLanguages = () => {
       arrowIcon={false}
       inline
       label={
-        <span className="p-[10px] rounded-full hover:bg-[#E6EEFD] transition-all duration-300 ease-in-out">
+        <span
+          className={`p-[10px] rounded-full transition-all duration-300 ease-in-out ${
+            topbarColorType === "dark-color"
+              ? "hover:bg-[#4A5A8F]"
+              : "hover:bg-[#E6EEFD]"
+          }`}
+        >
           <Image
             src={selectedLanguage.flag}
             alt={selectedLanguage.label}

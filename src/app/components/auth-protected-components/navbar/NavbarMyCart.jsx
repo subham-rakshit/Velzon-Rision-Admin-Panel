@@ -8,8 +8,10 @@ import { MdClose } from "react-icons/md";
 import { RiShoppingBagLine } from "react-icons/ri";
 import { PiShoppingCartSimpleBold } from "react-icons/pi";
 import { myCartData } from "@/app/assets/navData/navData";
+import { useAppSelector } from "@/lib/store/hooks";
 
 const NavbarMyCart = () => {
+  const { topbarColorType } = useAppSelector((state) => state.layout);
   const [cartData, setCartData] = useState(myCartData);
   const totalPrice = cartData.reduce((acc, curr) => {
     return acc + curr.productQuantity * curr.productPrice;
@@ -18,8 +20,19 @@ const NavbarMyCart = () => {
   return (
     <Dropdown
       label={
-        <span className="relative p-[9px] rounded-full hover:bg-[#E6EEFD] transition-all duration-300 ease-in-out">
-          <RiShoppingBagLine size={20} color="#878A99" />
+        <span
+          className={`relative p-[9px] rounded-full transition-all duration-300 ease-in-out ${
+            topbarColorType === "dark-color"
+              ? "hover:bg-[#4A5A8F]"
+              : "hover:bg-[#E6EEFD]"
+          }`}
+        >
+          <RiShoppingBagLine
+            size={20}
+            color={`${
+              topbarColorType === "dark-color" ? "#B0C4D9" : "#878A99"
+            }`}
+          />
           <span className="absolute -top-[7px] left-[50%] bg-[#299CDB] text-white font-poppins-md font-semibold text-[10px] rounded-full px-[7px] py-[2px]">
             {cartData.length}
           </span>

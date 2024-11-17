@@ -5,14 +5,25 @@ import { BiCategoryAlt } from "react-icons/bi";
 import { IoIosArrowForward } from "react-icons/io";
 import { webAppsData } from "@/app/assets/navData/navData";
 
-const NavbarWebApps = () => {
+const NavbarWebApps = ({ topbarColorType }) => {
   return (
     <Dropdown
       arrowIcon={false}
       inline
       label={
-        <span className="p-[9px] rounded-full hover:bg-[#E6EEFD] transition-all duration-300 ease-in-out">
-          <BiCategoryAlt size={20} color="#878A99" />
+        <span
+          className={`p-[9px] rounded-full hover:bg-[#E6EEFD] transition-all duration-300 ease-in-out ${
+            topbarColorType === "dark-color"
+              ? "hover:bg-[#4A5A8F]"
+              : "hover:bg-[#E6EEFD]"
+          }`}
+        >
+          <BiCategoryAlt
+            size={20}
+            color={`${
+              topbarColorType === "dark-color" ? "#B0C4D9" : "#878A99"
+            }`}
+          />
         </span>
       }
       className="w-full max-w-[320px]"
