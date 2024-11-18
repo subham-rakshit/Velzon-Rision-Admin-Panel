@@ -111,3 +111,88 @@ export const rightSidbarTopbarColorData = [
     label: "Dark",
   },
 ];
+
+export const rightSidbarColorData = [
+  {
+    id: "light-bg-color",
+    label: "Light",
+    leftColor: "bg-sidebar-color-light",
+    leftInnerColor: "bg-[#e2e5ed]",
+  },
+  {
+    id: "dark-bg-color",
+    label: "Dark",
+    leftColor: "bg-sidebar-color-yankees-blue",
+    leftInnerColor: "bg-[#536395]",
+  },
+  {
+    id: "gradient-bg-color",
+    label: "Gradient",
+    leftColor: "bg-sidebar-color-gradient-parent",
+    leftInnerColor: "bg-[#39919d]",
+    childrenElem: [
+      {
+        id: "child-1",
+        label: "gradient-bg-color",
+        leftColor: "bg-sidebar-color-gradient-first-child",
+      },
+      {
+        id: "child-2",
+        label: "sec-child-gradient-bg-color",
+        leftColor: "bg-sidebar-color-gradient-second-child",
+      },
+      {
+        id: "child-3",
+        label: "third-child-gradient-bg-color",
+        leftColor: "bg-sidebar-color-gradient-third-child",
+      },
+      {
+        id: "child-4",
+        label: "fourth-child-gradient-bg-color",
+        leftColor: "bg-sidebar-color-gradient-fourth-child",
+      },
+    ],
+  },
+];
+
+export const rightSidebarImagesData = [
+  {
+    id: "none",
+    bgColor: "bg-[#F3F6F9]",
+  },
+  {
+    id: "snow",
+    bgImage: "bg-sidebar-snow",
+  },
+  {
+    id: "office",
+    bgImage: "bg-sidebar-office",
+  },
+  {
+    id: "pattern",
+    bgImage: "bg-sidebar-pattern",
+  },
+  {
+    id: "bubble",
+    bgImage: "bg-sidebar-bubble",
+  },
+];
+
+export const rightSidebarPrimaryColorData = [
+  {
+    id: "default",
+    bgColor: "bg-sidebar-color-yankees-blue",
+  },
+  {
+    id: "teal-green",
+    bgColor: "bg-sidebar-color-dark-teal-green",
+  },
+  {
+    id: "royal-purple",
+    bgColor: "bg-sidebar-color-royal-purple",
+  },
+  {
+    id: "cobalt-blue",
+    bgColor: "bg-sidebar-color-cobalt-blue",
+  },
+];

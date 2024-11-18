@@ -14,6 +14,10 @@ module.exports = {
     extend: {
       backgroundImage: {
         "auth-hero-pattern": "url('/assets/auth-images/auth-one-bg.jpg')",
+        "sidebar-snow": "url('/assets/sidebar/img-1.jpg')",
+        "sidebar-office": "url('/assets/sidebar/img-2.jpg')",
+        "sidebar-pattern": "url('/assets/sidebar/img-3.jpg')",
+        "sidebar-bubble": "url('/assets/sidebar/img-4.jpg')",
       },
       fontFamily: {
         "hk-grotesk": ["var(--font-hk-grotesk)"],

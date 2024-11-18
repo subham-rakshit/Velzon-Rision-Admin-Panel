@@ -31,6 +31,7 @@ import { GoDot, GoDotFill } from "react-icons/go";
 import leftSidebarData from "../../leftSidebarData/leftSidebarData";
 import logoSmall from "../../../assets/images/logo-sm.png";
 import logoLight from "../../../assets/images/logo-light.png";
+import TransitionLink from "./TransitionLink";
 
 const LeftSidebar = ({ width, isSidebarCollapse }) => {
   const pathname = usePathname();
@@ -271,7 +272,7 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
                         </div>
                       ) : (
                         // DEBUG Parent Tab having no child
-                        <Link href={tabList.pathName}>
+                        <TransitionLink href={tabList.pathName}>
                           <div
                             className={`group ${
                               pathname.includes(tabList.id.toLowerCase())
@@ -288,7 +289,7 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
                               <span>{tabList.tabName}</span>
                             </span>
                           </div>
-                        </Link>
+                        </TransitionLink>
                       )}
 
                       {/* NOTE All Child's Main container */}
@@ -312,7 +313,7 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
                                 className="font-poppins-rg py-[10px]"
                               >
                                 {/* NOTE 1stChild Icon and Name container */}
-                                <Link href={firstChild.pathName}>
+                                <TransitionLink href={firstChild.pathName}>
                                   <span
                                     className={`flex items-center gap-2 hover:text-white transition-all duration-300 ease-in-out ${
                                       firstChildTabDetails &&
@@ -336,7 +337,7 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
                                       )}
                                     </span>
                                   </span>
-                                </Link>
+                                </TransitionLink>
                               </li>
                             );
                           } else {

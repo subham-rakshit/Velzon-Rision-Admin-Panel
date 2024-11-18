@@ -20,6 +20,7 @@ import ErrorImage from "./ErrorImage";
 
 // Auth Protected Pages -->
 import AuthProtectedLayoutProvider from "./auth-protected-components/AuthProtectedLayoutProvider";
+import LoadingUI from "./auth-protected-components/Loading";
 
 // LeftSidebar --->
 import LeftSidebar from "./auth-protected-components/leftSidebar/LeftSidebar";
@@ -56,6 +57,7 @@ export {
   ResendOtpForm,
   ErrorImage,
   AuthProtectedLayoutProvider,
+  LoadingUI,
   LeftSidebar,
   LeftTwoColumnSidebar,
   LeftHorizontalSidebar,

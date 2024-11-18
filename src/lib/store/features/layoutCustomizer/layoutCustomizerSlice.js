@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  rightSideBarIsOpen: false, // true
   layoutType: "vertical", // horizontal, two-column, semi-box
   sidebarUserProfileAvtarType: "show", // hide
   layoutThemeType: "default", // sass, corporate, galaxy, material, creative, minimal, mordern, interactive, classic, vintage
@@ -10,43 +11,27 @@ const initialState = {
   topbarColorType: "light-color", // dark-color
   leftSidbarSizeType: "default", // compact, small-icon-view, small-hover-view
   leftSidebarViewType: "default", // detached
-  leftSidebarColorType: "dark", // light, gradient
-  leftSidebarImageType: "none", // TODO
-  layoutThemePrimaryColorType: "default",
-  preloader: "disable", // enable
-  rightSideBarIsOpen: true, // false
+  leftSidebarColorType: "dark-bg-color", // light-bg-color, gradient-bg-color
+  leftSidebarGradientColorType: "gradient-bg-color", // sec-child-gradient-bg-color, third-child-gradient-bg-color, fourth-child-gradient-bg-color
+  leftSidebarImageType: "none", // snow, office, pattern, bubble
+  layoutThemePrimaryColorType: "default", // teal-green, royal-purple, cobalt-blue
+  preloader: "disable", // top-loader, spinner
 };
 
 export const layoutCustomizerSlice = createSlice({
   name: "customizer",
   initialState,
   reducers: {
-    initialCustomize: (state) => {
-      state.layoutType = "vertical";
-      state.layoutThemeType = "default";
-      state.layoutThemeColorType = "default";
-      state.leftSidebarType = "dark";
-      state.layoutModeType = "light";
-      state.layoutWidthType = "lg";
-      state.layoutPositionType = "fixed";
-      state.topbarThemeType = "light";
-      state.leftsidbarSizeType = "lg";
-      state.leftSidebarViewType = "default";
-      state.leftSidebarImageType = "none";
-      state.preloader = "disable";
-      state.sidebarVisibilitytype = "show";
-      state.rightSideBarIsOpen = true;
+    changeRightSideBarIsOpen: (state, action) => {
+      state.rightSideBarIsOpen = action.payload;
     },
+
     changeLayoutType: (state, action) => {
       state.layoutType = action.payload || "vertical";
     },
 
     changeLeftSideBarSizeType: (state, action) => {
       state.leftSidbarSizeType = action.payload || "default";
-    },
-
-    changeRightSideBarIsOpen: (state, action) => {
-      state.rightSideBarIsOpen = action.payload;
     },
 
     changeSidebarUserProfileAvtarType: (state, action) => {
@@ -76,11 +61,34 @@ export const layoutCustomizerSlice = createSlice({
     changeLeftSidbarSizeType: (state, action) => {
       state.leftSidbarSizeType = action.payload;
     },
+
+    changeLeftSidebarViewType: (state, action) => {
+      state.leftSidebarViewType = action.payload;
+    },
+
+    changeLeftSidebarColorType: (state, action) => {
+      state.leftSidebarColorType = action.payload;
+    },
+
+    changeLeftSidebarGradientColorType: (state, action) => {
+      state.leftSidebarGradientColorType = action.payload;
+    },
+
+    changeLeftSidebarImageType: (state, action) => {
+      state.leftSidebarImageType = action.payload;
+    },
+
+    changeLayoutThemePrimaryColorType: (state, action) => {
+      state.layoutThemePrimaryColorType = action.payload;
+    },
+
+    changePreloader: (state, action) => {
+      state.preloader = action.payload;
+    },
   },
 });
 
 export const {
-  initialCustomize,
   changeLayoutType,
   changeLeftSideBarSizeType,
   changeRightSideBarIsOpen,
@@ -91,5 +99,11 @@ export const {
   changeLayoutPositionType,
   changeTopbarColorType,
   changeLeftSidbarSizeType,
+  changeLeftSidebarViewType,
+  changeLeftSidebarColorType,
+  changeLeftSidebarGradientColorType,
+  changeLeftSidebarImageType,
+  changeLayoutThemePrimaryColorType,
+  changePreloader,
 } = layoutCustomizerSlice.actions;
 export default layoutCustomizerSlice.reducer;
