@@ -53,6 +53,55 @@ body {
 /* NOTE Preloader Spinner */
 
 @layer utilities {
+  /* Auth Styles */
+  .auth-section-container {
+    @apply w-full min-h-[100vh] bg-[#F3F3F9];
+  }
+
+  .auth-form-container {
+    @apply w-full px-2;
+  }
+
+  .auth-banner-text {
+    @apply text-[#ffffff80] font-poppins-md text-[15px] text-center;
+  }
+
+  .main-form-container {
+    @apply relative -top-[100px] sm:-top-[200px] lg:-top-[100px] z-[50] flex flex-col items-center justify-center gap-5;
+  }
+
+  .form-inner-container {
+    @apply bg-white w-full max-w-[450px] px-5 sm:px-8 py-8 rounded-md shadow-light;
+  }
+
+  .form-heading {
+    @apply mb-2 text-center font-poppins-md text-light-500 text-[16px];
+  }
+
+  .form-description {
+    @apply text-[13px] font-poppins-rg text-light-400 text-center;
+  }
+
+  .form-lable-text {
+    @apply text-[13px] font-poppins-md text-dark-500;
+  }
+
+  .form-input-text {
+    @apply text-[13px] font-poppins-rg  text-dark-500;
+  }
+
+  .auth-description {
+    @apply text-[#878A99] font-poppins-rg text-sm;
+  }
+
+  .auth-button {
+    @apply bg-[#099885] text-white text-[14px] font-poppins-rg px-2 py-2 rounded-md flex justify-center items-center;
+  }
+
+  .auth-direction-text {
+    @apply text-dark-500 font-poppins-md text-[13px];
+  }
+
   .inital-pages-style {
     @apply bg-gray-600 min-h-[500vh];
   }
@@ -63,35 +112,6 @@ body {
 
   .text-dark {
     @apply text-[#545A61] font-poppins-md;
-  }
-
-  /* NOTE Auth Class */
-  .auth-banner-text {
-    @apply font-semibold text-[#A6ADC4] text-center text-[16px] sm:text-[20px] font-poppins-rg;
-  }
-
-  .auth-heading {
-    @apply text-[#405189] text-lg font-poppins-md;
-  }
-
-  .auth-description {
-    @apply text-[#878A99] font-poppins-rg text-sm;
-  }
-
-  .auth-label-text {
-    @apply font-poppins-md text-[17px] text-[#212529];
-  }
-
-  .auth-input-text {
-    @apply font-poppins-rg text-[15px] text-[#212529];
-  }
-
-  .auth-button {
-    @apply bg-[#099885] text-white text-[18px] font-poppins-rg px-2 py-2 rounded-md flex justify-center items-center;
-  }
-
-  .auth-direction-text {
-    @apply text-dark font-poppins-md text-[17px] text-[#212529];
   }
 
   /* Navbar classes */

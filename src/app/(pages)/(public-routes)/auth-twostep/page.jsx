@@ -1,5 +1,6 @@
 import { titlesObject } from "@/app/assets/titlesData/titles";
-import { CommonAuthLayout, VerifyAccount } from "@/app/components";
+import { CommonAuthLayout, VerifyAccount } from "@/components";
+
 import React from "react";
 
 export const metadata = {
@@ -8,12 +9,12 @@ export const metadata = {
 
 const VerifyEmailAccount = () => {
   return (
-    <div className="w-full min-h-[100vh] bg-[#F3F3F9]">
+    <div className="auth-section-container">
       {/* Common Background */}
       <CommonAuthLayout />
       {/* Verify Form Section */}
-      <div className="w-full px-2">
-        <div className="relative -top-[100px] sm:-top-[200px] lg:-top-[100px] z-[50] flex flex-col items-center justify-center gap-5">
+      <div className="auth-form-container">
+        <div className="main-form-container">
           <VerifyAccount />
         </div>
       </div>

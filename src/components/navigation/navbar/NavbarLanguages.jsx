@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Avatar, Dropdown } from "flowbite-react";
-import { languagesDetails } from "../../../assets/navData/navData";
+import { languagesDetails } from "../../../app/assets/navData/navData";
 import Image from "next/image";
 import { useAppSelector } from "@/lib/store/hooks";
 

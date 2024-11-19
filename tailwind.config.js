@@ -36,6 +36,26 @@ module.exports = {
       boxShadow: {
         light: "0 2px 4px rgba(0, 0, 0, 0.1)",
       },
+      colors: {
+        dark: {
+          100: "#000000",
+          200: "#0F1117",
+          300: "#151821",
+          400: "#212734",
+          500: "#212529",
+        },
+        light: {
+          400: "#878a99",
+          500: "#405189",
+          700: "#DCE3F1",
+          800: "#F4F6F8",
+          850: "#FDFDFD",
+          900: "#FFFFFF",
+        },
+        accent: {
+          800: "#FFF1E6",
+        },
+      },
     },
   },
   plugins: [require("tailwindcss-animate"), flowbite.plugin()],

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { PasswordInputFiled } from "../..";
+import { PasswordInputFiled } from "..";
 import Link from "next/link";
 import { ClipLoader } from "react-spinners";
 import { toast } from "react-toastify";
@@ -110,14 +110,11 @@ const ResetPasswordForm = () => {
 
   return (
     <>
-      <form
-        className="bg-white w-full max-w-[450px] px-5 sm:px-8 py-6 rounded-md shadow-light"
-        onSubmit={handleFromSubmit}
-      >
+      <form className="form-inner-container" onSubmit={handleFromSubmit}>
         {/* Welcome Text */}
         <div className="mb-6">
-          <h1 className="mb-2 text-center auth-heading">Create new password</h1>
-          <p className="text-center auth-description">
+          <h1 className="form-heading">Create new password</h1>
+          <p className="form-description">
             Your new password must be different from pervious used password.
           </p>
         </div>

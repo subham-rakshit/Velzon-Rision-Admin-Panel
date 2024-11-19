@@ -3,16 +3,15 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 
-import { TextInputFile } from "../..";
-
 import { ClipLoader } from "react-spinners";
 import { toast } from "react-toastify";
 import { Player } from "@lordicon/react";
 
-import ICON from "../../../assets/jsonData/animate-mail-2.json"; // Mail Icon JSON file
+import ICON from "../../app/assets/jsonData/animate-mail-2.json"; // Mail Icon JSON file
 import { useRouter } from "next/navigation";
+import { TextInputFile } from "..";
 
-const ResendOtpForm = () => {
+const ForgotPasswordForm = () => {
   const playerRef = useRef(null);
   const [userEmail, setUserEmail] = useState({});
   const [isProcessing, setIsProcessing] = useState(false);
@@ -40,7 +39,7 @@ const ResendOtpForm = () => {
         const { email } = userEmail;
 
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/user/resend-otp`,
+          `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/user/forgot-password`,
           {
             method: "POST",
             headers: {
@@ -66,7 +65,7 @@ const ResendOtpForm = () => {
           });
           setUserEmail({});
           setIsProcessing(false);
-          router.replace("/auth-twostep"); // Redirect Login page
+          router.replace("/login"); // Redirect Login page
         } else {
           setIsProcessing(false);
           if (typeof data.message === "string") {
@@ -114,16 +113,11 @@ const ResendOtpForm = () => {
 
   return (
     <>
-      <form
-        className="bg-white w-full max-w-[450px] px-5 sm:px-8 py-6 rounded-md shadow-light"
-        onSubmit={handleFromSubmit}
-      >
+      <form className="form-inner-container" onSubmit={handleFromSubmit}>
         {/* Welcome Text */}
         <div className="flex flex-col items-center mb-6">
-          <h1 className="mb-2 text-center auth-heading">Resend OTP?</h1>
-          <p className="mb-4 text-center auth-description">
-            Resend otp with velzon
-          </p>
+          <h1 className="form-heading">Forgot Password?</h1>
+          <p className="form-description">Reset password with velzon</p>
 
           <Player
             ref={playerRef}
@@ -136,8 +130,8 @@ const ResendOtpForm = () => {
           />
 
           <div className="bg-[#FEF4E4] w-full px-3 py-3 rounded shadow-light mt-4">
-            <p className="text-[#D49C20] font-poppins-rg text-center text-[17px]">
-              Enter your email and otp will be sent to you!
+            <p className="text-[#d29c40] font-poppins-md text-center text-[13px]">
+              Enter your email and instructions will be sent to you!
             </p>
           </div>
         </div>
@@ -147,7 +141,7 @@ const ResendOtpForm = () => {
           {/* Email Input */}
           <TextInputFile
             labelText="Email"
-            inputId="resend-otp-email"
+            inputId="forgot-password-email"
             inputName="email"
             inputValue={userEmail.email ? userEmail.email : ""}
             inputPlaceholder="Enter email"
@@ -168,15 +162,15 @@ const ResendOtpForm = () => {
                 <span className="text-light">Processing...</span>
               </span>
             ) : (
-              "Send OTP"
+              "Send Reset Link"
             )}
           </button>
         </div>
       </form>
 
       <p className="text-center auth-direction-text">
-        Hold on, I just received my code...{" "}
-        <Link href="/auth-twostep">
+        Wait, I remember my password...{" "}
+        <Link href="/login">
           <span className="underline text-[#405189]">Click here</span>
         </Link>
       </p>
@@ -184,4 +178,4 @@ const ResendOtpForm = () => {
   );
 };
 
-export default ResendOtpForm;
+export default ForgotPasswordForm;

@@ -7,11 +7,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 
-import {
-  AlternateAuthentication,
-  PasswordInputFiled,
-  TextInputFile,
-} from "../..";
+import { AlternateAuthentication, PasswordInputFiled, TextInputFile } from "..";
 
 const RegistrationForm = () => {
   const [registerationData, setRegistrationData] = useState({});
@@ -116,16 +112,11 @@ const RegistrationForm = () => {
 
   return (
     <>
-      <form
-        className="bg-white w-full max-w-[450px] px-5 sm:px-8 py-8 rounded-md shadow-light"
-        onSubmit={handleFromSubmit}
-      >
+      <form className="form-inner-container" onSubmit={handleFromSubmit}>
         {/* Create Text */}
         <div className="mb-6">
-          <h1 className="mb-2 text-center auth-heading">Create New Account</h1>
-          <p className="text-center auth-description">
-            Get your free velzon account now
-          </p>
+          <h1 className="form-heading">Create New Account</h1>
+          <p className="form-description">Get your free velzon account now</p>
         </div>
 
         {/* Form Element */}
@@ -179,7 +170,7 @@ const RegistrationForm = () => {
               placeholderText="Confirm Password"
               onHandleInputs={onHandleInputs}
             />
-            <p className="text-soft text-[15px] font-normal italic mt-2">
+            <p className="form-description italic mt-2">
               By registering you agree to the Velzon{" "}
               <Link href="#">
                 <span className="underline not-italic text-[#405189] font-poppins-md">

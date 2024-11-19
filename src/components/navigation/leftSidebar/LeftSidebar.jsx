@@ -28,9 +28,9 @@ import { IoIosArrowForward } from "react-icons/io";
 import { BsDash } from "react-icons/bs";
 import { GoDot, GoDotFill } from "react-icons/go";
 
-import leftSidebarData from "../../leftSidebarData/leftSidebarData";
-import logoSmall from "../../../assets/images/logo-sm.png";
-import logoLight from "../../../assets/images/logo-light.png";
+import leftSidebarData from "../../../app/assets/leftSidebarData/leftSidebarData";
+import logoSmall from "../../../app/assets/images/logo-sm.png";
+import logoLight from "../../../app/assets/images/logo-light.png";
 import TransitionLink from "./TransitionLink";
 
 const LeftSidebar = ({ width, isSidebarCollapse }) => {

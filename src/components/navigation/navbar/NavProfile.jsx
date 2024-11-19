@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { Avatar, Dropdown } from "flowbite-react";
-import avatarImg from "../../../assets/images/users/avatar-1.jpg";
+import avatarImg from "../../../app/assets/images/users/avatar-1.jpg";
 
 import {
   MdAccountCircle,

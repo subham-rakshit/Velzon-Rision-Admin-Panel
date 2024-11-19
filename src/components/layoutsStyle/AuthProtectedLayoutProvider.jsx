@@ -2,17 +2,12 @@
 
 import React, { Suspense, useEffect, useRef, useState } from "react";
 import NextTopLoader from "nextjs-toploader";
-import {
-  Footer,
-  LeftSidebar,
-  LeftTwoColumnSidebar,
-  LeftHorizontalSidebar,
-  Navbar,
-  RightSidebar,
-  LoadingUI,
-} from "..";
+
 import { useAppSelector } from "@/lib/store/hooks";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
+import LoadingUI from "./Loading";
+import { LeftHorizontalSidebar, LeftSidebar, LeftTwoColumnSidebar, Navbar, RightSidebar } from "..";
+import Footer from "./Footer";
 
 const AuthProtectedLayoutProvider = ({ children }) => {
   const { layoutType, leftSidbarSizeType, topbarColorType, preloader } =

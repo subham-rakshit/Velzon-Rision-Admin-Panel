@@ -163,25 +163,18 @@ const VerifyAccount = () => {
 
   return (
     <>
-      <form
-        onSubmit={handleVerifyAccount}
-        className="bg-white w-full max-w-[450px] px-5 sm:px-8 py-6 rounded-md shadow-light"
-      >
+      <form onSubmit={handleVerifyAccount} className="form-inner-container">
         <div className="flex flex-col items-center justify-center gap-5">
           <div className="bg-[#F3F6F9] p-5 rounded-full">
             <AiOutlineMail color="#405189" size="65" />
           </div>
 
           <div className="text-center font-hk-grotesk">
-            <h1 className="text-center text-[#495057] font-poppins-md font-semibold text-lg mb-2">
-              Verify Your Email
-            </h1>
-            <p className="auth-description">
+            <h1 className="form-heading">Verify Your Email</h1>
+            <p className="form-description">
               Please click the below button to proceed
             </p>
-            <p className="text-[#878A99] text-[18px] font-poppins-md">
-              example@abc.com
-            </p>
+            <p className="form-description font-[600]">example@abc.com</p>
           </div>
 
           <div className="flex items-center justify-center w-full gap-4 my-5">

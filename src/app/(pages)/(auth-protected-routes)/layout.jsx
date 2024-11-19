@@ -1,4 +1,4 @@
-import { AuthProtectedLayoutProvider } from "@/app/components";
+import AuthProtectedLayoutProvider from "@/components/layoutsStyle/AuthProtectedLayoutProvider";
 import React from "react";
 
 const CommonLayoutForAdminAndUser = ({ children }) => {

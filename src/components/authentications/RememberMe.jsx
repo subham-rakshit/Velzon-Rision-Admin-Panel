@@ -25,12 +25,12 @@ const RememberMe = ({
         id={boxId}
         name={boxName}
         checked={checkedStatus}
-        className="w-3 h-3 focus:border-none focus:ring-0"
+        className="w-3 h-3 focus:border-none focus:ring-0 cursor-pointer"
         onChange={handleCheckboxChange}
       />
       <Label
         htmlFor={boxId}
-        className={`auth-label-text ${checkboxExtraClasses}`}
+        className={`form-lable-text ${checkboxExtraClasses}`}
       >
         Remember me
       </Label>

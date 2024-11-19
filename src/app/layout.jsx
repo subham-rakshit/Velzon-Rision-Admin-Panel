@@ -4,6 +4,7 @@ import AuthProvider from "@/context/AuthProvider.jsx";
 import { ToastContainer } from "./clientToastContainer.js";
 import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
+import ThemeProvider from "@/context/ThemeProvider.jsx";
 
 const hkGrotesk = localFont({
   src: "./assets/fonts/hkGroteskVF.ttf",
@@ -68,13 +69,13 @@ const workSans = localFont({
 const poppinsMd = localFont({
   src: "./assets/fonts/poppinsMd.ttf",
   variable: "--font-poppins-md",
-  weight: "500",
+  weight: "600, 500",
 });
 
 const poppinsRg = localFont({
   src: "./assets/fonts/poppinsRg.ttf",
   variable: "--font-poppins-rg",
-  weight: "500",
+  weight: "500, 400",
 });
 
 export const metadata = {
@@ -91,7 +92,14 @@ export default function RootLayout({ children }) {
         {/* Server Component wrapped with Client Component can be done */}
         <AuthProvider>
           <StoreProvider>
-            {children}
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              {children}
+            </ThemeProvider>
             <ToastContainer
               position="top-right"
               autoClose={5000}

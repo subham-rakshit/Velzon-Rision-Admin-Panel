@@ -12,7 +12,7 @@ import {
   PasswordInputFiled,
   RememberMe,
   TextInputFile,
-} from "../..";
+} from "..";
 
 const LoginForm = () => {
   const [loginData, setLoginData] = useState({ rememberMe: false });
@@ -117,16 +117,11 @@ const LoginForm = () => {
 
   return (
     <>
-      <form
-        className="bg-white w-full max-w-[450px] px-5 sm:px-8 py-8 rounded-md shadow-light"
-        onSubmit={handleFromSubmit}
-      >
+      <form className="form-inner-container" onSubmit={handleFromSubmit}>
         {/* Welcome Text */}
         <div className="mb-6">
-          <h1 className="mb-2 text-center auth-heading">Welcome Back !</h1>
-          <p className="text-center auth-description">
-            Sign in to continue to Velzon
-          </p>
+          <h1 className="form-heading">Welcome Back !</h1>
+          <p className="form-description">Sign in to continue to Velzon</p>
         </div>
 
         {/* Form Element */}

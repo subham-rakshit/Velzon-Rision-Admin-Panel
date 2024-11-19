@@ -5,7 +5,7 @@ import { MdCopyright, MdHome } from "react-icons/md";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ErrorImage } from "./components";
+import { ErrorImage } from "../components";
 
 export const metadata = {
   title: titlesObject.error404.title,
