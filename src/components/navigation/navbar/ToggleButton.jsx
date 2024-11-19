@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+
 import { changeLeftSideBarSizeType } from "@/lib/store/features/layoutCustomizer/layoutCustomizerSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 
@@ -23,7 +24,7 @@ const ToggleButton = () => {
     <button
       onClick={handleSidebarToggel}
       type="button"
-      className="inline-block cursor-pointer h-full px-2"
+      className="inline-block h-full cursor-pointer px-2"
     >
       {["bar_1", "bar_2", "bar_3"].map((bar) => {
         let dynamicClasses;
@@ -60,7 +61,7 @@ const ToggleButton = () => {
             key={bar}
             className={`block h-[2px] ${
               topbarColorType === "dark-color" ? "bg-[#B0C4D9]" : "bg-[#878A99]"
-            } my-[4px] transition-all duration-500 ease-in-out rounded-sm ${dynamicClasses}`}
+            } my-[4px] rounded-sm transition-all duration-500 ease-in-out ${dynamicClasses}`}
           ></span>
         );
       })}

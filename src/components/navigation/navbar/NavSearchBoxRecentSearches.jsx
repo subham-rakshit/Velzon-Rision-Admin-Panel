@@ -1,15 +1,19 @@
 "use client";
 
-import React from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
+import Link from "next/link";
+import React from "react";
 import {
   MdOutlineArrowForward,
   MdSearch,
   MdOutlineBubbleChart,
 } from "react-icons/md";
 import { RiLifebuoyLine, RiUserSettingsLine } from "react-icons/ri";
-import Image from "next/image";
-import Link from "next/link";
+
+import avarat2 from "../../../app/assets/images/users/avatar-2.jpg";
+import avarat3 from "../../../app/assets/images/users/avatar-3.jpg";
+import avarat5 from "../../../app/assets/images/users/avatar-5.jpg";
 
 const pagesContent = [
   {
@@ -32,19 +36,19 @@ const pagesContent = [
 const membersContent = [
   {
     id: "members_1",
-    userAvater: "/assets/userAvatarsImg/avatar-2.jpg",
+    userAvater: avarat2,
     name: "Angela Bernier",
     designation: "Manager",
   },
   {
     id: "members_2",
-    userAvater: "/assets/userAvatarsImg/avatar-3.jpg",
+    userAvater: avarat3,
     name: "David Grasso",
     designation: "Web Designer",
   },
   {
     id: "members_3",
-    userAvater: "/assets/userAvatarsImg/avatar-5.jpg",
+    userAvater: avarat5,
     name: "Mike Bunch",
     designation: "React Developer",
   },
@@ -53,6 +57,7 @@ const membersContent = [
 const NavSearchBoxRecentSearches = ({
   isRecentSearchOpen,
   setIsRecentSearchOpen,
+  layoutModeType,
 }) => {
   return (
     <motion.div
@@ -62,23 +67,27 @@ const NavSearchBoxRecentSearches = ({
         duration: 0.3,
         ease: "easeInOut",
       }}
-      className="bg-white rounded-[3px] h-[385px] min-w-[320px] absolute top-full left-0 mt-[1px] shadow-light flex flex-col pt-4"
+      className={`absolute left-0 top-full mt-px flex h-[385px] min-w-[320px] flex-col rounded-[3px] pt-4 shadow-light ${layoutModeType === "light" ? "nav-bg-light" : "nav-bg-dark"}`}
     >
       {/* NOTE Scrollable Content */}
-      <div className="h-full overflow-y-auto custom-scrollbar">
-        <h3 className="text-[13px] tracking-wide uppercase font-poppins-md font-[500] px-5">
+      <div className="custom-scrollbar h-full overflow-y-auto">
+        <h3 className="h4-dark-light-mode px-5 uppercase tracking-wide">
           Recent Searches
         </h3>
         {/* Buttons */}
-        <div className="text-[11px] flex items-center gap-2 mt-2 text-[#568df3] font-poppins-rg font-[500] px-5">
+        <div className="mt-2 flex items-center gap-2 px-5 font-poppins-rg text-[11px] text-[#568df3]">
           <Link href="/">
-            <button className="flex items-center gap-1 bg-[#e1ebfd] hover:bg-[#568df3] hover:text-white px-3 py-2 rounded-full">
+            <button
+              className={`flex items-center gap-1 rounded-full px-3 py-2 hover:bg-[#568df3] hover:text-white ${layoutModeType === "light" ? "bg-[#e1ebfd]" : "bg-[#2b394f]"}`}
+            >
               how to setup
               <MdSearch />
             </button>
           </Link>
           <Link href="/">
-            <button className="flex items-center gap-1 bg-[#e1ebfd] hover:bg-[#568df3] hover:text-white px-3 py-2 rounded-full">
+            <button
+              className={`flex items-center gap-1 rounded-full bg-[#e1ebfd] px-3 py-2 hover:bg-[#568df3] hover:text-white ${layoutModeType === "light" ? "bg-[#e1ebfd]" : "bg-[#2b394f]"}`}
+            >
               buttons
               <MdSearch />
             </button>
@@ -86,7 +95,7 @@ const NavSearchBoxRecentSearches = ({
         </div>
 
         {/* Pages */}
-        <h3 className="text-[13px] tracking-wide uppercase font-poppins-md mt-5 font-[500] px-5">
+        <h3 className="mt-5 px-5 font-poppins-md text-[13px] uppercase tracking-wide">
           Pages
         </h3>
         <ul className="mt-2">
@@ -94,16 +103,20 @@ const NavSearchBoxRecentSearches = ({
             <li
               key={content.id}
               onClick={() => setIsRecentSearchOpen(false)}
-              className="flex items-center gap-2 hover:bg-[#EFF2F7] py-3 px-5 cursor-pointer"
+              className={`flex cursor-pointer items-center gap-2 px-5 py-3 ${layoutModeType === "light" ? "nav-icons-hover-light" : "nav-icons-hover-dark"}`}
             >
               <span>{content.icon}</span>
-              <span className="text-[13px] text-dark">{content.text}</span>
+              <span
+                className={`${layoutModeType === "light" ? "h4-dark-light-mode" : "h4-dark-dark-mode"}`}
+              >
+                {content.text}
+              </span>
             </li>
           ))}
         </ul>
 
         {/* Members */}
-        <h3 className="text-[13px] tracking-wide uppercase font-poppins-md mt-5 font-[500] px-5">
+        <h3 className="mt-5 px-5 font-poppins-md text-[13px] uppercase tracking-wide">
           Members
         </h3>
         <ul className="mt-2">
@@ -111,7 +124,7 @@ const NavSearchBoxRecentSearches = ({
             <li
               key={member.id}
               onClick={() => setIsRecentSearchOpen(false)}
-              className="flex items-center gap-4 py-3 px-5 cursor-pointer hover:bg-[#EFF2F7]"
+              className={`flex cursor-pointer items-center gap-4 px-5 py-3 ${layoutModeType === "light" ? "nav-icons-hover-light" : "nav-icons-hover-dark"}`}
             >
               <Image
                 src={member.userAvater}
@@ -120,11 +133,13 @@ const NavSearchBoxRecentSearches = ({
                 height={35}
                 className="rounded-full"
               />
-              <span className="flex flex-col gap-1 text-[13px] font-poppins-md text-dark">
-                <span>{member.name}</span>
-                <span className="text-[11px] font-poppins-rg text-soft">
-                  {member.designation}
+              <span className="text-dark flex flex-col gap-1 font-poppins-md text-[13px]">
+                <span
+                  className={`${layoutModeType === "light" ? "h4-dark-light-mode" : "h4-dark-dark-mode"}`}
+                >
+                  {member.name}
                 </span>
+                <span className="h6-soft">{member.designation}</span>
               </span>
             </li>
           ))}
@@ -132,10 +147,10 @@ const NavSearchBoxRecentSearches = ({
       </div>
 
       {/* TODO Need To Work ON Redirection */}
-      <div className="w-full py-3 mt-auto">
+      <div className="mt-auto w-full py-3">
         <button
           type="button"
-          className="bg-[#405189] hover:bg-[#3c4c80] text-white text-[11px] flex items-center gap-1 px-3 py-2 rounded-[3px] mx-auto"
+          className="mx-auto flex items-center gap-1 rounded-[3px] bg-[#405189] px-3 py-2 text-[11px] text-white hover:bg-[#3c4c80]"
         >
           View All Results
           <MdOutlineArrowForward />

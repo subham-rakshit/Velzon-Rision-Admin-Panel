@@ -1,31 +1,32 @@
 "use client";
 
-import React from "react";
+import { Dropdown } from "flowbite-react";
 import Image from "next/image";
-import { Avatar, Dropdown } from "flowbite-react";
-import avatarImg from "../../../app/assets/images/users/avatar-1.jpg";
-
+import { useRouter } from "next/navigation";
+import React from "react";
+import { BiTask } from "react-icons/bi";
+import { IoMdWallet } from "react-icons/io";
+import { IoSettingsOutline } from "react-icons/io5";
 import {
   MdAccountCircle,
   MdOutlineMessage,
   MdLock,
   MdLogout,
 } from "react-icons/md";
-import { BiTask } from "react-icons/bi";
 import { RiLifebuoyLine } from "react-icons/ri";
-import { IoMdWallet } from "react-icons/io";
-import { IoSettingsOutline } from "react-icons/io5";
-import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+
+import avatarImg from "../../../app/assets/images/users/avatar-1.jpg";
+
 import { useAppSelector } from "@/lib/store/hooks";
 
 const NavProfile = () => {
-  const { sidebarUserProfileAvtarType, topbarColorType } = useAppSelector(
+  const { sidebarUserProfileAvtarType, layoutModeType } = useAppSelector(
     (state) => state.layout
   );
   const router = useRouter();
 
-  //NOTE: Logout functionality
+  // NOTE: Logout functionality
   const handleLogout = async () => {
     try {
       const res = await fetch(
@@ -44,7 +45,7 @@ const NavProfile = () => {
           progress: undefined,
           theme: "light",
         });
-        router.push("/login"); //NOTE: redirect to login page
+        router.push("/login"); // NOTE: redirect to login page
       } else {
         toast.error(data.message, {
           position: "top-right",
@@ -65,11 +66,7 @@ const NavProfile = () => {
   if (sidebarUserProfileAvtarType === "show") {
     return (
       <div
-        className={`relative h-full flex items-center ml-5 ${
-          topbarColorType === "dark-color"
-            ? "nav-profile-bg-dark"
-            : "nav-profile-bg-light"
-        }`}
+        className={`relative ml-5 flex h-full items-center ${layoutModeType === "light" ? "nav-profile-box-light" : "nav-profile-box-dark"}`}
       >
         <Dropdown
           label={
@@ -81,23 +78,19 @@ const NavProfile = () => {
                 height={35}
                 className="rounded-full border"
               />
-              <span className="flex flex-col">
+              <span className="flex flex-col font-poppins-rg">
                 <span
-                  className={`text-[13px] ${
-                    topbarColorType === "dark-color"
-                      ? "text-[#fff]"
-                      : "text-dark"
-                  }`}
+                  className={`text-[13px] ${layoutModeType === "light" ? "text-dark-500" : "text-light-850"}`}
                 >
                   Badsha
                 </span>
-                <span className="text-soft text-[11px]">Founder</span>
+                <span className={`text-[11px] text-light-400`}>Founder</span>
               </span>
             </span>
           }
           arrowIcon={false}
           style={{ backgroundColor: "transparent" }}
-          className="absolute top-0 left-0"
+          className="absolute left-0 top-0"
         >
           <Dropdown.Header>
             <span className="text-soft text-[11px] font-semibold">
@@ -123,16 +116,16 @@ const NavProfile = () => {
           <Dropdown.Divider />
           <Dropdown.Item className="flex items-center gap-2">
             <IoMdWallet size={16} color="#878a99" />
-            <span className="text-dark text-[13px] font-light flex items-center justify-between gap-1 w-full">
+            <span className="text-dark flex w-full items-center justify-between gap-1 text-[13px] font-light">
               <span>Balance:</span>
               <span className="font-medium text-black">$5971.67</span>
             </span>
           </Dropdown.Item>
           <Dropdown.Item className="flex items-center gap-2">
             <IoSettingsOutline size={16} color="#878a99" />
-            <span className="text-dark text-[13px] font-light flex items-center justify-between gap-1 w-full">
+            <span className="text-dark flex w-full items-center justify-between gap-1 text-[13px] font-light">
               <span>Settings</span>
-              <span className="font-medium bg-[#daf4f0] text-[#0ab39c] px-[4px] text-[11px]">
+              <span className="bg-[#daf4f0] px-[4px] text-[11px] font-medium text-[#0ab39c]">
                 New
               </span>
             </span>

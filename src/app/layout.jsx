@@ -1,10 +1,12 @@
 import localFont from "next/font/local";
-import StoreProvider from "./StoreProvider.jsx";
-import AuthProvider from "@/context/AuthProvider.jsx";
+
 import { ToastContainer } from "./clientToastContainer.js";
+import StoreProvider from "./StoreProvider.jsx";
+
+import AuthProvider from "@/context/AuthProvider.jsx";
 import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
-import ThemeProvider from "@/context/ThemeProvider.jsx";
+import DarkModeProvider from "@/context/DarkModeProvider.jsx";
 
 const hkGrotesk = localFont({
   src: "./assets/fonts/hkGroteskVF.ttf",
@@ -92,14 +94,8 @@ export default function RootLayout({ children }) {
         {/* Server Component wrapped with Client Component can be done */}
         <AuthProvider>
           <StoreProvider>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
-              {children}
-            </ThemeProvider>
+            <DarkModeProvider>{children}</DarkModeProvider>
+
             <ToastContainer
               position="top-right"
               autoClose={5000}

@@ -1,17 +1,19 @@
 "use client";
 
-import { Button, Dropdown } from "flowbite-react";
+import { Dropdown } from "flowbite-react";
 import Image from "next/image";
-import Link from "next/link";
 import React, { useState } from "react";
 import { MdClose } from "react-icons/md";
-import { RiShoppingBagLine } from "react-icons/ri";
 import { PiShoppingCartSimpleBold } from "react-icons/pi";
+import { RiShoppingBagLine } from "react-icons/ri";
+
 import { myCartData } from "@/app/assets/navData/navData";
 import { useAppSelector } from "@/lib/store/hooks";
 
 const NavbarMyCart = () => {
-  const { topbarColorType } = useAppSelector((state) => state.layout);
+  const { topbarColorType, layoutModeType } = useAppSelector(
+    (state) => state.layout
+  );
   const [cartData, setCartData] = useState(myCartData);
   const totalPrice = cartData.reduce((acc, curr) => {
     return acc + curr.productQuantity * curr.productPrice;
@@ -21,11 +23,7 @@ const NavbarMyCart = () => {
     <Dropdown
       label={
         <span
-          className={`relative p-[9px] rounded-full transition-all duration-300 ease-in-out ${
-            topbarColorType === "dark-color"
-              ? "hover:bg-[#4A5A8F]"
-              : "hover:bg-[#E6EEFD]"
-          }`}
+          className={`relative rounded-full p-[9px] transition-all duration-300 ease-in-out ${layoutModeType === "light" ? "nav-icons-hover-light" : "nav-icons-hover-dark"}`}
         >
           <RiShoppingBagLine
             size={20}
@@ -33,7 +31,7 @@ const NavbarMyCart = () => {
               topbarColorType === "dark-color" ? "#B0C4D9" : "#878A99"
             }`}
           />
-          <span className="absolute -top-[7px] left-[50%] bg-[#299CDB] text-white font-poppins-md font-semibold text-[10px] rounded-full px-[7px] py-[2px]">
+          <span className="absolute left-1/2 top-[-7px] rounded-full bg-[#299CDB] px-[7px] py-[2px] font-poppins-md text-[10px] font-semibold text-white">
             {cartData.length}
           </span>
         </span>
@@ -41,26 +39,26 @@ const NavbarMyCart = () => {
       arrowIcon={false}
       inline
       dismissOnClick={false}
-      className="w-full max-w-[420px] max-h-[460px] focus:border-none"
+      className="max-h-[460px] w-full max-w-[420px] focus:border-none"
     >
       <Dropdown.Header className="flex items-center justify-between gap-2">
-        <span className="block text-dark font-poppins-md font-semibold text-[15px] tracking-wide">
+        <span className="text-dark block font-poppins-md text-[15px] font-semibold tracking-wide">
           My Cart
         </span>
-        <span className="flex items-center gap-1 bg-[#FEF4E4] text-[#F7B84B] px-2 py-1 rounded-[4px] text-[13px] tracking-wide font-[600]">
+        <span className="flex items-center gap-1 rounded-[4px] bg-[#FEF4E4] px-2 py-1 text-[13px] font-[600] tracking-wide text-[#F7B84B]">
           {cartData.length} items
         </span>
       </Dropdown.Header>
       <div
         className={`flex flex-col ${
           cartData.length === 0
-            ? "items-center justify-center min-h-[200px]"
+            ? "min-h-[200px] items-center justify-center"
             : "max-h-[300px]"
-        } w-full overflow-y-auto custom-scrollbar`}
+        } custom-scrollbar w-full overflow-y-auto`}
       >
         {cartData.length > 0 ? (
           cartData.map((item) => {
-            //NOTE Handle deleting cart items
+            // NOTE Handle deleting cart items
             const handleCartData = (e) => {
               e.stopPropagation(); // NOTE Preventing the parent handlers from being triggerd
               const newCartArray = cartData.filter(
@@ -83,18 +81,18 @@ const NavbarMyCart = () => {
                     alt={item.productName}
                     width={50}
                     height={50}
-                    className="bg-[#f3f6f9] rounded-full p-2"
+                    className="rounded-full bg-[#f3f6f9] p-2"
                   />
                   <span>
-                    <span className="block text-dark font-light text-[14px] tracking-wide mb-2">
+                    <span className="text-dark mb-2 block text-[14px] font-light tracking-wide">
                       {item.productName}
                     </span>
-                    <span className="block text-soft font-light text-[12px] tracking-wide">
+                    <span className="text-soft block text-[12px] font-light tracking-wide">
                       {`Quantity: ${item.productQuantity} x $${item.productPrice}`}
                     </span>
                   </span>
                 </div>
-                <span className="text-drak font-medium text-[16px] tracking-wide flex items-center gap-3">
+                <span className="text-dark flex items-center gap-3 text-[16px] font-medium tracking-wide">
                   <span className="font-poppins-md">{`$${
                     item.productQuantity * item.productPrice
                   }`}</span>
@@ -110,8 +108,8 @@ const NavbarMyCart = () => {
             );
           })
         ) : (
-          <div className="flex flex-col items-center gap-4 w-full">
-            <span className="bg-[#DFF0FA] p-4 rounded-full">
+          <div className="flex w-full flex-col items-center gap-4">
+            <span className="rounded-full bg-[#DFF0FA] p-4">
               <PiShoppingCartSimpleBold size={40} color="#299CDB" />
             </span>
             <p className="text-dark text-[16px] font-medium">
@@ -119,7 +117,7 @@ const NavbarMyCart = () => {
             </p>
             <button
               type="button"
-              className="text-white text-[13px] tracking-wide font-poppins-rg bg-[#0ab39c] hover:bg-[#099885] px-4 py-2 rounded-[4px]"
+              className="rounded-[4px] bg-[#0ab39c] px-4 py-2 font-poppins-rg text-[13px] tracking-wide text-white hover:bg-[#099885]"
             >
               Shop Now
             </button>
@@ -129,17 +127,17 @@ const NavbarMyCart = () => {
       <Dropdown.Divider />
       <Dropdown.Item
         as="div"
-        className="text-[16px] text-dark flex items-center justify-between"
+        className="text-dark flex items-center justify-between text-[16px]"
       >
         <span className="font-poppins-rg">Total:</span>
         <span>{`$${totalPrice}`}</span>
       </Dropdown.Item>{" "}
       <Dropdown.Item
-        className="text-[14px] font-medium text-center rounded-[5px]"
+        className="rounded-[5px] text-center text-[14px] font-medium"
         as="div"
       >
         {/* TODO Create redirect to checkout page  */}
-        <button className="text-white tracking-wide font-poppins-rg bg-[#0ab39c] hover:bg-[#099885] w-full px-2 py-2 rounded-[4px]">
+        <button className="w-full rounded-[4px] bg-[#0ab39c] p-2 font-poppins-rg tracking-wide text-white hover:bg-[#099885]">
           Checkout
         </button>
       </Dropdown.Item>

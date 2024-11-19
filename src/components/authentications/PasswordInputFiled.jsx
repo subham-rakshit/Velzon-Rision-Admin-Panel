@@ -1,11 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
-import Link from "next/link";
-
-import { IoAlertCircleOutline, IoEye, IoEyeOff } from "react-icons/io5";
 import { Label, TextInput } from "flowbite-react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
+import React, { useState } from "react";
+import { IoAlertCircleOutline, IoEye, IoEyeOff } from "react-icons/io5";
 
 const PasswordInputFiled = ({
   labelText,
@@ -24,7 +23,7 @@ const PasswordInputFiled = ({
   const [isBlank, setIsBlank] = useState(false);
   const pathname = usePathname();
 
-  //NOTE: Handle Blur Effects
+  // NOTE: Handle Blur Effects
   const handleBlur = () => {
     if (passwordInput.trim() === "") {
       setIsBlank(true);
@@ -33,7 +32,7 @@ const PasswordInputFiled = ({
     }
   };
 
-  //NOTE: Handle Input value changes and pass it to the Login page
+  // NOTE: Handle Input value changes and pass it to the Login page
   const handleChange = (e) => {
     const charInput = e.target.value;
 
@@ -45,7 +44,7 @@ const PasswordInputFiled = ({
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-2">
+      <div className="mb-2 flex items-center justify-between">
         <div>
           <Label
             htmlFor={inputId}
@@ -58,7 +57,7 @@ const PasswordInputFiled = ({
         </div>
         {pathname.includes("login") && (
           <Link href="/forgot-password">
-            <span className="text-light-400 font-poppins-rg text-[13px]">
+            <span className="font-poppins-rg text-[13px] text-light-400">
               Forgot password?
             </span>
           </Link>
@@ -80,7 +79,7 @@ const PasswordInputFiled = ({
           onBlur={handleBlur}
           helperText={
             isBlank && (
-              <span className="text-[13px] font-normal text-red-500 font-poppins-rg">
+              <span className="font-poppins-rg text-[13px] font-normal text-red-500">
                 {helperText}
               </span>
             )
@@ -89,7 +88,7 @@ const PasswordInputFiled = ({
 
         {/* Alert Icon, always visible if input is blank */}
         {isBlank && (
-          <span className="absolute right-0 pr-3 inset-y-3">
+          <span className="absolute inset-y-3 right-0 pr-3">
             <IoAlertCircleOutline color="red" size="25" />
           </span>
         )}
@@ -101,24 +100,24 @@ const PasswordInputFiled = ({
             <button
               type="button"
               onClick={() => setIsVisible(!isVisible)}
-              className="absolute right-0 flex items-center pr-3 inset-y-2"
+              className="absolute inset-y-2 right-0 flex items-center pr-3"
             >
               {isVisible ? (
                 <IoEyeOff
                   color="#878A99"
-                  className="w-4 h-4 text-gray-500 dark:text-gray-400"
+                  className="size-4 text-gray-500 dark:text-gray-400"
                 />
               ) : (
                 <IoEye
                   color="#878A99"
-                  className="w-4 h-4 text-gray-500 dark:text-gray-400"
+                  className="size-4 text-gray-500 dark:text-gray-400"
                 />
               )}
             </button>
           )}
       </div>
       {pathname.includes("auth-pass-change") && userInfo && !isBlank && (
-        <span className="text-[15px] font-normal text-soft font-poppins-rg">
+        <span className="text-soft font-poppins-rg text-[13px] font-normal">
           {userInfo}
         </span>
       )}

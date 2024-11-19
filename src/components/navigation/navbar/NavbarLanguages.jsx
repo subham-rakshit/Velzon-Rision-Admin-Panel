@@ -1,13 +1,15 @@
 "use client";
 
-import React, { useState } from "react";
-import { Avatar, Dropdown } from "flowbite-react";
-import { languagesDetails } from "../../../app/assets/navData/navData";
+import { Dropdown } from "flowbite-react";
 import Image from "next/image";
+import React, { useState } from "react";
+
+import { languagesDetails } from "../../../app/assets/navData/navData";
+
 import { useAppSelector } from "@/lib/store/hooks";
 
 const NavbarLanguages = () => {
-  const { topbarColorType } = useAppSelector((state) => state.layout);
+  const { layoutModeType } = useAppSelector((state) => state.layout);
   const [selectedLanguage, setSelectedLanguage] = useState(
     Object.values(languagesDetails)[0]
   );
@@ -19,11 +21,7 @@ const NavbarLanguages = () => {
       inline
       label={
         <span
-          className={`p-[10px] rounded-full transition-all duration-300 ease-in-out ${
-            topbarColorType === "dark-color"
-              ? "hover:bg-[#4A5A8F]"
-              : "hover:bg-[#E6EEFD]"
-          }`}
+          className={`rounded-full p-[10px] transition-all duration-300 ease-in-out ${layoutModeType === "light" ? "nav-icons-hover-light" : "nav-icons-hover-dark"}`}
         >
           <Image
             src={selectedLanguage.flag}
@@ -35,14 +33,17 @@ const NavbarLanguages = () => {
         </span>
       }
       size="sm"
+      className={`${layoutModeType === "light" ? "nav-bg-light" : "nav-bg-dark"} border-none p-0`}
     >
       {languageArr.map((language) => {
         return (
           <Dropdown.Item
             key={language.label}
-            className={`flex items-center gap-4 ${
-              language.label === selectedLanguage.label ? "bg-[#E6EEFD]" : ""
-            }`}
+            className={`flex items-center gap-4  ${
+              language.label === selectedLanguage.label
+                ? `${layoutModeType === "light" ? "bg-light-800" : "bg-dark-100"}`
+                : ``
+            } hover:bg-transparent`}
             onClick={() => setSelectedLanguage(language)}
           >
             <Image
@@ -52,7 +53,11 @@ const NavbarLanguages = () => {
               height={15}
               className="rounded-[3px]"
             />
-            <span className="text-drak pr-8">{language.label}</span>
+            <span
+              className={`pr-8 ${layoutModeType === "light" ? "h4-dark-light-mode" : "h4-dark-dark-mode"}`}
+            >
+              {language.label}
+            </span>
           </Dropdown.Item>
         );
       })}

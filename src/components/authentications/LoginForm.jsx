@@ -1,11 +1,10 @@
 "use client";
 
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { ClipLoader } from "react-spinners";
 import { toast } from "react-toastify";
-
-import { useRouter } from "next/navigation";
-import Link from "next/link";
 
 import {
   AlternateAuthentication,
@@ -20,7 +19,7 @@ const LoginForm = () => {
 
   const router = useRouter();
 
-  //NOTE Handle the all input fields
+  // NOTE Handle the all input fields
   const onHandleInputs = (name, value) => {
     setLoginData({
       ...loginData,
@@ -28,7 +27,7 @@ const LoginForm = () => {
     });
   };
 
-  //NOTE Login from basic API hit
+  // NOTE Login from basic API hit
   async function handleFromSubmit(event) {
     event.preventDefault();
 
@@ -164,26 +163,26 @@ const LoginForm = () => {
             {isProcessing ? (
               <span className="flex items-center gap-4 font-poppins-rg">
                 <ClipLoader color="#ffffff" size={16} />
-                <span className="text-light">Processing...</span>
+                <span className="text-soft">Processing...</span>
               </span>
             ) : (
               "Sign In"
             )}
           </button>
         </div>
-        <div className="flex items-center gap-2 my-5">
-          <hr className="flex-grow border-gray-300 border-dotted border-t-1" />
+        <div className="my-5 flex items-center gap-2">
+          <hr className="grow border-t border-dotted border-gray-300" />
           <span className="auth-direction-text">Sign in with</span>
-          <hr className="flex-grow border-gray-300 border-dotted border-t-1" />
+          <hr className="grow border-t border-dotted border-gray-300" />
         </div>
         {/* Alternate Sign in */}
         <AlternateAuthentication isRememberMe={loginData.rememberMe} />
       </form>
       {/* Sign Up */}
-      <p className="text-center auth-direction-text">
+      <p className="auth-direction-text text-center">
         Don&apos;t have an account?{" "}
         <Link href="/register">
-          <span className="underline text-[#405189]">Signup</span>
+          <span className="text-[#405189] underline">Signup</span>
         </Link>
       </p>
     </>

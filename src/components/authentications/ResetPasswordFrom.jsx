@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
-import { PasswordInputFiled } from "..";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import React, { useState } from "react";
 import { ClipLoader } from "react-spinners";
 import { toast } from "react-toastify";
+
+import { PasswordInputFiled } from "..";
 
 const ResetPasswordForm = () => {
   const [resetPasswordInput, setResetPasswordInput] = useState({});
@@ -15,7 +16,7 @@ const ResetPasswordForm = () => {
   const pathname = usePathname();
   const resetToken = pathname.split("/").pop();
 
-  //NOTE: Handle the all input fields
+  // NOTE: Handle the all input fields
   const onHandleInputs = (name, value) => {
     setResetPasswordInput({
       ...resetPasswordInput,
@@ -23,7 +24,7 @@ const ResetPasswordForm = () => {
     });
   };
 
-  //NOTE: Handle the Login form
+  // NOTE: Handle the Login form
   const handleFromSubmit = async (event) => {
     event.preventDefault();
 
@@ -62,7 +63,7 @@ const ResetPasswordForm = () => {
           setResetPasswordInput({});
           setIsProcessing(false);
 
-          router.push("/"); //INFO: redirect to Root page
+          router.push("/"); // INFO: redirect to Root page
         } else {
           setIsProcessing(false);
           if (typeof data.message === "string") {
@@ -161,7 +162,7 @@ const ResetPasswordForm = () => {
             {isProcessing ? (
               <span className="flex items-center gap-4">
                 <ClipLoader color="#ffffff" size={16} />
-                <span className="text-light">Processing...</span>
+                <span className="text-soft">Processing...</span>
               </span>
             ) : (
               "Update Password"
@@ -170,10 +171,10 @@ const ResetPasswordForm = () => {
         </div>
       </form>
       {/* Sign In */}
-      <p className="text-center auth-direction-text">
+      <p className="auth-direction-text text-center">
         Wait, I remember my password...{" "}
         <Link href="/login">
-          <span className="underline text-[#405189]">Click here</span>
+          <span className="text-[#405189] underline">Click here</span>
         </Link>
       </p>
     </>

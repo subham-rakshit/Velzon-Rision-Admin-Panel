@@ -1,22 +1,28 @@
 "use client";
 
-import React, { Suspense, useEffect, useRef, useState } from "react";
 import NextTopLoader from "nextjs-toploader";
+import React from "react";
+
+import {
+  LeftHorizontalSidebar,
+  LeftSidebar,
+  LeftTwoColumnSidebar,
+  Navbar,
+  RightSidebar,
+} from "..";
+import Footer from "./Footer";
+import LoadingUI from "./Loading";
 
 import { useAppSelector } from "@/lib/store/hooks";
-import { usePathname, useSearchParams, useRouter } from "next/navigation";
-import LoadingUI from "./Loading";
-import { LeftHorizontalSidebar, LeftSidebar, LeftTwoColumnSidebar, Navbar, RightSidebar } from "..";
-import Footer from "./Footer";
 
 const AuthProtectedLayoutProvider = ({ children }) => {
-  const { layoutType, leftSidbarSizeType, topbarColorType, preloader } =
-    useAppSelector((state) => state.layout);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const router = useRouter();
+  const {
+    layoutType,
+    leftSidbarSizeType,
+    topbarColorType,
+    preloader,
+    layoutModeType,
+  } = useAppSelector((state) => state.layout);
 
   const isSidebarCollapse = leftSidbarSizeType === "small-icon-view";
   const leftMargin =
@@ -33,7 +39,7 @@ const AuthProtectedLayoutProvider = ({ children }) => {
       <div
         className={`flex ${
           layoutType === "horizontal" ? "flex-col" : ""
-        } w-full min-h-screen`}
+        } min-h-screen w-full`}
       >
         {layoutType === "vertical" || layoutType === "semi-box" ? (
           <LeftSidebar
@@ -48,13 +54,16 @@ const AuthProtectedLayoutProvider = ({ children }) => {
         ) : null}
 
         <div
-          className={`flex-grow min-h-screen flex flex-col ${
+          className={`flex min-h-screen grow flex-col ${
             layoutType === "vertical" || layoutType === "semi-box"
               ? leftMargin
               : ""
           }`}
         >
-          <Navbar topbarColorType={topbarColorType} />
+          <Navbar
+            topbarColorType={topbarColorType}
+            layoutModeType={layoutModeType}
+          />
           {layoutType === "horizontal" && <LeftHorizontalSidebar />}
           {children}
           <Footer />

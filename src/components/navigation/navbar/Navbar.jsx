@@ -1,4 +1,5 @@
 import React from "react";
+
 import {
   NavbarLanguages,
   NavbarMyCart,
@@ -10,28 +11,28 @@ import {
   NavSearchBox,
   ToggleButton,
 } from "../..";
-import { useAppSelector } from "@/lib/store/hooks";
 
-const Navbar = ({ topbarColorType }) => {
+const Navbar = ({ topbarColorType, layoutModeType }) => {
   return (
     <div
-      className={`h-[60px] sm:h-[70px] px-5 sm:px-[30px] flex items-center justify-between sticky top-0 shadow-light ${
-        topbarColorType === "dark-color" ? "nav-bg-dark" : "bg-white"
-      }`}
+      className={`sticky top-0 flex h-[60px] items-center justify-between px-5 shadow-light dark:bg-dark-600 sm:h-[70px] sm:px-[30px]`}
     >
       {/* Toggle Button and Form Section */}
-      <div className="flex items-center gap-2 h-full">
+      <div className="flex h-full items-center gap-2">
         <ToggleButton />
         <NavSearchBox />
       </div>
 
       {/* Nav Buttons */}
-      <div className="flex items-center gap-[5px] h-full">
+      <div className="flex h-full items-center gap-[5px]">
         {/* Languages */}
         <NavbarLanguages />
 
         {/* WebApps */}
-        <NavbarWebApps topbarColorType={topbarColorType} />
+        <NavbarWebApps
+          topbarColorType={topbarColorType}
+          layoutModeType={layoutModeType}
+        />
 
         {/* My Cart */}
         <NavbarMyCart />

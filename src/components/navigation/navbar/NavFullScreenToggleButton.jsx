@@ -1,14 +1,15 @@
 "use client";
 
-import { useAppSelector } from "@/lib/store/hooks";
 import React, { useState } from "react";
 import { MdFullscreen, MdFullscreenExit } from "react-icons/md";
 
+import { useAppSelector } from "@/lib/store/hooks";
+
 const NavFullScreenToggleButton = () => {
-  const { topbarColorType } = useAppSelector((state) => state.layout);
+  const { layoutModeType } = useAppSelector((state) => state.layout);
   const [isFullScreen, setIsFullScreen] = useState(false);
 
-  //NOTE: Handle fullscreen
+  // NOTE: Handle fullscreen
   const handleFullScreen = () => {
     // Extract that elem which want to convert in fullscreen
     const fullScreenContainerElem = document.getElementById(
@@ -30,27 +31,13 @@ const NavFullScreenToggleButton = () => {
     <button
       type="button"
       onClick={handleFullScreen}
-      className={`rounded-full p-[9px] flex items-center justify-center ${
-        topbarColorType === "dark-color"
-          ? "hover:bg-[#4A5A8F]"
-          : "hover:bg-[#E6EEFD]"
-      }`}
+      className={`flex items-center justify-center rounded-full p-[9px] ${layoutModeType === "light" ? "nav-icons-hover-light" : "nav-icons-hover-dark"}`}
     >
       <span>
         {isFullScreen ? (
-          <MdFullscreenExit
-            size={22}
-            color={`${
-              topbarColorType === "dark-color" ? "#B0C4D9" : "#878A99"
-            }`}
-          />
+          <MdFullscreenExit size={22} color="#878A99" />
         ) : (
-          <MdFullscreen
-            size={22}
-            color={`${
-              topbarColorType === "dark-color" ? "#B0C4D9" : "#878A99"
-            }`}
-          />
+          <MdFullscreen size={22} color="#878A99" />
         )}
       </span>
     </button>
