@@ -1,11 +1,17 @@
 import React from "react";
 
+import StoreProvider from "@/app/StoreProvider";
 import AuthProtectedLayoutProvider from "@/components/layoutsStyle/AuthProtectedLayoutProvider";
+import DarkModeProvider from "@/context/DarkModeProvider";
 
 const CommonLayoutForAdminAndUser = ({ children }) => {
   return (
     <div className="" id="full-screen-toggle-container">
-      <AuthProtectedLayoutProvider>{children}</AuthProtectedLayoutProvider>
+      <StoreProvider>
+        <DarkModeProvider>
+          <AuthProtectedLayoutProvider>{children}</AuthProtectedLayoutProvider>
+        </DarkModeProvider>
+      </StoreProvider>
     </div>
   );
 };

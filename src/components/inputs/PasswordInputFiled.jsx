@@ -6,6 +6,8 @@ import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 import { IoAlertCircleOutline, IoEye, IoEyeOff } from "react-icons/io5";
 
+import ROUTES from "@/constants/routes";
+
 const PasswordInputFiled = ({
   labelText,
   labelClasses,
@@ -56,7 +58,7 @@ const PasswordInputFiled = ({
           )}
         </div>
         {pathname.includes("login") && (
-          <Link href="/forgot-password">
+          <Link href={ROUTES.FORGOT_PASSWORD}>
             <span className="font-poppins-rg text-[13px] text-light-400">
               Forgot password?
             </span>

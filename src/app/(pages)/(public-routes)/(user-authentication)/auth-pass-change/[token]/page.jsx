@@ -1,7 +1,7 @@
 import React from "react";
 
 import { titlesObject } from "@/app/assets/titlesData/titles";
-import ResetPasswordForm from "@/components/authentications/ResetPasswordFrom";
+import ResetPasswordForm from "@/components/forms/ResetPasswordFrom";
 
 export const metadata = {
   title: titlesObject.authPassChange.title,

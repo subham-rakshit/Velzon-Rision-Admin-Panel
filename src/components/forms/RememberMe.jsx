@@ -1,7 +1,7 @@
 "use client";
 
 import { Checkbox, Label } from "flowbite-react";
-import React, { useState } from "react";
+import React from "react";
 
 const RememberMe = ({
   boxId,
@@ -10,12 +10,9 @@ const RememberMe = ({
   checkboxExtraClasses,
   onHandleInputs,
 }) => {
-  const [isChecked, setIsChecked] = useState(false);
-
-  //NOTE: Handle checkbox toggel
+  // NOTE: Handle checkbox toggel
   const handleCheckboxChange = (e) => {
     const checked = e.target.checked;
-    setIsChecked(checked);
     onHandleInputs(boxName, checked);
   };
 
@@ -25,7 +22,7 @@ const RememberMe = ({
         id={boxId}
         name={boxName}
         checked={checkedStatus}
-        className="w-3 h-3 focus:border-none focus:ring-0 cursor-pointer"
+        className="size-3 cursor-pointer focus:border-none focus:ring-0"
         onChange={handleCheckboxChange}
       />
       <Label

@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
 import { Label, TextInput } from "flowbite-react";
-import { IoAlertCircleOutline } from "react-icons/io5";
 import { usePathname } from "next/navigation";
+import React, { useState } from "react";
+import { IoAlertCircleOutline } from "react-icons/io5";
 
 const TextInputFile = ({
   labelText,
@@ -20,7 +20,7 @@ const TextInputFile = ({
   const [isBlank, setIsBlank] = useState(false);
   const pathname = usePathname();
 
-  //NOTE: Handle Input blank effects
+  // NOTE: Handle Input blank effects
   const handleBlur = () => {
     if (textInput.trim() === "") {
       setIsBlank(true);
@@ -29,7 +29,7 @@ const TextInputFile = ({
     }
   };
 
-  //NOTE: Handle Input value changes and pass it to the Login page
+  // NOTE: Handle Input value changes and pass it to the Login page
   const handleChange = (e) => {
     const charInput = e.target.value;
 
@@ -41,7 +41,7 @@ const TextInputFile = ({
 
   return (
     <div>
-      <div className="block mb-2">
+      <div className="mb-2 block">
         <Label
           htmlFor={inputId}
           value={labelText}
@@ -67,14 +67,14 @@ const TextInputFile = ({
           onBlur={handleBlur}
           helperText={
             isBlank && (
-              <span className="text-[13px] font-normal text-red-500 font-poppins-rg">
+              <span className="font-poppins-rg text-[13px] font-normal text-red-500">
                 {helperText}
               </span>
             )
           }
         />
         {isBlank && (
-          <span className="absolute right-0 pr-3 inset-y-3">
+          <span className="absolute inset-y-3 right-0 pr-3">
             <IoAlertCircleOutline color="red" size="25" />
           </span>
         )}

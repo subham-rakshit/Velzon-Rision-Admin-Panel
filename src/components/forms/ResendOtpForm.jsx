@@ -1,17 +1,24 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import dynamic from "next/dynamic";
 import Link from "next/link";
-
+import { useRouter } from "next/navigation";
+import React, { useState, useEffect, useRef } from "react";
 import { ClipLoader } from "react-spinners";
 import { toast } from "react-toastify";
-import { Player } from "@lordicon/react";
 
-import ICON from "../../app/assets/jsonData/animate-mail-2.json"; // Mail Icon JSON file
-import { useRouter } from "next/navigation";
 import { TextInputFile } from "..";
+import ICON from "../../app/assets/jsonData/animate-mail-2.json";
 
-const ForgotPasswordForm = () => {
+import ROUTES from "@/constants/routes";
+
+// Dynamically import the Player component to disable SSR
+const Player = dynamic(
+  () => import("@lordicon/react").then((mod) => mod.Player),
+  { ssr: false }
+);
+
+const ResendOtpForm = () => {
   const playerRef = useRef(null);
   const [userEmail, setUserEmail] = useState({});
   const [isProcessing, setIsProcessing] = useState(false);
@@ -21,7 +28,7 @@ const ForgotPasswordForm = () => {
     playerRef.current?.playFromBeginning();
   }, []);
 
-  //NOTE: Handle the all input fields
+  // NOTE: Handle the all input fields
   const onHandleInputs = (name, value) => {
     setUserEmail({
       ...userEmail,
@@ -29,7 +36,7 @@ const ForgotPasswordForm = () => {
     });
   };
 
-  //NOTE: Handle the Login form
+  // NOTE: Handle the Login form
   async function handleFromSubmit(event) {
     event.preventDefault();
 
@@ -39,7 +46,7 @@ const ForgotPasswordForm = () => {
         const { email } = userEmail;
 
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/user/forgot-password`,
+          `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/user/resend-otp`,
           {
             method: "POST",
             headers: {
@@ -65,7 +72,7 @@ const ForgotPasswordForm = () => {
           });
           setUserEmail({});
           setIsProcessing(false);
-          router.replace("/login"); // Redirect Login page
+          router.replace("/auth-twostep"); // Redirect Login page
         } else {
           setIsProcessing(false);
           if (typeof data.message === "string") {
@@ -115,9 +122,9 @@ const ForgotPasswordForm = () => {
     <>
       <form className="form-inner-container" onSubmit={handleFromSubmit}>
         {/* Welcome Text */}
-        <div className="flex flex-col items-center mb-6">
-          <h1 className="form-heading">Forgot Password?</h1>
-          <p className="form-description">Reset password with velzon</p>
+        <div className="mb-6 flex flex-col items-center">
+          <h1 className="form-heading">Resend OTP?</h1>
+          <p className="form-description">Resend otp with velzon</p>
 
           <Player
             ref={playerRef}
@@ -129,9 +136,9 @@ const ForgotPasswordForm = () => {
             onComplete={() => playerRef.current?.playFromBeginning()}
           />
 
-          <div className="bg-[#FEF4E4] w-full px-3 py-3 rounded shadow-light mt-4">
-            <p className="text-[#d29c40] font-poppins-md text-center text-[13px]">
-              Enter your email and instructions will be sent to you!
+          <div className="mt-4 w-full rounded bg-[#FEF4E4] p-3 shadow-light">
+            <p className="text-center font-poppins-md text-[13px] text-[#d29c40]">
+              Enter your email and otp will be sent to you!
             </p>
           </div>
         </div>
@@ -141,7 +148,7 @@ const ForgotPasswordForm = () => {
           {/* Email Input */}
           <TextInputFile
             labelText="Email"
-            inputId="forgot-password-email"
+            inputId="resend-otp-email"
             inputName="email"
             inputValue={userEmail.email ? userEmail.email : ""}
             inputPlaceholder="Enter email"
@@ -159,23 +166,23 @@ const ForgotPasswordForm = () => {
             {isProcessing ? (
               <span className="flex items-center gap-4">
                 <ClipLoader color="#ffffff" size={16} />
-                <span className="text-light">Processing...</span>
+                <span className="text-light-850">Processing...</span>
               </span>
             ) : (
-              "Send Reset Link"
+              "Send OTP"
             )}
           </button>
         </div>
       </form>
 
-      <p className="text-center auth-direction-text">
-        Wait, I remember my password...{" "}
-        <Link href="/login">
-          <span className="underline text-[#405189]">Click here</span>
+      <p className="auth-direction-text text-center">
+        Hold on, I just received my code...{" "}
+        <Link href={ROUTES.AUTH_TWO_STEP}>
+          <span className="text-[#405189] underline">Click here</span>
         </Link>
       </p>
     </>
   );
 };
 
-export default ForgotPasswordForm;
+export default ResendOtpForm;

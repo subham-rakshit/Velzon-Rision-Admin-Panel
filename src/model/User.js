@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import jwt from "jsonwebtoken";
 
 const userSchema = new mongoose.Schema(
   {
@@ -45,7 +44,7 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-//NOTE: In Next.js for creating models are different. First we check if there is a model already exists in DB. If not then we create a new model by adding || and create a new collection by mongoose and return it to us. We ahve to check both cases.
+// NOTE: In Next.js for creating models are different. First we check if there is a model already exists in DB. If not then we create a new model by adding || and create a new collection by mongoose and return it to us. We ahve to check both cases.
 const UserModel = mongoose.models.User || mongoose.model("User", userSchema);
 
 export default UserModel;

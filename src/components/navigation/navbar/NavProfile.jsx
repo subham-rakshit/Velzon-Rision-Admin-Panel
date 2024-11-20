@@ -2,7 +2,7 @@
 
 import { Dropdown } from "flowbite-react";
 import Image from "next/image";
-import { signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { BiTask } from "react-icons/bi";
 import { IoMdWallet } from "react-icons/io";
@@ -25,23 +25,42 @@ const NavProfile = () => {
   const { sidebarUserProfileAvtarType, layoutModeType } = useAppSelector(
     (state) => state.layout
   );
+  const router = useRouter();
 
   // NOTE: Logout functionality
   const handleLogout = async () => {
     try {
-      await signOut({ redirectTo: ROUTES.LOGIN });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/user/logout`
+      );
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        toast.success(data.message, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        router.push(ROUTES.LOGIN); // NOTE: redirect to login page
+      } else {
+        toast.error(data.message, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
     } catch (error) {
       console.log(error);
-      toast.error(error.message || "Error occured during logout", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
     }
   };
 

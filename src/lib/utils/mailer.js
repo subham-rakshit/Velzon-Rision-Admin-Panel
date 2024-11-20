@@ -1,14 +1,16 @@
-import UserModel from "@/model/User";
 import nodemailer from "nodemailer";
 import { v4 as uuidv4 } from "uuid";
+
 import {
   resetPasswordTokenEmailTemplate,
   verificationEmailTemplate,
 } from "../../../emails/mail-html-templates";
 
-//NOTE: Nodemailer transporter with MailTrap SMTP
+import UserModel from "@/model/User";
+
+// NOTE: Nodemailer transporter with MailTrap SMTP
 export const mailTransport = () => {
-  let transporter = nodemailer.createTransport({
+  const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
     port: process.env.SMTP_PORT,
     auth: {
@@ -19,15 +21,15 @@ export const mailTransport = () => {
   return transporter;
 };
 
-//NOTE: 4 digits OTP generator
+// NOTE: 4 digits OTP generator
 export const generateOTP = () => {
   return Math.floor(1000 + Math.random() * 9000); // Ex - 1000 + 0.6789 * 9000
 };
 
-//NOTE: Verification email function
+// NOTE: Verification email function
 export const sendEmail = async ({ email, emailType, username, userId }) => {
   try {
-    //INFO: Create tokenCode and save in DB according to email type
+    // INFO: Create tokenCode and save in DB according to email type
     const otp = generateOTP();
     const verifyToken = uuidv4();
 
@@ -43,8 +45,8 @@ export const sendEmail = async ({ email, emailType, username, userId }) => {
       });
     }
 
-    //INFO: Nodemailer transporter with MailTrap SMTP
-    var transporter = nodemailer.createTransport({
+    // INFO: Nodemailer transporter with MailTrap SMTP
+    const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
       port: process.env.SMTP_PORT,
       auth: {
@@ -53,7 +55,7 @@ export const sendEmail = async ({ email, emailType, username, userId }) => {
       },
     });
 
-    //INFO: Mail Options
+    // INFO: Mail Options
     const mailOptions = {
       from: process.env.SMTP_MAIL,
       to: email,
@@ -67,7 +69,7 @@ export const sendEmail = async ({ email, emailType, username, userId }) => {
           : resetPasswordTokenEmailTemplate({ token: verifyToken, username }),
     };
 
-    //INFO: Email Response
+    // INFO: Email Response
     await transporter.sendMail(mailOptions);
     return { success: true, message: "Verification email send successfully" };
   } catch (emailError) {

@@ -1,41 +1,19 @@
 "use client";
 
-import { useAppSelector } from "@/lib/store/hooks";
-import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
 import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
-import { twMerge } from "tailwind-merge";
 import Link from "next/link";
-
-import {
-  HiArrowSmRight,
-  HiChartPie,
-  HiInbox,
-  HiOutlineMinusSm,
-  HiOutlinePlusSm,
-  HiShoppingBag,
-  HiTable,
-  HiUser,
-} from "react-icons/hi";
-import {
-  RiDashboard2Fill,
-  RiApps2Line,
-  RiPagesLine,
-  RiRocketLine,
-} from "react-icons/ri";
-import { IoIosArrowForward } from "react-icons/io";
+import { usePathname } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import { BsDash } from "react-icons/bs";
-import { GoDot, GoDotFill } from "react-icons/go";
+import { IoIosArrowForward } from "react-icons/io";
 
-import leftSidebarData from "../../../app/assets/leftSidebarData/leftSidebarData";
-import logoSmall from "../../../app/assets/images/logo-sm.png";
-import logoLight from "../../../app/assets/images/logo-light.png";
 import TransitionLink from "./TransitionLink";
+import logoLight from "../../../app/assets/images/logo-light.png";
+import logoSmall from "../../../app/assets/images/logo-sm.png";
+import leftSidebarData from "../../../app/assets/leftSidebarData/leftSidebarData";
 
 const LeftSidebar = ({ width, isSidebarCollapse }) => {
   const pathname = usePathname();
-  const router = useRouter();
 
   // NOTE Default Sidebar State to manage open tabs based on pathname
   const [parentTabDetails, setParentTabDetails] = useState(null);
@@ -56,12 +34,8 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
     id: "",
     isOpen: false,
   });
-  const [thirdChildTabIsOpen, setThirdChildTabIsOpen] = useState({
-    id: "",
-    isOpen: false,
-  });
 
-  //TODO Need To Remove
+  // TODO Need To Remove
   // console.log("Parent: ", parentTabDetails);
   // console.log("FirstChild: ", firstChildTabDetails);
   // console.log("SecondChild: ", secondChildTabDetails);
@@ -204,25 +178,16 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
     }));
   };
 
-  // Handle First Child Tab toggle
-  const handleThirdChildTabToggle = (thirdChildId) => {
-    setThirdChildTabDetails((prev) => ({
-      ...prev,
-      id: thirdChildId,
-      isOpen: prev.id === thirdChildId ? !prev.isOpen : true,
-    }));
-  };
-
   // NOTE Vertical Default LeftSidebar View ----
   const verticalDefaultLeftSidebarView = () => {
     return (
-      <ul className="px-[20px] text-[#a6b4e4] bg-[#405189] h-[calc(100vh-70px)] py-2 overflow-y-auto custom-left-sidebar-scrollbar hide-scrollbar transition-style">
+      <ul className="custom-left-sidebar-scrollbar hide-scrollbar transition-style h-[calc(100vh-70px)] overflow-y-auto bg-[#405189] px-[20px] py-2 text-[#a6b4e4]">
         {leftSidebarData.map((tab, index) => {
           return (
             <li key={tab.tabCategory} className="flex flex-col gap-5 pt-[20px]">
               {/* NOTE Tab category */}
               <span
-                className={`text-soft text-[11px] font-semibold tracking-wider uppercase`}
+                className={`text-soft text-[11px] font-semibold uppercase tracking-wider`}
               >
                 {tab.tabCategory}
               </span>
@@ -234,12 +199,12 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
                     // NOTE Parent and childs Tab Main container *****
                     <li
                       key={tabList.id}
-                      className={`font-poppins-rg cursor-pointer transition-style py-2`}
+                      className={`transition-style cursor-pointer py-2 font-poppins-rg`}
                     >
                       {tabList.tabDropdownList.length > 0 ? (
                         // DEBUG Parent Tab having child
                         <div
-                          className={`flex items-center gap-2 group ${
+                          className={`group flex items-center gap-2 ${
                             pathname.includes(tabList.id.toLowerCase())
                               ? "text-white"
                               : ""
@@ -248,14 +213,14 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
                         >
                           {/* NOTE Parent Tab Icon */}
                           <span
-                            className={`group-hover:text-white transition-style`}
+                            className={`transition-style group-hover:text-white`}
                           >
                             {tabList.tabIcon}
                           </span>
 
                           {/* NOTE Parent Tabname and Arrow Icon Container */}
                           <span
-                            className={`text-[15px] flex items-center justify-between w-full transition-style group-hover:text-white`}
+                            className={`transition-style flex w-full items-center justify-between text-[15px] group-hover:text-white`}
                           >
                             {/* NOTE Parent Tabname */}
                             <span>{tabList.tabName}</span>
@@ -264,7 +229,7 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
                             <IoIosArrowForward
                               className={`${
                                 pathname.includes(tabList.id.toLowerCase())
-                                  ? "rotate-[90deg]"
+                                  ? "rotate-90"
                                   : ""
                               }`}
                             />
@@ -282,7 +247,7 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
                           >
                             {/* NOTE Parent Tab */}
                             <span
-                              className={`flex items-center gap-2 group-hover:text-white transition-style`}
+                              className={`transition-style flex items-center gap-2 group-hover:text-white`}
                             >
                               {tabList.tabIcon}
                               {/* NOTE Parent Tabname */}
@@ -294,11 +259,11 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
 
                       {/* NOTE All Child's Main container */}
                       <ul
-                        className={`overflow-hidden flex flex-col justify-center transition-style ${
+                        className={`transition-style flex flex-col justify-center overflow-hidden ${
                           parentTabDetails &&
                           tabList.id === parentTabDetails.id &&
                           parentTabDetails.isOpen
-                            ? "h-fit mt-2"
+                            ? "mt-2 h-fit"
                             : "h-0"
                         } transition-style`}
                       >
@@ -310,12 +275,12 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
                               <li
                                 id={firstChild.id}
                                 key={firstChild.id}
-                                className="font-poppins-rg py-[10px]"
+                                className="py-[10px] font-poppins-rg"
                               >
                                 {/* NOTE 1stChild Icon and Name container */}
                                 <TransitionLink href={firstChild.pathName}>
                                   <span
-                                    className={`flex items-center gap-2 hover:text-white transition-all duration-300 ease-in-out ${
+                                    className={`flex items-center gap-2 transition-all duration-300 ease-in-out hover:text-white ${
                                       firstChildTabDetails &&
                                       firstChildTabDetails.id === firstChild.id
                                         ? "text-white"
@@ -327,11 +292,11 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
 
                                     {/* NOTE 1stChild Name and New text */}
                                     <span
-                                      className={`text-[13px] w-full flex items-center justify-between`}
+                                      className={`flex w-full items-center justify-between text-[13px]`}
                                     >
                                       {firstChild.tabName}
                                       {firstChild.isNew && (
-                                        <span className="bg-[#0ab39c] text-white text-[10px] px-1 rounded-[2px]">
+                                        <span className="rounded-[2px] bg-[#0ab39c] px-1 text-[10px] text-white">
                                           New
                                         </span>
                                       )}
@@ -347,11 +312,11 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
                               <li
                                 id={firstChild.id}
                                 key={firstChild.id}
-                                className="font-poppins-rg py-[10px]"
+                                className="py-[10px] font-poppins-rg"
                               >
                                 {/* DEBUG 1st Child (Children) */}
                                 <span
-                                  className={`flex items-center gap-2 hover:text-white transition-all duration-300 ease-in-out ${
+                                  className={`flex items-center gap-2 transition-all duration-300 ease-in-out hover:text-white ${
                                     pathname.includes(firstChild.id)
                                       ? "text-white"
                                       : ""
@@ -365,18 +330,18 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
 
                                   {/* NOTE 1stChild Icon Tabname and Arrow Container */}
                                   <span
-                                    className={`text-[13px] w-full flex items-center justify-between`}
+                                    className={`flex w-full items-center justify-between text-[13px]`}
                                   >
                                     {firstChild.tabName}
                                     <IoIosArrowForward
                                       className={`${
                                         pathname.includes(firstChild.id)
-                                          ? "rotate-[90deg]"
+                                          ? "rotate-90"
                                           : ""
                                       }`}
                                     />
                                     {firstChild.isNew && (
-                                      <span className="bg-[#0ab39c] text-white text-[10px] px-1 rounded-[2px]">
+                                      <span className="rounded-[2px] bg-[#0ab39c] px-1 text-[10px] text-white">
                                         New
                                       </span>
                                     )}
@@ -385,7 +350,7 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
 
                                 {/* NOTE 2ndChild's main container  */}
                                 <ul
-                                  className={`pl-5 overflow-hidden ${
+                                  className={`overflow-hidden pl-5 ${
                                     firstChildTabDetails &&
                                     firstChildTabDetails.id === firstChild.id &&
                                     firstChildTabDetails.isOpen
@@ -404,7 +369,7 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
                                           <li
                                             key={secChild.id}
                                             id={secChild.id}
-                                            className={`font-poppins-rg text-[13px] pt-[10px] group transition-style ${
+                                            className={`transition-style group pt-[10px] font-poppins-rg text-[13px] ${
                                               pathname.includes(secChild.id)
                                                 ? "text-white"
                                                 : ""
@@ -415,14 +380,14 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
                                               className="flex items-center gap-3"
                                             >
                                               <span
-                                                className={`w-[6px] h-[6px] border border-[#a6b4e4] rounded-full group-hover:bg-white transition-style ${
+                                                className={`transition-style size-[6px] rounded-full border border-[#a6b4e4] group-hover:bg-white ${
                                                   pathname.includes(secChild.id)
                                                     ? "bg-white"
                                                     : ""
                                                 }`}
                                               ></span>
                                               <span
-                                                className={`group-hover:text-white transition-style`}
+                                                className={`transition-style group-hover:text-white`}
                                               >
                                                 {secChild.tabName}
                                               </span>
@@ -430,15 +395,15 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
                                           </li>
                                         );
                                       } else {
-                                        //NOTE If 2nd Child have children
+                                        // NOTE If 2nd Child have children
                                         return (
                                           <li
                                             key={secChild.id}
                                             id={secChild.id}
-                                            className={`font-poppins-rg text-[13px] pt-[10px] transition-style`}
+                                            className={`transition-style pt-[10px] font-poppins-rg text-[13px]`}
                                           >
                                             <span
-                                              className={`flex items-center gap-3 group ${
+                                              className={`group flex items-center gap-3 ${
                                                 pathname.includes(secChild.id)
                                                   ? "text-white"
                                                   : ""
@@ -450,7 +415,7 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
                                               }
                                             >
                                               <span
-                                                className={`w-[6px] h-[6px] border border-[#a6b4e4] rounded-full group-hover:bg-white transition-style ${
+                                                className={`transition-style size-[6px] rounded-full border border-[#a6b4e4] group-hover:bg-white ${
                                                   pathname.includes(secChild.id)
                                                     ? "bg-white"
                                                     : ""
@@ -459,7 +424,7 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
 
                                               {/* NOTE 2ndChild Icon Tabname and Arrow Container */}
                                               <span
-                                                className={`text-[13px] w-full flex items-center justify-between group-hover:text-white`}
+                                                className={`flex w-full items-center justify-between text-[13px] group-hover:text-white`}
                                               >
                                                 {secChild.tabName}
                                                 <IoIosArrowForward
@@ -467,7 +432,7 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
                                                     pathname.includes(
                                                       secChild.id
                                                     )
-                                                      ? "rotate-[90deg]"
+                                                      ? "rotate-90"
                                                       : ""
                                                   }`}
                                                 />
@@ -476,7 +441,7 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
 
                                             {/* TODO 3rcChild */}
                                             <ul
-                                              className={`pl-5 overflow-hidden ${
+                                              className={`overflow-hidden pl-5 ${
                                                 secondChildTabDetails &&
                                                 secondChildTabDetails.id ===
                                                   secChild.id &&
@@ -491,7 +456,7 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
                                                     <li
                                                       key={thirdChild.id}
                                                       id={thirdChild.id}
-                                                      className={`font-poppins-rg text-[13px] pt-[10px] group transition-style`}
+                                                      className={`transition-style group pt-[10px] font-poppins-rg text-[13px]`}
                                                     >
                                                       <Link
                                                         href={
@@ -500,7 +465,7 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
                                                         className="flex items-center gap-3"
                                                       >
                                                         <span
-                                                          className={`w-[6px] h-[6px] border border-[#a6b4e4] rounded-full group-hover:bg-white transition-style ${
+                                                          className={`transition-style size-[6px] rounded-full border border-[#a6b4e4] group-hover:bg-white ${
                                                             pathname.includes(
                                                               thirdChild.id
                                                             )
@@ -509,7 +474,7 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
                                                           }`}
                                                         ></span>
                                                         <span
-                                                          className={`group-hover:text-white transition-style ${
+                                                          className={`transition-style group-hover:text-white ${
                                                             pathname.includes(
                                                               thirdChild.id
                                                             )
@@ -550,13 +515,13 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
   // NOTE Vertical Small Icon LeftSidebar View ----
   const verticalSmallIconLeftSideView = () => {
     return (
-      <ul className="relative text-[#a6b4e4] bg-[#405189] py-2 transition-style h-[100%]">
+      <ul className="transition-style relative h-full bg-[#405189] py-2 text-[#a6b4e4]">
         {leftSidebarData.map((category) =>
           category.tabNameList.map((parentTabIcon) => (
             // Tab Icon Main Container
             <li
               key={parentTabIcon.id}
-              className="relative py-[13px] flex items-center justify-center hover:cursor-pointer"
+              className="relative flex items-center justify-center py-[13px] hover:cursor-pointer"
               onMouseEnter={() =>
                 setParentTabIsOpen({ id: parentTabIcon.id, isOpen: true })
               }
@@ -575,7 +540,7 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
 
               {/* NOTE Parent Dropdown Box */}
               <ul
-                className={`absolute top-0 left-[100%] bg-[#405189] z-[9999] w-[200px] transition-style px-2 py-3 rounded-tr-[5px] rounded-br-[5px] font-poppins-rg ${
+                className={`transition-style absolute left-full top-0 z-[9999] w-[200px] rounded-r-[5px] bg-[#405189] px-2 py-3 font-poppins-rg ${
                   parentTabIsOpen.isOpen &&
                   parentTabIsOpen.id === parentTabIcon.id
                     ? "visible opacity-100"
@@ -584,7 +549,7 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
               >
                 {/* Parent Tab Name  */}
                 <span
-                  className={`text-[15px] flex items-center justify-between w-full transition-style group-hover:text-white ${
+                  className={`transition-style flex w-full items-center justify-between text-[15px] group-hover:text-white ${
                     parentTabIsOpen.id === parentTabIcon.id ? "text-white" : ""
                   } ${
                     parentTabIcon.tabDropdownList.length > 0 ? "mb-3" : "mb-0"
@@ -595,7 +560,7 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
                     <IoIosArrowForward
                       className={`${
                         parentTabIsOpen.id === parentTabIcon.id
-                          ? "rotate-[90deg]"
+                          ? "rotate-90"
                           : ""
                       }`}
                     />
@@ -608,12 +573,12 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
                     return (
                       <li
                         key={firstChild.id}
-                        className={`font-poppins-rg cursor-pointer transition-style`}
+                        className={`transition-style cursor-pointer font-poppins-rg`}
                       >
                         {firstChild.tabDropdownList.length > 0 ? (
                           // FirstChild Tab having dropdown
                           <ul
-                            className={`relative flex text-[13px] items-center gap-2 p-2`}
+                            className={`relative flex items-center gap-2 p-2 text-[13px]`}
                             onMouseEnter={() =>
                               setFirstChildTabIsOpen({
                                 id: firstChild.id,
@@ -625,7 +590,7 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
                             }
                           >
                             <span
-                              className={`text-[13px] flex items-center justify-between w-full transition-style hover:text-white ${
+                              className={`transition-style flex w-full items-center justify-between text-[13px] hover:text-white ${
                                 firstChildTabDetails &&
                                 firstChildTabDetails.id === firstChild.id
                                   ? "text-white"
@@ -638,7 +603,7 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
 
                             {/* Second Children */}
                             <li
-                              className={`absolute top-0 left-[100%] bg-[#405189] z-[9999] w-[200px] transition-style p-3 rounded-tr-[5px] rounded-br-[5px] font-poppins-rg ${
+                              className={`transition-style absolute left-full top-0 z-[9999] w-[200px] rounded-r-[5px] bg-[#405189] p-3 font-poppins-rg ${
                                 firstChildTabIsOpen.isOpen &&
                                 firstChildTabIsOpen.id === firstChild.id
                                   ? "visible opacity-100"
@@ -650,7 +615,7 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
                                 secondChild.tabDropdownList.length > 0 ? (
                                   <ul
                                     key={secondChild.id}
-                                    className={`relative flex text-[13px] items-center gap-2 p-2`}
+                                    className={`relative flex items-center gap-2 p-2 text-[13px]`}
                                     onMouseEnter={() =>
                                       setSecondChilTabIsOpen({
                                         id: secondChild.id,
@@ -665,7 +630,7 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
                                     }
                                   >
                                     <span
-                                      className={`text-[13px] flex items-center justify-between w-full transition-style hover:text-white ${
+                                      className={`transition-style flex w-full items-center justify-between text-[13px] hover:text-white ${
                                         secondChildTabDetails &&
                                         secondChildTabDetails.id ===
                                           secondChild.id
@@ -679,7 +644,7 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
 
                                     {/* Third Child */}
                                     <li
-                                      className={`absolute top-0 left-[100%] bg-[#405189] z-[9999] w-[200px] transition-style p-3 rounded-[5px] font-poppins-rg ${
+                                      className={`transition-style absolute left-full top-0 z-[9999] w-[200px] rounded-[5px] bg-[#405189] p-3 font-poppins-rg ${
                                         secondChilTabIsOpen.isOpen &&
                                         secondChilTabIsOpen.id ===
                                           secondChild.id
@@ -696,7 +661,7 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
                                               key={thirdChild.id}
                                             >
                                               <span
-                                                className={`flex items-center gap-2 hover:text-white text-[13px] p-2 transition-style ${
+                                                className={`transition-style flex items-center gap-2 p-2 text-[13px] hover:text-white ${
                                                   thirdChildTabDetails &&
                                                   thirdChildTabDetails.id ===
                                                     thirdChild.id
@@ -718,7 +683,7 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
                                     key={secondChild.id}
                                   >
                                     <span
-                                      className={`flex items-center gap-2 hover:text-white text-[13px] p-2 transition-style ${
+                                      className={`transition-style flex items-center gap-2 p-2 text-[13px] hover:text-white ${
                                         secondChildTabDetails &&
                                         secondChildTabDetails.id ===
                                           secondChild.id
@@ -737,7 +702,7 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
                           // FirstChild Tab having no dropdown
                           <Link href={firstChild.pathName}>
                             <span
-                              className={`flex items-center gap-2 text-[13px] p-2 hover:text-white transition-style ${
+                              className={`transition-style flex items-center gap-2 p-2 text-[13px] hover:text-white ${
                                 firstChildTabDetails &&
                                 firstChildTabDetails.id === firstChild.id
                                   ? "text-white"
@@ -767,11 +732,11 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
     >
       {/* NOTE Sidebar Top Logo Section */}
       <div
-        className={`h-[70px] bg-[#405189] px-[20px] transition-style sticky left-0 top-0 z-[100] w-full`}
+        className={`transition-style sticky left-0 top-0 z-[100] h-[70px] w-full bg-[#405189] px-[20px]`}
       >
         <Link
           href="/dashboard"
-          className="h-full w-full flex items-center justify-center"
+          className="flex size-full items-center justify-center"
         >
           {isSidebarCollapse ? (
             <Image src={logoSmall} alt="logo small" width={25} height={25} />

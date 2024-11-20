@@ -1,14 +1,10 @@
 import localFont from "next/font/local";
-import { SessionProvider } from "next-auth/react";
 
 import { ToastContainer } from "./clientToastContainer.js";
-import StoreProvider from "./StoreProvider.jsx";
-
-import { auth } from "@/auth";
-import DarkModeProvider from "@/context/DarkModeProvider.jsx";
 
 import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
+import AuthProvider from "@/context/AuthProvider.jsx";
 
 const hkGrotesk = localFont({
   src: "./assets/fonts/hkGroteskVF.ttf",
@@ -87,33 +83,29 @@ export const metadata = {
   description: "A general dashboard template for websites.",
 };
 
-const RootLayout = async ({ children }) => {
-  const session = await auth();
-
+const RootLayout = ({ children }) => {
   return (
     <html lang="en">
-      <SessionProvider session={session}>
-        <body
-          className={`${hkGrotesk.variable} ${inter.variable} ${jost.variable} ${montserrat.variable} ${nunito.variable} ${openSans.variable} ${outfit.variable} ${publicSans.variable} ${saira.variable} ${workSans.variable} ${poppinsRg.variable} ${poppinsMd.variable} antialiased`}
-        >
-          <StoreProvider>
-            <DarkModeProvider>{children}</DarkModeProvider>
+      <body
+        className={`${hkGrotesk.variable} ${inter.variable} ${jost.variable} ${montserrat.variable} ${nunito.variable} ${openSans.variable} ${outfit.variable} ${publicSans.variable} ${saira.variable} ${workSans.variable} ${poppinsRg.variable} ${poppinsMd.variable} antialiased`}
+      >
+        <AuthProvider>
+          {children}
 
-            <ToastContainer
-              position="top-right"
-              autoClose={5000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme="light"
-            />
-          </StoreProvider>
-        </body>
-      </SessionProvider>
+          <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
+        </AuthProvider>
+      </body>
     </html>
   );
 };

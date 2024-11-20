@@ -8,6 +8,8 @@ import { toast } from "react-toastify";
 
 import { SocialAuthForm, PasswordInputFiled, TextInputFile } from "..";
 
+import ROUTES from "@/constants/routes";
+
 const RegistrationForm = () => {
   const [registerationData, setRegistrationData] = useState({});
   const [isProcessing, setIsProcessing] = useState(false);
@@ -22,7 +24,7 @@ const RegistrationForm = () => {
     });
   };
 
-  // NOTE: Handle the SignUp form
+  // TODO: Registration by Auth.js
   async function handleFromSubmit(event) {
     event.preventDefault();
 
@@ -207,7 +209,7 @@ const RegistrationForm = () => {
       {/* Sign Up */}
       <p className="auth-direction-text">
         Already have an account?{" "}
-        <Link href="/login">
+        <Link href={ROUTES.LOGIN}>
           <span className="text-[#405189] underline">Signin</span>
         </Link>
       </p>

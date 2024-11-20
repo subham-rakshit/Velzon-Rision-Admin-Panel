@@ -1,12 +1,10 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
 import { motion, useTime, useTransform } from "framer-motion";
-import { FaCog } from "react-icons/fa";
-import { MdClose } from "react-icons/md";
-import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 import Image from "next/image";
-import { FaCheckCircle } from "react-icons/fa";
+import React from "react";
+import { FaCog, FaCheckCircle } from "react-icons/fa";
+import { MdClose } from "react-icons/md";
 import { ClipLoader } from "react-spinners";
 
 import {
@@ -19,7 +17,6 @@ import {
   rightSidebarImagesData,
   rightSidebarPrimaryColorData,
 } from "@/app/assets/rightSidebarData/rightSidebarData";
-
 import {
   changeLayoutType,
   changeRightSideBarIsOpen,
@@ -37,7 +34,7 @@ import {
   changeLayoutThemePrimaryColorType,
   changePreloader,
 } from "@/lib/store/features/layoutCustomizer/layoutCustomizerSlice";
-import { useRouter } from "next/router";
+import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 
 const RightSidebar = () => {
   const {
@@ -76,11 +73,11 @@ const RightSidebar = () => {
   return (
     <>
       {/* NOTE Settings Button */}
-      <div className="w-[120px] fixed left-full -translate-x-full min-h-[100vh] flex items-end justify-center pb-8">
+      <div className="fixed left-full flex min-h-screen w-[120px] -translate-x-full items-end justify-center pb-8">
         <motion.button
           style={{ rotate }}
           onClick={() => dispatch(changeRightSideBarIsOpen(true))}
-          className="w-[50px] h-[50px] rounded-full flex items-center justify-center bg-[#299CDB]"
+          className="flex size-[50px] items-center justify-center rounded-full bg-[#299CDB]"
         >
           <FaCog size={22} color="white" />
         </motion.button>
@@ -91,65 +88,65 @@ const RightSidebar = () => {
         initial={{ x: "100%" }}
         animate={rightSideBarIsOpen ? { x: 0 } : { x: "100%" }}
         transition={{ duration: 0.3, ease: "easeInOut" }}
-        className={`fixed right-0 top-0 w-[380px] h-[100vh] bg-white z-[99]`}
+        className={`fixed right-0 top-0 z-[99] h-screen w-[380px] bg-white`}
       >
         {/* NOTE Header */}
-        <div className="w-full h-[60px] bg-[#505f93] flex items-center justify-between px-[16px]">
-          <h1 className="text-white font-poppins-md text-[16px]">
+        <div className="flex h-[60px] w-full items-center justify-between bg-[#505f93] px-[16px]">
+          <h1 className="font-poppins-md text-[16px] text-white">
             Theme Customizer
           </h1>
           <button
             type="button"
             onClick={() => dispatch(changeRightSideBarIsOpen(false))}
-            className="hover:scale-[1.3] transition-style"
+            className="transition-style hover:scale-[1.3]"
           >
             <MdClose size={22} color="#9da6c2" />
           </button>
         </div>
 
         {/* NOTE Inner */}
-        <div className="p-[25px] h-[calc(100vh-60px)] overflow-y-auto custom-left-sidebar-scrollbar shadow-light">
+        <div className="custom-left-sidebar-scrollbar h-[calc(100vh-60px)] overflow-y-auto p-[25px] shadow-light">
           {/* NOTE Layouts */}
           <div>
-            <h3 className="text-[#665057] font-poppins-rg uppercase text-[13px] font-[600]">
+            <h3 className="font-poppins-rg text-[13px] uppercase text-[#665057]">
               Layout
             </h3>
             <p className="text-soft text-[13px]">Choose your layout</p>
-            <div className="flex items-center flex-wrap gap-3 mt-5">
+            <div className="mt-5 flex flex-wrap items-center gap-3">
               {/* Vertical Layout */}
               <button
                 type="button"
-                className="flex flex-col items-center gap-1 group cursor-pointer"
+                className="group flex cursor-pointer flex-col items-center gap-1"
                 onClick={() => dispatch(changeLayoutType("vertical"))}
               >
                 <span
-                  className={`relative w-[100px] h-[70px] rounded-[5px] group-hover:shadow-light overflow-hidden border ${
+                  className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
                     layoutType === "vertical" ? "border border-[#405189]" : ""
                   }`}
                 >
-                  <span className="w-full h-full flex gap-2">
-                    <span className="w-[25px] h-[100%] bg-[#f3f6f9] p-[4px] flex flex-col">
+                  <span className="flex size-full gap-2">
+                    <span className="flex h-full w-[25px] flex-col bg-[#f3f6f9] p-[4px]">
                       <span className="h-[8px] w-full rounded-lg bg-[#e2e5ed]"></span>
-                      <span className="flex flex-col justify-center gap-1 h-full">
-                        <span className="w-full h-[4px] bg-[#e2e5ed]"></span>
-                        <span className="w-full h-[4px] bg-[#e2e5ed]"></span>
-                        <span className="w-full h-[4px] bg-[#e2e5ed]"></span>
+                      <span className="flex h-full flex-col justify-center gap-1">
+                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
+                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
+                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
                       </span>
                     </span>
-                    <span className="w-full h-full flex flex-col justify-between">
-                      <span className="w-full h-[8px] bg-[#f3f6f9]"></span>
-                      <span className="w-full h-[8px] bg-[#f3f6f9]"></span>
+                    <span className="flex size-full flex-col justify-between">
+                      <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
+                      <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
                     </span>
                   </span>
                   {layoutType === "vertical" && (
                     <FaCheckCircle
                       color="#405189"
                       size={13}
-                      className="absolute top-[7px] right-[7px]"
+                      className="absolute right-[7px] top-[7px]"
                     />
                   )}
                 </span>
-                <span className="text-[#665057] font-poppins-md text-[13px] font-[500] tracking-wide mx-auto">
+                <span className="mx-auto font-poppins-md text-[13px] tracking-wide text-[#665057]">
                   Vertical
                 </span>
               </button>
@@ -157,37 +154,37 @@ const RightSidebar = () => {
               {/* Horizontal Layout */}
               <button
                 type="button"
-                className="flex flex-col items-center gap-1 cursor-pointer group"
+                className="group flex cursor-pointer flex-col items-center gap-1"
                 onClick={() => dispatch(changeLayoutType("horizontal"))}
               >
                 <span
-                  className={`relative w-[100px] h-[70px] rounded-[5px] group-hover:shadow-light overflow-hidden border ${
+                  className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
                     layoutType === "horizontal" ? "border-[#405189]" : ""
                   }`}
                 >
-                  <span className="w-full h-full flex flex-col justify-between gap-2">
-                    <span className="w-full flex flex-col">
-                      <span className="w-full h-[17px] flex items-center justify-between bg-[#f3f6f9] px-[5px]">
-                        <span className="w-[8px] h-[8px] rounded-full bg-[#e2e5ed]"></span>
+                  <span className="flex size-full flex-col justify-between gap-2">
+                    <span className="flex w-full flex-col">
+                      <span className="flex h-[17px] w-full items-center justify-between bg-[#f3f6f9] px-[5px]">
+                        <span className="size-[8px] rounded-full bg-[#e2e5ed]"></span>
                         <span className="flex items-center gap-2">
-                          <span className="w-[16px] h-[4px] bg-[#e2e5ed]"></span>
-                          <span className="w-[16px] h-[4px] bg-[#e2e5ed]"></span>
+                          <span className="h-[4px] w-[16px] bg-[#e2e5ed]"></span>
+                          <span className="h-[4px] w-[16px] bg-[#e2e5ed]"></span>
                         </span>
                       </span>
-                      <span className="w-full h-[8px] bg-[#f3f6f9] mt-[4px]"></span>
+                      <span className="mt-[4px] h-[8px] w-full bg-[#f3f6f9]"></span>
                     </span>
-                    <span className="w-full h-[8px] bg-[#f3f6f9]"></span>
+                    <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
                   </span>
 
                   {layoutType === "horizontal" && (
                     <FaCheckCircle
                       color="#405189"
                       size={13}
-                      className="absolute top-[7px] right-[7px]"
+                      className="absolute right-[7px] top-[7px]"
                     />
                   )}
                 </span>
-                <span className="text-[#665057] font-poppins-md text-[13px] font-[500] tracking-wide mx-auto">
+                <span className="mx-auto font-poppins-md text-[13px] tracking-wide text-[#665057]">
                   Horizontal
                 </span>
               </button>
@@ -195,33 +192,33 @@ const RightSidebar = () => {
               {/* Two Column Layout */}
               <button
                 type="button"
-                className="flex flex-col items-center gap-1 cursor-pointer group"
+                className="group flex cursor-pointer flex-col items-center gap-1"
                 onClick={() => dispatch(changeLayoutType("two-column"))}
               >
                 <span
-                  className={`relative w-[100px] h-[70px] rounded-[5px] group-hover:shadow-light overflow-hidden border ${
+                  className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
                     layoutType === "two-column" ? "border border-[#405189]" : ""
                   }`}
                 >
-                  <span className="w-full h-full flex gap-1">
-                    <span className="w-[10px] h-[100%] bg-[#f3f6f9] flex flex-col">
+                  <span className="flex size-full gap-1">
+                    <span className="flex h-full w-[10px] flex-col bg-[#f3f6f9]">
                       <span className="h-[8px] w-full bg-[#e2e5ed]"></span>
-                      <span className="flex flex-col justify-center gap-1 h-full">
-                        <span className="w-full h-[4px] bg-[#e2e5ed]"></span>
-                        <span className="w-full h-[4px] bg-[#e2e5ed]"></span>
-                        <span className="w-full h-[4px] bg-[#e2e5ed]"></span>
+                      <span className="flex h-full flex-col justify-center gap-1">
+                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
+                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
+                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
                       </span>
                     </span>
 
-                    <span className="w-[25px] h-[100%] bg-[#f3f6f9] p-[4px] flex flex-col gap-1">
-                      <span className="w-full h-[4px] bg-[#e2e5ed]"></span>
-                      <span className="w-full h-[4px] bg-[#e2e5ed]"></span>
-                      <span className="w-full h-[4px] bg-[#e2e5ed]"></span>
-                      <span className="w-full h-[4px] bg-[#e2e5ed]"></span>
+                    <span className="flex h-full w-[25px] flex-col gap-1 bg-[#f3f6f9] p-[4px]">
+                      <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
+                      <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
+                      <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
+                      <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
                     </span>
-                    <span className="w-full h-full flex flex-col justify-between">
-                      <span className="w-full h-[8px] bg-[#f3f6f9]"></span>
-                      <span className="w-full h-[8px] bg-[#f3f6f9]"></span>
+                    <span className="flex size-full flex-col justify-between">
+                      <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
+                      <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
                     </span>
                   </span>
 
@@ -229,11 +226,11 @@ const RightSidebar = () => {
                     <FaCheckCircle
                       color="#405189"
                       size={13}
-                      className="absolute top-[7px] right-[7px]"
+                      className="absolute right-[7px] top-[7px]"
                     />
                   )}
                 </span>
-                <span className="text-[#665057] font-poppins-md text-[13px] font-[500] tracking-wide mx-auto">
+                <span className="mx-auto font-poppins-md text-[13px] tracking-wide text-[#665057]">
                   Two Column
                 </span>
               </button>
@@ -241,26 +238,26 @@ const RightSidebar = () => {
               {/* Semi Box Layout */}
               <button
                 type="button"
-                className="flex flex-col items-center gap-1 cursor-pointer group"
+                className="group flex cursor-pointer flex-col items-center gap-1"
                 onClick={() => dispatch(changeLayoutType("semi-box"))}
               >
                 <span
-                  className={`relative w-[100px] h-[70px] rounded-[5px] group-hover:shadow-light overflow-hidden border ${
+                  className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
                     layoutType === "semi-box" ? "border border-[#405189]" : ""
                   }`}
                 >
-                  <span className="w-full h-full flex gap-2 p-1">
-                    <span className="w-[25px] h-[100%] bg-[#f3f6f9] p-[4px] flex flex-col">
+                  <span className="flex size-full gap-2 p-1">
+                    <span className="flex h-full w-[25px] flex-col bg-[#f3f6f9] p-[4px]">
                       <span className="h-[8px] w-full rounded-lg bg-[#e2e5ed]"></span>
-                      <span className="flex flex-col justify-center gap-1 h-full">
-                        <span className="w-full h-[4px] bg-[#e2e5ed]"></span>
-                        <span className="w-full h-[4px] bg-[#e2e5ed]"></span>
-                        <span className="w-full h-[4px] bg-[#e2e5ed]"></span>
+                      <span className="flex h-full flex-col justify-center gap-1">
+                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
+                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
+                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
                       </span>
                     </span>
-                    <span className="w-full h-full flex flex-col justify-between">
-                      <span className="w-full h-[8px] bg-[#f3f6f9]"></span>
-                      <span className="w-full h-[8px] bg-[#f3f6f9]"></span>
+                    <span className="flex size-full flex-col justify-between">
+                      <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
+                      <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
                     </span>
                   </span>
 
@@ -268,11 +265,11 @@ const RightSidebar = () => {
                     <FaCheckCircle
                       color="#405189"
                       size={13}
-                      className="absolute top-[7px] right-[7px]"
+                      className="absolute right-[7px] top-[7px]"
                     />
                   )}
                 </span>
-                <span className="text-[#665057] font-poppins-md text-[13px] font-[500] tracking-wide mx-auto">
+                <span className="mx-auto font-poppins-md text-[13px] tracking-wide text-[#665057]">
                   Semi Box
                 </span>
               </button>
@@ -280,18 +277,18 @@ const RightSidebar = () => {
           </div>
 
           {/* NOTE User Profile Avatar Button */}
-          <div className="flex items-center gap-2 my-5">
+          <div className="my-5 flex items-center gap-2">
             <button
               type="button"
-              className={`border border-[#bdbfc7] rounded-full w-[40px] py-[2px] px-[3px] cursor-pointer flex ${
+              className={`flex w-[40px] cursor-pointer rounded-full border border-[#bdbfc7] px-[3px] py-[2px] ${
                 sidebarUserProfileAvtarType === "hide"
-                  ? "bg-[#4f5e92] border-[#4f5e92] justify-end"
-                  : "transparent border-[#bdbfc7] justify-start"
+                  ? "justify-end border-[#4f5e92] bg-[#4f5e92]"
+                  : "justify-start border-[#bdbfc7] bg-transparent"
               }`}
               onClick={toggleAvatarSwitch}
             >
               <motion.span
-                className={`w-[14px] h-[14px] rounded-full ${
+                className={`size-[14px] rounded-full ${
                   sidebarUserProfileAvtarType === "hide"
                     ? "bg-white"
                     : "bg-[#bdbfc7]"
@@ -301,28 +298,28 @@ const RightSidebar = () => {
               />
             </button>
 
-            <span className="text-[#000] font-poppins-md text-[13px] font-[500] tracking-wide">
+            <span className="font-poppins-md text-[13px] tracking-wide text-[#000]">
               Sidebar User Profile Avatar
             </span>
           </div>
 
           {/* NOTE Theme */}
           <div>
-            <h3 className="text-[#665057] font-poppins-rg uppercase text-[13px] font-[600]">
+            <h3 className="font-poppins-rg text-[13px] uppercase text-[#665057]">
               Theme
             </h3>
             <p className="text-soft text-[13px]">Choose your suitable Theme.</p>
 
-            <div className="flex flex-wrap gap-3 mt-5">
+            <div className="mt-5 flex flex-wrap gap-3">
               {rightSidebarThemeData.map((theme) => (
                 <button
                   type="button"
                   key={theme.id}
-                  className="flex flex-col items-center gap-1 group cursor-pointer"
+                  className="group flex cursor-pointer flex-col items-center gap-1"
                   onClick={() => dispatch(changeLayoutThemeType(theme.id))}
                 >
                   <span
-                    className={`relative rounded-[5px] group-hover:shadow-light overflow-hidden border ${
+                    className={`relative overflow-hidden rounded-[5px] border group-hover:shadow-light ${
                       layoutThemeType === theme.id ? "border-[#405189]" : ""
                     }`}
                   >
@@ -336,11 +333,11 @@ const RightSidebar = () => {
                       <FaCheckCircle
                         color="#405189"
                         size={13}
-                        className="absolute top-[7px] right-[7px]"
+                        className="absolute right-[7px] top-[7px]"
                       />
                     )}
                   </span>
-                  <span className="text-[#665057] font-poppins-md text-[13px] font-[500] tracking-wide mx-auto">
+                  <span className="mx-auto font-poppins-md text-[13px] tracking-wide text-[#665057]">
                     {theme.label}
                   </span>
                 </button>
@@ -350,30 +347,30 @@ const RightSidebar = () => {
 
           {/* NOTE Color Schema */}
           <div className="mt-5">
-            <h3 className="text-[#665057] font-poppins-rg uppercase text-[13px] font-[600]">
+            <h3 className="font-poppins-rg text-[13px] uppercase text-[#665057]">
               Color Schema
             </h3>
             <p className="text-soft text-[13px]">
               Choose Light or Dark Schema.
             </p>
-            <div className="flex items-center flex-wrap gap-3 mt-5">
+            <div className="mt-5 flex flex-wrap items-center gap-3">
               {rightSidbarColorSchemaData.map((color) => (
                 <button
                   type="button"
                   key={color.id}
-                  className="flex flex-col items-center gap-1 group cursor-pointer"
+                  className="group flex cursor-pointer flex-col items-center gap-1"
                   onClick={() => dispatch(changeLayoutModeType(color.id))}
                 >
                   <span
-                    className={`relative w-[100px] h-[70px] rounded-[5px] group-hover:shadow-light overflow-hidden ${
+                    className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] group-hover:shadow-light ${
                       layoutModeType === color.id
                         ? "border border-[#405189]"
                         : "border"
                     } ${color.id === "dark" ? "bg-[#212529]" : ""}`}
                   >
-                    <span className="w-full h-full flex gap-2">
+                    <span className="flex size-full gap-2">
                       <span
-                        className={`w-[25px] h-[100%] bg-[#f3f6f9] p-[4px] flex flex-col ${
+                        className={`flex h-full w-[25px] flex-col bg-[#f3f6f9] p-[4px] ${
                           color.id === "dark" ? "bg-[#383b3f]" : "bg-[#f3f6f9]"
                         }`}
                       >
@@ -384,11 +381,11 @@ const RightSidebar = () => {
                               : "bg-[#e2e5ed]"
                           }`}
                         ></span>
-                        <span className="flex flex-col justify-center gap-1 h-full">
+                        <span className="flex h-full flex-col justify-center gap-1">
                           {["box-1", "box-2", "box-3"].map((box) => (
                             <span
                               key={box}
-                              className={`w-full h-[4px] ${
+                              className={`h-[4px] w-full ${
                                 color.id === "dark"
                                   ? "bg-[#4c4f53]"
                                   : "bg-[#e2e5ed]"
@@ -398,12 +395,12 @@ const RightSidebar = () => {
                         </span>
                       </span>
                       <span
-                        className={`w-full h-full flex flex-col justify-between`}
+                        className={`flex size-full flex-col justify-between`}
                       >
                         {["inner-box-1", "inner-box-2"].map((innerBox) => (
                           <span
                             key={innerBox}
-                            className={`w-full h-[8px] bg-[#f3f6f9] ${
+                            className={`h-[8px] w-full bg-[#f3f6f9] ${
                               color.id === "dark"
                                 ? "bg-[#383b3f]"
                                 : "bg-[#e2e5ed]"
@@ -416,11 +413,11 @@ const RightSidebar = () => {
                       <FaCheckCircle
                         color="#405189"
                         size={13}
-                        className="absolute top-[7px] right-[7px]"
+                        className="absolute right-[7px] top-[7px]"
                       />
                     )}
                   </span>
-                  <span className="text-[#665057] font-poppins-md text-[13px] font-[500] tracking-wide mx-auto">
+                  <span className="mx-auto font-poppins-md text-[13px] tracking-wide text-[#665057]">
                     {color.label}
                   </span>
                 </button>
@@ -430,56 +427,54 @@ const RightSidebar = () => {
 
           {/* NOTE Layout Width */}
           <div className="mt-5">
-            <h3 className="text-[#665057] font-poppins-rg uppercase text-[13px] font-[600]">
+            <h3 className="font-poppins-rg text-[13px] uppercase text-[#665057]">
               Layout Width
             </h3>
             <p className="text-soft text-[13px]">
               Choose Fluid or Boxed layout.
             </p>
-            <div className="flex items-center flex-wrap gap-3 mt-5">
+            <div className="mt-5 flex flex-wrap items-center gap-3">
               {rightSidbarLayoutWidthData.map((width) => (
                 <button
                   type="button"
                   key={width.id}
-                  className="flex flex-col items-center gap-1 group cursor-pointer"
+                  className="group flex cursor-pointer flex-col items-center gap-1"
                   onClick={() => dispatch(changeLayoutWidthType(width.id))}
                 >
                   <span
-                    className={`relative w-[100px] h-[70px] rounded-[5px] group-hover:shadow-light overflow-hidden border ${
+                    className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
                       layoutWidthType === width.id
                         ? "border border-[#405189]"
                         : ""
                     } ${width.id === "boxed" ? "px-2" : "px-0"}`}
                   >
                     <span
-                      className={`w-full h-full flex gap-2 ${
-                        width.id === "boxed"
-                          ? "border-l border-r border-[#e2e5ed]"
-                          : ""
+                      className={`flex size-full gap-2 ${
+                        width.id === "boxed" ? "border-x border-[#e2e5ed]" : ""
                       }`}
                     >
                       <span
-                        className={`w-[25px] h-[100%] bg-[#f3f6f9] p-[4px] flex flex-col`}
+                        className={`flex h-full w-[25px] flex-col bg-[#f3f6f9] p-[4px]`}
                       >
                         <span
                           className={`h-[8px] w-full rounded-lg bg-[#e2e5ed]`}
                         ></span>
-                        <span className="flex flex-col justify-center gap-1 h-full">
+                        <span className="flex h-full flex-col justify-center gap-1">
                           {["w-box-1", "w-box-2", "w-box-3"].map((box) => (
                             <span
                               key={box}
-                              className={`w-full h-[4px] bg-[#e2e5ed]`}
+                              className={`h-[4px] w-full bg-[#e2e5ed]`}
                             ></span>
                           ))}
                         </span>
                       </span>
                       <span
-                        className={`w-full h-full flex flex-col justify-between`}
+                        className={`flex size-full flex-col justify-between`}
                       >
                         {["w-inner-box-1", "w-inner-box-2"].map((innerBox) => (
                           <span
                             key={innerBox}
-                            className={`w-full h-[8px] bg-[#f3f6f9]`}
+                            className={`h-[8px] w-full bg-[#f3f6f9]`}
                           ></span>
                         ))}
                       </span>
@@ -488,11 +483,11 @@ const RightSidebar = () => {
                       <FaCheckCircle
                         color="#405189"
                         size={13}
-                        className="absolute top-[7px] right-[7px]"
+                        className="absolute right-[7px] top-[7px]"
                       />
                     )}
                   </span>
-                  <span className="text-[#665057] font-poppins-md text-[13px] font-[500] tracking-wide mx-auto">
+                  <span className="mx-auto font-poppins-md text-[13px] tracking-wide text-[#665057]">
                     {width.label}
                   </span>
                 </button>
@@ -502,18 +497,18 @@ const RightSidebar = () => {
 
           {/* NOTE Layout Position */}
           <div className="mt-5">
-            <h3 className="text-[#665057] font-poppins-rg uppercase text-[13px] font-[600]">
+            <h3 className="font-poppins-rg text-[13px] uppercase text-[#665057]">
               Layout Position
             </h3>
             <p className="text-soft text-[13px]">
               Choose Fixed or Scrollable Layout Position.
             </p>
 
-            <div className="mt-5 rounded-[3px] overflow-hidden">
+            <div className="mt-5 overflow-hidden rounded-[3px]">
               {rightSidbarLayoutPositionData.map((position) => (
                 <button
                   key={position.id}
-                  className={`py-[6px] w-[95px] cursor-pointer font-poppins-rg text-[13px] transition-all duration-500 ease-in-out ${
+                  className={`w-[95px] cursor-pointer py-[6px] font-poppins-rg text-[13px] transition-all duration-500 ease-in-out ${
                     layoutPositionType === position.id
                       ? "bg-[#d4ebf8] text-[#659cdb]"
                       : "bg-[#f3f6f9] text-black"
@@ -530,53 +525,53 @@ const RightSidebar = () => {
 
           {/* NOTE Topbar Color */}
           <div className="mt-5">
-            <h3 className="text-[#665057] font-poppins-rg uppercase text-[13px] font-[600]">
+            <h3 className="font-poppins-rg text-[13px] uppercase text-[#665057]">
               Topbar Color
             </h3>
             <p className="text-soft text-[13px]">
               Choose Light or Dark Topbar Color.
             </p>
-            <div className="flex items-center flex-wrap gap-3 mt-5">
+            <div className="mt-5 flex flex-wrap items-center gap-3">
               {rightSidbarTopbarColorData.map((topbarColor) => (
                 <button
                   type="button"
                   key={topbarColor.id}
-                  className="flex flex-col items-center gap-1 group cursor-pointer"
+                  className="group flex cursor-pointer flex-col items-center gap-1"
                   onClick={() =>
                     dispatch(changeTopbarColorType(topbarColor.id))
                   }
                 >
                   <span
-                    className={`relative w-[100px] h-[70px] rounded-[5px] group-hover:shadow-light overflow-hidden border ${
+                    className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
                       topbarColorType === topbarColor.id
                         ? "border border-[#405189]"
                         : ""
                     }`}
                   >
-                    <span className={`w-full h-full flex gap-2`}>
+                    <span className={`flex size-full gap-2`}>
                       <span
-                        className={`w-[25px] h-[100%] bg-[#f3f6f9] p-[4px] flex flex-col`}
+                        className={`flex h-full w-[25px] flex-col bg-[#f3f6f9] p-[4px]`}
                       >
                         <span
                           className={`h-[8px] w-full rounded-lg bg-[#e2e5ed]`}
                         ></span>
-                        <span className="flex flex-col justify-center gap-1 h-full">
+                        <span className="flex h-full flex-col justify-center gap-1">
                           {["c-box-1", "c-box-2", "c-box-3"].map((box) => (
                             <span
                               key={box}
-                              className={`w-full h-[4px] bg-[#e2e5ed]`}
+                              className={`h-[4px] w-full bg-[#e2e5ed]`}
                             ></span>
                           ))}
                         </span>
                       </span>
                       <span
-                        className={`w-full h-full flex flex-col justify-between`}
+                        className={`flex size-full flex-col justify-between`}
                       >
                         {["c-inner-box-1", "c-inner-box-2"].map(
                           (innerBox, index) => (
                             <span
                               key={innerBox}
-                              className={`w-full h-[8px] ${
+                              className={`h-[8px] w-full ${
                                 topbarColor.id === "dark-color" && index === 0
                                   ? "bg-[#405189]"
                                   : "bg-[#f3f6f9]"
@@ -590,11 +585,11 @@ const RightSidebar = () => {
                       <FaCheckCircle
                         color="#405189"
                         size={13}
-                        className="absolute top-[7px] right-[7px]"
+                        className="absolute right-[7px] top-[7px]"
                       />
                     )}
                   </span>
-                  <span className="text-[#665057] font-poppins-md text-[13px] font-[500] tracking-wide mx-auto">
+                  <span className="mx-auto font-poppins-md text-[13px] tracking-wide text-[#665057]">
                     {topbarColor.label}
                   </span>
                 </button>
@@ -604,47 +599,47 @@ const RightSidebar = () => {
 
           {/* NOTE Sidebar Size */}
           <div className="mt-5">
-            <h3 className="text-[#665057] font-poppins-rg uppercase text-[13px] font-[600]">
+            <h3 className="font-poppins-rg text-[13px] uppercase text-[#665057]">
               Sidebar Size
             </h3>
             <p className="text-soft text-[13px]">Choose a size of Sidebar.</p>
-            <div className="flex items-center flex-wrap gap-2 mt-5">
+            <div className="mt-5 flex flex-wrap items-center gap-2">
               {/* Default Size */}
               <button
                 type="button"
-                className="flex flex-col items-center gap-1 group cursor-pointer"
+                className="group flex cursor-pointer flex-col items-center gap-1"
                 onClick={() => dispatch(changeLeftSidbarSizeType("default"))}
               >
                 <span
-                  className={`relative w-[100px] h-[70px] rounded-[5px] group-hover:shadow-light overflow-hidden border ${
+                  className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
                     leftSidbarSizeType === "default"
                       ? "border border-[#405189]"
                       : ""
                   }`}
                 >
-                  <span className="w-full h-full flex gap-2">
-                    <span className="w-[25px] h-[100%] bg-[#f3f6f9] p-[4px] flex flex-col">
+                  <span className="flex size-full gap-2">
+                    <span className="flex h-full w-[25px] flex-col bg-[#f3f6f9] p-[4px]">
                       <span className="h-[8px] w-full rounded-lg bg-[#e2e5ed]"></span>
-                      <span className="flex flex-col justify-center gap-1 h-full">
-                        <span className="w-full h-[4px] bg-[#e2e5ed]"></span>
-                        <span className="w-full h-[4px] bg-[#e2e5ed]"></span>
-                        <span className="w-full h-[4px] bg-[#e2e5ed]"></span>
+                      <span className="flex h-full flex-col justify-center gap-1">
+                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
+                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
+                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
                       </span>
                     </span>
-                    <span className="w-full h-full flex flex-col justify-between">
-                      <span className="w-full h-[8px] bg-[#f3f6f9]"></span>
-                      <span className="w-full h-[8px] bg-[#f3f6f9]"></span>
+                    <span className="flex size-full flex-col justify-between">
+                      <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
+                      <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
                     </span>
                   </span>
                   {leftSidbarSizeType === "default" && (
                     <FaCheckCircle
                       color="#405189"
                       size={13}
-                      className="absolute top-[7px] right-[7px]"
+                      className="absolute right-[7px] top-[7px]"
                     />
                   )}
                 </span>
-                <span className="text-[#665057] font-poppins-md text-[13px] font-[500] tracking-wide mx-auto">
+                <span className="mx-auto font-poppins-md text-[13px] tracking-wide text-[#665057]">
                   Default
                 </span>
               </button>
@@ -652,26 +647,26 @@ const RightSidebar = () => {
               {/* Compact Size */}
               <button
                 type="button"
-                className="flex flex-col items-center gap-1 cursor-pointer group"
+                className="group flex cursor-pointer flex-col items-center gap-1"
                 onClick={() => dispatch(changeLeftSidbarSizeType("compact"))}
               >
                 <span
-                  className={`relative w-[100px] h-[70px] rounded-[5px] group-hover:shadow-light overflow-hidden border ${
+                  className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
                     leftSidbarSizeType === "compact" ? "border-[#405189]" : ""
                   }`}
                 >
-                  <span className="w-full h-full flex gap-2">
-                    <span className="w-[17px] h-[100%] bg-[#f3f6f9] p-[4px] flex flex-col">
+                  <span className="flex size-full gap-2">
+                    <span className="flex h-full w-[17px] flex-col bg-[#f3f6f9] p-[4px]">
                       <span className="h-[8px] w-full rounded-full bg-[#e2e5ed]"></span>
-                      <span className="flex flex-col justify-center gap-1 h-full">
-                        <span className="w-full h-[4px] bg-[#e2e5ed]"></span>
-                        <span className="w-full h-[4px] bg-[#e2e5ed]"></span>
-                        <span className="w-full h-[4px] bg-[#e2e5ed]"></span>
+                      <span className="flex h-full flex-col justify-center gap-1">
+                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
+                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
+                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
                       </span>
                     </span>
-                    <span className="w-full h-full flex flex-col justify-between">
-                      <span className="w-full h-[8px] bg-[#f3f6f9]"></span>
-                      <span className="w-full h-[8px] bg-[#f3f6f9]"></span>
+                    <span className="flex size-full flex-col justify-between">
+                      <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
+                      <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
                     </span>
                   </span>
 
@@ -679,11 +674,11 @@ const RightSidebar = () => {
                     <FaCheckCircle
                       color="#405189"
                       size={13}
-                      className="absolute top-[7px] right-[7px]"
+                      className="absolute right-[7px] top-[7px]"
                     />
                   )}
                 </span>
-                <span className="text-[#665057] font-poppins-md text-[13px] font-[500] tracking-wide mx-auto">
+                <span className="mx-auto font-poppins-md text-[13px] tracking-wide text-[#665057]">
                   Compact
                 </span>
               </button>
@@ -691,31 +686,31 @@ const RightSidebar = () => {
               {/* Small (Icon View) Size */}
               <button
                 type="button"
-                className="flex flex-col items-center gap-1 cursor-pointer group"
+                className="group flex cursor-pointer flex-col items-center gap-1"
                 onClick={() =>
                   dispatch(changeLeftSidbarSizeType("small-icon-view"))
                 }
               >
                 <span
-                  className={`relative w-[110px] h-[70px] rounded-[5px] group-hover:shadow-light overflow-hidden border ${
+                  className={`relative h-[70px] w-[110px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
                     leftSidbarSizeType === "small-icon-view"
                       ? "border border-[#405189]"
                       : ""
                   }`}
                 >
-                  <span className="w-full h-full flex gap-1">
-                    <span className="w-[10px] h-[100%] bg-[#f3f6f9] flex flex-col">
+                  <span className="flex size-full gap-1">
+                    <span className="flex h-full w-[10px] flex-col bg-[#f3f6f9]">
                       <span className="h-[8px] w-full bg-[#e2e5ed]"></span>
-                      <span className="flex flex-col justify-center gap-1 h-full">
-                        <span className="w-full h-[4px] bg-[#e2e5ed]"></span>
-                        <span className="w-full h-[4px] bg-[#e2e5ed]"></span>
-                        <span className="w-full h-[4px] bg-[#e2e5ed]"></span>
+                      <span className="flex h-full flex-col justify-center gap-1">
+                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
+                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
+                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
                       </span>
                     </span>
 
-                    <span className="w-full h-full flex flex-col justify-between">
-                      <span className="w-full h-[8px] bg-[#f3f6f9]"></span>
-                      <span className="w-full h-[8px] bg-[#f3f6f9]"></span>
+                    <span className="flex size-full flex-col justify-between">
+                      <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
+                      <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
                     </span>
                   </span>
 
@@ -723,11 +718,11 @@ const RightSidebar = () => {
                     <FaCheckCircle
                       color="#405189"
                       size={13}
-                      className="absolute top-[7px] right-[7px]"
+                      className="absolute right-[7px] top-[7px]"
                     />
                   )}
                 </span>
-                <span className="text-[#665057] font-poppins-md text-[13px] font-[500] tracking-tighter mx-auto text-center">
+                <span className="mx-auto text-center font-poppins-md text-[13px] tracking-tighter text-[#665057]">
                   Small (Icon View)
                 </span>
               </button>
@@ -735,31 +730,31 @@ const RightSidebar = () => {
               {/* Small Hover View Size */}
               <button
                 type="button"
-                className="flex flex-col items-center gap-1 cursor-pointer group"
+                className="group flex cursor-pointer flex-col items-center gap-1"
                 onClick={() =>
                   dispatch(changeLeftSidbarSizeType("small-hover-view"))
                 }
               >
                 <span
-                  className={`relative w-[110px] h-[70px] rounded-[5px] group-hover:shadow-light overflow-hidden border ${
+                  className={`relative h-[70px] w-[110px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
                     leftSidbarSizeType === "small-hover-view"
                       ? "border border-[#405189]"
                       : ""
                   }`}
                 >
-                  <span className="w-full h-full flex gap-1">
-                    <span className="w-[10px] h-[100%] bg-[#f3f6f9] flex flex-col">
+                  <span className="flex size-full gap-1">
+                    <span className="flex h-full w-[10px] flex-col bg-[#f3f6f9]">
                       <span className="h-[8px] w-full bg-[#e2e5ed]"></span>
-                      <span className="flex flex-col justify-center gap-1 h-full">
-                        <span className="w-full h-[4px] bg-[#e2e5ed]"></span>
-                        <span className="w-full h-[4px] bg-[#e2e5ed]"></span>
-                        <span className="w-full h-[4px] bg-[#e2e5ed]"></span>
+                      <span className="flex h-full flex-col justify-center gap-1">
+                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
+                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
+                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
                       </span>
                     </span>
 
-                    <span className="w-full h-full flex flex-col justify-between">
-                      <span className="w-full h-[8px] bg-[#f3f6f9]"></span>
-                      <span className="w-full h-[8px] bg-[#f3f6f9]"></span>
+                    <span className="flex size-full flex-col justify-between">
+                      <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
+                      <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
                     </span>
                   </span>
 
@@ -767,11 +762,11 @@ const RightSidebar = () => {
                     <FaCheckCircle
                       color="#405189"
                       size={13}
-                      className="absolute top-[7px] right-[7px]"
+                      className="absolute right-[7px] top-[7px]"
                     />
                   )}
                 </span>
-                <span className="text-[#665057] font-poppins-md text-[13px] font-[500] tracking-tighter mx-auto text-center">
+                <span className="mx-auto text-center font-poppins-md text-[13px] tracking-tighter text-[#665057]">
                   Small Hover View
                 </span>
               </button>
@@ -780,48 +775,48 @@ const RightSidebar = () => {
 
           {/* NOTE Sidebar View */}
           <div className="mt-5">
-            <h3 className="text-[#665057] font-poppins-rg uppercase text-[13px] font-[600]">
+            <h3 className="font-poppins-rg text-[13px] uppercase text-[#665057]">
               Sidebar Size
             </h3>
             <p className="text-soft text-[13px]">Choose a size of Sidebar.</p>
 
-            <div className="flex items-center flex-wrap gap-2 mt-5">
+            <div className="mt-5 flex flex-wrap items-center gap-2">
               {/* Default View */}
               <button
                 type="button"
-                className="flex flex-col items-center gap-1 group cursor-pointer"
+                className="group flex cursor-pointer flex-col items-center gap-1"
                 onClick={() => dispatch(changeLeftSidebarViewType("default"))}
               >
                 <span
-                  className={`relative w-[100px] h-[70px] rounded-[5px] group-hover:shadow-light overflow-hidden border ${
+                  className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
                     leftSidebarViewType === "default"
                       ? "border border-[#405189]"
                       : ""
                   }`}
                 >
-                  <span className="w-full h-full flex gap-2">
-                    <span className="w-[25px] h-[100%] bg-[#f3f6f9] p-[4px] flex flex-col">
+                  <span className="flex size-full gap-2">
+                    <span className="flex h-full w-[25px] flex-col bg-[#f3f6f9] p-[4px]">
                       <span className="h-[8px] w-full rounded-lg bg-[#e2e5ed]"></span>
-                      <span className="flex flex-col justify-center gap-1 h-full">
-                        <span className="w-full h-[4px] bg-[#e2e5ed]"></span>
-                        <span className="w-full h-[4px] bg-[#e2e5ed]"></span>
-                        <span className="w-full h-[4px] bg-[#e2e5ed]"></span>
+                      <span className="flex h-full flex-col justify-center gap-1">
+                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
+                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
+                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
                       </span>
                     </span>
-                    <span className="w-full h-full flex flex-col justify-between">
-                      <span className="w-full h-[8px] bg-[#f3f6f9]"></span>
-                      <span className="w-full h-[8px] bg-[#f3f6f9]"></span>
+                    <span className="flex size-full flex-col justify-between">
+                      <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
+                      <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
                     </span>
                   </span>
                   {leftSidebarViewType === "default" && (
                     <FaCheckCircle
                       color="#405189"
                       size={13}
-                      className="absolute top-[7px] right-[7px]"
+                      className="absolute right-[7px] top-[7px]"
                     />
                   )}
                 </span>
-                <span className="text-[#665057] font-poppins-md text-[13px] font-[500] tracking-wide mx-auto">
+                <span className="mx-auto font-poppins-md text-[13px] tracking-wide text-[#665057]">
                   Default
                 </span>
               </button>
@@ -829,41 +824,41 @@ const RightSidebar = () => {
               {/* Detached View */}
               <button
                 type="button"
-                className="flex flex-col items-center gap-1 cursor-pointer group"
+                className="group flex cursor-pointer flex-col items-center gap-1"
                 onClick={() => dispatch(changeLeftSidebarViewType("detached"))}
               >
                 <span
-                  className={`relative w-[100px] h-[70px] rounded-[5px] group-hover:shadow-light overflow-hidden border ${
+                  className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
                     leftSidebarViewType === "detached" ? "border-[#405189]" : ""
                   }`}
                 >
-                  <span className="w-full h-full flex flex-col justify-between gap-1">
-                    <span className="w-full h-[17px] flex items-center justify-between bg-[#f3f6f9] px-[5px]">
-                      <span className="w-[8px] h-[8px] rounded-full bg-[#e2e5ed]"></span>
+                  <span className="flex size-full flex-col justify-between gap-1">
+                    <span className="flex h-[17px] w-full items-center justify-between bg-[#f3f6f9] px-[5px]">
+                      <span className="size-[8px] rounded-full bg-[#e2e5ed]"></span>
                       <span className="flex items-center gap-2">
-                        <span className="w-[16px] h-[4px] bg-[#e2e5ed]"></span>
-                        <span className="w-[16px] h-[4px] bg-[#e2e5ed]"></span>
+                        <span className="h-[4px] w-[16px] bg-[#e2e5ed]"></span>
+                        <span className="h-[4px] w-[16px] bg-[#e2e5ed]"></span>
                       </span>
                     </span>
 
-                    <span className=" flex flex-col items-center gap-1 w-[24px] h-full bg-[#f3f6f9] mt-[4px] rounded-[4px] ml-1 p-1">
-                      <span className="w-full h-[4px] bg-[#e2e5ed]"></span>
-                      <span className="w-full h-[4px] bg-[#e2e5ed]"></span>
-                      <span className="w-full h-[4px] bg-[#e2e5ed]"></span>
+                    <span className=" ml-1 mt-[4px] flex h-full w-[24px] flex-col items-center gap-1 rounded-[4px] bg-[#f3f6f9] p-1">
+                      <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
+                      <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
+                      <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
                     </span>
 
-                    <span className="w-full h-[8px] bg-[#f3f6f9]"></span>
+                    <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
                   </span>
 
                   {leftSidebarViewType === "detached" && (
                     <FaCheckCircle
                       color="#405189"
                       size={13}
-                      className="absolute top-[7px] right-[7px]"
+                      className="absolute right-[7px] top-[7px]"
                     />
                   )}
                 </span>
-                <span className="text-[#665057] font-poppins-md text-[13px] font-[500] tracking-wide mx-auto">
+                <span className="mx-auto font-poppins-md text-[13px] tracking-wide text-[#665057]">
                   Detached
                 </span>
               </button>
@@ -872,65 +867,65 @@ const RightSidebar = () => {
 
           {/* NOTE Sidebar Color */}
           <div className="mt-5">
-            <h3 className="text-[#665057] font-poppins-rg uppercase text-[13px] font-[600]">
+            <h3 className="font-poppins-rg text-[13px] uppercase text-[#665057]">
               Sidebar Color
             </h3>
             <p className="text-soft text-[13px]">
               Choose Light or Dark Sidebar Color.
             </p>
 
-            <div className="flex items-center flex-wrap gap-3 mt-5">
+            <div className="mt-5 flex flex-wrap items-center gap-3">
               {rightSidbarColorData.map((eachColor, index) => (
                 <button
                   type="button"
                   key={eachColor.id}
-                  className="flex flex-col items-center gap-1 group cursor-pointer"
+                  className="group flex cursor-pointer flex-col items-center gap-1"
                   onClick={() =>
                     dispatch(changeLeftSidebarColorType(eachColor.id))
                   }
                 >
                   <span
-                    className={`relative w-[100px] h-[70px] rounded-[5px] group-hover:shadow-light overflow-hidden border ${
+                    className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
                       leftSidebarColorType === eachColor.id
                         ? "border border-[#405189]"
                         : ""
                     }`}
                   >
-                    <span className="w-full h-full flex gap-2">
+                    <span className="flex size-full gap-2">
                       <span
-                        className={`w-[25px] h-[100%] p-[4px] flex flex-col ${
+                        className={`flex h-full w-[25px] flex-col p-[4px] ${
                           eachColor.leftColor
                         } ${index === 0 ? "border-r" : ""}`}
                       >
                         <span
                           className={`h-[8px] w-full rounded-lg ${eachColor.leftInnerColor}`}
                         ></span>
-                        <span className="flex flex-col justify-center gap-1 h-full">
+                        <span className="flex h-full flex-col justify-center gap-1">
                           <span
-                            className={`w-full h-[4px] ${eachColor.leftInnerColor}`}
+                            className={`h-[4px] w-full ${eachColor.leftInnerColor}`}
                           ></span>
                           <span
-                            className={`w-full h-[4px] ${eachColor.leftInnerColor}`}
+                            className={`h-[4px] w-full ${eachColor.leftInnerColor}`}
                           ></span>
                           <span
-                            className={`w-full h-[4px] ${eachColor.leftInnerColor}`}
+                            className={`h-[4px] w-full ${eachColor.leftInnerColor}`}
                           ></span>
                         </span>
                       </span>
-                      <span className="w-full h-full flex flex-col justify-between">
-                        <span className="w-full h-[8px] bg-[#f3f6f9]"></span>
-                        <span className="w-full h-[8px] bg-[#f3f6f9]"></span>
+                      <span className="flex size-full flex-col justify-between">
+                        <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
+                        <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
                       </span>
                     </span>
                     {leftSidebarColorType === eachColor.id && (
                       <FaCheckCircle
                         color="#405189"
                         size={13}
-                        className="absolute top-[7px] right-[7px]"
+                        className="absolute right-[7px] top-[7px]"
                       />
                     )}
                   </span>
-                  <span className="text-[#665057] font-poppins-md text-[13px] font-[500] tracking-wide mx-auto">
+                  <span className="mx-auto font-poppins-md text-[13px] tracking-wide text-[#665057]">
                     {eachColor.label}
                   </span>
                 </button>
@@ -938,12 +933,12 @@ const RightSidebar = () => {
             </div>
 
             {leftSidebarColorType === "gradient-bg-color" && (
-              <div className="flex items-center flex-wrap gap-2 mt-4 bg-[#f3f6f9] px-[16px] py-[8px] rounded-[4px]">
+              <div className="mt-4 flex flex-wrap items-center gap-2 rounded-[4px] bg-[#f3f6f9] px-[16px] py-[8px]">
                 {rightSidbarColorData[2].childrenElem.map((eachChild) => (
                   <button
                     key={eachChild.id}
                     type="button"
-                    className={`w-[30px] h-[30px] flex items-center justify-center rounded-full ${eachChild.leftColor}`}
+                    className={`flex size-[30px] items-center justify-center rounded-full ${eachChild.leftColor}`}
                     onClick={() =>
                       dispatch(
                         changeLeftSidebarGradientColorType(eachChild.label)
@@ -961,17 +956,17 @@ const RightSidebar = () => {
 
           {/* NOTE Sidebar Images */}
           <div className="mt-5">
-            <h3 className="text-[#665057] font-poppins-rg uppercase text-[13px] font-[600]">
+            <h3 className="font-poppins-rg text-[13px] uppercase text-[#665057]">
               Sidebar Images
             </h3>
             <p className="text-soft text-[13px]">Choose a image of Sidebar.</p>
 
-            <div className="flex items-center flex-wrap gap-3 mt-5">
+            <div className="mt-5 flex flex-wrap items-center gap-3">
               {rightSidebarImagesData.map((imgBtn, index) => (
                 <button
                   type="button"
                   key={imgBtn.id}
-                  className={`relative w-[45px] h-[72px] flex items-center justify-center rounded-[4px] overflow-hidden bg-cover bg-center transition-style ${
+                  className={`transition-style relative flex h-[72px] w-[45px] items-center justify-center overflow-hidden rounded-[4px] bg-cover bg-center ${
                     index === 0 ? `${imgBtn.bgColor}` : `${imgBtn.bgImage}`
                   } ${
                     leftSidebarImageType === imgBtn.id
@@ -987,9 +982,9 @@ const RightSidebar = () => {
                       <FaCheckCircle
                         size={16}
                         color="#fff"
-                        className="border border-[#405189] rounded-full z-[99]"
+                        className="z-[99] rounded-full border border-[#405189]"
                       />
-                      <span className="absolute top-0 left-0 w-full h-full inset-0 bg-[#405582]/50"></span>
+                      <span className="absolute inset-0 size-full bg-[#405582]/50"></span>
                     </>
                   ) : index === 0 ? (
                     <MdClose size={16} />
@@ -1001,22 +996,22 @@ const RightSidebar = () => {
 
           {/* NOTE Sidebar Primary Color */}
           <div className="mt-5">
-            <h3 className="text-[#665057] font-poppins-rg uppercase text-[13px] font-[600]">
+            <h3 className="font-poppins-rg text-[13px] uppercase text-[#665057]">
               Primary Color
             </h3>
             <p className="text-soft text-[13px]">Choose a color of Primary.</p>
 
-            <div className="flex items-center flex-wrap gap-3 mt-4">
+            <div className="mt-4 flex flex-wrap items-center gap-3">
               {rightSidebarPrimaryColorData.map((pColor) => (
                 <button
                   key={pColor.id}
                   type="button"
-                  className={`w-[30px] h-[30px] rounded-[4px] transition-style ${
+                  className={`transition-style size-[30px] rounded-[4px] ${
                     pColor.bgColor
                   } ${
                     layoutThemePrimaryColorType === pColor.id
-                      ? "scale-[1.1]"
-                      : "scale-[1]"
+                      ? "scale-110"
+                      : "scale-100"
                   }`}
                   onClick={() =>
                     dispatch(changeLayoutThemePrimaryColorType(pColor.id))
@@ -1028,24 +1023,24 @@ const RightSidebar = () => {
 
           {/* Preloader */}
           <div className="mt-5">
-            <h3 className="text-[#665057] font-poppins-rg uppercase text-[13px] font-[600]">
+            <h3 className="font-poppins-rg text-[13px] uppercase text-[#665057]">
               Preloader
             </h3>
             <p className="text-soft text-[13px]">Choose a preloader.</p>
 
-            <div className="flex items-center flex-wrap gap-3 mt-4">
+            <div className="mt-4 flex flex-wrap items-center gap-3">
               {/* Top Loader */}
               <button
                 type="button"
-                className="flex flex-col items-center gap-1 group cursor-pointer"
+                className="group flex cursor-pointer flex-col items-center gap-1"
                 onClick={() => dispatch(changePreloader("top-loader"))}
               >
                 <span
-                  className={`relative w-[100px] h-[70px] rounded-[5px] group-hover:shadow-light overflow-hidden border ${
+                  className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
                     preloader === "top-loader" ? "border border-[#405189]" : ""
                   }`}
                 >
-                  <span className="relative w-full h-full flex gap-2">
+                  <span className="relative flex size-full gap-2">
                     <motion.span
                       initial={{ width: 0 }}
                       animate={{ width: [0, "100%"] }}
@@ -1055,30 +1050,30 @@ const RightSidebar = () => {
                         repeat: Infinity,
                         repeatDelay: 1,
                       }}
-                      className="absolute top-0 left-0 h-[3px] bg-[#405189]"
+                      className="absolute left-0 top-0 h-[3px] bg-[#405189]"
                     ></motion.span>
-                    <span className="w-[25px] h-[100%] bg-[#f3f6f9] p-[4px] flex flex-col">
+                    <span className="flex h-full w-[25px] flex-col bg-[#f3f6f9] p-[4px]">
                       <span className="h-[8px] w-full rounded-lg bg-[#e2e5ed]"></span>
-                      <span className="flex flex-col justify-center gap-1 h-full">
-                        <span className="w-full h-[4px] bg-[#e2e5ed]"></span>
-                        <span className="w-full h-[4px] bg-[#e2e5ed]"></span>
-                        <span className="w-full h-[4px] bg-[#e2e5ed]"></span>
+                      <span className="flex h-full flex-col justify-center gap-1">
+                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
+                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
+                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
                       </span>
                     </span>
-                    <span className="w-full h-full flex flex-col justify-between">
-                      <span className="w-full h-[8px] bg-[#f3f6f9]"></span>
-                      <span className="w-full h-[8px] bg-[#f3f6f9]"></span>
+                    <span className="flex size-full flex-col justify-between">
+                      <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
+                      <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
                     </span>
                   </span>
                   {preloader === "top-loader" && (
                     <FaCheckCircle
                       color="#405189"
                       size={13}
-                      className="absolute top-[7px] right-[7px]"
+                      className="absolute right-[7px] top-[7px]"
                     />
                   )}
                 </span>
-                <span className="text-[#665057] font-poppins-md text-[13px] font-[500] tracking-wide mx-auto">
+                <span className="mx-auto font-poppins-md text-[13px] tracking-wide text-[#665057]">
                   Top Loader
                 </span>
               </button>
@@ -1086,16 +1081,16 @@ const RightSidebar = () => {
               {/* Spinner */}
               <button
                 type="button"
-                className="flex flex-col items-center gap-1 group cursor-pointer"
+                className="group flex cursor-pointer flex-col items-center gap-1"
                 onClick={() => dispatch(changePreloader("spinner"))}
               >
                 <span
-                  className={`relative w-[100px] h-[70px] rounded-[5px] group-hover:shadow-light overflow-hidden border ${
+                  className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
                     preloader === "spinner" ? "border border-[#405189]" : ""
                   }`}
                 >
-                  <span className="relative w-full h-full flex gap-2">
-                    <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                  <span className="relative flex size-full gap-2">
+                    <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
                       <ClipLoader
                         size={25}
                         color="#405189"
@@ -1103,28 +1098,28 @@ const RightSidebar = () => {
                         cssOverride={{ borderWidth: "3px" }}
                       />
                     </span>
-                    <span className="w-[25px] h-[100%] bg-[#f3f6f9] p-[4px] flex flex-col">
+                    <span className="flex h-full w-[25px] flex-col bg-[#f3f6f9] p-[4px]">
                       <span className="h-[8px] w-full rounded-lg bg-[#e2e5ed]"></span>
-                      <span className="flex flex-col justify-center gap-1 h-full">
-                        <span className="w-full h-[4px] bg-[#e2e5ed]"></span>
-                        <span className="w-full h-[4px] bg-[#e2e5ed]"></span>
-                        <span className="w-full h-[4px] bg-[#e2e5ed]"></span>
+                      <span className="flex h-full flex-col justify-center gap-1">
+                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
+                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
+                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
                       </span>
                     </span>
-                    <span className="w-full h-full flex flex-col justify-between">
-                      <span className="w-full h-[8px] bg-[#f3f6f9]"></span>
-                      <span className="w-full h-[8px] bg-[#f3f6f9]"></span>
+                    <span className="flex size-full flex-col justify-between">
+                      <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
+                      <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
                     </span>
                   </span>
                   {preloader === "spinner" && (
                     <FaCheckCircle
                       color="#405189"
                       size={13}
-                      className="absolute top-[7px] right-[7px]"
+                      className="absolute right-[7px] top-[7px]"
                     />
                   )}
                 </span>
-                <span className="text-[#665057] font-poppins-md text-[13px] font-[500] tracking-wide mx-auto">
+                <span className="mx-auto font-poppins-md text-[13px] tracking-wide text-[#665057]">
                   Spinner
                 </span>
               </button>
@@ -1132,37 +1127,37 @@ const RightSidebar = () => {
               {/* Disable */}
               <button
                 type="button"
-                className="flex flex-col items-center gap-1 group cursor-pointer"
+                className="group flex cursor-pointer flex-col items-center gap-1"
                 onClick={() => dispatch(changePreloader("disable"))}
               >
                 <span
-                  className={`relative w-[100px] h-[70px] rounded-[5px] group-hover:shadow-light overflow-hidden border ${
+                  className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
                     preloader === "disable" ? "border border-[#405189]" : ""
                   }`}
                 >
-                  <span className="w-full h-full flex gap-2">
-                    <span className="w-[25px] h-[100%] bg-[#f3f6f9] p-[4px] flex flex-col">
+                  <span className="flex size-full gap-2">
+                    <span className="flex h-full w-[25px] flex-col bg-[#f3f6f9] p-[4px]">
                       <span className="h-[8px] w-full rounded-lg bg-[#e2e5ed]"></span>
-                      <span className="flex flex-col justify-center gap-1 h-full">
-                        <span className="w-full h-[4px] bg-[#e2e5ed]"></span>
-                        <span className="w-full h-[4px] bg-[#e2e5ed]"></span>
-                        <span className="w-full h-[4px] bg-[#e2e5ed]"></span>
+                      <span className="flex h-full flex-col justify-center gap-1">
+                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
+                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
+                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
                       </span>
                     </span>
-                    <span className="w-full h-full flex flex-col justify-between">
-                      <span className="w-full h-[8px] bg-[#f3f6f9]"></span>
-                      <span className="w-full h-[8px] bg-[#f3f6f9]"></span>
+                    <span className="flex size-full flex-col justify-between">
+                      <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
+                      <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
                     </span>
                   </span>
                   {preloader === "disable" && (
                     <FaCheckCircle
                       color="#405189"
                       size={13}
-                      className="absolute top-[7px] right-[7px]"
+                      className="absolute right-[7px] top-[7px]"
                     />
                   )}
                 </span>
-                <span className="text-[#665057] font-poppins-md text-[13px] font-[500] tracking-wide mx-auto">
+                <span className="mx-auto font-poppins-md text-[13px] tracking-wide text-[#665057]">
                   Disable
                 </span>
               </button>

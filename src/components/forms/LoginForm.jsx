@@ -1,55 +1,59 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { ClipLoader } from "react-spinners";
 import { toast } from "react-toastify";
 
-import { PasswordInputFiled } from "..";
+import {
+  SocialAuthForm,
+  PasswordInputFiled,
+  RememberMe,
+  TextInputFile,
+} from "..";
 
-const ResetPasswordForm = () => {
-  const [resetPasswordInput, setResetPasswordInput] = useState({});
+import ROUTES from "@/constants/routes";
+
+const LoginForm = () => {
+  const [loginData, setLoginData] = useState({ rememberMe: false });
   const [isProcessing, setIsProcessing] = useState(false);
 
   const router = useRouter();
-  const pathname = usePathname();
-  const resetToken = pathname.split("/").pop();
 
-  // NOTE: Handle the all input fields
   const onHandleInputs = (name, value) => {
-    setResetPasswordInput({
-      ...resetPasswordInput,
+    setLoginData({
+      ...loginData,
       [name]: value,
     });
   };
 
-  // NOTE: Handle the Login form
   const handleFromSubmit = async (event) => {
     event.preventDefault();
 
-    if (Object.keys(resetPasswordInput).length > 0) {
+    if (Object.keys(loginData).length > 1) {
       try {
         setIsProcessing(true);
-        const { newPassword, confirmPassword } = resetPasswordInput;
+        const { email, password, rememberMe } = loginData;
 
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/user/reset-password`,
+          `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/user/login`,
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              newPassword,
-              confirmPassword,
-              token: resetToken,
+              email,
+              password,
+              rememberMe,
             }),
           }
         );
+
         const data = await response.json();
 
-        if (response.ok && data.success) {
+        if (data.success) {
           toast.success(data.message, {
             position: "top-right",
             autoClose: 3000,
@@ -60,10 +64,11 @@ const ResetPasswordForm = () => {
             progress: undefined,
             theme: "light",
           });
-          setResetPasswordInput({});
+
+          setLoginData({ rememberMe: false });
           setIsProcessing(false);
 
-          router.push("/"); // INFO: redirect to Root page
+          router.push("/dashboard"); // Redirect to dashboard page
         } else {
           setIsProcessing(false);
           if (typeof data.message === "string") {
@@ -114,41 +119,37 @@ const ResetPasswordForm = () => {
       <form className="form-inner-container" onSubmit={handleFromSubmit}>
         {/* Welcome Text */}
         <div className="mb-6">
-          <h1 className="form-heading">Create new password</h1>
-          <p className="form-description">
-            Your new password must be different from pervious used password.
-          </p>
+          <h1 className="form-heading">Welcome Back !</h1>
+          <p className="form-description">Sign in to continue to Velzon</p>
         </div>
 
         {/* Form Element */}
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-5">
+          {/* Email Input */}
+          <TextInputFile
+            labelText="Email"
+            inputId="login-email"
+            inputName="email"
+            inputPlaceholder="Enter email"
+            inputValue={loginData.email ? loginData.email : ""}
+            helperText="Please Enter Your Email"
+            onHandleInputs={onHandleInputs}
+          />
           {/* Password Input */}
           <PasswordInputFiled
             labelText="Password"
-            inputId="reset-password"
-            inputName="newPassword"
-            inputValue={
-              resetPasswordInput.newPassword
-                ? resetPasswordInput.newPassword
-                : ""
-            }
-            helperText="This field is required"
+            inputId="login-password"
+            inputName="password"
+            inputValue={loginData.password ? loginData.password : ""}
+            helperText="Please Enter Your Password"
             placeholderText="Enter password"
-            userInfo="Must be at least 6 characters."
             onHandleInputs={onHandleInputs}
           />
-          {/* Confirm Password Input */}
-          <PasswordInputFiled
-            labelText="Confirm Password"
-            inputId="reset-confirm-password"
-            inputName="confirmPassword"
-            inputValue={
-              resetPasswordInput.confirmPassword
-                ? resetPasswordInput.confirmPassword
-                : ""
-            }
-            helperText="Confirm Password Required"
-            placeholderText="Confirm password"
+          {/* RememberMe Input */}
+          <RememberMe
+            boxId="remember-checkbox"
+            boxName="rememberMe"
+            checkedStatus={loginData.rememberMe ? loginData.rememberMe : false}
             onHandleInputs={onHandleInputs}
           />
           {/* Sign in Button */}
@@ -160,25 +161,32 @@ const ResetPasswordForm = () => {
             }`}
           >
             {isProcessing ? (
-              <span className="flex items-center gap-4">
+              <span className="flex items-center gap-4 font-poppins-rg">
                 <ClipLoader color="#ffffff" size={16} />
                 <span className="text-soft">Processing...</span>
               </span>
             ) : (
-              "Update Password"
+              "Sign In"
             )}
           </button>
         </div>
+        <div className="my-5 flex items-center gap-2">
+          <hr className="grow border-t border-dotted border-gray-300" />
+          <span className="auth-direction-text">Sign in with</span>
+          <hr className="grow border-t border-dotted border-gray-300" />
+        </div>
+        {/* Alternate Sign in */}
+        <SocialAuthForm isRememberMe={loginData.rememberMe} />
       </form>
-      {/* Sign In */}
+      {/* Sign Up */}
       <p className="auth-direction-text text-center">
-        Wait, I remember my password...{" "}
-        <Link href="/login">
-          <span className="text-[#405189] underline">Click here</span>
+        Don&apos;t have an account?{" "}
+        <Link href={ROUTES.REGISTER}>
+          <span className="text-[#405189] underline">Signup</span>
         </Link>
       </p>
     </>
   );
 };
 
-export default ResetPasswordForm;
+export default LoginForm;
