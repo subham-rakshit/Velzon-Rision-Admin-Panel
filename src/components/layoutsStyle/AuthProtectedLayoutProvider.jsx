@@ -65,7 +65,7 @@ const AuthProtectedLayoutProvider = ({ children }) => {
             layoutModeType={layoutModeType}
           />
           {layoutType === "horizontal" && <LeftHorizontalSidebar />}
-          {children}
+          <main>{children}</main>
           <Footer />
         </div>
         <RightSidebar />

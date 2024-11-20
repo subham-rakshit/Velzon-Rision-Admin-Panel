@@ -1,13 +1,13 @@
+import bcrypt from "bcryptjs";
+import CredentialsProvider from "next-auth/providers/credentials";
+import FacebookProvider from "next-auth/providers/facebook";
+import GitHubProvider from "next-auth/providers/github";
+import GoogleProvider from "next-auth/providers/google";
+import TwitterProvider from "next-auth/providers/twitter";
+
 import dbConnect from "@/lib/db/dbConnect";
 import UserModel from "@/model/User";
-import bcrypt from "bcryptjs";
 import { SignInSchema } from "@/schemas";
-
-import CredentialsProvider from "next-auth/providers/credentials";
-import GoogleProvider from "next-auth/providers/google";
-import GitHubProvider from "next-auth/providers/github";
-import TwitterProvider from "next-auth/providers/twitter";
-import FacebookProvider from "next-auth/providers/facebook";
 
 export const authOptions = {
   providers: [

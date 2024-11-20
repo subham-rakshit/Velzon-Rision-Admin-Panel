@@ -14,8 +14,8 @@ import {
 
 const Navbar = ({ topbarColorType, layoutModeType }) => {
   return (
-    <div
-      className={`sticky top-0 flex h-[60px] items-center justify-between px-5 shadow-light dark:bg-dark-600 sm:h-[70px] sm:px-[30px]`}
+    <nav
+      className={`background-light900_dark200 sticky top-0 flex h-[60px] items-center justify-between px-5 shadow-light dark:bg-dark-600 sm:h-[70px] sm:px-[30px]`}
     >
       {/* Toggle Button and Form Section */}
       <div className="flex h-full items-center gap-2">
@@ -49,7 +49,7 @@ const Navbar = ({ topbarColorType, layoutModeType }) => {
         {/* User Profile Avatar Sidebar NOTE need to fetch the register user data */}
         <NavProfile />
       </div>
-    </div>
+    </nav>
   );
 };
 

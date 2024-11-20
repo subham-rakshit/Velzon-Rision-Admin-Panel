@@ -3,7 +3,7 @@ import React from "react";
 
 const UserAuthenticationLayout = ({ children, ...props }) => {
   return (
-    <div className="relative min-h-screen w-full bg-[#F3F3F9]">
+    <main className="relative min-h-screen w-full bg-[#F3F3F9]">
       <div className="relative min-h-[50vh] bg-auth-hero-pattern bg-cover bg-center">
         {/* Overlay */}
         <div className="absolute inset-0 bg-[#405582]/90 px-2">
@@ -46,7 +46,7 @@ const UserAuthenticationLayout = ({ children, ...props }) => {
           by Themesbrand
         </p>
       </div>
-    </div>
+    </main>
   );
 };
 

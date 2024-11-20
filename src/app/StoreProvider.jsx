@@ -3,9 +3,10 @@
 import { useEffect, useState } from "react";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
+
 import { makeStore } from "@/lib/store/store";
 
-//NOTE: When StoreProvide render in client side only then makeStore() will call. (Safe for SSR)
+// NOTE: When StoreProvide render in client side only then makeStore() will call. (Safe for SSR)
 export default function StoreProvider({ children }) {
   const [storeReadyStatus, setStoreReadyStatus] = useState(false);
   const [storeData, setStoreData] = useState(null);

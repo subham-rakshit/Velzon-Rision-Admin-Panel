@@ -1,4 +1,3 @@
-import AlternateAuthentication from "./authentications/AlternateAuthentication";
 import ForgotPasswordForm from "./authentications/ForgotPasswordForm";
 import LoginForm from "./authentications/LoginForm";
 import PasswordInputFiled from "./authentications/PasswordInputFiled";
@@ -6,6 +5,7 @@ import RegistrationForm from "./authentications/RegistrationForm";
 import RememberMe from "./authentications/RememberMe";
 import ResendOtpForm from "./authentications/ResendOtpForm";
 import ResetPasswordFrom from "./authentications/ResetPasswordFrom";
+import SocialAuthForm from "./authentications/SocialAuthForm";
 import TextInputFile from "./authentications/TextInputFile";
 import VerifyAccount from "./authentications/VerifyAccount";
 import ErrorImage from "./ErrorImage";
@@ -30,7 +30,7 @@ import ToggleButton from "./navigation/navbar/ToggleButton";
 import RightSidebar from "./navigation/rightSidebar/RightSidebar";
 
 export {
-  AlternateAuthentication,
+  SocialAuthForm,
   ForgotPasswordForm,
   LoginForm,
   PasswordInputFiled,

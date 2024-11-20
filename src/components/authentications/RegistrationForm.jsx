@@ -1,13 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
 import Link from "next/link";
-
 import { useRouter } from "next/navigation";
-import { toast } from "react-toastify";
+import React, { useState } from "react";
 import { ClipLoader } from "react-spinners";
+import { toast } from "react-toastify";
 
-import { AlternateAuthentication, PasswordInputFiled, TextInputFile } from "..";
+import { SocialAuthForm, PasswordInputFiled, TextInputFile } from "..";
 
 const RegistrationForm = () => {
   const [registerationData, setRegistrationData] = useState({});
@@ -15,7 +14,7 @@ const RegistrationForm = () => {
 
   const router = useRouter();
 
-  //NOTE: Handle the all input fields
+  // NOTE: Handle the all input fields
   const onHandleInputs = (name, value) => {
     setRegistrationData({
       ...registerationData,
@@ -23,7 +22,7 @@ const RegistrationForm = () => {
     });
   };
 
-  //NOTE: Handle the SignUp form
+  // NOTE: Handle the SignUp form
   async function handleFromSubmit(event) {
     event.preventDefault();
 
@@ -170,10 +169,10 @@ const RegistrationForm = () => {
               placeholderText="Confirm Password"
               onHandleInputs={onHandleInputs}
             />
-            <p className="form-description italic mt-2">
+            <p className="form-description mt-2 italic">
               By registering you agree to the Velzon{" "}
               <Link href="#">
-                <span className="underline not-italic text-[#405189] font-poppins-md">
+                <span className="font-poppins-md not-italic text-[#405189] underline">
                   Terms of Use
                 </span>
               </Link>
@@ -190,26 +189,26 @@ const RegistrationForm = () => {
             {isProcessing ? (
               <span className="flex items-center gap-4">
                 <ClipLoader color="#ffffff" size={16} />
-                <span className="text-light">Processing...</span>
+                <span className="text-light-850">Processing...</span>
               </span>
             ) : (
               "Sign Up"
             )}
           </button>
         </div>
-        <div className="flex items-center gap-2 my-5">
-          <hr className="flex-grow border-gray-300 border-dotted border-t-1" />
+        <div className="my-5 flex items-center gap-2">
+          <hr className="grow border-t border-dotted border-gray-300" />
           <span className="auth-direction-text">Create account with</span>
-          <hr className="flex-grow border-gray-300 border-dotted border-t-1" />
+          <hr className="grow border-t border-dotted border-gray-300" />
         </div>
         {/* Alternate Sign in */}
-        <AlternateAuthentication />
+        <SocialAuthForm />
       </form>
       {/* Sign Up */}
       <p className="auth-direction-text">
         Already have an account?{" "}
         <Link href="/login">
-          <span className="underline text-[#405189]">Signin</span>
+          <span className="text-[#405189] underline">Signin</span>
         </Link>
       </p>
     </>

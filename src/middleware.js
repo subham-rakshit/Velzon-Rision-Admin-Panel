@@ -321,3 +321,5 @@
 //     "/icons-crypto",
 //   ],
 // };
+
+export { auth as middleware } from "@/auth";

@@ -1,12 +1,14 @@
 import localFont from "next/font/local";
+import { SessionProvider } from "next-auth/react";
 
 import { ToastContainer } from "./clientToastContainer.js";
 import StoreProvider from "./StoreProvider.jsx";
 
-import AuthProvider from "@/context/AuthProvider.jsx";
+import { auth } from "@/auth";
+import DarkModeProvider from "@/context/DarkModeProvider.jsx";
+
 import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
-import DarkModeProvider from "@/context/DarkModeProvider.jsx";
 
 const hkGrotesk = localFont({
   src: "./assets/fonts/hkGroteskVF.ttf",
@@ -85,14 +87,15 @@ export const metadata = {
   description: "A general dashboard template for websites.",
 };
 
-export default function RootLayout({ children }) {
+const RootLayout = async ({ children }) => {
+  const session = await auth();
+
   return (
     <html lang="en">
-      <body
-        className={`${hkGrotesk.variable} ${inter.variable} ${jost.variable} ${montserrat.variable} ${nunito.variable} ${openSans.variable} ${outfit.variable} ${publicSans.variable} ${saira.variable} ${workSans.variable} ${poppinsRg.variable} ${poppinsMd.variable} antialiased`}
-      >
-        {/* Server Component wrapped with Client Component can be done */}
-        <AuthProvider>
+      <SessionProvider session={session}>
+        <body
+          className={`${hkGrotesk.variable} ${inter.variable} ${jost.variable} ${montserrat.variable} ${nunito.variable} ${openSans.variable} ${outfit.variable} ${publicSans.variable} ${saira.variable} ${workSans.variable} ${poppinsRg.variable} ${poppinsMd.variable} antialiased`}
+        >
           <StoreProvider>
             <DarkModeProvider>{children}</DarkModeProvider>
 
@@ -109,8 +112,10 @@ export default function RootLayout({ children }) {
               theme="light"
             />
           </StoreProvider>
-        </AuthProvider>
-      </body>
+        </body>
+      </SessionProvider>
     </html>
   );
-}
+};
+
+export default RootLayout;

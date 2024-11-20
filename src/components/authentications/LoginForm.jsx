@@ -7,7 +7,7 @@ import { ClipLoader } from "react-spinners";
 import { toast } from "react-toastify";
 
 import {
-  AlternateAuthentication,
+  SocialAuthForm,
   PasswordInputFiled,
   RememberMe,
   TextInputFile,
@@ -176,7 +176,7 @@ const LoginForm = () => {
           <hr className="grow border-t border-dotted border-gray-300" />
         </div>
         {/* Alternate Sign in */}
-        <AlternateAuthentication isRememberMe={loginData.rememberMe} />
+        <SocialAuthForm isRememberMe={loginData.rememberMe} />
       </form>
       {/* Sign Up */}
       <p className="auth-direction-text text-center">

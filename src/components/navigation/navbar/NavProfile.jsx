@@ -2,7 +2,7 @@
 
 import { Dropdown } from "flowbite-react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { signOut } from "next-auth/react";
 import React from "react";
 import { BiTask } from "react-icons/bi";
 import { IoMdWallet } from "react-icons/io";
@@ -18,48 +18,30 @@ import { toast } from "react-toastify";
 
 import avatarImg from "../../../app/assets/images/users/avatar-1.jpg";
 
+import ROUTES from "@/constants/routes";
 import { useAppSelector } from "@/lib/store/hooks";
 
 const NavProfile = () => {
   const { sidebarUserProfileAvtarType, layoutModeType } = useAppSelector(
     (state) => state.layout
   );
-  const router = useRouter();
 
   // NOTE: Logout functionality
   const handleLogout = async () => {
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/user/logout`
-      );
-      const data = await res.json();
-
-      if (res.ok && data.success) {
-        toast.success(data.message, {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-        router.push("/login"); // NOTE: redirect to login page
-      } else {
-        toast.error(data.message, {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-      }
+      await signOut({ redirectTo: ROUTES.LOGIN });
     } catch (error) {
       console.log(error);
+      toast.error(error.message || "Error occured during logout", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
 
