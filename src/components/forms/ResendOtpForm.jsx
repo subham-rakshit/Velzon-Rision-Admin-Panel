@@ -72,7 +72,7 @@ const ResendOtpForm = () => {
           });
           setUserEmail({});
           setIsProcessing(false);
-          router.replace("/auth-twostep"); // Redirect Login page
+          router.replace(ROUTES.AUTH_TWO_STEP); // Redirect Login page
         } else {
           setIsProcessing(false);
           if (typeof data.message === "string") {

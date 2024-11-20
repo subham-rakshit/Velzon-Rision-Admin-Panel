@@ -69,6 +69,7 @@ module.exports = {
         },
         light: {
           900: "#FFFFFF",
+          850: "#f9fbfc",
           800: "#f3f3f9",
         },
       },

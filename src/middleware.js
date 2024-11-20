@@ -23,6 +23,7 @@ const protectedRoutes = [
   "/tables",
   "/charts",
   "/icons",
+  "/maps",
 ];
 
 // NOTE: Web Crypto API Logic for verifying the JWT token
@@ -315,5 +316,7 @@ export const config = {
     "/icons-lineawesome",
     "/icons-feather",
     "/icons-crypto",
+    // Maps
+    "/maps-google",
   ],
 };

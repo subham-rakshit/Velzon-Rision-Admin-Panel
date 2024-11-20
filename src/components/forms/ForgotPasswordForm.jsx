@@ -71,7 +71,7 @@ const ForgotPasswordForm = () => {
           });
           setUserEmail({});
           setIsProcessing(false);
-          router.replace("/login"); // Redirect Login page
+          router.replace(ROUTES.LOGIN);
         } else {
           setIsProcessing(false);
           if (typeof data.message === "string") {

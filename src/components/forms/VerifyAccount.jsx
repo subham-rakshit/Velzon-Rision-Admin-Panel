@@ -111,7 +111,7 @@ const VerifyAccount = () => {
           setIsProcessing(false);
           setOtpInputs(new Array(4).fill(""));
           inputBoxRef.current[0].focus();
-          router.push(`/login`); // Redirect to login page
+          router.push(ROUTES.LOGIN); // Redirect to login page
         } else {
           setIsProcessing(false);
           setOtpInputs(new Array(4).fill(""));

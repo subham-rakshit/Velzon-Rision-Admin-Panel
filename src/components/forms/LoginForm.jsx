@@ -68,7 +68,7 @@ const LoginForm = () => {
           setLoginData({ rememberMe: false });
           setIsProcessing(false);
 
-          router.push("/dashboard"); // Redirect to dashboard page
+          router.push(ROUTES.DASHBOARD_ECOMMERCE); // Redirect to dashboard page
         } else {
           setIsProcessing(false);
           if (typeof data.message === "string") {
