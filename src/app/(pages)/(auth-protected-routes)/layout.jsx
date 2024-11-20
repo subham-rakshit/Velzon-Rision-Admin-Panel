@@ -1,7 +1,7 @@
 import React from "react";
 
 import StoreProvider from "@/app/StoreProvider";
-import AuthProtectedLayoutProvider from "@/components/layoutsStyle/AuthProtectedLayoutProvider";
+import AuthProtectedLayoutProvider from "@/components/navigation/AuthProtectedLayoutProvider";
 import DarkModeProvider from "@/context/DarkModeProvider";
 
 const CommonLayoutForAdminAndUser = ({ children }) => {

@@ -31,6 +31,75 @@ body {
   display: none;
 }
 
+/* Theme Settings */
+
+.rotate-settings-button {
+  animation: rotate 2s linear infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Sidebar default styles */
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh; /* Full screen height */
+  width: 380px; /* Sidebar width */
+  background-color: white;
+  transform: translateX(100%); /* Hidden off-screen */
+  transition: transform 0.3s ease-in-out; /* Smooth animation */
+  z-index: 99; /* Ensure it's on top */
+}
+
+/* Open state */
+.sidebar.open {
+  transform: translateX(0); /* Slide into view */
+}
+
+/* Closed state (optional for clarity) */
+.sidebar.closed {
+  transform: translateX(100%);
+}
+
+/* Animated span styles */
+.animated-span {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 3px;
+  background-color: #405189;
+  width: 0; /* Start at 0 width */
+  animation: expandWidth 2s ease-in-out infinite;
+  animation-delay: 1s; /* Delay before each repeat */
+}
+
+/* Keyframes for width animation */
+@keyframes expandWidth {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+/* Theme Settings */
+
 /* NOTE Preloader Spinner */
 .main-tranisiton {
   transition-property: display, justify-conten, align-items, background-color,

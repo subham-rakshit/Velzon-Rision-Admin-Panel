@@ -1,17 +1,17 @@
+import ErrorImage from "./ErrorImage";
 import ForgotPasswordForm from "./forms/ForgotPasswordForm";
 import LoginForm from "./forms/LoginForm";
-import PasswordInputFiled from "./inputs/PasswordInputFiled";
 import RegistrationForm from "./forms/RegistrationForm";
 import RememberMe from "./forms/RememberMe";
 import ResendOtpForm from "./forms/ResendOtpForm";
-import ResetPasswordFrom from "./forms/ResetPasswordFrom";
+import ResetPasswordForm from "./forms/ResetPasswordForm";
 import SocialAuthForm from "./forms/SocialAuthForm";
-import TextInputFile from "./inputs/TextInputFile";
 import VerifyAccount from "./forms/VerifyAccount";
-import ErrorImage from "./ErrorImage";
-import AuthProtectedLayoutProvider from "./layoutsStyle/AuthProtectedLayoutProvider";
+import PasswordInputFiled from "./inputs/PasswordInputFiled";
+import TextInputFile from "./inputs/TextInputFile";
 import Footer from "./layoutsStyle/Footer";
-import LoadingUI from "./layoutsStyle/Loading";
+import LoadingUI from "./layoutsStyle/LoadingUI";
+import AuthProtectedLayoutProvider from "./navigation/AuthProtectedLayoutProvider";
 import LeftHorizontalSidebar from "./navigation/leftSidebar/LeftHorizontalSidebar";
 import LeftSidebar from "./navigation/leftSidebar/LeftSidebar";
 import LeftTwoColumnSidebar from "./navigation/leftSidebar/LeftTwoColumnSidebar";
@@ -37,7 +37,7 @@ export {
   RegistrationForm,
   RememberMe,
   ResendOtpForm,
-  ResetPasswordFrom,
+  ResetPasswordForm,
   TextInputFile,
   VerifyAccount,
   Navbar,
