@@ -26,7 +26,7 @@ const AuthProtectedLayoutProvider = ({ children }) => {
 
   const isSidebarCollapse = leftSidbarSizeType === "small-icon-view";
   const leftMargin =
-    leftSidbarSizeType === "small-icon-view" ? "ml-0" : "ml-[250px]";
+    leftSidbarSizeType === "small-icon-view" ? "lg:ml-0" : "lg:ml-[250px]";
   const leftSidebarWidth =
     leftSidbarSizeType === "small-icon-view" ? "w-fit" : "w-[250px]";
 

@@ -22,9 +22,13 @@ const NavbarNotification = () => {
     <Dropdown
       label={
         <span
-          className={`relative rounded-full p-[9px] transition-all duration-300 ease-in-out ${layoutModeType === "light" ? "nav-icons-hover-light" : "nav-icons-hover-dark"}`}
+          className={`relative rounded-full border p-[5px] sm:p-[10px] transition-all duration-300 ease-in-out ${
+            layoutModeType === "light"
+              ? "nav-icons-hover-light"
+              : "nav-icons-hover-dark"
+          }`}
         >
-          <FaRegBell size={20} color="#878A99" />
+          <FaRegBell size={20} className="icon-light450_dark350" />
           <span className="absolute left-1/2 top-[-7px] rounded-full bg-[#F06548] px-[7px] py-[2px] font-poppins-md text-[10px] font-semibold text-white">
             3
           </span>

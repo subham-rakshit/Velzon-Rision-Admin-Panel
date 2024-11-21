@@ -726,7 +726,7 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
 
   return (
     <div
-      className={`min-h-screen ${
+      className={`hidden min-h-screen ${
         isSidebarCollapse ? "sticky" : `fixed`
       } left-0 top-0 z-[99] ${width}`}
     >

@@ -21,14 +21,58 @@ const ToggleButton = () => {
   };
 
   return (
-    <button
-      onClick={handleSidebarToggel}
-      type="button"
-      className="inline-block h-full cursor-pointer px-2"
-    >
-      {["bar_1", "bar_2", "bar_3"].map((bar) => {
-        let dynamicClasses;
-        if (isToggle) {
+    <>
+      {/* After Medium screen btn */}
+      <button
+        onClick={handleSidebarToggel}
+        type="button"
+        className="hidden md:inline-block h-full cursor-pointer"
+      >
+        {["bar_1", "bar_2", "bar_3"].map((bar) => {
+          let dynamicClasses;
+
+          if (isToggle) {
+            switch (bar) {
+              case "bar_1":
+                dynamicClasses =
+                  "w-[12px] rotate-[40deg] translate-y-[3px] translate-x-[13px]";
+                break;
+              case "bar_3":
+                dynamicClasses =
+                  "w-[12px] -rotate-[40deg] -translate-y-[3px] translate-x-[13px]";
+                break;
+              default:
+                dynamicClasses = "w-[22px] rotate-[180deg]";
+                break;
+            }
+          } else {
+            switch (bar) {
+              case "bar_1":
+                dynamicClasses = "w-[16px]";
+                break;
+              case "bar_3":
+                dynamicClasses = "w-[12px]";
+                break;
+              default:
+                dynamicClasses = "w-[20px]";
+                break;
+            }
+          }
+
+          return (
+            <span
+              key={bar}
+              className={`block background-light200_dark350 h-[2px] my-[4px] rounded-sm transition-all duration-500 ease-in-out ${dynamicClasses}`}
+            ></span>
+          );
+        })}
+      </button>
+
+      {/* Upto Medium screen btn */}
+      <button type="button" className="md:hidden inline-block cursor-pointer">
+        {["bar_1", "bar_2", "bar_3"].map((bar) => {
+          let dynamicClasses;
+
           switch (bar) {
             case "bar_1":
               dynamicClasses =
@@ -42,30 +86,16 @@ const ToggleButton = () => {
               dynamicClasses = "w-[22px] rotate-[180deg]";
               break;
           }
-        } else {
-          switch (bar) {
-            case "bar_1":
-              dynamicClasses = "w-[16px]";
-              break;
-            case "bar_3":
-              dynamicClasses = "w-[12px]";
-              break;
-            default:
-              dynamicClasses = "w-[20px]";
-              break;
-          }
-        }
 
-        return (
-          <span
-            key={bar}
-            className={`block h-[2px] ${
-              topbarColorType === "dark-color" ? "bg-[#B0C4D9]" : "bg-[#878A99]"
-            } my-[4px] rounded-sm transition-all duration-500 ease-in-out ${dynamicClasses}`}
-          ></span>
-        );
-      })}
-    </button>
+          return (
+            <span
+              key={bar}
+              className={`block background-light200_dark350 h-[2px] my-[4px] rounded-sm transition-all duration-500 ease-in-out ${dynamicClasses}`}
+            ></span>
+          );
+        })}
+      </button>
+    </>
   );
 };
 

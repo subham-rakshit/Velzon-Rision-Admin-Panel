@@ -17,6 +17,7 @@ import LeftSidebar from "./navigation/leftSidebar/LeftSidebar";
 import LeftTwoColumnSidebar from "./navigation/leftSidebar/LeftTwoColumnSidebar";
 import TransitionLink from "./navigation/leftSidebar/TransitionLink";
 import Navbar from "./navigation/navbar/Navbar";
+import NavbarSearchSmallDevice from "./navigation/navbar/NavbarSearchSmallDevice";
 import NavbarLanguages from "./navigation/navbar/NavbarLanguages";
 import NavbarMyCart from "./navigation/navbar/NavbarMyCart";
 import NavbarNotification from "./navigation/navbar/NavbarNotification";
@@ -44,6 +45,7 @@ export {
   ToggleButton,
   NavSearchBox,
   NavSearchBoxRecentSearches,
+  NavbarSearchSmallDevice,
   NavbarLanguages,
   NavbarWebApps,
   NavbarMyCart,

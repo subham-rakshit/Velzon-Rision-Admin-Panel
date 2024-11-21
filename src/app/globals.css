@@ -159,19 +159,19 @@ body {
   }
 
   .form-heading {
-    @apply mb-2 text-center font-poppins-md text-light-500 text-[16px];
+    @apply mb-2 text-center font-poppins-md text-light-weight-500 text-[16px];
   }
 
   .form-description {
-    @apply text-[13px] font-poppins-rg text-light-400 text-center;
+    @apply text-[13px] font-poppins-rg text-light-weight-400 text-center;
   }
 
   .form-lable-text {
-    @apply text-[13px] font-poppins-md text-dark-500;
+    @apply text-[13px] font-poppins-md text-dark-weight-500;
   }
 
   .form-input-text {
-    @apply text-[13px] font-poppins-rg  text-dark-500;
+    @apply text-[13px] font-poppins-rg  text-dark-weight-500;
   }
 
   .auth-description {
@@ -183,7 +183,7 @@ body {
   }
 
   .auth-direction-text {
-    @apply text-dark-500 font-poppins-md text-[13px];
+    @apply text-dark-weight-500 font-poppins-md text-[13px];
   }
 
   .inital-pages-style {
@@ -207,27 +207,37 @@ body {
   }
 
   .background-light900_dark200 {
-    @apply bg-light-900 dark:bg-dark-200;
+    @apply bg-light-dencity-900 dark:bg-dark-dencity-200 !important;
   }
-
+  .background-light900_dark250 {
+    @apply bg-light-dencity-900 dark:bg-dark-dencity-250;
+  }
+  .background-light900_dark300 {
+    @apply bg-light-dencity-900 dark:bg-dark-dencity-300;
+  }
   .background-light800_dark300 {
-    @apply bg-light-800 dark:bg-dark-300;
+    @apply bg-light-dencity-800 dark:bg-dark-dencity-300;
+  }
+  .background-light700_dark220 {
+    @apply bg-light-dencity-700 dark:bg-dark-dencity-220;
+  }
+  .background-light400_dark100 {
+    @apply bg-light-dencity-400 dark:bg-dark-dencity-100;
+  }
+  .background-light200_dark350 {
+    @apply bg-light-dencity-200 dark:bg-dark-dencity-350;
   }
 
-  .background-light800_dark100 {
-    @apply bg-light-800 dark:bg-dark-100 !important;
+  .icon-light450_dark350 {
+    @apply text-light-weight-450 dark:text-dark-weight-350;
   }
 
-  .background-light800_dark600 {
-    @apply bg-light-800 dark:bg-dark-600;
+  .no-focus {
+    @apply focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 !important;
   }
 
-  .background-light850_dark500 {
-    @apply bg-light-850 dark:bg-dark-500;
-  }
-
-  .bg-sidebar-color-yankees-blue {
-    @apply bg-[#405189];
+  .bg-color-yankees-blue {
+    @apply bg-accent-yankees-blue;
   }
   .bg-sidebar-color-dark-teal-green {
     @apply bg-[#066b5e];
@@ -263,15 +273,15 @@ body {
   }
 
   .h1-bold-light550_dark550 {
-    @apply text-dark-550 dark:text-light-550 font-poppins-md text-[22px];
+    @apply text-dark-weight-550 dark:text-light-weight-550 font-poppins-md text-[22px];
   }
 
   .h2-light550_dark550 {
-    @apply text-dark-550 dark:text-light-550 font-poppins-rg text-[16px];
+    @apply text-dark-weight-550 dark:text-light-weight-550 font-poppins-rg text-[16px];
   }
 
   .h4-light500_dark550 {
-    @apply text-dark-550 dark:text-light-550 font-poppins-rg text-[13px];
+    @apply text-dark-weight-550 dark:text-light-weight-550 font-poppins-rg text-[13px];
   }
 
   .h6-soft {
@@ -286,12 +296,8 @@ body {
     @apply focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 !important;
   }
 
-  .nav-icons-hover {
-    @apply hover:bg-light-800 dark:hover:bg-dark-100;
-  }
-
-  .recent-search-button {
-    @apply bg-[#e1ebfd] dark:bg-[#2b394f] flex items-center gap-1 rounded-full px-3 py-2 hover:bg-[#568df3] hover:text-white;
+  .nav-inner-button {
+    @apply bg-[#e1ebfd] dark:bg-[#2b394f] flex items-center gap-1 rounded-full px-3 py-1 hover:bg-[#568df3] hover:text-white;
   }
 }
 

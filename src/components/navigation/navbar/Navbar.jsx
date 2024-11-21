@@ -4,6 +4,7 @@ import {
   NavbarLanguages,
   NavbarMyCart,
   NavbarNotification,
+  NavbarSearchSmallDevice,
   NavbarThemeSwitcher,
   NavbarWebApps,
   NavFullScreenToggleButton,
@@ -15,14 +16,16 @@ import {
 const Navbar = ({ topbarColorType, layoutModeType }) => {
   return (
     <nav
-      className={`background-light900_dark200 sticky top-0 flex h-[60px] items-center justify-between px-5 shadow-light sm:h-[70px] sm:px-[30px]`}
+      className={`background-light900_dark200 flex-between sticky top-0 h-[70px] px-5 shadow-light`}
     >
-      <div className="flex h-full items-center gap-2">
-        {/* <ToggleButton /> */}
+      <div className="flex-start h-full gap-2 md:gap-5">
+        <ToggleButton />
         <NavSearchBox />
       </div>
 
-      <div className="flex h-full items-center gap-[5px]">
+      <div className="flex-start h-full gap-[5px]">
+        <NavbarSearchSmallDevice />
+
         <NavbarLanguages />
 
         <NavbarWebApps

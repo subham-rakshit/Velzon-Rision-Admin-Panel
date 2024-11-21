@@ -54,6 +54,9 @@ const membersContent = [
   },
 ];
 
+const btnStyle =
+  "flex-start gap-1 bg-custom-blue-100 dark:bg-custom-green-100 rounded-full px-3 py-1 hover:bg-custom-blue-500 dark:hover:bg-custom-blue-500 hover:text-white";
+
 const NavSearchBoxRecentSearches = ({
   isRecentSearchOpen,
   setIsRecentSearchOpen,
@@ -77,13 +80,13 @@ const NavSearchBoxRecentSearches = ({
         {/* Buttons */}
         <div className="mt-2 flex items-center gap-2 px-5 font-poppins-rg text-[11px] text-[#568df3]">
           <Link href="/">
-            <button className={`recent-search-button`}>
+            <button className={btnStyle}>
               how to setup
               <MdSearch />
             </button>
           </Link>
           <Link href="/">
-            <button className={`recent-search-button`}>
+            <button className={btnStyle}>
               buttons
               <MdSearch />
             </button>

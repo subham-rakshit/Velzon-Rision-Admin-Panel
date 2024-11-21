@@ -12,7 +12,7 @@ const NavSearchBox = () => {
 
   return (
     <form
-      className={`text-soft background-light800_dark300 relative flex min-w-[270px] items-center rounded-[3px] bg-[#f3f3f9] px-4`}
+      className={`hidden text-soft background-light800_dark300 relative md:flex-start max-w-[230px] rounded-[3px] bg-[#f3f3f9] px-4`}
     >
       <MdSearch size={18} />
       <input

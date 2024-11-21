@@ -31,13 +31,17 @@ const NavFullScreenToggleButton = () => {
     <button
       type="button"
       onClick={handleFullScreen}
-      className={`flex items-center justify-center rounded-full p-[9px] ${layoutModeType === "light" ? "nav-icons-hover-light" : "nav-icons-hover-dark"}`}
+      className={`flex items-center justify-center rounded-full border p-[5px] sm:p-[10px] ${
+        layoutModeType === "light"
+          ? "nav-icons-hover-light"
+          : "nav-icons-hover-dark"
+      }`}
     >
       <span>
         {isFullScreen ? (
-          <MdFullscreenExit size={22} color="#878A99" />
+          <MdFullscreenExit size={22} className="icon-light450_dark350" />
         ) : (
-          <MdFullscreen size={22} color="#878A99" />
+          <MdFullscreen size={22} className="icon-light450_dark350" />
         )}
       </span>
     </button>

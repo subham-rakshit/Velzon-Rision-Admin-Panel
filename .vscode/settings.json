@@ -1,28 +1,24 @@
 {
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode", // Default formatter for all files
+  "editor.formatOnSave": true, // Format files automatically on save
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit",
-    "source.addMissingImports": "explicit"
+    "source.fixAll.eslint": "always", // Fix ESLint issues automatically on save
+    "source.addMissingImports": "always" // Add missing imports automatically on save
   },
-  "prettier.tabWidth": 2,
-  "prettier.useTabs": false,
-  "prettier.semi": true,
-  "prettier.singleQuote": false,
-  "prettier.jsxSingleQuote": false,
-  "prettier.trailingComma": "es5",
-  "prettier.arrowParens": "always",
+  "prettier.tabWidth": 2, // Use 2 spaces for indentation
+  "prettier.useTabs": false, // Use spaces instead of tabs
+  "prettier.semi": true, // Add semicolons at the end of statements
+  "prettier.singleQuote": false, // Use double quotes
+  "prettier.jsxSingleQuote": false, // Use double quotes in JSX
+  "prettier.trailingComma": "es5", // Add trailing commas where valid in ES5 (e.g., objects, arrays)
+  "prettier.arrowParens": "always", // Always include parentheses around arrow function parameters
   "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode" // Prettier for JSON files
   },
-  "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode" // Prettier for JavaScript files
   },
   "[javascriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "typescript.tsdk": "node_modules/typescript/lib"
+    "editor.defaultFormatter": "esbenp.prettier-vscode" // Prettier for React (JSX) files
+  }
 }

@@ -87,44 +87,44 @@ export async function middleware(request) {
   const redirect = (path) => NextResponse.redirect(new URL(path, request.url));
 
   // TODO Remove thisthis
-  console.log(
-    `1. Middleware called. ${nextAuthToken ? "NEXTAUTH" : "JWT"} TOKEN -> `,
-    token
-  );
+  // console.log(
+  //   `1. Middleware called. ${nextAuthToken ? "NEXTAUTH" : "JWT"} TOKEN -> `,
+  //   token
+  // );
 
   // Handle Auth Routes
-  if (authRoutes.some((route) => pathname.startsWith(route))) {
-    console.log("Middleware called and AUTH ROUTE hits....."); // TODO REMOVE
+  // if (authRoutes.some((route) => pathname.startsWith(route))) {
+  //   console.log("Middleware called and AUTH ROUTE hits....."); // TODO REMOVE
 
-    return token
-      ? redirect(token.isAdmin ? "/dashboard" : "/landing")
-      : NextResponse.next();
-  }
+  //   return token
+  //     ? redirect(token.isAdmin ? "/dashboard" : "/landing")
+  //     : NextResponse.next();
+  // }
 
   // Handle Protected Routes
-  if (protectedRoutes.some((route) => pathname.startsWith(route))) {
-    console.log("Middleware called and PROTECTED ROUTE hits....."); // TODO REMOVE
+  // if (protectedRoutes.some((route) => pathname.startsWith(route))) {
+  //   console.log("Middleware called and PROTECTED ROUTE hits....."); // TODO REMOVE
 
-    if (!token) return redirect("/login");
+  //   if (!token) return redirect("/login");
 
-    if (!token.isAdmin) {
-      return redirect("/landing");
-    }
+  //   if (!token.isAdmin) {
+  //     return redirect("/landing");
+  //   }
 
-    return NextResponse.next();
-  }
+  //   return NextResponse.next();
+  // }
 
   // Redirect based on the root path
-  if (pathname === "/") {
-    console.log("Middleware called and [ / ] hits....."); // TODO REMOVE
+  // if (pathname === "/") {
+  //   console.log("Middleware called and [ / ] hits....."); // TODO REMOVE
 
-    if (!token) {
-      return NextResponse.redirect(new URL("/login", request.url));
-    }
-    return NextResponse.redirect(
-      new URL(token.isAdmin ? "/dashboard" : "/landing", request.url)
-    );
-  }
+  //   if (!token) {
+  //     return NextResponse.redirect(new URL("/login", request.url));
+  //   }
+  //   return NextResponse.redirect(
+  //     new URL(token.isAdmin ? "/dashboard" : "/landing", request.url)
+  //   );
+  // }
 
   // Allow the request to proceed if no conditions matched
   console.log("PASS the request....."); // TODO REMOVE

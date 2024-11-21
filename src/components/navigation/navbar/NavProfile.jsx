@@ -67,7 +67,11 @@ const NavProfile = () => {
   if (sidebarUserProfileAvtarType === "show") {
     return (
       <div
-        className={`relative ml-5 flex h-full items-center ${layoutModeType === "light" ? "nav-profile-box-light" : "nav-profile-box-dark"}`}
+        className={`relative flex-start h-full ${
+          layoutModeType === "light"
+            ? "nav-profile-box-light"
+            : "nav-profile-box-dark"
+        }`}
       >
         <Dropdown
           label={
@@ -79,14 +83,18 @@ const NavProfile = () => {
                 height={35}
                 className="rounded-full border"
               />
-              <span className="flex flex-col font-poppins-rg">
+              {/* <span className="hidden xl:flex flex-col font-poppins-rg">
                 <span
-                  className={`text-[13px] ${layoutModeType === "light" ? "text-dark-500" : "text-light-850"}`}
+                  className={`text-[13px] ${
+                    layoutModeType === "light"
+                      ? "text-dark-500"
+                      : "text-light-850"
+                  }`}
                 >
                   Badsha
                 </span>
-                <span className={`text-[11px] text-light-400`}>Founder</span>
-              </span>
+                <span className={`text-[11px] text-light-400`}>Founder</span> */}
+              {/* </span> */}
             </span>
           }
           arrowIcon={false}

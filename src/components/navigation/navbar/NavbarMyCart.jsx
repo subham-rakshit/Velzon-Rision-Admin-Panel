@@ -23,14 +23,13 @@ const NavbarMyCart = () => {
     <Dropdown
       label={
         <span
-          className={`relative rounded-full p-[9px] transition-all duration-300 ease-in-out ${layoutModeType === "light" ? "nav-icons-hover-light" : "nav-icons-hover-dark"}`}
+          className={`relative rounded-full border p-[5px] sm:p-[10px] transition-all duration-300 ease-in-out ${
+            layoutModeType === "light"
+              ? "nav-icons-hover-light"
+              : "nav-icons-hover-dark"
+          }`}
         >
-          <RiShoppingBagLine
-            size={20}
-            color={`${
-              topbarColorType === "dark-color" ? "#B0C4D9" : "#878A99"
-            }`}
-          />
+          <RiShoppingBagLine size={20} className="icon-light450_dark350" />
           <span className="absolute left-1/2 top-[-7px] rounded-full bg-[#299CDB] px-[7px] py-[2px] font-poppins-md text-[10px] font-semibold text-white">
             {cartData.length}
           </span>
