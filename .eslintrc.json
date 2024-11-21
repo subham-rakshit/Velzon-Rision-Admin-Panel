@@ -1,10 +1,5 @@
 {
-  "extends": [
-    "next/core-web-vitals",
-    "standard",
-    "plugin:tailwindcss/recommended",
-    "prettier"
-  ],
+  "extends": ["next/core-web-vitals", "standard", "plugin:tailwindcss/recommended", "prettier"],
   "plugins": ["import"],
   "rules": {
     "import/order": [

@@ -215,7 +215,7 @@ body {
   }
 
   .background-light800_dark100 {
-    @apply bg-light-800 dark:bg-dark-100;
+    @apply bg-light-800 dark:bg-dark-100 !important;
   }
 
   .background-light800_dark600 {
@@ -271,7 +271,7 @@ body {
   }
 
   .h4-light500_dark550 {
-    @apply text-dark-550 dark:light-550 font-poppins-rg text-[13px];
+    @apply text-dark-550 dark:text-light-550 font-poppins-rg text-[13px];
   }
 
   .h6-soft {
@@ -284,5 +284,19 @@ body {
 
   .no-focus {
     @apply focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 !important;
+  }
+
+  .nav-icons-hover {
+    @apply hover:bg-light-800 dark:hover:bg-dark-100;
+  }
+
+  .recent-search-button {
+    @apply bg-[#e1ebfd] dark:bg-[#2b394f] flex items-center gap-1 rounded-full px-3 py-2 hover:bg-[#568df3] hover:text-white;
+  }
+}
+
+@layer base {
+  :root {
+    --radius: 0.5rem;
   }
 }

@@ -8,6 +8,7 @@ module.exports = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
     "./node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}", // Flowbite React components
+    "./node_modules/@shadcn/ui/**/*.{js,ts,jsx,tsx}", // shadcn/ui components
     flowbite.content(),
   ],
   theme: {
@@ -68,10 +69,15 @@ module.exports = {
           600: "#1A1D21",
         },
         light: {
-          900: "#FFFFFF",
-          850: "#f9fbfc",
           800: "#f3f3f9",
+          850: "#f9fbfc",
+          900: "#FFFFFF",
         },
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
       },
     },
   },

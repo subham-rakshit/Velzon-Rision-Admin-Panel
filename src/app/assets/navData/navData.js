@@ -1,36 +1,31 @@
-//NOTE Language Images ---
-import flagSpain from "../images/flags/spain.svg";
-import flagGermany from "../images/flags/germany.svg";
-import flagItaly from "../images/flags/italy.svg";
-import flagRussia from "../images/flags/russia.svg";
-import flagUs from "../images/flags/us.svg";
-import flagChina from "../images/flags/china.svg";
-import flagFrench from "../images/flags/french.svg";
-import flagArabic from "../images/flags/ar.svg";
+// NOTE Language Images ---
+import { BiBadgeCheck, BiMessageSquareDots } from "react-icons/bi";
 
-//NOTE WebApp Images ---
-import github from "../images/brands/github.png";
 import bitbucket from "../images/brands/bitbucket.png";
 import dribbble from "../images/brands/dribbble.png";
 import dropbox from "../images/brands/dropbox.png";
-import mail_chimp from "../images/brands/mail_chimp.png";
+import github from "../images/brands/github.png";
+import mailChimp from "../images/brands/mail_chimp.png";
 import slack from "../images/brands/slack.png";
-
-//NOTE MyCart Images ----
+import flagArabic from "../images/flags/ar.svg";
+import flagChina from "../images/flags/china.svg";
+import flagFrench from "../images/flags/french.svg";
+import flagGermany from "../images/flags/germany.svg";
+import flagItaly from "../images/flags/italy.svg";
+import flagRussia from "../images/flags/russia.svg";
+import flagSpain from "../images/flags/spain.svg";
+import flagUs from "../images/flags/us.svg";
 import productImage1 from "../images/products/img-1.png";
 import productImage2 from "../images/products/img-2.png";
 import productImage3 from "../images/products/img-3.png";
 import productImage5 from "../images/products/img-5.png";
 import productImage6 from "../images/products/img-6.png";
-
-//NOTE Notifications
-import { BiBadgeCheck, BiMessageSquareDots } from "react-icons/bi";
 import avatar1 from "../images/users/avatar-2.jpg";
-import avatar2 from "../images/users/avatar-8.jpg";
 import avatar3 from "../images/users/avatar-3.jpg";
 import avatar4 from "../images/users/avatar-6.jpg";
+import avatar2 from "../images/users/avatar-8.jpg";
 
-//NOTE Languages Data ****
+// NOTE Languages Data ****
 export const languagesDetails = {
   spain: {
     label: "Española",
@@ -66,7 +61,7 @@ export const languagesDetails = {
   },
 };
 
-//NOTE WebApp Data ****
+// NOTE WebApp Data ****
 export const webAppsData = [
   {
     id: "github_webapp",
@@ -91,7 +86,7 @@ export const webAppsData = [
   {
     id: "mailchimp_webapp",
     appName: "Mail Chimp",
-    appImage: mail_chimp,
+    appImage: mailChimp,
   },
   {
     id: "slack_webapp",
@@ -100,7 +95,7 @@ export const webAppsData = [
   },
 ];
 
-//NOTE MyCart Data ****
+// NOTE MyCart Data ****
 export const myCartData = [
   {
     id: "cart_1",
@@ -139,7 +134,7 @@ export const myCartData = [
   },
 ];
 
-//NOTE Nav Notifications Data ****
+// NOTE Nav Notifications Data ****
 export const notificationsData = [
   {
     id: "all-notification",
