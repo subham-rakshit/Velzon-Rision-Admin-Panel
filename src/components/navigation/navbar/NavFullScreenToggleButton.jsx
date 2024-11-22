@@ -3,10 +3,7 @@
 import React, { useState } from "react";
 import { MdFullscreen, MdFullscreenExit } from "react-icons/md";
 
-import { useAppSelector } from "@/lib/store/hooks";
-
 const NavFullScreenToggleButton = () => {
-  const { layoutModeType } = useAppSelector((state) => state.layout);
   const [isFullScreen, setIsFullScreen] = useState(false);
 
   // NOTE: Handle fullscreen
@@ -31,11 +28,7 @@ const NavFullScreenToggleButton = () => {
     <button
       type="button"
       onClick={handleFullScreen}
-      className={`flex items-center justify-center rounded-full border p-[5px] sm:p-[10px] ${
-        layoutModeType === "light"
-          ? "nav-icons-hover-light"
-          : "nav-icons-hover-dark"
-      }`}
+      className="hover:background-light400_dark100 flex items-center justify-center rounded-full p-[5px] sm:p-[10px]"
     >
       <span>
         {isFullScreen ? (

@@ -1,6 +1,5 @@
 "use client";
 
-import { Dropdown } from "flowbite-react";
 import Image from "next/image";
 import React, { useState } from "react";
 import { MdClose } from "react-icons/md";
@@ -8,6 +7,15 @@ import { PiShoppingCartSimpleBold } from "react-icons/pi";
 import { RiShoppingBagLine } from "react-icons/ri";
 
 import { myCartData } from "@/app/assets/navData/navData";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const NavbarMyCart = () => {
   const [cartData, setCartData] = useState(myCartData);
@@ -15,130 +23,126 @@ const NavbarMyCart = () => {
     return acc + curr.productQuantity * curr.productPrice;
   }, 0);
 
-  // return (
-  //   <Dropdown
-  //     label={
-  //       <span
-  //         className={`relative rounded-full border p-[5px] sm:p-[10px] transition-all duration-300 ease-in-out ${
-  //           layoutModeType === "light"
-  //             ? "nav-icons-hover-light"
-  //             : "nav-icons-hover-dark"
-  //         }`}
-  //       >
-  //         <RiShoppingBagLine size={20} className="icon-light450_dark350" />
-  //         <span className="absolute left-1/2 top-[-7px] rounded-full bg-[#299CDB] px-[7px] py-[2px] font-poppins-md text-[10px] font-semibold text-white">
-  //           {cartData.length}
-  //         </span>
-  //       </span>
-  //     }
-  //     arrowIcon={false}
-  //     inline
-  //     dismissOnClick={false}
-  //     className="max-h-[460px] w-full max-w-[420px] focus:border-none"
-  //   >
-  //     <Dropdown.Header className="flex items-center justify-between gap-2">
-  //       <span className="text-dark block font-poppins-md text-[15px] font-semibold tracking-wide">
-  //         My Cart
-  //       </span>
-  //       <span className="flex items-center gap-1 rounded-[4px] bg-[#FEF4E4] px-2 py-1 text-[13px] font-[600] tracking-wide text-[#F7B84B]">
-  //         {cartData.length} items
-  //       </span>
-  //     </Dropdown.Header>
-  //     <div
-  //       className={`flex flex-col ${
-  //         cartData.length === 0
-  //           ? "min-h-[200px] items-center justify-center"
-  //           : "max-h-[300px]"
-  //       } custom-scrollbar w-full overflow-y-auto`}
-  //     >
-  //       {cartData.length > 0 ? (
-  //         cartData.map((item) => {
-  //           // NOTE Handle deleting cart items
-  //           const handleCartData = (e) => {
-  //             e.stopPropagation(); // NOTE Preventing the parent handlers from being triggerd
-  //             const newCartArray = cartData.filter(
-  //               (product) => product.id !== item.id
-  //             );
+  const handleCartData = (e, item) => {
+    e.stopPropagation();
+    const newCartArray = cartData.filter((product) => product.id !== item.id);
 
-  //             setCartData(newCartArray);
-  //           };
+    setCartData(newCartArray);
+  };
 
-  //           return (
-  //             <Dropdown.Item
-  //               key={item.id}
-  //               id={item.id}
-  //               className={`flex items-center justify-between gap-2 hover:bg-[#f3f6f9]`}
-  //               as="div"
-  //             >
-  //               <div className="flex items-center gap-4">
-  //                 <Image
-  //                   src={item.productImage}
-  //                   alt={item.productName}
-  //                   width={50}
-  //                   height={50}
-  //                   className="rounded-full bg-[#f3f6f9] p-2"
-  //                 />
-  //                 <span>
-  //                   <span className="text-dark mb-2 block text-[14px] font-light tracking-wide">
-  //                     {item.productName}
-  //                   </span>
-  //                   <span className="text-soft block text-[12px] font-light tracking-wide">
-  //                     {`Quantity: ${item.productQuantity} x $${item.productPrice}`}
-  //                   </span>
-  //                 </span>
-  //               </div>
-  //               <span className="text-dark flex items-center gap-3 text-[16px] font-medium tracking-wide">
-  //                 <span className="font-poppins-md">{`$${
-  //                   item.productQuantity * item.productPrice
-  //                 }`}</span>
-  //                 <button
-  //                   type="button"
-  //                   onClick={handleCartData}
-  //                   className="hover:scale-[1.3]"
-  //                 >
-  //                   <MdClose size={16} color="#407EF2" />
-  //                 </button>
-  //               </span>
-  //             </Dropdown.Item>
-  //           );
-  //         })
-  //       ) : (
-  //         <div className="flex w-full flex-col items-center gap-4">
-  //           <span className="rounded-full bg-[#DFF0FA] p-4">
-  //             <PiShoppingCartSimpleBold size={40} color="#299CDB" />
-  //           </span>
-  //           <p className="text-dark text-[16px] font-medium">
-  //             Your Cart is Empty!
-  //           </p>
-  //           <button
-  //             type="button"
-  //             className="rounded-[4px] bg-[#0ab39c] px-4 py-2 font-poppins-rg text-[13px] tracking-wide text-white hover:bg-[#099885]"
-  //           >
-  //             Shop Now
-  //           </button>
-  //         </div>
-  //       )}
-  //     </div>
-  //     <Dropdown.Divider />
-  //     <Dropdown.Item
-  //       as="div"
-  //       className="text-dark flex items-center justify-between text-[16px]"
-  //     >
-  //       <span className="font-poppins-rg">Total:</span>
-  //       <span>{`$${totalPrice}`}</span>
-  //     </Dropdown.Item>{" "}
-  //     <Dropdown.Item
-  //       className="rounded-[5px] text-center text-[14px] font-medium"
-  //       as="div"
-  //     >
-  //       {/* TODO Create redirect to checkout page  */}
-  //       <button className="w-full rounded-[4px] bg-[#0ab39c] p-2 font-poppins-rg tracking-wide text-white hover:bg-[#099885]">
-  //         Checkout
-  //       </button>
-  //     </Dropdown.Item>
-  //   </Dropdown>
-  // );
-  return null;
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <button
+          type="button"
+          className="hover:background-light400_dark100 flex-center relative m-0 size-[30px] rounded-full p-0 sm:size-[40px]"
+        >
+          <RiShoppingBagLine size={20} className="icon-light450_dark350" />
+          <span className="flex-center absolute left-1/2 top-[-8px] rounded-full bg-[#299CDB] px-[5px] font-poppins-md text-[10px] font-semibold text-white sm:top-[-5px]">
+            {cartData.length}
+          </span>
+        </button>
+      </DropdownMenuTrigger>
+
+      <DropdownMenuContent
+        align="end"
+        className="background-light900_dark200 max-h-[460px] w-screen gap-2 border-none sm:max-w-[420px]"
+      >
+        <DropdownMenuLabel className="flex-between">
+          <span className="text-16-light550_dark550">My Cart</span>
+          <span className="flex-start gap-1 rounded-[4px] bg-custom-yellow-100 px-2 py-1 font-poppins-rg text-[11px] tracking-wider text-accent-light-yellow dark:bg-custom-yellow-400">
+            {cartData.length} items
+          </span>
+        </DropdownMenuLabel>
+
+        <DropdownMenuSeparator />
+
+        <DropdownMenuGroup
+          className={`flex flex-col gap-2 ${
+            cartData.length === 0
+              ? "min-h-[200px] items-center justify-center"
+              : "max-h-[300px]"
+          } custom-scrollbar w-full overflow-y-auto`}
+        >
+          {cartData.length > 0 ? (
+            cartData.map((item) => {
+              return (
+                <DropdownMenuItem
+                  key={item.id}
+                  id={item.id}
+                  className={`flex-between gap-2`}
+                  as="div"
+                >
+                  <div className="flex-start gap-4">
+                    <Image
+                      src={item.productImage}
+                      alt={item.productName}
+                      width={50}
+                      height={50}
+                      className="rounded-full bg-light-dencity-800 p-2 dark:bg-dark-dencity-300"
+                    />
+                    <span>
+                      <span className="text-13-light500_dark550 mb-1 block">
+                        {item.productName}
+                      </span>
+                      <span className="text-11-light400 block">
+                        {`Quantity: ${item.productQuantity} x $${item.productPrice}`}
+                      </span>
+                    </span>
+                  </div>
+                  <span className="flex-start text-16-light550_dark550 gap-3">
+                    <span className="font-poppins-md">{`$${
+                      item.productQuantity * item.productPrice
+                    }`}</span>
+                    <button
+                      type="button"
+                      onClick={(e) => handleCartData(e, item)}
+                      className="hover:scale-[1.3]"
+                    >
+                      <MdClose size={16} color="#407EF2" />
+                    </button>
+                  </span>
+                </DropdownMenuItem>
+              );
+            })
+          ) : (
+            <DropdownMenuItem className="flex-col-center w-full gap-4">
+              <span className="rounded-full bg-custom-blue-200 p-5 dark:bg-custom-blue-400">
+                <PiShoppingCartSimpleBold size={35} color="#299CDB" />
+              </span>
+              <p className="text-16-light550_dark550">Your Cart is Empty!</p>
+              <button
+                type="button"
+                className="rounded-[4px] bg-custom-green-400 px-5 py-2 font-poppins-rg text-[13px] tracking-wide text-white hover:bg-custom-green-500"
+              >
+                Shop Now
+              </button>
+            </DropdownMenuItem>
+          )}
+        </DropdownMenuGroup>
+
+        <DropdownMenuSeparator />
+
+        <DropdownMenuGroup>
+          <DropdownMenuItem
+            as="div"
+            className="flex-between text-16-bold-light550_dark550"
+          >
+            <span className="text-light-weight-400">Total:</span>
+            <span>{`$${totalPrice}`}</span>
+          </DropdownMenuItem>{" "}
+          <DropdownMenuItem
+            className="rounded-[5px] text-center text-[14px] font-medium"
+            as="div"
+          >
+            <button className="w-full rounded-[4px] bg-custom-green-400 p-2 font-poppins-rg tracking-wide text-white hover:bg-custom-green-500">
+              Checkout
+            </button>
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
 };
 
 export default NavbarMyCart;

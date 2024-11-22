@@ -19,15 +19,13 @@ const NavbarThemeSwitcher = () => {
     <button
       type="button"
       onClick={handleToggleTheme}
-      className={`hidden sm:flex items-center justify-center rounded-full border p-[5px] sm:p-[10px]`}
+      className={`sm:flex-center hover:background-light400_dark100 hidden rounded-full p-[5px] sm:p-[10px]`}
     >
-      <span>
-        {theme === "light" ? (
-          <IoMoonOutline size={22} className="icon-light450_dark350" />
-        ) : (
-          <IoSunnyOutline size={22} className="icon-light450_dark350" />
-        )}
-      </span>
+      {theme === "light" ? (
+        <IoMoonOutline size={20} className="icon-light450_dark350" />
+      ) : (
+        <IoSunnyOutline size={20} className="icon-light450_dark350" />
+      )}
     </button>
   );
 };

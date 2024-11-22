@@ -34,7 +34,7 @@ const SocialAuthForm = () => {
     <div className="flex items-center justify-center gap-2">
       <button
         type="button"
-        // onClick={() => handleOAuthLogin("facebook")}
+        // onClick={() => handleLogin("facebook")}
         className={`${oAuthBtnStyle} bg-[#364574]`}
       >
         <FaFacebookF size="20" color="white" />
@@ -55,7 +55,7 @@ const SocialAuthForm = () => {
       </button>
       <button
         type="button"
-        // onClick={() => handleOAuthLogin("twitter")}
+        // onClick={() => handleLogin("twitter")}
         className={`${oAuthBtnStyle} bg-[#2385BA]`}
       >
         <FaTwitter size="20" color="white" />

@@ -69,13 +69,37 @@ const workSans = localFont({
 const poppinsMd = localFont({
   src: "./assets/fonts/poppinsMd.ttf",
   variable: "--font-poppins-md",
-  weight: "600, 500",
+  weight: "500",
 });
 
 const poppinsRg = localFont({
   src: "./assets/fonts/poppinsRg.ttf",
   variable: "--font-poppins-rg",
-  weight: "500, 400",
+  weight: "400",
+});
+
+const poppinsBl = localFont({
+  src: "./assets/fonts/poppinsBl.ttf",
+  variable: "--font-poppins-black",
+  weight: "900",
+});
+
+const poppinsBo = localFont({
+  src: "./assets/fonts/poppinsBo.ttf",
+  variable: "--font-poppins-bold",
+  weight: "700",
+});
+
+const poppinsLi = localFont({
+  src: "./assets/fonts/poppinsLi.ttf",
+  variable: "--font-poppins-light",
+  weight: "300",
+});
+
+const poppinsELi = localFont({
+  src: "./assets/fonts/poppinsELi.ttf",
+  variable: "--font-poppins--extra-light",
+  weight: "300",
 });
 
 export const metadata = {
@@ -87,7 +111,7 @@ const RootLayout = ({ children }) => {
   return (
     <html lang="en">
       <body
-        className={`${hkGrotesk.variable} ${inter.variable} ${jost.variable} ${montserrat.variable} ${nunito.variable} ${openSans.variable} ${outfit.variable} ${publicSans.variable} ${saira.variable} ${workSans.variable} ${poppinsRg.variable} ${poppinsMd.variable} antialiased`}
+        className={`${hkGrotesk.variable} ${inter.variable} ${jost.variable} ${montserrat.variable} ${nunito.variable} ${openSans.variable} ${outfit.variable} ${publicSans.variable} ${saira.variable} ${workSans.variable} ${poppinsRg.variable} ${poppinsMd.variable} ${poppinsBl.variable} ${poppinsBo.variable} ${poppinsLi.variable} ${poppinsELi.variable} antialiased`}
       >
         <AuthProvider>
           {children}

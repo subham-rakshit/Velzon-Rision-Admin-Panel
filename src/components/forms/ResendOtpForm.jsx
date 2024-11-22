@@ -166,7 +166,7 @@ const ResendOtpForm = () => {
             {isProcessing ? (
               <span className="flex items-center gap-4">
                 <ClipLoader color="#ffffff" size={16} />
-                <span className="text-light-850">Processing...</span>
+                <span className="text-light-weight-850">Processing...</span>
               </span>
             ) : (
               "Send OTP"

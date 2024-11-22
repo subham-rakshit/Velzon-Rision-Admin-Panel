@@ -1,5 +1,14 @@
 // NOTE Language Images ---
 import { BiBadgeCheck, BiMessageSquareDots } from "react-icons/bi";
+import { BiTask } from "react-icons/bi";
+import { IoMdWallet } from "react-icons/io";
+import { IoSettingsOutline } from "react-icons/io5";
+import {
+  MdAccountCircle,
+  MdOutlineMessage,
+  MdLock,
+} from "react-icons/md";
+import { RiLifebuoyLine } from "react-icons/ri";
 
 import bitbucket from "../images/brands/bitbucket.png";
 import dribbble from "../images/brands/dribbble.png";
@@ -24,6 +33,7 @@ import avatar1 from "../images/users/avatar-2.jpg";
 import avatar3 from "../images/users/avatar-3.jpg";
 import avatar4 from "../images/users/avatar-6.jpg";
 import avatar2 from "../images/users/avatar-8.jpg";
+
 
 // NOTE Languages Data ****
 export const languagesDetails = {
@@ -221,3 +231,57 @@ export const notificationsData = [
     content: [],
   },
 ];
+
+// NOTE Nav profile data group 1 ****
+export const profileDataGroup1 = [
+  {
+    id: "nav-profile",
+    label: "Profile",
+    icon: <MdAccountCircle size={16} color="#878a99" />,
+    linkAddress: "/profile",
+  },
+  {
+    id: "nav-messages",
+    label: "Messages",
+    icon: <MdOutlineMessage size={16} color="#878a99" />,
+    linkAddress: "/apps-chat",
+  },
+  {
+    id: "nav-taskboard",
+    label: "Taskboard",
+    icon: <BiTask size={16} color="#878a99" />,
+    linkAddress: "#",
+  },
+  {
+    id: "nav-help",
+    label: "Help",
+    icon: <RiLifebuoyLine size={16} color="#878a99" />,
+    linkAddress: "/pages-faqs",
+  },
+  
+]
+
+// NOTE Nav profile data group 2 ****
+export const profileDataGroup2 = [
+  {
+    id: "nav-balance",
+    label: "Balance: ",
+    subLabel: "$5971.67",
+    icon: <IoMdWallet size={16} color="#878a99" />,
+    linkAddress: "/pages-profile",
+  },
+  {
+    id: "nav-settings",
+    label: "Settiings",
+    isNew: true,
+    icon: <IoSettingsOutline size={16} color="#878a99" />,
+    linkAddress: "/pages-user-profile-settings",
+  },
+  {
+    id: "nav-lock-screen",
+    label: "Lock Screen",
+    icon: <MdLock size={16} color="#878a99" />,
+    linkAddress: "/auth-lockscreen-basic",
+  },
+  
+]

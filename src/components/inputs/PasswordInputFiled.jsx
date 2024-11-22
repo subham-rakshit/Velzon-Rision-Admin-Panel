@@ -59,7 +59,7 @@ const PasswordInputFiled = ({
         </div>
         {pathname.includes("login") && (
           <Link href={ROUTES.FORGOT_PASSWORD}>
-            <span className="font-poppins-rg text-[13px] text-light-400">
+            <span className="font-poppins-rg text-[13px] text-light-weight-400">
               Forgot password?
             </span>
           </Link>

@@ -1,32 +1,32 @@
-import React from "react";
+"use client";
 
-import { Button } from "@/components/ui/button";
+import React from "react";
+import { IoSearch } from "react-icons/io5";
+import { MdSearch } from "react-icons/md";
+
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-import { IoSearch } from "react-icons/io5";
-import { MdSearch } from "react-icons/md";
-
 const NavbarSearchSmallDevice = () => {
   return (
     <Popover>
-      <PopoverTrigger className="md:hidden p-[5px] sm:p-[10px] rounded-full hover:background-light400_dark100">
+      <PopoverTrigger className="hover:background-light400_dark100 rounded-full p-[5px] sm:p-[10px] md:hidden">
         <IoSearch size={20} className="icon-light450_dark350" />
       </PopoverTrigger>
-      <PopoverContent className="md:hidden background-light900_dark200 border-none w-screen sm:max-w-[320px]">
-        <form className="flex-start h-[35px] border dark:border-none rounded-tl-[3px] rounded-bl-[3px]">
+      <PopoverContent className="background-light900_dark200 w-screen border-none sm:max-w-[320px] md:hidden">
+        <form className="flex-start h-[35px] rounded-l-[3px] border dark:border-none">
           <input
             type="text"
             placeholder="Search..."
-            className="h4-light500_dark550 background-light800_dark300 no-focus border-none dark:border-none px-3 w-full h-full"
+            className="text-13-light500_dark550 background-light800_dark300 no-focus size-full border-none px-3 dark:border-none"
           />
 
           <button
             type="submit"
-            className="bg-accent-indigo-blue h-full px-3 rounded-tr-[3px] rounded-br-[3px]"
+            className="h-full rounded-r-[3px] bg-accent-indigo-blue px-3"
           >
             <MdSearch size={16} color="#fff" />
           </button>

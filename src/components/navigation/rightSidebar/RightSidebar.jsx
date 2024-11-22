@@ -73,7 +73,7 @@ const RightSidebar = () => {
   return (
     <>
       {/* NOTE Settings Button */}
-      <div className="fixed left-full flex min-h-screen w-[120px] -translate-x-full items-end justify-center pb-8">
+      <div className="md:flex-center fixed left-full top-[calc(100vh-80px)] hidden w-[120px] -translate-x-full pb-8">
         <motion.button
           style={{ rotate }}
           onClick={() => dispatch(changeRightSideBarIsOpen(true))}

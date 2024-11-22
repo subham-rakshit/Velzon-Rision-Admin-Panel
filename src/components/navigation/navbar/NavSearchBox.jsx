@@ -12,7 +12,7 @@ const NavSearchBox = () => {
 
   return (
     <form
-      className={`hidden text-soft background-light800_dark300 relative md:flex-start max-w-[230px] rounded-[3px] bg-[#f3f3f9] px-4`}
+      className={`text-soft background-light800_dark300 md:flex-start relative hidden max-w-[230px] rounded-[3px] bg-[#f3f3f9] px-4`}
     >
       <MdSearch size={18} />
       <input
@@ -20,7 +20,7 @@ const NavSearchBox = () => {
         value={searchInput}
         onChange={(e) => setSearchInput(e.target.value)}
         onClick={() => setIsRecentSearchOpen(true)}
-        className={`h4-light500_dark550 flex-1 border-none bg-transparent tracking-wide focus:ring-0`}
+        className={`text-13-light500_dark550 flex-1 border-none bg-transparent tracking-wide focus:ring-0`}
         placeholder="Search..."
       />
       {searchInput && (

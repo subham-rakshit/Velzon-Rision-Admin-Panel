@@ -1,33 +1,36 @@
 "use client";
 
-import { Dropdown } from "flowbite-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { BiTask } from "react-icons/bi";
-import { IoMdWallet } from "react-icons/io";
-import { IoSettingsOutline } from "react-icons/io5";
-import {
-  MdAccountCircle,
-  MdOutlineMessage,
-  MdLock,
-  MdLogout,
-} from "react-icons/md";
-import { RiLifebuoyLine } from "react-icons/ri";
+import { MdLogout } from "react-icons/md";
 import { toast } from "react-toastify";
 
 import avatarImg from "../../../app/assets/images/users/avatar-1.jpg";
 
+import {
+  profileDataGroup1,
+  profileDataGroup2,
+} from "@/app/assets/navData/navData";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import ROUTES from "@/constants/routes";
 import { useAppSelector } from "@/lib/store/hooks";
 
 const NavProfile = () => {
-  const { sidebarUserProfileAvtarType, layoutModeType } = useAppSelector(
+  const { sidebarUserProfileAvtarType } = useAppSelector(
     (state) => state.layout
   );
   const router = useRouter();
 
-  // NOTE: Logout functionality
   const handleLogout = async () => {
     try {
       const res = await fetch(
@@ -66,95 +69,85 @@ const NavProfile = () => {
 
   if (sidebarUserProfileAvtarType === "show") {
     return (
-      <div
-        className={`relative flex-start h-full ${
-          layoutModeType === "light"
-            ? "nav-profile-box-light"
-            : "nav-profile-box-dark"
-        }`}
-      >
-        <Dropdown
-          label={
-            <span className="flex items-center gap-[10px]">
-              <Image
-                alt="User settings"
-                src={avatarImg}
-                width={35}
-                height={35}
-                className="rounded-full border"
-              />
-              {/* <span className="hidden xl:flex flex-col font-poppins-rg">
-                <span
-                  className={`text-[13px] ${
-                    layoutModeType === "light"
-                      ? "text-dark-500"
-                      : "text-light-850"
-                  }`}
-                >
-                  Badsha
-                </span>
-                <span className={`text-[11px] text-light-400`}>Founder</span> */}
-              {/* </span> */}
-            </span>
-          }
-          arrowIcon={false}
-          style={{ backgroundColor: "transparent" }}
-          className="absolute left-0 top-0"
+      <DropdownMenu>
+        <DropdownMenuTrigger
+          asChild
+          className="md:background-light800_dark100 h-full cursor-pointer px-4"
         >
-          <Dropdown.Header>
-            <span className="text-soft text-[11px] font-semibold">
+          <span className="flex items-center gap-[10px]">
+            <Image
+              alt="User settings"
+              src={avatarImg}
+              width={33}
+              height={33}
+              className="rounded-full"
+            />
+            <span className="hidden font-poppins-rg xl:flex xl:flex-col">
+              <span className={`text-13-light500_dark550`}>Badsha</span>
+              <span className={`text-11-light400`}>Founder</span>
+            </span>
+          </span>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent
+          align="end"
+          side="bottom"
+          className="background-light900_dark200 border-none px-4 py-2"
+        >
+          <DropdownMenuLabel>
+            <span className="font-poppins-extra-light text-[12px] tracking-wide text-light-weight-400">
               Welcome Badsha!
             </span>
-          </Dropdown.Header>
-          <Dropdown.Item className="flex items-center gap-2">
-            <MdAccountCircle size={16} color="#878a99" />
-            <span className="text-dark text-[13px] font-light">Profile</span>
-          </Dropdown.Item>
-          <Dropdown.Item className="flex items-center gap-2">
-            <MdOutlineMessage size={16} color="#878a99" />
-            <span className="text-dark text-[13px] font-light">Messages</span>
-          </Dropdown.Item>
-          <Dropdown.Item className="flex items-center gap-2">
-            <BiTask size={16} color="#878a99" />
-            <span className="text-dark text-[13px] font-light">Taskboard</span>
-          </Dropdown.Item>
-          <Dropdown.Item className="flex items-center gap-2">
-            <RiLifebuoyLine size={16} color="#878a99" />
-            <span className="text-dark text-[13px] font-light">Help</span>
-          </Dropdown.Item>
-          <Dropdown.Divider />
-          <Dropdown.Item className="flex items-center gap-2">
-            <IoMdWallet size={16} color="#878a99" />
-            <span className="text-dark flex w-full items-center justify-between gap-1 text-[13px] font-light">
-              <span>Balance:</span>
-              <span className="font-medium text-black">$5971.67</span>
-            </span>
-          </Dropdown.Item>
-          <Dropdown.Item className="flex items-center gap-2">
-            <IoSettingsOutline size={16} color="#878a99" />
-            <span className="text-dark flex w-full items-center justify-between gap-1 text-[13px] font-light">
-              <span>Settings</span>
-              <span className="bg-[#daf4f0] px-[4px] text-[11px] font-medium text-[#0ab39c]">
-                New
+          </DropdownMenuLabel>
+
+          <DropdownMenuSeparator />
+
+          <DropdownMenuGroup>
+            {profileDataGroup1.map((tab) => (
+              <Link key={tab.id} href={tab.linkAddress}>
+                <DropdownMenuItem className="cursor-pointer">
+                  {tab.icon}
+                  <span className="font-poppins-rg text-[13px] text-dark-weight-600 dark:text-light-weight-400">
+                    {tab.label}
+                  </span>
+                </DropdownMenuItem>
+              </Link>
+            ))}
+          </DropdownMenuGroup>
+
+          <DropdownMenuSeparator />
+
+          <DropdownMenuGroup>
+            {profileDataGroup2.map((tabData) => (
+              <Link key={tabData.id} href={tabData.linkAddress}>
+                <DropdownMenuItem className="cursor-pointer">
+                  {tabData.icon}
+                  <span className="flex-between w-full">
+                    <span className="font-poppins-rg text-[13px] text-dark-weight-600 dark:text-light-weight-400">
+                      {tabData.label}
+                    </span>
+                    {tabData.subLabel ? (
+                      <span className="ml-2 font-poppins-md text-[13px] text-dark-weight-600 dark:text-light-weight-450">
+                        {tabData.subLabel}
+                      </span>
+                    ) : tabData.isNew ? (
+                      <span className="bg-custom-green-50 px-2 text-[11px] text-accent-light-green dark:bg-custom-green-450">
+                        New
+                      </span>
+                    ) : null}
+                  </span>
+                </DropdownMenuItem>
+              </Link>
+            ))}
+
+            <DropdownMenuItem onClick={handleLogout} className="cursor-pointer">
+              <MdLogout size={16} color="#878a99" />
+              <span className="font-poppins-rg text-[13px] text-dark-weight-600 dark:text-light-weight-400">
+                Logout
               </span>
-            </span>
-          </Dropdown.Item>
-          <Dropdown.Item className="flex items-center gap-2">
-            <MdLock size={16} color="#878a99" />
-            <span className="text-dark text-[13px] font-light">
-              Lock screen
-            </span>
-          </Dropdown.Item>
-          {/* Logout Button */}
-          <Dropdown.Item
-            className="flex items-center gap-2"
-            onClick={handleLogout}
-          >
-            <MdLogout size={16} color="#878a99" />
-            <span className="text-dark text-[13px] font-light">Logout</span>
-          </Dropdown.Item>
-        </Dropdown>
-      </div>
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
+        </DropdownMenuContent>
+      </DropdownMenu>
     );
   } else {
     return null;

@@ -33,6 +33,10 @@ module.exports = {
         saira: ["var(--font-saira)"],
         "poppins-md": ["var(--font-poppins-md)"],
         "poppins-rg": ["var(--font-poppins-rg)"],
+        "poppins-black": ["var(--font-poppins-black)"],
+        "poppins-bold": ["var(--font-poppins-bold)"],
+        "poppins-light": ["var(--font-poppins-light)"],
+        "poppins-extra-light": ["var(--font-poppins-extra-light)"],
       },
       boxShadow: {
         light: "0 2px 4px rgba(0, 0, 0, 0.1)",
@@ -61,7 +65,9 @@ module.exports = {
           "yankees-blue": "#405189",
           "indigo-blue": "#364574",
           "light-blue": "#548cf3",
+          "light-blue-400": "#406AAF",
           "light-yellow": "#f7b84b",
+          "light-green": "#0ab39c",
         },
       },
       backgroundColor: {
@@ -87,9 +93,16 @@ module.exports = {
         custom: {
           "blue-100": "#e1ebfd",
           "blue-200": "#dff0fa",
+          "blue-400": "#293e4c",
           "blue-500": "#3577F1",
           "blue-550": "#299CDB",
+
+          "green-50": "#DAF4F0",
           "green-100": "#293E4C",
+          "green-400": "#0ab39c",
+          "green-450": "#1D3A3A",
+          "green-500": "#099885",
+
           "yellow-100": "#fef4e4",
           "yellow-400": "#484236",
         },

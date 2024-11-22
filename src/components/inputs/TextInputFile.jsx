@@ -58,7 +58,7 @@ const TextInputFile = ({
           value={inputValue}
           type="text"
           placeholder={inputPlaceholder}
-          className={`form-input-text w-full rounded-lg ${
+          className={`form-input-text !dark:bg-white w-full rounded-lg bg-white ${
             isBlank ? "border-2 border-red-500" : ""
           } ${inputExtraClasses}`}
           sizes="sm"

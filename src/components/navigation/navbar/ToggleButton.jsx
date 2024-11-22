@@ -7,9 +7,7 @@ import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 
 const ToggleButton = () => {
   const [isToggle, setIsToggle] = useState(false);
-  const { leftSidbarSizeType, topbarColorType } = useAppSelector(
-    (state) => state.layout
-  );
+  const { leftSidbarSizeType } = useAppSelector((state) => state.layout);
   const dispatch = useAppDispatch();
 
   const handleSidebarToggel = () => {
@@ -26,7 +24,7 @@ const ToggleButton = () => {
       <button
         onClick={handleSidebarToggel}
         type="button"
-        className="hidden md:inline-block h-full cursor-pointer"
+        className="hidden h-full cursor-pointer md:inline-block"
       >
         {["bar_1", "bar_2", "bar_3"].map((bar) => {
           let dynamicClasses;
@@ -62,14 +60,14 @@ const ToggleButton = () => {
           return (
             <span
               key={bar}
-              className={`block background-light200_dark350 h-[2px] my-[4px] rounded-sm transition-all duration-500 ease-in-out ${dynamicClasses}`}
+              className={`background-light200_dark350 transition-300 my-[4px] block h-[2px] rounded-sm ${dynamicClasses}`}
             ></span>
           );
         })}
       </button>
 
       {/* Upto Medium screen btn */}
-      <button type="button" className="md:hidden inline-block cursor-pointer">
+      <button type="button" className="inline-block cursor-pointer md:hidden">
         {["bar_1", "bar_2", "bar_3"].map((bar) => {
           let dynamicClasses;
 
@@ -90,7 +88,7 @@ const ToggleButton = () => {
           return (
             <span
               key={bar}
-              className={`block background-light200_dark350 h-[2px] my-[4px] rounded-sm transition-all duration-500 ease-in-out ${dynamicClasses}`}
+              className={`background-light200_dark350 transition-300 my-[4px] block h-[2px] rounded-sm ${dynamicClasses}`}
             ></span>
           );
         })}

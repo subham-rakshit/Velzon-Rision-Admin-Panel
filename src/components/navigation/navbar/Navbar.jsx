@@ -23,7 +23,7 @@ const Navbar = ({ topbarColorType, layoutModeType }) => {
         <NavSearchBox />
       </div>
 
-      <div className="flex-start h-full gap-[5px]">
+      <div className="flex-start h-full gap-2 sm:gap-0 lg:gap-2">
         <NavbarSearchSmallDevice />
 
         <NavbarLanguages />

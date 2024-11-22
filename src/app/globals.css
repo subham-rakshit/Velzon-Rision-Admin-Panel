@@ -14,7 +14,7 @@ body {
 
 .scrollbar-custom::-webkit-scrollbar {
   width: 5px;
-  height: 10px;
+  height: 8px;
 }
 .scrollbar-custom::-webkit-scrollbar-track {
   background-color: transparent; /* Background of the scrollbar main container */
@@ -23,8 +23,13 @@ body {
   background-color: #d0d6db; /* Color of the scrollbar main elem */
   border-radius: 4px;
 }
-.scrollbar-custom.hide-scrollbar::-webkit-scrollbar-hover {
-  display: none;
+.dark .scrollbar-custom::-webkit-scrollbar-thumb {
+  background-color: #262a2f; /* Color of the scrollbar main elem */
+  border-radius: 4px;
+}
+.scrollbar-custom::-webkit-scrollbar-hover {
+  width: 7px;
+  cursor: pointer;
 }
 
 .sidebar-custom::-webkit-scrollbar {
@@ -138,10 +143,6 @@ body {
     @apply sidebar-custom;
   }
 
-  .notification-dropdown ul {
-    @apply py-0;
-  }
-
   .auth-section-container {
     @apply w-full min-h-[100vh] bg-[#F3F3F9];
   }
@@ -209,6 +210,9 @@ body {
   .flex-start {
     @apply flex justify-start items-center;
   }
+  .flex-col-start {
+    @apply flex flex-col justify-start items-center;
+  }
 
   .background-light900_dark200 {
     @apply bg-light-dencity-900 dark:bg-dark-dencity-200 !important;
@@ -221,6 +225,9 @@ body {
   }
   .background-light800_dark300 {
     @apply bg-light-dencity-800 dark:bg-dark-dencity-300;
+  }
+  .background-light800_dark100 {
+    @apply bg-light-dencity-800 dark:bg-dark-dencity-100;
   }
   .background-light700_dark220 {
     @apply bg-light-dencity-700 dark:bg-dark-dencity-220;
@@ -276,20 +283,24 @@ body {
     @apply text-[#545A61] font-poppins-md;
   }
 
-  .h1-bold-light550_dark550 {
+  .text-22-bold-light550_dark550 {
     @apply text-dark-weight-550 dark:text-light-weight-550 font-poppins-md text-[22px];
   }
 
-  .h2-light550_dark550 {
+  .text-16-bold-light550_dark550 {
+    @apply text-dark-weight-550 dark:text-light-weight-550 font-poppins-md text-[16px];
+  }
+
+  .text-16-light550_dark550 {
     @apply text-dark-weight-550 dark:text-light-weight-550 font-poppins-rg text-[16px];
   }
 
-  .h4-light500_dark550 {
+  .text-13-light500_dark550 {
     @apply text-dark-weight-550 dark:text-light-weight-550 font-poppins-rg text-[13px];
   }
 
-  .h6-soft {
-    @apply text-[11px] text-soft;
+  .text-11-light400 {
+    @apply text-[11px] text-light-weight-400 font-poppins-rg;
   }
 
   .invert-colors {

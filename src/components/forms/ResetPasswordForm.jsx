@@ -164,7 +164,7 @@ const ResetPasswordForm = () => {
             {isProcessing ? (
               <span className="flex items-center gap-4">
                 <ClipLoader color="#ffffff" size={16} />
-                <span className="text-soft">Processing...</span>
+                <span className="text-light-weight-850">Processing...</span>
               </span>
             ) : (
               "Update Password"

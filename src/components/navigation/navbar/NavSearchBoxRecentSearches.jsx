@@ -74,11 +74,11 @@ const NavSearchBoxRecentSearches = ({
     >
       {/* NOTE Scrollable Content */}
       <div className="custom-scrollbar h-full overflow-y-auto">
-        <h3 className="h4-light500_dark550 px-5 uppercase tracking-wide">
+        <h3 className="text-13-light500_dark550 px-5 uppercase tracking-wide">
           Recent Searches
         </h3>
         {/* Buttons */}
-        <div className="mt-2 flex items-center gap-2 px-5 font-poppins-rg text-[11px] text-[#568df3]">
+        <div className="flex-start mt-2 gap-2 px-5 font-poppins-rg text-[11px] text-[#568df3]">
           <Link href="/">
             <button className={btnStyle}>
               how to setup
@@ -102,10 +102,10 @@ const NavSearchBoxRecentSearches = ({
             <li
               key={content.id}
               onClick={() => setIsRecentSearchOpen(false)}
-              className={`nav-icons-hover flex cursor-pointer items-center gap-2 px-5 py-3`}
+              className={`flex-start cursor-pointer gap-2 px-5 py-3 hover:bg-light-dencity-800 dark:hover:bg-dark-dencity-500`}
             >
               <span>{content.icon}</span>
-              <span className={`h4-light500_dark550`}>{content.text}</span>
+              <span className={`text-13-light500_dark550`}>{content.text}</span>
             </li>
           ))}
         </ul>
@@ -119,7 +119,7 @@ const NavSearchBoxRecentSearches = ({
             <li
               key={member.id}
               onClick={() => setIsRecentSearchOpen(false)}
-              className={`nav-icons-hover flex cursor-pointer items-center gap-4 px-5 py-3`}
+              className={`flex-start cursor-pointer gap-2 px-5 py-3 hover:bg-light-dencity-800 dark:hover:bg-dark-dencity-500`}
             >
               <Image
                 src={member.userAvater}
@@ -129,8 +129,10 @@ const NavSearchBoxRecentSearches = ({
                 className="rounded-full"
               />
               <span className="text-dark flex flex-col gap-1 font-poppins-md text-[13px]">
-                <span className={`h4-light500_dark550`}>{member.name}</span>
-                <span className="h6-soft">{member.designation}</span>
+                <span className={`text-13-light500_dark550`}>
+                  {member.name}
+                </span>
+                <span className="text-11-light400">{member.designation}</span>
               </span>
             </li>
           ))}
