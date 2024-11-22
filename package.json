@@ -22,6 +22,8 @@
     "clsx": "^2.1.1",
     "eslint-config-prettier": "^9.1.0",
     "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-n": "^17.14.0",
+    "eslint-plugin-promise": "^7.1.0",
     "eslint-plugin-tailwindcss": "^3.17.5",
     "flowbite": "^2.5.2",
     "flowbite-react": "^0.10.2",
@@ -49,15 +51,11 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "eslint": "^9.15.0",
+    "eslint": "^8.57.1",
     "eslint-config-next": "15.0.2",
     "eslint-plugin-import": "^2.31.0",
-    "eslint-plugin-n": "^17.13.2",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^7.1.0",
     "postcss": "^8",
     "prettier": "^3.3.3",
-    "prettier-eslint": "^16.3.0",
     "tailwindcss": "^3.4.1"
   }
 }

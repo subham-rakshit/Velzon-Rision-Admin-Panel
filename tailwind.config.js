@@ -61,6 +61,7 @@ module.exports = {
           "yankees-blue": "#405189",
           "indigo-blue": "#364574",
           "light-blue": "#548cf3",
+          "light-yellow": "#f7b84b",
         },
       },
       backgroundColor: {
@@ -89,6 +90,8 @@ module.exports = {
           "blue-500": "#3577F1",
           "blue-550": "#299CDB",
           "green-100": "#293E4C",
+          "yellow-100": "#fef4e4",
+          "yellow-400": "#484236",
         },
       },
       borderRadius: {
