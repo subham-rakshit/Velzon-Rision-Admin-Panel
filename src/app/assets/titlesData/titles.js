@@ -40,7 +40,7 @@ export const titlesObject = {
   },
 
   // Admin Pages
-  //INFO: Dashborad Pages
+  // INFO: Dashborad Pages
   dashboard: {
     title: "Dashboard | Velzon - NEXT.js Admin & Dashboard Template",
   },

@@ -1,9 +1,12 @@
+import { BsStack } from "react-icons/bs";
+import { FaPencilRuler } from "react-icons/fa";
+import { FiMapPin } from "react-icons/fi";
+import { MdOutlineAccountCircle } from "react-icons/md";
 import {
   RiDashboard2Fill,
   RiApps2Line,
   RiPagesLine,
   RiRocketLine,
-  RiStackLine,
   RiHonourLine,
   RiFileList3Line,
   RiLayoutGridLine,
@@ -11,10 +14,6 @@ import {
   RiCompasses2Fill,
   RiShareLine,
 } from "react-icons/ri";
-import { MdOutlineAccountCircle } from "react-icons/md";
-import { FaPencilRuler } from "react-icons/fa";
-import { BsStack } from "react-icons/bs";
-import { FiMapPin } from "react-icons/fi";
 
 const leftSidebarData = [
   {
