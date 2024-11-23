@@ -1,6 +1,6 @@
 // NOTE Language Images ---
-import { BiBadgeCheck, BiMessageSquareDots } from "react-icons/bi";
-import { BiTask } from "react-icons/bi";
+
+import { BiBadgeCheck,BiTask, BiMessageSquareDots } from "react-icons/bi";
 import { IoMdWallet } from "react-icons/io";
 import { IoSettingsOutline } from "react-icons/io5";
 import {
@@ -33,6 +33,8 @@ import avatar1 from "../images/users/avatar-2.jpg";
 import avatar3 from "../images/users/avatar-3.jpg";
 import avatar4 from "../images/users/avatar-6.jpg";
 import avatar2 from "../images/users/avatar-8.jpg";
+
+import ROUTES from "@/constants/routes";
 
 
 // NOTE Languages Data ****
@@ -238,13 +240,13 @@ export const profileDataGroup1 = [
     id: "nav-profile",
     label: "Profile",
     icon: <MdAccountCircle size={16} color="#878a99" />,
-    linkAddress: "/profile",
+    linkAddress: ROUTES.PROFILE,
   },
   {
     id: "nav-messages",
     label: "Messages",
     icon: <MdOutlineMessage size={16} color="#878a99" />,
-    linkAddress: "/apps-chat",
+    linkAddress: ROUTES.APPS_CHAT,
   },
   {
     id: "nav-taskboard",
@@ -256,7 +258,7 @@ export const profileDataGroup1 = [
     id: "nav-help",
     label: "Help",
     icon: <RiLifebuoyLine size={16} color="#878a99" />,
-    linkAddress: "/pages-faqs",
+    linkAddress: ROUTES.PAGES_FAQS,
   },
   
 ]
@@ -268,20 +270,20 @@ export const profileDataGroup2 = [
     label: "Balance: ",
     subLabel: "$5971.67",
     icon: <IoMdWallet size={16} color="#878a99" />,
-    linkAddress: "/pages-profile",
+    linkAddress: ROUTES.PAGES_PROFILE,
   },
   {
     id: "nav-settings",
     label: "Settiings",
     isNew: true,
     icon: <IoSettingsOutline size={16} color="#878a99" />,
-    linkAddress: "/pages-user-profile-settings",
+    linkAddress: ROUTES.PAGES_USER_PROFILE_SETTINGS,
   },
   {
     id: "nav-lock-screen",
     label: "Lock Screen",
     icon: <MdLock size={16} color="#878a99" />,
-    linkAddress: "/auth-lockscreen-basic",
+    linkAddress: ROUTES.AUTH_LOCKSCREEN_BASIC,
   },
   
 ]

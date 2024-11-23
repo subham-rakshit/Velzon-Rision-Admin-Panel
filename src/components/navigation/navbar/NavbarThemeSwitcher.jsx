@@ -8,11 +8,7 @@ const NavbarThemeSwitcher = () => {
   const { theme, setTheme } = useTheme();
 
   const handleToggleTheme = () => {
-    if (theme === "dark") {
-      setTheme("light");
-    } else if (theme === "light") {
-      setTheme("dark");
-    }
+    setTheme(theme === "dark" ? "light" : "dark");
   };
 
   return (

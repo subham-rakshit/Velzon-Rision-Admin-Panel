@@ -16,9 +16,9 @@ import {
   DropdownMenuGroup,
 } from "@/components/ui/dropdown-menu";
 
-const NavbarWebApps = ({ topbarColorType, layoutModeType }) => {
+const NavbarWebApps = ({ topbarColorType }) => {
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger className="hover:background-light400_dark100 rounded-full p-[5px] sm:p-[10px]">
         <BiCategoryAlt size={20} className="icon-light450_dark350" />
       </DropdownMenuTrigger>

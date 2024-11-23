@@ -726,7 +726,7 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
 
   return (
     <div
-      className={`hidden min-h-screen ${
+      className={`min-h-screen ${
         isSidebarCollapse ? "sticky" : `fixed`
       } left-0 top-0 z-[99] ${width}`}
     >
@@ -741,7 +741,7 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
           {isSidebarCollapse ? (
             <Image src={logoSmall} alt="logo small" width={25} height={25} />
           ) : (
-            <Image src={logoLight} alt="logo light" width={100} height={20} />
+            <Image src={logoLight} alt="logo light" width={100} height={25} />
           )}
         </Link>
       </div>

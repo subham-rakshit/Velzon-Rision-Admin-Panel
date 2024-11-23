@@ -18,7 +18,7 @@ const NavbarLanguages = () => {
   const languageArr = Object.values(languagesDetails);
 
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger className="hover:background-light400_dark100 rounded-full p-[5px] sm:p-[10px]">
         <Image
           src={selectedLanguage.flag}

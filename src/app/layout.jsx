@@ -114,7 +114,7 @@ const RootLayout = ({ children }) => {
         className={`${hkGrotesk.variable} ${inter.variable} ${jost.variable} ${montserrat.variable} ${nunito.variable} ${openSans.variable} ${outfit.variable} ${publicSans.variable} ${saira.variable} ${workSans.variable} ${poppinsRg.variable} ${poppinsMd.variable} ${poppinsBl.variable} ${poppinsBo.variable} ${poppinsLi.variable} ${poppinsELi.variable} antialiased`}
       >
         <AuthProvider>
-          {children}
+          <main>{children}</main>
 
           <ToastContainer
             position="top-right"

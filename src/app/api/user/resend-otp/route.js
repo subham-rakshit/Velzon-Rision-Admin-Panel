@@ -1,8 +1,8 @@
-import UserModel from "@/model/User";
 import dbConnect from "@/lib/db/dbConnect";
-import { EmailSchema } from "@/schemas";
-import { sendEmail } from "@/lib/utils/mailer";
 import handleResponse from "@/lib/middleware/responseMiddleware";
+import { sendEmail } from "@/lib/utils/mailer";
+import UserModel from "@/model/User";
+import { EmailSchema } from "@/schemas";
 
 export async function POST(request) {
   await dbConnect();
@@ -10,7 +10,7 @@ export async function POST(request) {
   try {
     const { email } = await request.json();
 
-    //NOTE: Validate the email by zod schema
+    // NOTE: Validate the email by zod schema
     const validatedFields = EmailSchema.safeParse({
       email,
     });
@@ -24,7 +24,7 @@ export async function POST(request) {
       );
     }
 
-    //INFO: Fetch the user details
+    // INFO: Fetch the user details
     const userDetails = await UserModel.findOne({ email });
     if (!userDetails) {
       return handleResponse({
@@ -35,7 +35,7 @@ export async function POST(request) {
       });
     }
 
-    //INFO: Send verification email
+    // INFO: Send verification email
     const emailResponse = await sendEmail({
       email: userDetails.email,
       emailType: "RESEND",
@@ -43,7 +43,7 @@ export async function POST(request) {
       userId: userDetails._id,
     });
 
-    //INFO: Response send email with error
+    // INFO: Response send email with error
     if (!emailResponse.success) {
       return handleResponse({
         res: Response,
@@ -53,7 +53,7 @@ export async function POST(request) {
       });
     }
 
-    //INFO: Response send email with success
+    // INFO: Response send email with success
     return handleResponse({
       res: Response,
       status: 200,

@@ -17,13 +17,14 @@ import LeftSidebar from "./navigation/leftSidebar/LeftSidebar";
 import LeftTwoColumnSidebar from "./navigation/leftSidebar/LeftTwoColumnSidebar";
 import TransitionLink from "./navigation/leftSidebar/TransitionLink";
 import Navbar from "./navigation/navbar/Navbar";
-import NavbarSearchSmallDevice from "./navigation/navbar/NavbarSearchSmallDevice";
 import NavbarLanguages from "./navigation/navbar/NavbarLanguages";
 import NavbarMyCart from "./navigation/navbar/NavbarMyCart";
 import NavbarNotification from "./navigation/navbar/NavbarNotification";
+import NavbarSearchSmallDevice from "./navigation/navbar/NavbarSearchSmallDevice";
 import NavbarThemeSwitcher from "./navigation/navbar/NavbarThemeSwitcher";
 import NavbarWebApps from "./navigation/navbar/NavbarWebApps";
 import NavFullScreenToggleButton from "./navigation/navbar/NavFullScreenToggleButton";
+import NavLogo from "./navigation/navbar/NavLogo";
 import NavProfile from "./navigation/navbar/NavProfile";
 import NavSearchBox from "./navigation/navbar/NavSearchBox";
 import NavSearchBoxRecentSearches from "./navigation/navbar/NavSearchBoxRecentSearches";
@@ -42,6 +43,7 @@ export {
   TextInputFile,
   VerifyAccount,
   Navbar,
+  NavLogo,
   ToggleButton,
   NavSearchBox,
   NavSearchBoxRecentSearches,

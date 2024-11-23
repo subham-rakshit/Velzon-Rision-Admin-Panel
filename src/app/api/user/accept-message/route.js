@@ -1,8 +1,10 @@
+import mongoose from "mongoose";
 import { getServerSession } from "next-auth";
+
 import { authOptions } from "../../auth/[...nextauth]/options";
+
 import dbConnect from "@/lib/db/dbConnect";
 import UserModel from "@/model/User";
-import mongoose from "mongoose";
 
 export async function POST(request) {
   await dbConnect();
@@ -25,8 +27,8 @@ export async function POST(request) {
   const { acceptMessage } = await request.json();
 
   try {
-    //TODO:
+    // TODO:
   } catch (error) {
-    //TODO:
+    // TODO:
   }
 }

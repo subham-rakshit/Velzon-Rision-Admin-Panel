@@ -1,20 +1,21 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { NextResponse } from "next/server";
+
 import dbConnect from "@/lib/db/dbConnect";
+import handleResponse from "@/lib/middleware/responseMiddleware";
 import UserModel from "@/model/User";
 import { SignInSchema } from "@/schemas";
-import { NextResponse } from "next/server";
-import handleResponse from "@/lib/middleware/responseMiddleware";
 
 export async function POST(request) {
-  await dbConnect(); //INFO: Database connection
+  await dbConnect(); // INFO: Database connection
 
   try {
     const { email, password, rememberMe } = await request.json(); // return Promise
 
     console.log("API Login data ---", rememberMe);
 
-    //NOTE: Validate the registration schema
+    // NOTE: Validate the registration schema
     const validatedFields = SignInSchema.safeParse({
       email,
       password,
@@ -29,7 +30,7 @@ export async function POST(request) {
       );
     }
 
-    //INFO: Find user details
+    // INFO: Find user details
     const userDetails = await UserModel.findOne({ email });
 
     if (!userDetails) {
@@ -41,7 +42,7 @@ export async function POST(request) {
       });
     }
 
-    //INFO: Compare both passwords
+    // INFO: Compare both passwords
     const validPasswordCheck = await bcrypt.compare(
       password,
       userDetails.password
@@ -56,7 +57,7 @@ export async function POST(request) {
       });
     }
 
-    //INFO: Generate JWT token
+    // INFO: Generate JWT token
     const tokenData = {
       _id: userDetails._id,
       username: userDetails.username,
@@ -82,7 +83,7 @@ export async function POST(request) {
       expiresIn: expireToken / 1000, // JWT requires seconds
     });
 
-    //INFO: Response
+    // INFO: Response
     const { password: pass, ...rest } = userDetails._doc;
     const response = NextResponse.json(
       {

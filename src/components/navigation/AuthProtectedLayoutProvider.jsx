@@ -16,13 +16,8 @@ import {
 import { useAppSelector } from "@/lib/store/hooks";
 
 const AuthProtectedLayoutProvider = ({ children }) => {
-  const {
-    layoutType,
-    leftSidbarSizeType,
-    topbarColorType,
-    preloader,
-    layoutModeType,
-  } = useAppSelector((state) => state.layout);
+  const { layoutType, leftSidbarSizeType, topbarColorType, preloader } =
+    useAppSelector((state) => state.layout);
 
   const isSidebarCollapse = leftSidbarSizeType === "small-icon-view";
   const leftMargin =
@@ -61,11 +56,12 @@ const AuthProtectedLayoutProvider = ({ children }) => {
           }`}
         >
           <Navbar
+            layoutType={layoutType}
             topbarColorType={topbarColorType}
-            layoutModeType={layoutModeType}
+            leftSidbarSizeType={leftSidbarSizeType}
           />
           {layoutType === "horizontal" && <LeftHorizontalSidebar />}
-          <main>{children}</main>
+          {children}
           <Footer />
         </div>
         <RightSidebar />

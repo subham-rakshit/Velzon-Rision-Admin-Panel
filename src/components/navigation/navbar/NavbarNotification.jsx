@@ -27,8 +27,8 @@ const NavbarNotification = () => {
     "mx-auto flex-start gap-2 rounded-[4px] bg-custom-green-50 dark:bg-custom-green-450 p-2 font-poppins-rg tracking-wide text-accent-light-green transition-300 hover:bg-custom-green-500 dark:hover:bg-custom-green-500 hover:text-white text-[13px]";
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+    <DropdownMenu modal={false}>
+      <DropdownMenuTrigger asChild={true}>
         <button
           type="button"
           className="hover:background-light400_dark100 flex-center relative m-0 size-[30px] rounded-full p-0 sm:size-[40px]"

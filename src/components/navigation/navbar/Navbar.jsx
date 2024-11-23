@@ -8,18 +8,24 @@ import {
   NavbarThemeSwitcher,
   NavbarWebApps,
   NavFullScreenToggleButton,
+  NavLogo,
   NavProfile,
   NavSearchBox,
   ToggleButton,
 } from "../..";
 
-const Navbar = ({ topbarColorType, layoutModeType }) => {
+const Navbar = ({ topbarColorType, layoutType, leftSidbarSizeType }) => {
   return (
     <nav
-      className={`background-light900_dark200 flex-between sticky top-0 h-[70px] px-5 shadow-light`}
+      className={`background-light900_dark200 flex-between sticky top-0 h-[70px] shadow-light ${layoutType === "horizontal" ? "px-10" : "px-5"}`}
     >
       <div className="flex-start h-full gap-2 md:gap-5">
-        <ToggleButton />
+        {layoutType === "horizontal" && <NavLogo />}
+
+        <ToggleButton
+          leftSidbarSizeType={leftSidbarSizeType}
+          layoutType={layoutType}
+        />
         <NavSearchBox />
       </div>
 
@@ -28,10 +34,7 @@ const Navbar = ({ topbarColorType, layoutModeType }) => {
 
         <NavbarLanguages />
 
-        <NavbarWebApps
-          topbarColorType={topbarColorType}
-          layoutModeType={layoutModeType}
-        />
+        <NavbarWebApps topbarColorType={topbarColorType} />
 
         <NavbarMyCart />
 

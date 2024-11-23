@@ -1,6 +1,6 @@
-import UserModel from "@/model/User";
 import dbConnect from "@/lib/db/dbConnect";
 import handleResponse from "@/lib/middleware/responseMiddleware";
+import UserModel from "@/model/User";
 
 export async function POST(request) {
   await dbConnect();
@@ -8,7 +8,7 @@ export async function POST(request) {
     const reqBody = await request.json();
     const { otp } = reqBody;
 
-    //INFO: Handle not getting token
+    // INFO: Handle not getting token
     if (!otp) {
       return handleResponse({
         res: Response,
@@ -18,7 +18,7 @@ export async function POST(request) {
       });
     }
 
-    //NOTE: If token is present ****
+    // NOTE: If token is present ****
     const userDetails = await UserModel.findOne({
       verifyCode: otp,
       verifyCodeExpiry: { $gte: Date.now() }, // handle 1hr time expiry
@@ -39,7 +39,7 @@ export async function POST(request) {
 
     await userDetails.save(); // Save the updated verified user details.
 
-    //INFO: Response
+    // INFO: Response
     return handleResponse({
       res: Response,
       status: 200,

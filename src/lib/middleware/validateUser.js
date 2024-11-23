@@ -1,18 +1,43 @@
 import jwt from "jsonwebtoken";
+import { cookies } from "next/headers";
 
-export const validateUserFromToken = (request) => {
-  //INFO: Extract token from request cookies
-  try {
-    const cookiesToken = request.cookies.get("token")?.value || "";
+import handleResponse from "./responseMiddleware";
 
-    // Decode the token
-    const decodedToken = jwt.verify(cookiesToken, process.env.TOKEN_SECRET);
+export const validateUserFromToken = async (request) => {
+  // INFO: Extract token from request cookies
+  try { 
+    const cookieStore = await cookies()
+    
+    const token = cookieStore.get("access-token")
 
-    console.log("Hi", decodedToken); //TODO REMOVE
-
-    return decodedToken.userId;
+    if (!token) {
+      return handleResponse({
+        res: Response,
+        status: 401,
+        success: false,
+        message: "User unauthorized!",
+      })
+    } else {
+      jwt.verify(token.value, process.env.TOKEN_SECRET, (err, tokenData) => {
+        if (err) {
+          return handleResponse({
+            res: Response,
+            status: 401,
+            success: false,
+            message: "User unauthorized!"
+          })
+        } else {
+          return tokenData
+        }
+      })
+    }
   } catch (error) {
     console.log(`Data extracting error from token: ${error.message}`);
-    throw new Error(error.message);
+    return handleResponse({
+      res: Response,
+      status: 200,
+      success: true,
+      message: "Backend Error",
+    });
   }
 };

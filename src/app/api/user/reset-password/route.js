@@ -1,8 +1,11 @@
-import UserModel from "@/model/User";
-import dbConnect from "@/lib/db/dbConnect";
-import { ResetPasswordSchema } from "@/schemas";
 import bcrypt from "bcryptjs";
+
+import dbConnect from "@/lib/db/dbConnect";
 import handleResponse from "@/lib/middleware/responseMiddleware";
+import UserModel from "@/model/User";
+import { ResetPasswordSchema } from "@/schemas";
+
+
 
 export async function POST(request) {
   await dbConnect();
@@ -10,7 +13,7 @@ export async function POST(request) {
     const reqBody = await request.json();
     const { token, newPassword, confirmPassword } = reqBody;
 
-    //INFO: Handle not getting token
+    // INFO: Handle not getting token
     if (!token) {
       return handleResponse({
         res: Response,
@@ -20,7 +23,7 @@ export async function POST(request) {
       });
     }
 
-    //INFO: Validate the verification schema
+    // INFO: Validate the verification schema
     const validatedFields = ResetPasswordSchema.safeParse({
       newPassword,
       confirmPassword,
@@ -35,7 +38,7 @@ export async function POST(request) {
       );
     }
 
-    //INFO: Check the password and cofirmPassword
+    // INFO: Check the password and cofirmPassword
     if (newPassword !== confirmPassword) {
       return handleResponse({
         res: Response,
@@ -45,7 +48,7 @@ export async function POST(request) {
       });
     }
 
-    //INFO: If token is present ****
+    // INFO: If token is present ****
     const userDetails = await UserModel.findOne({
       forgetPasswordCode: token,
       forgetPasswordCodeExpiry: { $gte: Date.now() }, // handle 1hr time expiry
@@ -79,7 +82,7 @@ export async function POST(request) {
 
     await userDetails.save(); // Save the updated verified user details.
 
-    //INFO: Response
+    // INFO: Response
     return handleResponse({
       res: Response,
       status: 200,

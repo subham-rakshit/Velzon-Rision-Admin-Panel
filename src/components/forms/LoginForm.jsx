@@ -98,7 +98,18 @@ const LoginForm = () => {
           }
         }
       } catch (error) {
-        console.log(error);
+        console.log("Login Error", error);
+        setIsProcessing(false);
+        toast.error("Login failure.", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       }
     } else {
       toast.error("Invalid input field", {
