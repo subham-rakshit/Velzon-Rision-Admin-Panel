@@ -29,6 +29,7 @@ import NavProfile from "./navigation/navbar/NavProfile";
 import NavSearchBox from "./navigation/navbar/NavSearchBox";
 import NavSearchBoxRecentSearches from "./navigation/navbar/NavSearchBoxRecentSearches";
 import ToggleButton from "./navigation/navbar/ToggleButton";
+import NavigationData from "./navigation/NavigationData";
 import RightSidebar from "./navigation/rightSidebar/RightSidebar";
 
 export {
@@ -55,6 +56,7 @@ export {
   NavbarThemeSwitcher,
   NavbarNotification,
   NavProfile,
+  NavigationData,
   LeftSidebar,
   LeftTwoColumnSidebar,
   LeftHorizontalSidebar,

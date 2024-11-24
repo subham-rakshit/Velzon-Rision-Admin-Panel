@@ -13,6 +13,11 @@ import {
   LoadingUI,
 } from "..";
 
+import {
+  layout,
+  loader,
+  sidebarSize,
+} from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
 import { changeLeftSideBarSizeType } from "@/lib/store/features/layoutCustomizer/layoutCustomizerSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 
@@ -29,7 +34,6 @@ const AuthProtectedLayoutProvider = ({ children }) => {
   const [leftSidebarWidth, setLeftSiderbarWidth] = useState("");
 
   const dispatch = useAppDispatch();
-  const isSidebarCollapse = leftSidbarSizeType === "small-icon-view";
 
   useEffect(() => {
     const handleResize = () => {
@@ -44,22 +48,22 @@ const AuthProtectedLayoutProvider = ({ children }) => {
         if (toggleButtonStatus) {
           setBodyLeftMargin("ml-[250px]");
           setLeftSiderbarWidth("w-[250px]");
-          dispatch(changeLeftSideBarSizeType("default"));
+          dispatch(changeLeftSideBarSizeType(sidebarSize.DEFAULT));
         } else {
           setBodyLeftMargin("ml-0");
           setLeftSiderbarWidth("w-[65px]");
-          dispatch(changeLeftSideBarSizeType("small-icon-view"));
+          dispatch(changeLeftSideBarSizeType(sidebarSize.SMALL_ICON_VIEW));
         }
       } else {
         // for width > 1024
         if (toggleButtonStatus) {
           setBodyLeftMargin("ml-0");
           setLeftSiderbarWidth("w-[65px]");
-          dispatch(changeLeftSideBarSizeType("small-icon-view"));
+          dispatch(changeLeftSideBarSizeType(sidebarSize.SMALL_ICON_VIEW));
         } else {
           setBodyLeftMargin("ml-[250px]");
           setLeftSiderbarWidth("w-[250px]");
-          dispatch(changeLeftSideBarSizeType("default"));
+          dispatch(changeLeftSideBarSizeType(sidebarSize.DEFAULT));
         }
       }
     };
@@ -76,29 +80,26 @@ const AuthProtectedLayoutProvider = ({ children }) => {
   return (
     <>
       <LoadingUI />
-      {preloader === "top-loader" && (
+      {preloader === loader.TOP_LOADER && (
         <NextTopLoader showSpinner={false} color="#e61247" />
       )}
       <div
         className={`flex ${
-          layoutType === "horizontal" ? "flex-col" : ""
+          layoutType === layout.HORIZONTAL ? "flex-col" : ""
         } min-h-screen w-full`}
       >
-        {layoutType === "vertical" || layoutType === "semi-box" ? (
+        {layoutType === layout.VERTICAL || layoutType === layout.SEMI_BOX ? (
           <LeftSidebar
             width={leftSidebarWidth}
             leftSidbarSizeType={leftSidbarSizeType}
           />
-        ) : layoutType === "two-column" ? (
-          <LeftTwoColumnSidebar
-            width={leftSidebarWidth}
-            isSidebarCollapse={isSidebarCollapse}
-          />
+        ) : layoutType === layout.TWO_COLUMN ? (
+          <LeftTwoColumnSidebar width={leftSidebarWidth} />
         ) : null}
 
         <div
           className={`flex min-h-screen grow flex-col ${
-            layoutType === "vertical" || layoutType === "semi-box"
+            layoutType === layout.VERTICAL || layoutType === layout.SEMI_BOX
               ? bodyLeftMargin
               : ""
           }`}
@@ -109,7 +110,7 @@ const AuthProtectedLayoutProvider = ({ children }) => {
             topbarColorType={topbarColorType}
             leftSidbarSizeType={leftSidbarSizeType}
           />
-          {layoutType === "horizontal" && <LeftHorizontalSidebar />}
+          {layoutType === layout.HORIZONTAL && <LeftHorizontalSidebar />}
           {children}
           <Footer />
         </div>

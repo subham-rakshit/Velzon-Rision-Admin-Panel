@@ -1,22 +1,25 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { theme } from "flowbite-react";
+
+import { avatarStatus, layout, layoutThemePrimaryColor, loader, mode, position, rightSidebarOpenStatus, sidebarColor, sidebarGradientColor, sidebarImage, sidebarSize, sidebarView, toggleStatus, topbarColor,  widthType } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
 
 const initialState = {
-  rightSideBarIsOpen: false, // true
-  toggleButtonStatus: false, // true
-  layoutType: "vertical", // horizontal, two-column, semi-box
-  sidebarUserProfileAvtarType: "show", // hide
-  layoutThemeType: "default", // sass, corporate, galaxy, material, creative, minimal, mordern, interactive, classic, vintage
-  layoutModeType: "light", // dark
-  layoutWidthType: "fluid", // boxed
-  layoutPositionType: "fixed", // scrollable
-  topbarColorType: "light-color", // dark-color
-  leftSidbarSizeType: "default", // compact, small-icon-view, small-hover-view
-  leftSidebarViewType: "default", // detached
-  leftSidebarColorType: "dark-bg-color", // light-bg-color, gradient-bg-color
-  leftSidebarGradientColorType: "gradient-bg-color", // sec-child-gradient-bg-color, third-child-gradient-bg-color, fourth-child-gradient-bg-color
-  leftSidebarImageType: "none", // snow, office, pattern, bubble
-  layoutThemePrimaryColorType: "default", // teal-green, royal-purple, cobalt-blue
-  preloader: "disable", // top-loader, spinner
+  rightSideBarIsOpen: rightSidebarOpenStatus.CLOSE, // OPEN
+  toggleButtonStatus: toggleStatus.CLOSE, // OPEN
+  layoutType: layout.VERTICAL, // HORIZONTAL, TWO_COLUMN, SEMI_BOX
+  sidebarUserProfileAvtarType: avatarStatus.SHOW, // HIDE
+  layoutThemeType: theme.DEFAULT, // SASS, CORPORATE, GALAXY, MATERIAL, CREATIVE, MINIMAL, MORDERN, INTERACTIVE, CLASSIC, VINTAGE
+  layoutModeType: mode.LIGHT, // DARK
+  layoutWidthType: widthType.FLUID, // BOXED
+  layoutPositionType: position.FIXED, // SCROLLABLE
+  topbarColorType: topbarColor.LIGHT_COLOR, // DARK_COLOR
+  leftSidbarSizeType: sidebarSize.DEFAULT, // COMPACT, SMALL_ICON_VIEW, SMALL_HOVER_VIEW
+  leftSidebarViewType: sidebarView.DEFAULT, // detached
+  leftSidebarColorType: sidebarColor.DARK_BG_COLOR, // LIGHT_BG_COLOR,  GRADIENT_BG_COLOR
+  leftSidebarGradientColorType: sidebarGradientColor.GRADIENT_BG_COLOR, // SEC_CHILD_GRADIENT_BG_COLOR, THIRD_CHILD_GRADIENT_BG_COLOR, FOURTH_CHILD_GRADIENT_BG_COLOR
+  leftSidebarImageType: sidebarImage.NONE, // SNOW, OFFICE, PATTERN, BUBBLE
+  layoutThemePrimaryColorType: layoutThemePrimaryColor.DEFAULT, // TEAL_GREEN, ROYAL_PURPLE, COBALT_BLUE
+  preloader: loader.DISABLE, // TOP_LOADER, SPINNER
 };
 
 export const layoutCustomizerSlice = createSlice({
@@ -32,11 +35,11 @@ export const layoutCustomizerSlice = createSlice({
     },
 
     changeLayoutType: (state, action) => {
-      state.layoutType = action.payload || "vertical";
+      state.layoutType = action.payload;
     },
 
     changeLeftSideBarSizeType: (state, action) => {
-      state.leftSidbarSizeType = action.payload || "default";
+      state.leftSidbarSizeType = action.payload;
     },
 
     changeSidebarUserProfileAvtarType: (state, action) => {

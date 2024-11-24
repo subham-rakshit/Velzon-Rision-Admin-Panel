@@ -35,17 +35,6 @@ const LeftSidebar = ({ width, leftSidbarSizeType }) => {
     isOpen: false,
   });
 
-  // TODO Need To Remove
-  // console.log("Parent: ", parentTabDetails);
-  // console.log("FirstChild: ", firstChildTabDetails);
-  // console.log("SecondChild: ", secondChildTabDetails);
-  // console.log("ThirdChild: ", thirdChildTabDetails);
-
-  // console.log("Parent: ", parentTabIsOpen);
-  // console.log("FirstChild: ", firstChildTabIsOpen);
-  // console.log("SecondChild: ", secondChilTabIsOpen);
-  // console.log("ThirdChild: ", thirdChildTabIsOpen);
-
   useEffect(() => {
     const mainPath = pathname.split("/")[1];
     const parentObject = { id: "", isOpen: false };
@@ -150,6 +139,72 @@ const LeftSidebar = ({ width, leftSidbarSizeType }) => {
     setSecondChildTabDetails(secondChildObject);
     setThirdChildTabDetails(thirdChildObject);
   }, [pathname, leftSidbarSizeType]);
+
+  // const pathname = usePathname();
+
+  // // Default Sidebar State
+  // const [tabDetails, setTabDetails] = useState({
+  //   parent: { id: "", isOpen: false },
+  //   firstChild: { id: "", isOpen: false },
+  //   secondChild: { id: "", isOpen: false },
+  //   thirdChild: { id: "", isOpen: false },
+  // });
+
+  // // Small Sidebar State for Hover
+  // const [hoverState, setHoverState] = useState({
+  //   parent: { id: "", isOpen: false },
+  //   firstChild: { id: "", isOpen: false },
+  //   secondChild: { id: "", isOpen: false },
+  // });
+
+  // useEffect(() => {
+  //   const mainPath = pathname.split("/")[1];
+
+  //   const newTabDetails = {
+  //     parent: { id: "", isOpen: false },
+  //     firstChild: { id: "", isOpen: false },
+  //     secondChild: { id: "", isOpen: false },
+  //     thirdChild: { id: "", isOpen: false },
+  //   };
+
+  //   // Efficiently traverse the data structure
+  //   const found = leftSidebarData.some((category) =>
+  //     category.tabNameList.some((parent) => {
+  //       if (mainPath.includes(parent.id.toLowerCase())) {
+  //         newTabDetails.parent = { id: parent.id, isOpen: true };
+  //       }
+
+  //       return parent.tabDropdownList.some((firstChild) => {
+  //         if (mainPath.includes(firstChild.id)) {
+  //           newTabDetails.firstChild = { id: firstChild.id, isOpen: true };
+  //           newTabDetails.parent = { id: parent.id, isOpen: true };
+  //         }
+
+  //         return firstChild.tabDropdownList.some((secondChild) => {
+  //           if (mainPath.includes(secondChild.id)) {
+  //             newTabDetails.secondChild = { id: secondChild.id, isOpen: true };
+  //             newTabDetails.firstChild = { id: firstChild.id, isOpen: true };
+  //             newTabDetails.parent = { id: parent.id, isOpen: true };
+  //           }
+
+  //           return secondChild.tabDropdownList.some((thirdChild) => {
+  //             if (mainPath.includes(thirdChild.id)) {
+  //               newTabDetails.thirdChild = { id: thirdChild.id, isOpen: true };
+  //               newTabDetails.secondChild = { id: secondChild.id, isOpen: true };
+  //               newTabDetails.firstChild = { id: firstChild.id, isOpen: true };
+  //               newTabDetails.parent = { id: parent.id, isOpen: true };
+  //               return true;
+  //             }
+  //             return false;
+  //           });
+  //         });
+  //       });
+  //     })
+  //   );
+
+  //   // If a match was found, update the state
+  //   if (found) setTabDetails(newTabDetails);
+  // }, [pathname, leftSidebarData, leftSidebarSizeType]);
 
   // Handle Parent Tab toggle
   const handleParentTabToggle = (parentId) => {

@@ -60,7 +60,6 @@ const btnStyle =
 const NavSearchBoxRecentSearches = ({
   isRecentSearchOpen,
   setIsRecentSearchOpen,
-  layoutModeType,
 }) => {
   return (
     <motion.div

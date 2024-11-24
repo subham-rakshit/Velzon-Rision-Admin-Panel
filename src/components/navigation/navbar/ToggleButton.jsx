@@ -2,6 +2,11 @@
 
 import React, { useState } from "react";
 
+import {
+  layout,
+  sidebarSize,
+  toggleStatus,
+} from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
 import { changeToggleButtonStatus } from "@/lib/store/features/layoutCustomizer/layoutCustomizerSlice";
 import { useAppDispatch } from "@/lib/store/hooks";
 
@@ -14,7 +19,7 @@ const ToggleButton = ({
   const dispatch = useAppDispatch();
 
   const handleSidebarToggel = () => {
-    const status = toggleButtonStatus === false;
+    const status = toggleButtonStatus === toggleStatus.CLOSE;
 
     dispatch(changeToggleButtonStatus(status));
     setIsToggle((prev) => !prev);
@@ -35,7 +40,7 @@ const ToggleButton = ({
         {["bar_1", "bar_2", "bar_3"].map((bar) => {
           let dynamicClasses;
 
-          if (leftSidbarSizeType === "small-icon-view") {
+          if (leftSidbarSizeType === sidebarSize.SMALL_ICON_VIEW) {
             switch (bar) {
               case "bar_1":
                 dynamicClasses =
@@ -153,7 +158,7 @@ const ToggleButton = ({
   );
 
   switch (layoutType) {
-    case "horizontal":
+    case layout.HORIZONTAL:
       return horrizontalToggleButton();
     default:
       return defaultToggleButton();

@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 
 import avatarImg from "../../../app/assets/images/users/avatar-1.jpg";
 
+import { avatarStatus } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
 import {
   profileDataGroup1,
   profileDataGroup2,
@@ -140,7 +141,7 @@ const NavProfile = () => {
     }
   }, [session]);
 
-  if (sidebarUserProfileAvtarType === "show") {
+  if (sidebarUserProfileAvtarType === avatarStatus.SHOW) {
     return (
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger
