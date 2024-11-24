@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   rightSideBarIsOpen: false, // true
+  toggleButtonStatus: false, // true
   layoutType: "vertical", // horizontal, two-column, semi-box
   sidebarUserProfileAvtarType: "show", // hide
   layoutThemeType: "default", // sass, corporate, galaxy, material, creative, minimal, mordern, interactive, classic, vintage
@@ -24,6 +25,10 @@ export const layoutCustomizerSlice = createSlice({
   reducers: {
     changeRightSideBarIsOpen: (state, action) => {
       state.rightSideBarIsOpen = action.payload;
+    },
+    
+    changeToggleButtonStatus: (state, action) => {
+      state.toggleButtonStatus = action.payload;
     },
 
     changeLayoutType: (state, action) => {
@@ -89,9 +94,10 @@ export const layoutCustomizerSlice = createSlice({
 });
 
 export const {
+  changeRightSideBarIsOpen,
+  changeToggleButtonStatus,
   changeLayoutType,
   changeLeftSideBarSizeType,
-  changeRightSideBarIsOpen,
   changeSidebarUserProfileAvtarType,
   changeLayoutThemeType,
   changeLayoutModeType,

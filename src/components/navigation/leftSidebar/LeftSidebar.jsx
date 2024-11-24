@@ -12,7 +12,7 @@ import logoLight from "../../../app/assets/images/logo-light.png";
 import logoSmall from "../../../app/assets/images/logo-sm.png";
 import leftSidebarData from "../../../app/assets/leftSidebarData/leftSidebarData";
 
-const LeftSidebar = ({ width, isSidebarCollapse }) => {
+const LeftSidebar = ({ width, leftSidbarSizeType }) => {
   const pathname = usePathname();
 
   // NOTE Default Sidebar State to manage open tabs based on pathname
@@ -149,7 +149,7 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
     setFirstChildTabDetails(firstChildObject);
     setSecondChildTabDetails(secondChildObject);
     setThirdChildTabDetails(thirdChildObject);
-  }, [pathname, isSidebarCollapse]);
+  }, [pathname, leftSidbarSizeType]);
 
   // Handle Parent Tab toggle
   const handleParentTabToggle = (parentId) => {
@@ -181,7 +181,7 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
   // NOTE Vertical Default LeftSidebar View ----
   const verticalDefaultLeftSidebarView = () => {
     return (
-      <ul className="custom-left-sidebar-scrollbar hide-scrollbar transition-style h-[calc(100vh-70px)] overflow-y-auto bg-[#405189] px-[20px] py-2 text-[#a6b4e4]">
+      <ul className="custom-left-sidebar-scrollbar transition-style h-[calc(100vh-70px)] overflow-y-auto bg-[#405189] px-[20px] py-2 text-[#a6b4e4]">
         {leftSidebarData.map((tab, index) => {
           return (
             <li key={tab.tabCategory} className="flex flex-col gap-5 pt-[20px]">
@@ -727,7 +727,7 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
   return (
     <div
       className={`min-h-screen ${
-        isSidebarCollapse ? "sticky" : `fixed`
+        leftSidbarSizeType === "small-icon-view" ? "sticky" : `fixed`
       } left-0 top-0 z-[99] ${width}`}
     >
       {/* NOTE Sidebar Top Logo Section */}
@@ -738,7 +738,7 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
           href="/dashboard"
           className="flex size-full items-center justify-center"
         >
-          {isSidebarCollapse ? (
+          {leftSidbarSizeType === "small-icon-view" ? (
             <Image src={logoSmall} alt="logo small" width={25} height={25} />
           ) : (
             <Image src={logoLight} alt="logo light" width={100} height={25} />
@@ -747,7 +747,7 @@ const LeftSidebar = ({ width, isSidebarCollapse }) => {
       </div>
 
       {/* NOTE Tab Section */}
-      {isSidebarCollapse
+      {leftSidbarSizeType === "small-icon-view"
         ? verticalSmallIconLeftSideView()
         : verticalDefaultLeftSidebarView()}
     </div>

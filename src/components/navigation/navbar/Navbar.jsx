@@ -14,7 +14,12 @@ import {
   ToggleButton,
 } from "../..";
 
-const Navbar = ({ topbarColorType, layoutType, leftSidbarSizeType }) => {
+const Navbar = ({
+  topbarColorType,
+  layoutType,
+  leftSidbarSizeType,
+  toggleButtonStatus,
+}) => {
   return (
     <nav
       className={`background-light900_dark200 flex-between sticky top-0 h-[70px] shadow-light ${layoutType === "horizontal" ? "px-10" : "px-5"}`}
@@ -23,10 +28,11 @@ const Navbar = ({ topbarColorType, layoutType, leftSidbarSizeType }) => {
         {layoutType === "horizontal" && <NavLogo />}
 
         <ToggleButton
+          toggleButtonStatus={toggleButtonStatus}
           leftSidbarSizeType={leftSidbarSizeType}
           layoutType={layoutType}
         />
-        <NavSearchBox />
+        <NavSearchBox leftSidbarSizeType={leftSidbarSizeType} />
       </div>
 
       <div className="flex-start h-full gap-2 sm:gap-0 lg:gap-2">

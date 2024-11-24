@@ -6,13 +6,13 @@ import { MdSearch } from "react-icons/md";
 
 import { NavSearchBoxRecentSearches } from "../..";
 
-const NavSearchBox = () => {
+const NavSearchBox = ({ leftSidbarSizeType }) => {
   const [searchInput, setSearchInput] = useState("");
   const [isRecentSearchOpen, setIsRecentSearchOpen] = useState(true);
 
   return (
     <form
-      className={`text-soft background-light800_dark300 md:flex-start relative hidden max-w-[230px] rounded-[3px] bg-[#f3f3f9] px-4`}
+      className={`text-soft background-light800_dark300 md:flex-center relative hidden rounded-[3px] bg-[#f3f3f9] px-4`}
     >
       <MdSearch size={18} />
       <input
@@ -20,7 +20,7 @@ const NavSearchBox = () => {
         value={searchInput}
         onChange={(e) => setSearchInput(e.target.value)}
         onClick={() => setIsRecentSearchOpen(true)}
-        className={`text-13-light500_dark550 flex-1 border-none bg-transparent tracking-wide focus:ring-0`}
+        className={`text-13-light500_dark550 border-none bg-transparent tracking-wide focus:ring-0 ${leftSidbarSizeType === "default" ? "md:w-[100px] lg:w-[180px]" : "w-[180px]"}`}
         placeholder="Search..."
       />
       {searchInput && (
