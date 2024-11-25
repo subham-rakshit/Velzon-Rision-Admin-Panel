@@ -98,7 +98,7 @@ const AuthProtectedLayoutProvider = ({ children }) => {
         ) : null}
 
         <div
-          className={`flex min-h-screen flex-1 flex-col ${
+          className={`flex min-h-screen flex-1 flex-col ${bodyLeftMargin !== "ml-0" ? "transition-300" : "transition-none"} ${
             layoutType === layout.VERTICAL || layoutType === layout.SEMI_BOX
               ? bodyLeftMargin
               : ""

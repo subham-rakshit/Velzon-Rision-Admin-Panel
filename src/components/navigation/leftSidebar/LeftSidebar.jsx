@@ -544,7 +544,7 @@ const LeftSidebar = ({ width, leftSidbarSizeType, leftSidebarColorType }) => {
     <div
       className={`min-h-screen ${
         leftSidbarSizeType === "small-icon-view" ? "sticky" : `fixed`
-      } left-0 top-0 z-[99] ${width}`}
+      } transition-300 left-0 top-0 z-[99] ${width}`}
     >
       {/* NOTE Sidebar Top Logo Section */}
       <div

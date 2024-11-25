@@ -24,7 +24,7 @@ const Navbar = ({
 }) => {
   return (
     <nav
-      className={`background-light900_dark200 flex-between sticky top-0 z-[99] h-[70px] shadow-light ${layoutType === layout.HORIZONTAL ? "px-10" : "px-5"}`}
+      className={`background-light900_dark200 flex-between sticky top-0 z-[98] h-[70px] shadow-light ${layoutType === layout.HORIZONTAL ? "px-10" : "px-5"}`}
     >
       <div className="flex-start h-full gap-2 md:gap-5">
         {layoutType === layout.HORIZONTAL && <NavLogo />}
