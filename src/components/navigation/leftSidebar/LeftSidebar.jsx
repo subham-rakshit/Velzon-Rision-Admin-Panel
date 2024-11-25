@@ -17,12 +17,24 @@ import leftSidebarData from "../../../app/assets/leftSidebarData/leftSidebarData
 import {
   sidebarColor,
   sidebarSize,
+  sidebarMainSize,
+  toggleStatus,
 } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
+import { LeftSidebarCompactView, LeftSidebarSmallIconView } from "@/components";
+import { changeToggleButtonStatus } from "@/lib/store/features/layoutCustomizer/layoutCustomizerSlice";
+import { useAppDispatch } from "@/lib/store/hooks";
 
-const LeftSidebar = ({ width, leftSidbarSizeType, leftSidebarColorType }) => {
+const LeftSidebar = ({
+  width,
+  leftSidbarSizeType,
+  leftSidbarSizeMain,
+  leftSidebarColorType,
+  toggleButtonStatus,
+}) => {
   const pathname = usePathname();
   const mainPath = pathname.split("/")[1];
   const { theme } = useTheme();
+  const dispatch = useAppDispatch();
 
   const [tabDetails, setTabDetails] = useState({
     parent: { id: "", isOpen: false },
@@ -31,11 +43,8 @@ const LeftSidebar = ({ width, leftSidbarSizeType, leftSidebarColorType }) => {
     thirdChild: { id: "", isOpen: false },
   });
 
-  const [hoverState, setHoverState] = useState({
-    parent: { id: "", isOpen: false },
-    firstChild: { id: "", isOpen: false },
-    secondChild: { id: "", isOpen: false },
-  });
+  const [isContainerHover, setIsContainerHover] = useState(false);
+  const [isFixedBtnCliked, setIsFixedBtnClicked] = useState(false);
 
   useEffect(() => {
     const newTabDetails = {
@@ -145,42 +154,10 @@ const LeftSidebar = ({ width, leftSidbarSizeType, leftSidebarColorType }) => {
     }));
   };
 
-  // NOTE Handle Hove State Functionality
-  const handleParentHoverState = (parentId) => {
-    setHoverState((prev) => ({
-      ...prev,
-      parent: {
-        ...prev.parent,
-        id: parentId,
-        isOpen: prev.parent.id === parentId ? !prev.parent.isOpen : true,
-      },
-    }));
-  };
-
-  const handleFirstChildHoverState = (firstChildId) => {
-    setHoverState((prev) => ({
-      ...prev,
-      firstChild: {
-        ...prev.firstChild,
-        id: firstChildId,
-        isOpen:
-          prev.firstChild.id === firstChildId ? !prev.firstChild.isOpen : true,
-      },
-    }));
-  };
-
-  const handleSecondChildHoverState = (secondChildId) => {
-    setHoverState((prev) => ({
-      ...prev,
-      secondChild: {
-        ...prev.secondChild,
-        id: secondChildId,
-        isOpen:
-          prev.secondChild.id === secondChildId
-            ? !prev.secondChild.isOpen
-            : true,
-      },
-    }));
+  const handleSmallHoverIconFixedButton = () => {
+    const status = toggleButtonStatus === toggleStatus.CLOSE;
+    setIsFixedBtnClicked(!isFixedBtnCliked);
+    dispatch(changeToggleButtonStatus(status));
   };
 
   // NOTE Default Sidebar Size
@@ -349,208 +326,71 @@ const LeftSidebar = ({ width, leftSidbarSizeType, leftSidebarColorType }) => {
     );
   };
 
-  // NOTE Small Icon View Size
-  const verticalSmallIconLeftSideView = () => {
+  // NOTE Small Icon Hover View
+  const verticalSmallIconHoverView = () => {
     return (
-      <ul
-        className={`relative h-full bg-[#405189] py-2 text-[#a6b4e4] dark:bg-dark-dencity-300 ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? "bg-light-weight-500" : "bg-light-dencity-900"}`}
-      >
-        {leftSidebarData.map((category) =>
-          category.tabNameList.map((parent) => (
-            // Tab Icon Main Container
-            <li
-              key={parent.id}
-              className="relative flex items-center justify-center py-[13px] hover:cursor-pointer"
-              onMouseEnter={() => handleParentHoverState(parent.id)}
-              onMouseLeave={() => handleParentHoverState(parent.id)}
-            >
-              {/* NOTE Parent Icon */}
-              <span
-                className={`text-[22px] ${
-                  pathname.includes(parent.id.toLowerCase()) ? "text-white" : ""
-                }`}
-              >
-                {parent.tabIcon}
-              </span>
-
-              {/* NOTE Parent Dropdown Box */}
-              <ul
-                className={`absolute left-full top-0 z-[9999] w-[200px] rounded-r-[5px] px-2 py-3 font-poppins-rg dark:bg-dark-dencity-300 ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? "bg-light-weight-500" : "bg-light-dencity-900"} ${
-                  hoverState.parent.isOpen && hoverState.parent.id === parent.id
-                    ? "visible opacity-100"
-                    : "hidden opacity-0"
-                }`}
-              >
-                {/* Parent Tab Name  */}
-                <span
-                  className={`flex w-full items-center justify-between text-[15px] group-hover:text-white ${
-                    tabDetails.parent.id === parent.id ? "text-white" : ""
-                  } ${parent.tabDropdownList.length > 0 ? "mb-3" : "mb-0"}`}
+      <>
+        {isContainerHover ? (
+          verticalDefaultLeftSidebarView()
+        ) : (
+          <ul
+            className={`h-full py-2 text-light-weight-450 dark:bg-dark-dencity-300 ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? "bg-light-weight-500" : "bg-light-dencity-900"}`}
+          >
+            {leftSidebarData.map((category) =>
+              category.tabNameList.map((parent) => (
+                // Tab Icon Main Container
+                <li
+                  key={parent.id}
+                  className="flex items-center justify-center py-[13px] hover:cursor-pointer"
                 >
-                  <span>{parent.tabName}</span>
-                  {parent.tabDropdownList.length > 0 && (
-                    <IoIosArrowForward
-                      className={`${
-                        hoverState.parent.id === parent.id ? "rotate-90" : ""
-                      }`}
-                    />
-                  )}
-                </span>
-
-                {/* First Childrens */}
-                {parent.tabDropdownList.length > 0 &&
-                  parent.tabDropdownList.map((firstChild) => {
-                    return (
-                      <li
-                        key={firstChild.id}
-                        className={`cursor-pointer font-poppins-rg`}
-                      >
-                        {firstChild.tabDropdownList.length > 0 ? (
-                          // FirstChild Tab having dropdown
-                          <ul
-                            className={`relative flex items-center gap-2 p-2 text-[13px]`}
-                            onMouseEnter={() =>
-                              handleFirstChildHoverState(firstChild.id)
-                            }
-                            onMouseLeave={() =>
-                              handleFirstChildHoverState(firstChild.id)
-                            }
-                          >
-                            <span
-                              className={`flex w-full items-center justify-between text-[13px] hover:text-white ${
-                                tabDetails.firstChild.id === firstChild.id
-                                  ? "text-white"
-                                  : ""
-                              }`}
-                            >
-                              <span>{firstChild.tabName}</span>
-                              <IoIosArrowForward />
-                            </span>
-
-                            {/* Second Children */}
-                            <li
-                              className={`absolute left-full top-0 z-[9999] w-[200px] rounded-r-[5px] p-3 font-poppins-rg dark:bg-dark-dencity-300 ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? "bg-light-weight-500" : "bg-light-dencity-900"} ${
-                                hoverState.firstChild.isOpen &&
-                                hoverState.firstChild.id === firstChild.id
-                                  ? "visible opacity-100"
-                                  : "hidden opacity-0"
-                              }`}
-                            >
-                              {firstChild.tabDropdownList.map((secondChild) =>
-                                // Second Child Having Dropdown
-                                secondChild.tabDropdownList.length > 0 ? (
-                                  <ul
-                                    key={secondChild.id}
-                                    className={`relative flex items-center gap-2 p-2 text-[13px]`}
-                                    onMouseEnter={() =>
-                                      handleSecondChildHoverState(
-                                        secondChild.id
-                                      )
-                                    }
-                                    onMouseLeave={() =>
-                                      handleSecondChildHoverState(
-                                        secondChild.id
-                                      )
-                                    }
-                                  >
-                                    <span
-                                      className={`flex w-full items-center justify-between text-[13px] hover:text-white ${
-                                        tabDetails.secondChild.id ===
-                                        secondChild.id
-                                          ? "text-white"
-                                          : ""
-                                      }`}
-                                    >
-                                      <span>{secondChild.tabName}</span>
-                                      <IoIosArrowForward />
-                                    </span>
-
-                                    {/* Third Child */}
-                                    <li
-                                      className={`absolute left-full top-0 z-[9999] w-[200px] rounded-[5px] p-3 font-poppins-rg dark:bg-dark-dencity-300 ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? "bg-light-weight-500" : "bg-light-dencity-900"} ${
-                                        hoverState.secondChild.isOpen &&
-                                        hoverState.secondChild.id ===
-                                          secondChild.id
-                                          ? "visible opacity-100"
-                                          : "hidden opacity-0"
-                                      }`}
-                                    >
-                                      {secondChild.tabDropdownList.map(
-                                        (thirdChild) =>
-                                          thirdChild.tabDropdownList >
-                                          0 ? null : (
-                                            <Link
-                                              href={thirdChild.pathName}
-                                              key={thirdChild.id}
-                                            >
-                                              <span
-                                                className={`flex items-center gap-2 p-2 text-[13px] hover:text-white ${
-                                                  tabDetails.thirdChild.id ===
-                                                  thirdChild.id
-                                                    ? "text-white"
-                                                    : ""
-                                                }`}
-                                              >
-                                                {thirdChild.tabName}
-                                              </span>
-                                            </Link>
-                                          )
-                                      )}
-                                    </li>
-                                  </ul>
-                                ) : (
-                                  // Second Child Having No Dropdown
-                                  <Link
-                                    href={secondChild.pathName}
-                                    key={secondChild.id}
-                                  >
-                                    <span
-                                      className={`flex items-center gap-2 p-2 text-[13px] hover:text-white ${
-                                        tabDetails.secondChild.id ===
-                                        secondChild.id
-                                          ? "text-white"
-                                          : ""
-                                      }`}
-                                    >
-                                      {secondChild.tabName}
-                                    </span>
-                                  </Link>
-                                )
-                              )}
-                            </li>
-                          </ul>
-                        ) : (
-                          // FirstChild Tab having no dropdown
-                          <Link href={firstChild.pathName} key={firstChild.id}>
-                            <span
-                              className={`flex items-center gap-2 p-2 text-[13px] hover:text-white ${tabDetails.firstChild.id === firstChild.id ? "text-white" : ""}`}
-                            >
-                              {firstChild.tabName}
-                            </span>
-                          </Link>
-                        )}
-                      </li>
-                    );
-                  })}
-              </ul>
-            </li>
-          ))
+                  {/* NOTE Parent Icon */}
+                  <span
+                    className={`text-[22px] ${
+                      pathname.includes(parent.id.toLowerCase())
+                        ? "text-white"
+                        : ""
+                    }`}
+                  >
+                    {parent.tabIcon}
+                  </span>
+                </li>
+              ))
+            )}
+          </ul>
         )}
-      </ul>
+      </>
     );
   };
 
   return (
     <div
-      className={`min-h-screen ${
-        leftSidbarSizeType === "small-icon-view" ? "sticky" : `fixed`
-      } transition-300 left-0 top-0 z-[99] ${width}`}
+      className={`h-screen ${
+        leftSidbarSizeType === sidebarSize.SMALL_ICON_VIEW
+          ? "sticky"
+          : leftSidbarSizeType === sidebarSize.SMALL_HOVER_VIEW &&
+              isFixedBtnCliked
+            ? "sticky"
+            : "fixed"
+      } transition-300 left-0 top-0 z-[99] ${isContainerHover ? "w-[250px]" : width}`}
+      onMouseEnter={() =>
+        leftSidbarSizeType === sidebarSize.SMALL_HOVER_VIEW && !isFixedBtnCliked
+          ? setIsContainerHover(true)
+          : null
+      }
+      onMouseLeave={() =>
+        leftSidbarSizeType === sidebarSize.SMALL_HOVER_VIEW && !isFixedBtnCliked
+          ? setIsContainerHover(false)
+          : null
+      }
     >
       {/* NOTE Sidebar Top Logo Section */}
       <div
-        className={`sticky left-0 top-0 z-[100] h-[70px] w-full ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? "bg-light-weight-500" : "bg-light-dencity-900"} px-[20px] dark:bg-dark-dencity-300`}
+        className={`transition-300 sticky left-0 top-0 z-[100] h-[70px] w-full px-[20px] dark:bg-dark-dencity-300 ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? "bg-light-weight-500" : "bg-light-dencity-900"}`}
       >
-        <Link href="/dashboard" className="flex-center size-full">
+        <Link
+          href="/dashboard"
+          className={`${leftSidbarSizeType === sidebarSize.SMALL_HOVER_VIEW ? "hidden" : "flex-center"} size-full`}
+        >
           {leftSidbarSizeType === sidebarSize.SMALL_ICON_VIEW ? (
             <Image src={logoSmall} alt="logo small" width={25} height={25} />
           ) : leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? (
@@ -564,12 +404,100 @@ const LeftSidebar = ({ width, leftSidbarSizeType, leftSidebarColorType }) => {
             />
           )}
         </Link>
+
+        <div
+          className={`${leftSidbarSizeType === sidebarSize.SMALL_HOVER_VIEW ? "flex-between transition-300" : "hidden"} h-full`}
+        >
+          <Link
+            href="/dashboard"
+            className={`flex-start transition-300 h-full w-fit`}
+          >
+            {leftSidbarSizeMain === sidebarMainSize.SM_HOVER &&
+            !isContainerHover ? (
+              <Image src={logoSmall} alt="logo small" width={25} height={25} />
+            ) : leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? (
+              <Image src={logoLight} alt="logo light" width={100} height={22} />
+            ) : (
+              <Image
+                src={theme === "light" ? logoDark : logoLight}
+                alt="logo light"
+                width={100}
+                height={22}
+              />
+            )}
+          </Link>
+
+          <button
+            type="button"
+            className={`${isContainerHover ? "visible" : "hidden"}`}
+            onClick={handleSmallHoverIconFixedButton}
+          >
+            <span className="flex-center size-[16px] rounded-full border-2 border-light-weight-400 dark:border-light-weight-450">
+              <span
+                className={`${isFixedBtnCliked ? "opacity-100" : "opacity-0"} size-[8px] rounded-full bg-light-weight-400 dark:bg-light-weight-450`}
+              ></span>
+            </span>
+          </button>
+        </div>
       </div>
 
-      {/* NOTE Tab Section */}
-      {leftSidbarSizeType === sidebarSize.SMALL_ICON_VIEW
-        ? verticalSmallIconLeftSideView()
-        : verticalDefaultLeftSidebarView()}
+      {/* NOTE Left Sidebar Changes According Sizes */}
+      {leftSidbarSizeMain === sidebarMainSize.LG &&
+      leftSidbarSizeType === sidebarSize.DEFAULT ? (
+        verticalDefaultLeftSidebarView()
+      ) : leftSidbarSizeMain === sidebarMainSize.LG &&
+        leftSidbarSizeType === sidebarSize.SMALL_ICON_VIEW ? (
+        <LeftSidebarSmallIconView
+          tabDetails={tabDetails}
+          leftSidebarColorType={leftSidebarColorType}
+          pathname={pathname}
+        />
+      ) : leftSidbarSizeMain === sidebarMainSize.MD &&
+        leftSidbarSizeType === sidebarSize.DEFAULT ? (
+        verticalDefaultLeftSidebarView()
+      ) : leftSidbarSizeMain === sidebarMainSize.MD &&
+        leftSidbarSizeType === sidebarSize.SMALL_ICON_VIEW ? (
+        <LeftSidebarSmallIconView
+          tabDetails={tabDetails}
+          leftSidebarColorType={leftSidebarColorType}
+          pathname={pathname}
+        />
+      ) : leftSidbarSizeMain === sidebarMainSize.MD &&
+        leftSidbarSizeType === sidebarSize.COMPACT ? (
+        <LeftSidebarCompactView
+          pathname={pathname}
+          mainPath={mainPath}
+          tabDetails={tabDetails}
+          leftSidebarColorType={leftSidebarColorType}
+          leftSidbarSizeType={leftSidbarSizeType}
+          handleParentTabToggle={handleParentTabToggle}
+          handleFirstChildTabToggle={handleFirstChildTabToggle}
+          handleSecondChildTabToggle={handleSecondChildTabToggle}
+        />
+      ) : leftSidbarSizeMain === sidebarMainSize.SM &&
+        leftSidbarSizeType === sidebarSize.SMALL_ICON_VIEW ? (
+        <LeftSidebarSmallIconView
+          tabDetails={tabDetails}
+          leftSidebarColorType={leftSidebarColorType}
+          pathname={pathname}
+        />
+      ) : leftSidbarSizeMain === sidebarMainSize.SM &&
+        leftSidbarSizeType === sidebarSize.DEFAULT ? (
+        verticalDefaultLeftSidebarView()
+      ) : leftSidbarSizeMain === sidebarMainSize.SM_HOVER &&
+        leftSidbarSizeType === sidebarSize.SMALL_ICON_VIEW ? (
+        <LeftSidebarSmallIconView
+          tabDetails={tabDetails}
+          leftSidebarColorType={leftSidebarColorType}
+          pathname={pathname}
+        />
+      ) : leftSidbarSizeMain === sidebarMainSize.SM_HOVER &&
+        leftSidbarSizeType === sidebarSize.DEFAULT ? (
+        verticalDefaultLeftSidebarView()
+      ) : leftSidbarSizeMain === sidebarMainSize.SM_HOVER &&
+        leftSidbarSizeType === sidebarSize.SMALL_HOVER_VIEW ? (
+        verticalSmallIconHoverView()
+      ) : null}
     </div>
   );
 };

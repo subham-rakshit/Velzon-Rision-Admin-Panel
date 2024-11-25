@@ -14,6 +14,8 @@ import LoadingUI from "./layoutsStyle/LoadingUI";
 import AuthProtectedLayoutProvider from "./navigation/AuthProtectedLayoutProvider";
 import LeftHorizontalSidebar from "./navigation/leftSidebar/LeftHorizontalSidebar";
 import LeftSidebar from "./navigation/leftSidebar/LeftSidebar";
+import LeftSidebarCompactView from "./navigation/leftSidebar/LeftSidebarCompactView";
+import LeftSidebarSmallIconView from "./navigation/leftSidebar/LeftSidebarSmallIconView";
 import LeftTwoColumnSidebar from "./navigation/leftSidebar/LeftTwoColumnSidebar";
 import TransitionLink from "./navigation/leftSidebar/TransitionLink";
 import Navbar from "./navigation/navbar/Navbar";
@@ -58,6 +60,8 @@ export {
   LeftSidebar,
   LeftTwoColumnSidebar,
   LeftHorizontalSidebar,
+  LeftSidebarSmallIconView,
+  LeftSidebarCompactView,
   TransitionLink,
   RightSidebar,
   ErrorImage,

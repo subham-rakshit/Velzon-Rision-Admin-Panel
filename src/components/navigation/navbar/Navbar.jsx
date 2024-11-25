@@ -21,6 +21,7 @@ const Navbar = ({
   layoutType,
   leftSidbarSizeType,
   toggleButtonStatus,
+  leftSidbarSizeMain,
 }) => {
   return (
     <nav
@@ -33,6 +34,7 @@ const Navbar = ({
           toggleButtonStatus={toggleButtonStatus}
           leftSidbarSizeType={leftSidbarSizeType}
           layoutType={layoutType}
+          leftSidbarSizeMain={leftSidbarSizeMain}
         />
         <NavSearchBox leftSidbarSizeType={leftSidbarSizeType} />
       </div>

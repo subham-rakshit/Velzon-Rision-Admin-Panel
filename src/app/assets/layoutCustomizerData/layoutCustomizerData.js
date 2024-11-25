@@ -61,6 +61,13 @@ export const sidebarSize = {
  SMALL_HOVER_VIEW: "small-hover-view"
 }
 
+export const sidebarMainSize = {
+ LG: "lg",
+ MD: "md",
+ SM: "sm",
+ SM_HOVER: "sm-hover"
+}
+
 export const sidebarView = {
  DEFAULT: "default",
  DETACHED: "detached"

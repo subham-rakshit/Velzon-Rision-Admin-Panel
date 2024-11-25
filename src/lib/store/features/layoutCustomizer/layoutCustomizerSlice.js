@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { theme } from "flowbite-react";
 
-import { avatarStatus, layout, layoutThemePrimaryColor, loader, mode, position, rightSidebarOpenStatus, sidebarColor, sidebarGradientColor, sidebarImage, sidebarSize, sidebarView, toggleStatus, topbarColor,  widthType } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
+import { avatarStatus, layout, layoutThemePrimaryColor, loader, mode, position, rightSidebarOpenStatus, sidebarColor, sidebarGradientColor, sidebarImage, sidebarMainSize, sidebarSize, sidebarView, toggleStatus, topbarColor,  widthType } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
 
 const initialState = {
   rightSideBarIsOpen: rightSidebarOpenStatus.CLOSE, // OPEN
@@ -14,6 +14,7 @@ const initialState = {
   layoutPositionType: position.FIXED, // SCROLLABLE
   topbarColorType: topbarColor.LIGHT_COLOR, // DARK_COLOR
   leftSidbarSizeType: sidebarSize.DEFAULT, // COMPACT, SMALL_ICON_VIEW, SMALL_HOVER_VIEW
+  leftSidbarSizeMain: sidebarMainSize.LG, // MD, SM, SM_HOVER
   leftSidebarViewType: sidebarView.DEFAULT, // detached
   leftSidebarColorType: sidebarColor.DARK_BG_COLOR, // LIGHT_BG_COLOR,  GRADIENT_BG_COLOR
   leftSidebarGradientColorType: sidebarGradientColor.GRADIENT_BG_COLOR, // SEC_CHILD_GRADIENT_BG_COLOR, THIRD_CHILD_GRADIENT_BG_COLOR, FOURTH_CHILD_GRADIENT_BG_COLOR
@@ -40,6 +41,10 @@ export const layoutCustomizerSlice = createSlice({
 
     changeLeftSideBarSizeType: (state, action) => {
       state.leftSidbarSizeType = action.payload;
+    },
+    
+    changeLeftSidbarSizeMain: (state, action) => {
+      state.leftSidbarSizeMain = action.payload;
     },
 
     changeSidebarUserProfileAvtarType: (state, action) => {
@@ -108,6 +113,7 @@ export const {
   changeLayoutPositionType,
   changeTopbarColorType,
   changeLeftSidbarSizeType,
+  changeLeftSidbarSizeMain,
   changeLeftSidebarViewType,
   changeLeftSidebarColorType,
   changeLeftSidebarGradientColorType,

@@ -4,6 +4,7 @@ import React, { useState } from "react";
 
 import {
   layout,
+  sidebarMainSize,
   sidebarSize,
   toggleStatus,
 } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
@@ -14,6 +15,7 @@ const ToggleButton = ({
   layoutType,
   leftSidbarSizeType,
   toggleButtonStatus,
+  leftSidbarSizeMain,
 }) => {
   const [isToggle, setIsToggle] = useState(false);
   const dispatch = useAppDispatch();
@@ -35,7 +37,7 @@ const ToggleButton = ({
       <button
         onClick={handleSidebarToggel}
         type="button"
-        className={`h-full cursor-pointer`}
+        className={`h-full cursor-pointer ${leftSidbarSizeMain === sidebarMainSize.SM_HOVER ? "lg:hidden" : ""}`}
       >
         {["bar_1", "bar_2", "bar_3"].map((bar) => {
           let dynamicClasses;

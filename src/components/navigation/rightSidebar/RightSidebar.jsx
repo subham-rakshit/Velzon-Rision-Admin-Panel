@@ -26,13 +26,13 @@ import {
   changeLayoutWidthType,
   changeLayoutPositionType,
   changeTopbarColorType,
-  changeLeftSidbarSizeType,
   changeLeftSidebarViewType,
   changeLeftSidebarColorType,
   changeLeftSidebarGradientColorType,
   changeLeftSidebarImageType,
   changeLayoutThemePrimaryColorType,
   changePreloader,
+  changeLeftSidbarSizeMain,
 } from "@/lib/store/features/layoutCustomizer/layoutCustomizerSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 
@@ -46,7 +46,7 @@ const RightSidebar = () => {
     layoutWidthType,
     layoutPositionType,
     topbarColorType,
-    leftSidbarSizeType,
+    leftSidbarSizeMain,
     leftSidebarViewType,
     leftSidebarColorType,
     leftSidebarGradientColorType,
@@ -608,13 +608,11 @@ const RightSidebar = () => {
               <button
                 type="button"
                 className="group flex cursor-pointer flex-col items-center gap-1"
-                onClick={() => dispatch(changeLeftSidbarSizeType("default"))}
+                onClick={() => dispatch(changeLeftSidbarSizeMain("lg"))}
               >
                 <span
                   className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
-                    leftSidbarSizeType === "default"
-                      ? "border border-[#405189]"
-                      : ""
+                    leftSidbarSizeMain === "lg" ? "border border-[#405189]" : ""
                   }`}
                 >
                   <span className="flex size-full gap-2">
@@ -631,7 +629,7 @@ const RightSidebar = () => {
                       <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
                     </span>
                   </span>
-                  {leftSidbarSizeType === "default" && (
+                  {leftSidbarSizeMain === "lg" && (
                     <FaCheckCircle
                       color="#405189"
                       size={13}
@@ -648,11 +646,11 @@ const RightSidebar = () => {
               <button
                 type="button"
                 className="group flex cursor-pointer flex-col items-center gap-1"
-                onClick={() => dispatch(changeLeftSidbarSizeType("compact"))}
+                onClick={() => dispatch(changeLeftSidbarSizeMain("md"))}
               >
                 <span
                   className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
-                    leftSidbarSizeType === "compact" ? "border-[#405189]" : ""
+                    leftSidbarSizeMain === "md" ? "border-[#405189]" : ""
                   }`}
                 >
                   <span className="flex size-full gap-2">
@@ -670,7 +668,7 @@ const RightSidebar = () => {
                     </span>
                   </span>
 
-                  {leftSidbarSizeType === "compact" && (
+                  {leftSidbarSizeMain === "md" && (
                     <FaCheckCircle
                       color="#405189"
                       size={13}
@@ -687,15 +685,11 @@ const RightSidebar = () => {
               <button
                 type="button"
                 className="group flex cursor-pointer flex-col items-center gap-1"
-                onClick={() =>
-                  dispatch(changeLeftSidbarSizeType("small-icon-view"))
-                }
+                onClick={() => dispatch(changeLeftSidbarSizeMain("sm"))}
               >
                 <span
                   className={`relative h-[70px] w-[110px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
-                    leftSidbarSizeType === "small-icon-view"
-                      ? "border border-[#405189]"
-                      : ""
+                    leftSidbarSizeMain === "sm" ? "border border-[#405189]" : ""
                   }`}
                 >
                   <span className="flex size-full gap-1">
@@ -714,7 +708,7 @@ const RightSidebar = () => {
                     </span>
                   </span>
 
-                  {leftSidbarSizeType === "small-icon-view" && (
+                  {leftSidbarSizeMain === "sm" && (
                     <FaCheckCircle
                       color="#405189"
                       size={13}
@@ -731,13 +725,11 @@ const RightSidebar = () => {
               <button
                 type="button"
                 className="group flex cursor-pointer flex-col items-center gap-1"
-                onClick={() =>
-                  dispatch(changeLeftSidbarSizeType("small-hover-view"))
-                }
+                onClick={() => dispatch(changeLeftSidbarSizeMain("sm-hover"))}
               >
                 <span
                   className={`relative h-[70px] w-[110px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
-                    leftSidbarSizeType === "small-hover-view"
+                    leftSidbarSizeMain === "sm-hover"
                       ? "border border-[#405189]"
                       : ""
                   }`}
@@ -758,7 +750,7 @@ const RightSidebar = () => {
                     </span>
                   </span>
 
-                  {leftSidbarSizeType === "small-hover-view" && (
+                  {leftSidbarSizeMain === "sm-hover" && (
                     <FaCheckCircle
                       color="#405189"
                       size={13}
