@@ -25,6 +25,7 @@ const AuthProtectedLayoutProvider = ({ children }) => {
   const {
     layoutType,
     leftSidbarSizeType,
+    leftSidebarColorType,
     topbarColorType,
     preloader,
     toggleButtonStatus,
@@ -37,8 +38,6 @@ const AuthProtectedLayoutProvider = ({ children }) => {
 
   useEffect(() => {
     const handleResize = () => {
-      console.log("Use Effect Run..");
-
       const width = window.innerWidth;
 
       if (width < 768) {
@@ -92,13 +91,14 @@ const AuthProtectedLayoutProvider = ({ children }) => {
           <LeftSidebar
             width={leftSidebarWidth}
             leftSidbarSizeType={leftSidbarSizeType}
+            leftSidebarColorType={leftSidebarColorType}
           />
         ) : layoutType === layout.TWO_COLUMN ? (
           <LeftTwoColumnSidebar width={leftSidebarWidth} />
         ) : null}
 
         <div
-          className={`flex min-h-screen grow flex-col ${
+          className={`flex min-h-screen flex-1 flex-col ${
             layoutType === layout.VERTICAL || layoutType === layout.SEMI_BOX
               ? bodyLeftMargin
               : ""

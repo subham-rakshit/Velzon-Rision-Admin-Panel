@@ -66,28 +66,10 @@ const workSans = localFont({
   weight: "100 300 400 500 600 700 900",
 });
 
-const poppinsMd = localFont({
-  src: "./assets/fonts/poppinsMd.ttf",
-  variable: "--font-poppins-md",
-  weight: "500",
-});
-
-const poppinsRg = localFont({
-  src: "./assets/fonts/poppinsRg.ttf",
-  variable: "--font-poppins-rg",
-  weight: "400",
-});
-
-const poppinsBl = localFont({
-  src: "./assets/fonts/poppinsBl.ttf",
-  variable: "--font-poppins-black",
-  weight: "900",
-});
-
-const poppinsBo = localFont({
-  src: "./assets/fonts/poppinsBo.ttf",
-  variable: "--font-poppins-bold",
-  weight: "700",
+const poppinsELi = localFont({
+  src: "./assets/fonts/poppinsELi.ttf",
+  variable: "--font-poppins--extra-light",
+  weight: "200",
 });
 
 const poppinsLi = localFont({
@@ -96,10 +78,34 @@ const poppinsLi = localFont({
   weight: "300",
 });
 
-const poppinsELi = localFont({
-  src: "./assets/fonts/poppinsELi.ttf",
-  variable: "--font-poppins--extra-light",
-  weight: "300",
+const poppinsRg = localFont({
+  src: "./assets/fonts/poppinsRg.ttf",
+  variable: "--font-poppins-rg",
+  weight: "400",
+});
+
+const poppinsMd = localFont({
+  src: "./assets/fonts/poppinsMd.ttf",
+  variable: "--font-poppins-md",
+  weight: "500",
+});
+
+const poppinsSb = localFont({
+  src: "./assets/fonts/poppinsSb.ttf",
+  variable: "--font-poppins-sb",
+  weight: "600",
+});
+
+const poppinsBo = localFont({
+  src: "./assets/fonts/poppinsBo.ttf",
+  variable: "--font-poppins-bold",
+  weight: "700",
+});
+
+const poppinsBl = localFont({
+  src: "./assets/fonts/poppinsBl.ttf",
+  variable: "--font-poppins-black",
+  weight: "900",
 });
 
 export const metadata = {
@@ -111,7 +117,7 @@ const RootLayout = ({ children }) => {
   return (
     <html lang="en">
       <body
-        className={`${hkGrotesk.variable} ${inter.variable} ${jost.variable} ${montserrat.variable} ${nunito.variable} ${openSans.variable} ${outfit.variable} ${publicSans.variable} ${saira.variable} ${workSans.variable} ${poppinsRg.variable} ${poppinsMd.variable} ${poppinsBl.variable} ${poppinsBo.variable} ${poppinsLi.variable} ${poppinsELi.variable} antialiased`}
+        className={`${hkGrotesk.variable} ${inter.variable} ${jost.variable} ${montserrat.variable} ${nunito.variable} ${openSans.variable} ${outfit.variable} ${publicSans.variable} ${saira.variable} ${workSans.variable} ${poppinsRg.variable} ${poppinsMd.variable} ${poppinsBl.variable} ${poppinsBo.variable} ${poppinsLi.variable} ${poppinsELi.variable} ${poppinsSb.variable} antialiased`}
       >
         <AuthProvider>
           <main>{children}</main>

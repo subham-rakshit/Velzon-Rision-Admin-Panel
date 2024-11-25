@@ -18,20 +18,20 @@ const TransitionLink = ({ children, href, ...props }) => {
     if (preloader === "spinner") {
       e.preventDefault();
 
-      // TODO Run some animation
+      // NOTE Run some animation
       const transitionElem = document.querySelector(".main-tranisiton");
       transitionElem.classList.remove("page-transition-off");
       transitionElem.classList.add("page-transition-on");
 
-      // TODO Sleep for some time
+      // NOTE Sleep for some time
       await sleep(500);
 
-      // TODO router.push(href)
+      // NOTE router.push(href)
       router.push(href);
 
       await sleep(500);
 
-      // TODO Run some enter animation
+      // NOTE Run some enter animation
       transitionElem.classList.remove("page-transition-on");
       transitionElem.classList.add("page-transition-off");
     }

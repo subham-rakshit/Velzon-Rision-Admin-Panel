@@ -3,651 +3,422 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTheme } from "next-themes";
 import React, { useEffect, useState } from "react";
 import { BsDash } from "react-icons/bs";
 import { IoIosArrowForward } from "react-icons/io";
 
 import TransitionLink from "./TransitionLink";
+import logoDark from "../../../app/assets/images/logo-dark.png";
 import logoLight from "../../../app/assets/images/logo-light.png";
 import logoSmall from "../../../app/assets/images/logo-sm.png";
 import leftSidebarData from "../../../app/assets/leftSidebarData/leftSidebarData";
 
-const LeftSidebar = ({ width, leftSidbarSizeType }) => {
+import {
+  sidebarColor,
+  sidebarSize,
+} from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
+
+const LeftSidebar = ({ width, leftSidbarSizeType, leftSidebarColorType }) => {
   const pathname = usePathname();
+  const mainPath = pathname.split("/")[1];
+  const { theme } = useTheme();
 
-  // NOTE Default Sidebar State to manage open tabs based on pathname
-  const [parentTabDetails, setParentTabDetails] = useState(null);
-  const [firstChildTabDetails, setFirstChildTabDetails] = useState(null);
-  const [secondChildTabDetails, setSecondChildTabDetails] = useState(null);
-  const [thirdChildTabDetails, setThirdChildTabDetails] = useState(null);
+  const [tabDetails, setTabDetails] = useState({
+    parent: { id: "", isOpen: false },
+    firstChild: { id: "", isOpen: false },
+    secondChild: { id: "", isOpen: false },
+    thirdChild: { id: "", isOpen: false },
+  });
 
-  // NOTE Small(Icon View) Sidebar state to manage tab open based on hover
-  const [parentTabIsOpen, setParentTabIsOpen] = useState({
-    id: "",
-    isOpen: false,
-  });
-  const [firstChildTabIsOpen, setFirstChildTabIsOpen] = useState({
-    id: "",
-    isOpen: false,
-  });
-  const [secondChilTabIsOpen, setSecondChilTabIsOpen] = useState({
-    id: "",
-    isOpen: false,
+  const [hoverState, setHoverState] = useState({
+    parent: { id: "", isOpen: false },
+    firstChild: { id: "", isOpen: false },
+    secondChild: { id: "", isOpen: false },
   });
 
   useEffect(() => {
-    const mainPath = pathname.split("/")[1];
-    const parentObject = { id: "", isOpen: false };
-    const firstChildObject = { id: "", isOpen: false };
-    const secondChildObject = { id: "", isOpen: false };
-    const thirdChildObject = { id: "", isOpen: false };
+    const newTabDetails = {
+      parent: { id: "", isOpen: false },
+      firstChild: { id: "", isOpen: false },
+      secondChild: { id: "", isOpen: false },
+      thirdChild: { id: "", isOpen: false },
+    };
 
-    // Loop over each category and tab to check if their IDs are in the pathname
-    leftSidebarData.forEach((category) => {
-      category.tabNameList.forEach((parent) => {
-        // Open the main tab if its ID is in the pathname
+    leftSidebarData.some((category) =>
+      category.tabNameList.some((parent) => {
         if (mainPath.includes(parent.id.toLowerCase())) {
-          parentObject.id = parent.id;
-          parentObject.isOpen = true;
+          newTabDetails.parent = { id: parent.id, isOpen: true };
         }
 
-        // Loop over each dropdown item in this tab to see if they match the pathname
-        parent.tabDropdownList.forEach((firstChild) => {
-          if (firstChild.tabDropdownList.length > 0) {
-            if (mainPath.includes(firstChild.id)) {
-              firstChildObject.id = firstChild.id;
-              firstChildObject.isOpen = true;
-
-              parentObject.id = parent.id;
-              parentObject.isOpen = true;
+        return parent.tabDropdownList.some((firstChild) => {
+          if (firstChild.tabDropdownList.length === 0) {
+            if (mainPath === firstChild.id) {
+              newTabDetails.firstChild = { id: firstChild.id, isOpen: true };
+              newTabDetails.parent = { id: parent.id, isOpen: true };
             }
           } else {
-            if (mainPath === firstChild.id) {
-              firstChildObject.id = firstChild.id;
-              firstChildObject.isOpen = true;
-
-              parentObject.id = parent.id;
-              parentObject.isOpen = true;
+            if (mainPath.includes(firstChild.id)) {
+              newTabDetails.firstChild = { id: firstChild.id, isOpen: true };
+              newTabDetails.parent = { id: parent.id, isOpen: true };
             }
           }
 
-          // Check for any sub-dropdowns within the dropdown item
-          firstChild.tabDropdownList.forEach((secondChild) => {
-            if (secondChild.tabDropdownList.length > 0) {
-              if (mainPath.includes(secondChild.id)) {
-                secondChildObject.id = secondChild.id;
-                secondChildObject.isOpen = true;
-
-                firstChildObject.id = firstChild.id;
-                firstChildObject.isOpen = true;
-
-                parentObject.id = parent.id;
-                parentObject.isOpen = true;
+          return firstChild.tabDropdownList.some((secondChild) => {
+            if (secondChild.tabDropdownList.length === 0) {
+              if (mainPath === secondChild.id) {
+                newTabDetails.secondChild = {
+                  id: secondChild.id,
+                  isOpen: true,
+                };
+                newTabDetails.firstChild = { id: firstChild.id, isOpen: true };
+                newTabDetails.parent = { id: parent.id, isOpen: true };
               }
             } else {
-              if (mainPath === secondChild.id) {
-                secondChildObject.id = secondChild.id;
-                secondChildObject.isOpen = true;
-
-                firstChildObject.id = firstChild.id;
-                firstChildObject.isOpen = true;
-
-                parentObject.id = parent.id;
-                parentObject.isOpen = true;
+              if (mainPath.includes(secondChild.id)) {
+                newTabDetails.secondChild = {
+                  id: secondChild.id,
+                  isOpen: true,
+                };
+                newTabDetails.firstChild = { id: firstChild.id, isOpen: true };
+                newTabDetails.parent = { id: parent.id, isOpen: true };
               }
             }
 
-            // Check for any sub-dropdowns within the dropdown item
-            secondChild.tabDropdownList.forEach((thirdChild) => {
-              if (thirdChild.tabDropdownList.length > 0) {
-                if (mainPath.includes(thirdChild.id)) {
-                  thirdChildObject.id = thirdChild.id;
-                  thirdChildObject.isOpen = true;
-
-                  secondChildObject.id = secondChild.id;
-                  secondChildObject.isOpen = true;
-
-                  firstChildObject.id = firstChild.id;
-                  firstChildObject.isOpen = true;
-
-                  parentObject.id = parent.id;
-                  parentObject.isOpen = true;
-                }
-              } else {
-                if (mainPath === thirdChild.id) {
-                  thirdChildObject.id = thirdChild.id;
-                  thirdChildObject.isOpen = true;
-
-                  secondChildObject.id = secondChild.id;
-                  secondChildObject.isOpen = true;
-
-                  firstChildObject.id = firstChild.id;
-                  firstChildObject.isOpen = true;
-
-                  parentObject.id = parent.id;
-                  parentObject.isOpen = true;
-                }
+            return secondChild.tabDropdownList.some((thirdChild) => {
+              if (mainPath === thirdChild.id) {
+                newTabDetails.thirdChild = { id: thirdChild.id, isOpen: true };
+                newTabDetails.secondChild = {
+                  id: secondChild.id,
+                  isOpen: true,
+                };
+                newTabDetails.firstChild = { id: firstChild.id, isOpen: true };
+                newTabDetails.parent = { id: parent.id, isOpen: true };
+                return true;
               }
+              return false;
             });
           });
         });
-      });
-    });
+      })
+    );
 
-    setParentTabDetails(parentObject);
-    setFirstChildTabDetails(firstChildObject);
-    setSecondChildTabDetails(secondChildObject);
-    setThirdChildTabDetails(thirdChildObject);
-  }, [pathname, leftSidbarSizeType]);
+    // If a match was found, update the state
+    setTabDetails(newTabDetails);
+  }, [mainPath]);
 
-  // const pathname = usePathname();
-
-  // // Default Sidebar State
-  // const [tabDetails, setTabDetails] = useState({
-  //   parent: { id: "", isOpen: false },
-  //   firstChild: { id: "", isOpen: false },
-  //   secondChild: { id: "", isOpen: false },
-  //   thirdChild: { id: "", isOpen: false },
-  // });
-
-  // // Small Sidebar State for Hover
-  // const [hoverState, setHoverState] = useState({
-  //   parent: { id: "", isOpen: false },
-  //   firstChild: { id: "", isOpen: false },
-  //   secondChild: { id: "", isOpen: false },
-  // });
-
-  // useEffect(() => {
-  //   const mainPath = pathname.split("/")[1];
-
-  //   const newTabDetails = {
-  //     parent: { id: "", isOpen: false },
-  //     firstChild: { id: "", isOpen: false },
-  //     secondChild: { id: "", isOpen: false },
-  //     thirdChild: { id: "", isOpen: false },
-  //   };
-
-  //   // Efficiently traverse the data structure
-  //   const found = leftSidebarData.some((category) =>
-  //     category.tabNameList.some((parent) => {
-  //       if (mainPath.includes(parent.id.toLowerCase())) {
-  //         newTabDetails.parent = { id: parent.id, isOpen: true };
-  //       }
-
-  //       return parent.tabDropdownList.some((firstChild) => {
-  //         if (mainPath.includes(firstChild.id)) {
-  //           newTabDetails.firstChild = { id: firstChild.id, isOpen: true };
-  //           newTabDetails.parent = { id: parent.id, isOpen: true };
-  //         }
-
-  //         return firstChild.tabDropdownList.some((secondChild) => {
-  //           if (mainPath.includes(secondChild.id)) {
-  //             newTabDetails.secondChild = { id: secondChild.id, isOpen: true };
-  //             newTabDetails.firstChild = { id: firstChild.id, isOpen: true };
-  //             newTabDetails.parent = { id: parent.id, isOpen: true };
-  //           }
-
-  //           return secondChild.tabDropdownList.some((thirdChild) => {
-  //             if (mainPath.includes(thirdChild.id)) {
-  //               newTabDetails.thirdChild = { id: thirdChild.id, isOpen: true };
-  //               newTabDetails.secondChild = { id: secondChild.id, isOpen: true };
-  //               newTabDetails.firstChild = { id: firstChild.id, isOpen: true };
-  //               newTabDetails.parent = { id: parent.id, isOpen: true };
-  //               return true;
-  //             }
-  //             return false;
-  //           });
-  //         });
-  //       });
-  //     })
-  //   );
-
-  //   // If a match was found, update the state
-  //   if (found) setTabDetails(newTabDetails);
-  // }, [pathname, leftSidebarData, leftSidebarSizeType]);
-
-  // Handle Parent Tab toggle
+  // NOTE Handle Toggle Tabs Functionality
   const handleParentTabToggle = (parentId) => {
-    setParentTabDetails((prev) => ({
+    setTabDetails((prev) => ({
       ...prev,
-      id: parentId,
-      isOpen: prev.id === parentId ? !prev.isOpen : true,
+      parent: {
+        ...prev.parent,
+        id: parentId,
+        isOpen: prev.parent.id === parentId ? !prev.parent.isOpen : true,
+      },
     }));
   };
 
-  // Handle First Child Tab toggle
   const handleFirstChildTabToggle = (firstChildId) => {
-    setFirstChildTabDetails((prev) => ({
+    setTabDetails((prev) => ({
       ...prev,
-      id: firstChildId,
-      isOpen: prev.id === firstChildId ? !prev.isOpen : true,
+      firstChild: {
+        ...prev.firstChild,
+        id: firstChildId,
+        isOpen:
+          prev.firstChild.id === firstChildId ? !prev.firstChild.isOpen : true,
+      },
     }));
   };
 
-  // Handle First Child Tab toggle
   const handleSecondChildTabToggle = (secondChildId) => {
-    setSecondChildTabDetails((prev) => ({
+    setTabDetails((prev) => ({
       ...prev,
-      id: secondChildId,
-      isOpen: prev.id === secondChildId ? !prev.isOpen : true,
+      secondChild: {
+        ...prev.secondChild,
+        id: secondChildId,
+        isOpen:
+          prev.secondChild.id === secondChildId
+            ? !prev.secondChild.isOpen
+            : true,
+      },
     }));
   };
 
-  // NOTE Vertical Default LeftSidebar View ----
+  // NOTE Handle Hove State Functionality
+  const handleParentHoverState = (parentId) => {
+    setHoverState((prev) => ({
+      ...prev,
+      parent: {
+        ...prev.parent,
+        id: parentId,
+        isOpen: prev.parent.id === parentId ? !prev.parent.isOpen : true,
+      },
+    }));
+  };
+
+  const handleFirstChildHoverState = (firstChildId) => {
+    setHoverState((prev) => ({
+      ...prev,
+      firstChild: {
+        ...prev.firstChild,
+        id: firstChildId,
+        isOpen:
+          prev.firstChild.id === firstChildId ? !prev.firstChild.isOpen : true,
+      },
+    }));
+  };
+
+  const handleSecondChildHoverState = (secondChildId) => {
+    setHoverState((prev) => ({
+      ...prev,
+      secondChild: {
+        ...prev.secondChild,
+        id: secondChildId,
+        isOpen:
+          prev.secondChild.id === secondChildId
+            ? !prev.secondChild.isOpen
+            : true,
+      },
+    }));
+  };
+
+  // NOTE Default Sidebar Size
   const verticalDefaultLeftSidebarView = () => {
     return (
-      <ul className="custom-left-sidebar-scrollbar transition-style h-[calc(100vh-70px)] overflow-y-auto bg-[#405189] px-[20px] py-2 text-[#a6b4e4]">
-        {leftSidebarData.map((tab, index) => {
-          return (
-            <li key={tab.tabCategory} className="flex flex-col gap-5 pt-[20px]">
-              {/* NOTE Tab category */}
-              <span
-                className={`text-soft text-[11px] font-semibold uppercase tracking-wider`}
-              >
-                {tab.tabCategory}
-              </span>
+      <ul
+        className={`custom-left-sidebar-scrollbar h-[calc(100vh-70px)] overflow-y-auto px-4 dark:bg-dark-dencity-300 ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? "bg-light-weight-500" : "bg-light-dencity-900"}`}
+      >
+        {leftSidebarData.map((category) => (
+          // Main Category Container
+          <li
+            key={category.tabCategory}
+            className={`${leftSidbarSizeType === sidebarSize.SMALL_ICON_VIEW ? "py-0" : "py-[10px]"}`}
+          >
+            <span
+              className={`${leftSidbarSizeType === sidebarSize.SMALL_ICON_VIEW ? "hidden" : "inline"} text-11-light400-sb uppercase tracking-widest`}
+            >
+              {category.tabCategory}
+            </span>
 
-              {/* NOTE Full Category Items Main Container */}
-              <ul className={`flex flex-col`}>
-                {tab.tabNameList.map((tabList) => {
-                  return (
-                    // NOTE Parent and childs Tab Main container *****
-                    <li
-                      key={tabList.id}
-                      className={`transition-style cursor-pointer py-2 font-poppins-rg`}
+            <ul>
+              {category.tabNameList.map((parent) =>
+                parent.tabDropdownList.length > 0 ? (
+                  <li key={parent.id} className={`pl-1 pt-5`}>
+                    {/* Parent Tab */}
+                    <div
+                      className={`flex-start cursor-pointer gap-2 ${pathname.includes(parent.id.toLowerCase()) ? "text-light-weight-800" : "text-light-weight-450"} hover:text-light-weight-800`}
+                      onClick={() => handleParentTabToggle(parent.id)}
                     >
-                      {tabList.tabDropdownList.length > 0 ? (
-                        // DEBUG Parent Tab having child
-                        <div
-                          className={`group flex items-center gap-2 ${
-                            pathname.includes(tabList.id.toLowerCase())
-                              ? "text-white"
-                              : ""
-                          }`}
-                          onClick={() => handleParentTabToggle(tabList.id)}
-                        >
-                          {/* NOTE Parent Tab Icon */}
-                          <span
-                            className={`transition-style group-hover:text-white`}
-                          >
-                            {tabList.tabIcon}
-                          </span>
+                      <span className="text-[18px]">{parent.tabIcon}</span>
+                      <span className="font-poppins-rg text-[15px]">
+                        {parent.tabName}
+                      </span>
+                      <IoIosArrowForward
+                        className={`ml-auto ${pathname.includes(parent.id.toLowerCase()) ? "rotate-90" : ""}`}
+                      />
+                    </div>
 
-                          {/* NOTE Parent Tabname and Arrow Icon Container */}
-                          <span
-                            className={`transition-style flex w-full items-center justify-between text-[15px] group-hover:text-white`}
-                          >
-                            {/* NOTE Parent Tabname */}
-                            <span>{tabList.tabName}</span>
-
-                            {/* NOTE Parent Arrow Icon */}
-                            <IoIosArrowForward
-                              className={`${
-                                pathname.includes(tabList.id.toLowerCase())
-                                  ? "rotate-90"
-                                  : ""
-                              }`}
-                            />
-                          </span>
-                        </div>
-                      ) : (
-                        // DEBUG Parent Tab having no child
-                        <TransitionLink href={tabList.pathName}>
-                          <div
-                            className={`group ${
-                              pathname.includes(tabList.id.toLowerCase())
-                                ? "text-white"
-                                : ""
-                            }`}
-                          >
-                            {/* NOTE Parent Tab */}
-                            <span
-                              className={`transition-style flex items-center gap-2 group-hover:text-white`}
+                    <ul
+                      className={`${tabDetails.parent.id === parent.id && tabDetails.parent.isOpen ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"} custom-left-sidebar-scrollbar overflow-y-auto transition-all duration-500`}
+                    >
+                      {parent.tabDropdownList.map((firstChild) =>
+                        firstChild.tabDropdownList.length > 0 ? (
+                          // First Child
+                          <li key={firstChild.id}>
+                            <div
+                              className={`${pathname.includes(firstChild.id.toLowerCase()) ? "text-light-weight-800" : "text-light-weight-450"} flex-start cursor-pointer gap-2 pl-2 pt-4 font-poppins-rg text-[14px] hover:text-light-weight-800`}
+                              onClick={() =>
+                                handleFirstChildTabToggle(firstChild.id)
+                              }
                             >
-                              {tabList.tabIcon}
-                              {/* NOTE Parent Tabname */}
-                              <span>{tabList.tabName}</span>
-                            </span>
-                          </div>
-                        </TransitionLink>
-                      )}
+                              <BsDash />
+                              {firstChild.tabName}
+                              <IoIosArrowForward
+                                size={15}
+                                className={`ml-auto ${pathname.includes(firstChild.id.toLowerCase()) ? "rotate-90" : ""}`}
+                              />
+                            </div>
 
-                      {/* NOTE All Child's Main container */}
-                      <ul
-                        className={`transition-style flex flex-col justify-center overflow-hidden ${
-                          parentTabDetails &&
-                          tabList.id === parentTabDetails.id &&
-                          parentTabDetails.isOpen
-                            ? "mt-2 h-fit"
-                            : "h-0"
-                        } transition-style`}
-                      >
-                        {tabList.tabDropdownList.map((firstChild) => {
-                          // NOTE If 1st child doesn't have children
-                          if (firstChild.tabDropdownList.length === 0) {
-                            return (
-                              // DEBUG 1st Child (No Children)
-                              <li
-                                id={firstChild.id}
-                                key={firstChild.id}
-                                className="py-[10px] font-poppins-rg"
-                              >
-                                {/* NOTE 1stChild Icon and Name container */}
-                                <TransitionLink href={firstChild.pathName}>
-                                  <span
-                                    className={`flex items-center gap-2 transition-all duration-300 ease-in-out hover:text-white ${
-                                      firstChildTabDetails &&
-                                      firstChildTabDetails.id === firstChild.id
-                                        ? "text-white"
-                                        : ""
-                                    }`}
-                                  >
-                                    {/* NOTE 1stChild Icon */}
-                                    <BsDash size={18} />
-
-                                    {/* NOTE 1stChild Name and New text */}
-                                    <span
-                                      className={`flex w-full items-center justify-between text-[13px]`}
-                                    >
-                                      {firstChild.tabName}
-                                      {firstChild.isNew && (
-                                        <span className="rounded-[2px] bg-[#0ab39c] px-1 text-[10px] text-white">
-                                          New
-                                        </span>
-                                      )}
-                                    </span>
-                                  </span>
-                                </TransitionLink>
-                              </li>
-                            );
-                          } else {
-                            // NOTE If 1st child have children
-                            return (
-                              // NOTE 1st Child main container
-                              <li
-                                id={firstChild.id}
-                                key={firstChild.id}
-                                className="py-[10px] font-poppins-rg"
-                              >
-                                {/* DEBUG 1st Child (Children) */}
-                                <span
-                                  className={`flex items-center gap-2 transition-all duration-300 ease-in-out hover:text-white ${
-                                    pathname.includes(firstChild.id)
-                                      ? "text-white"
-                                      : ""
-                                  }`}
-                                  onClick={() =>
-                                    handleFirstChildTabToggle(firstChild.id)
-                                  }
-                                >
-                                  {/* NOTE 1stChild Icon */}
-                                  <BsDash size={18} />
-
-                                  {/* NOTE 1stChild Icon Tabname and Arrow Container */}
-                                  <span
-                                    className={`flex w-full items-center justify-between text-[13px]`}
-                                  >
-                                    {firstChild.tabName}
-                                    <IoIosArrowForward
-                                      className={`${
-                                        pathname.includes(firstChild.id)
-                                          ? "rotate-90"
-                                          : ""
-                                      }`}
-                                    />
-                                    {firstChild.isNew && (
-                                      <span className="rounded-[2px] bg-[#0ab39c] px-1 text-[10px] text-white">
-                                        New
-                                      </span>
-                                    )}
-                                  </span>
-                                </span>
-
-                                {/* NOTE 2ndChild's main container  */}
-                                <ul
-                                  className={`overflow-hidden pl-5 ${
-                                    firstChildTabDetails &&
-                                    firstChildTabDetails.id === firstChild.id &&
-                                    firstChildTabDetails.isOpen
-                                      ? "h-fit"
-                                      : "h-0"
-                                  } transition-style`}
-                                >
-                                  {firstChild.tabDropdownList.map(
-                                    (secChild) => {
-                                      // NOTE If 2nd Child doesn't have child
-                                      if (
-                                        secChild.tabDropdownList.length === 0
-                                      ) {
-                                        return (
-                                          // DEBUG 2nd Child
-                                          <li
-                                            key={secChild.id}
-                                            id={secChild.id}
-                                            className={`transition-style group pt-[10px] font-poppins-rg text-[13px] ${
-                                              pathname.includes(secChild.id)
-                                                ? "text-white"
-                                                : ""
-                                            }`}
-                                          >
-                                            <Link
-                                              href={secChild.pathName}
-                                              className="flex items-center gap-3"
-                                            >
-                                              <span
-                                                className={`transition-style size-[6px] rounded-full border border-[#a6b4e4] group-hover:bg-white ${
-                                                  pathname.includes(secChild.id)
-                                                    ? "bg-white"
-                                                    : ""
-                                                }`}
-                                              ></span>
-                                              <span
-                                                className={`transition-style group-hover:text-white`}
-                                              >
-                                                {secChild.tabName}
-                                              </span>
-                                            </Link>
-                                          </li>
-                                        );
-                                      } else {
-                                        // NOTE If 2nd Child have children
-                                        return (
-                                          <li
-                                            key={secChild.id}
-                                            id={secChild.id}
-                                            className={`transition-style pt-[10px] font-poppins-rg text-[13px]`}
-                                          >
-                                            <span
-                                              className={`group flex items-center gap-3 ${
-                                                pathname.includes(secChild.id)
-                                                  ? "text-white"
-                                                  : ""
-                                              }`}
-                                              onClick={() =>
-                                                handleSecondChildTabToggle(
-                                                  secChild.id
-                                                )
-                                              }
-                                            >
-                                              <span
-                                                className={`transition-style size-[6px] rounded-full border border-[#a6b4e4] group-hover:bg-white ${
-                                                  pathname.includes(secChild.id)
-                                                    ? "bg-white"
-                                                    : ""
-                                                }`}
-                                              ></span>
-
-                                              {/* NOTE 2ndChild Icon Tabname and Arrow Container */}
-                                              <span
-                                                className={`flex w-full items-center justify-between text-[13px] group-hover:text-white`}
-                                              >
-                                                {secChild.tabName}
-                                                <IoIosArrowForward
-                                                  className={`${
-                                                    pathname.includes(
-                                                      secChild.id
-                                                    )
-                                                      ? "rotate-90"
-                                                      : ""
-                                                  }`}
-                                                />
-                                              </span>
-                                            </span>
-
-                                            {/* TODO 3rcChild */}
-                                            <ul
-                                              className={`overflow-hidden pl-5 ${
-                                                secondChildTabDetails &&
-                                                secondChildTabDetails.id ===
-                                                  secChild.id &&
-                                                secondChildTabDetails.isOpen
-                                                  ? "h-fit"
-                                                  : "h-0"
-                                              } transition-style`}
-                                            >
-                                              {secChild.tabDropdownList.map(
-                                                (thirdChild) => {
-                                                  return (
-                                                    <li
-                                                      key={thirdChild.id}
-                                                      id={thirdChild.id}
-                                                      className={`transition-style group pt-[10px] font-poppins-rg text-[13px]`}
-                                                    >
-                                                      <Link
-                                                        href={
-                                                          thirdChild.pathName
-                                                        }
-                                                        className="flex items-center gap-3"
-                                                      >
-                                                        <span
-                                                          className={`transition-style size-[6px] rounded-full border border-[#a6b4e4] group-hover:bg-white ${
-                                                            pathname.includes(
-                                                              thirdChild.id
-                                                            )
-                                                              ? "bg-white"
-                                                              : ""
-                                                          }`}
-                                                        ></span>
-                                                        <span
-                                                          className={`transition-style group-hover:text-white ${
-                                                            pathname.includes(
-                                                              thirdChild.id
-                                                            )
-                                                              ? "text-white"
-                                                              : ""
-                                                          }`}
-                                                        >
-                                                          {thirdChild.tabName}
-                                                        </span>
-                                                      </Link>
-                                                    </li>
-                                                  );
-                                                }
-                                              )}
-                                            </ul>
-                                          </li>
-                                        );
+                            <ul
+                              className={`${tabDetails.firstChild.id === firstChild.id && tabDetails.firstChild.isOpen ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"} custom-left-sidebar-scrollbar overflow-y-auto transition-all duration-500`}
+                            >
+                              {firstChild.tabDropdownList.map((secondChild) =>
+                                secondChild.tabDropdownList.length > 0 ? (
+                                  // Second Child
+                                  <li key={secondChild.id}>
+                                    <div
+                                      className={`flex-start cursor-pointer gap-3 pl-7 pt-4 font-poppins-rg text-[13px] ${pathname.includes(secondChild.id) ? "text-light-weight-800" : "text-light-weight-450"} group hover:text-light-weight-800`}
+                                      onClick={() =>
+                                        handleSecondChildTabToggle(
+                                          secondChild.id
+                                        )
                                       }
-                                    }
-                                  )}
-                                </ul>
-                              </li>
-                            );
-                          }
-                        })}
-                      </ul>
+                                    >
+                                      <span
+                                        className={`size-[5px] rounded-full border border-light-weight-450 group-hover:bg-white ${pathname.includes(secondChild.id.toLowerCase()) ? "bg-white" : ""}`}
+                                      ></span>
+                                      {secondChild.tabName}
+                                      <IoIosArrowForward
+                                        size={15}
+                                        className={`ml-auto ${pathname.includes(secondChild.id.toLowerCase()) ? "rotate-90" : ""}`}
+                                      />
+                                    </div>
+
+                                    <ul
+                                      className={`${tabDetails.secondChild.id === secondChild.id && tabDetails.secondChild.isOpen ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"} custom-left-sidebar-scrollbar overflow-y-auto transition-all duration-500`}
+                                    >
+                                      {secondChild.tabDropdownList.map(
+                                        (thirdChild) =>
+                                          thirdChild.tabDropdownList.length >
+                                          0 ? null : (
+                                            // Third Child
+                                            <Link
+                                              key={thirdChild.id}
+                                              href={thirdChild.pathName}
+                                            >
+                                              <li
+                                                className={`${mainPath === thirdChild.id ? "text-light-weight-800" : "text-light-weight-450"} flex-start group gap-3 pl-10 pt-4 font-poppins-rg text-[12px] hover:text-light-weight-800`}
+                                              >
+                                                <span
+                                                  className={`size-[5px] rounded-full border border-light-weight-450 group-hover:bg-white ${mainPath === thirdChild.id ? "bg-white" : ""}`}
+                                                ></span>
+                                                {thirdChild.tabName}
+                                              </li>
+                                            </Link>
+                                          )
+                                      )}
+                                    </ul>
+                                  </li>
+                                ) : (
+                                  // Second Child
+                                  <Link
+                                    key={secondChild.id}
+                                    href={secondChild.pathName}
+                                  >
+                                    <li
+                                      className={`${mainPath === secondChild.id ? "text-light-weight-800" : "text-light-weight-450"} flex-start group gap-3 pl-7 pt-4 font-poppins-rg text-[13px] hover:text-light-weight-800`}
+                                    >
+                                      <span
+                                        className={`size-[5px] rounded-full border border-light-weight-450 group-hover:bg-white ${mainPath === secondChild.id ? "bg-white" : ""}`}
+                                      ></span>
+                                      {secondChild.tabName}
+                                    </li>
+                                  </Link>
+                                )
+                              )}
+                            </ul>
+                          </li>
+                        ) : (
+                          // First Child
+                          <TransitionLink
+                            key={firstChild.id}
+                            href={firstChild.pathName}
+                          >
+                            <li
+                              className={`${mainPath === firstChild.id ? "text-light-weight-800" : "text-light-weight-450"} flex-start gap-2 pl-2 pt-4 font-poppins-rg text-[14px] hover:text-light-weight-800`}
+                            >
+                              <BsDash />
+                              {firstChild.tabName}
+                            </li>
+                          </TransitionLink>
+                        )
+                      )}
+                    </ul>
+                  </li>
+                ) : (
+                  // Parent Tab
+                  <Link key={parent.id} href={parent.pathName}>
+                    <li
+                      className={`pl-1 pt-5 ${pathname.includes(parent.id.toLowerCase()) ? "text-light-weight-800" : "text-light-weight-450"} hover:text-light-weight-800`}
+                    >
+                      <div className="flex-start cursor-pointer gap-2">
+                        <span className="text-[18px]">{parent.tabIcon}</span>
+                        <span className="font-poppins-rg text-[15px]">
+                          {parent.tabName}
+                        </span>
+                      </div>
                     </li>
-                  );
-                })}
-              </ul>
-            </li>
-          );
-        })}
+                  </Link>
+                )
+              )}
+            </ul>
+          </li>
+        ))}
       </ul>
     );
   };
 
-  // NOTE Vertical Small Icon LeftSidebar View ----
+  // NOTE Small Icon View Size
   const verticalSmallIconLeftSideView = () => {
     return (
-      <ul className="transition-style relative h-full bg-[#405189] py-2 text-[#a6b4e4]">
+      <ul
+        className={`relative h-full bg-[#405189] py-2 text-[#a6b4e4] dark:bg-dark-dencity-300 ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? "bg-light-weight-500" : "bg-light-dencity-900"}`}
+      >
         {leftSidebarData.map((category) =>
-          category.tabNameList.map((parentTabIcon) => (
+          category.tabNameList.map((parent) => (
             // Tab Icon Main Container
             <li
-              key={parentTabIcon.id}
+              key={parent.id}
               className="relative flex items-center justify-center py-[13px] hover:cursor-pointer"
-              onMouseEnter={() =>
-                setParentTabIsOpen({ id: parentTabIcon.id, isOpen: true })
-              }
-              onMouseLeave={() => setParentTabIsOpen({ id: "", isOpen: false })}
+              onMouseEnter={() => handleParentHoverState(parent.id)}
+              onMouseLeave={() => handleParentHoverState(parent.id)}
             >
               {/* NOTE Parent Icon */}
               <span
                 className={`text-[22px] ${
-                  pathname.includes(parentTabIcon.id.toLowerCase())
-                    ? "text-white"
-                    : ""
+                  pathname.includes(parent.id.toLowerCase()) ? "text-white" : ""
                 }`}
               >
-                {parentTabIcon.tabIcon}
+                {parent.tabIcon}
               </span>
 
               {/* NOTE Parent Dropdown Box */}
               <ul
-                className={`transition-style absolute left-full top-0 z-[9999] w-[200px] rounded-r-[5px] bg-[#405189] px-2 py-3 font-poppins-rg ${
-                  parentTabIsOpen.isOpen &&
-                  parentTabIsOpen.id === parentTabIcon.id
+                className={`absolute left-full top-0 z-[9999] w-[200px] rounded-r-[5px] px-2 py-3 font-poppins-rg dark:bg-dark-dencity-300 ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? "bg-light-weight-500" : "bg-light-dencity-900"} ${
+                  hoverState.parent.isOpen && hoverState.parent.id === parent.id
                     ? "visible opacity-100"
                     : "hidden opacity-0"
                 }`}
               >
                 {/* Parent Tab Name  */}
                 <span
-                  className={`transition-style flex w-full items-center justify-between text-[15px] group-hover:text-white ${
-                    parentTabIsOpen.id === parentTabIcon.id ? "text-white" : ""
-                  } ${
-                    parentTabIcon.tabDropdownList.length > 0 ? "mb-3" : "mb-0"
-                  }`}
+                  className={`flex w-full items-center justify-between text-[15px] group-hover:text-white ${
+                    tabDetails.parent.id === parent.id ? "text-white" : ""
+                  } ${parent.tabDropdownList.length > 0 ? "mb-3" : "mb-0"}`}
                 >
-                  <span>{parentTabIcon.tabName}</span>
-                  {parentTabIcon.tabDropdownList.length > 0 && (
+                  <span>{parent.tabName}</span>
+                  {parent.tabDropdownList.length > 0 && (
                     <IoIosArrowForward
                       className={`${
-                        parentTabIsOpen.id === parentTabIcon.id
-                          ? "rotate-90"
-                          : ""
+                        hoverState.parent.id === parent.id ? "rotate-90" : ""
                       }`}
                     />
                   )}
                 </span>
 
                 {/* First Childrens */}
-                {parentTabIcon.tabDropdownList.length > 0 &&
-                  parentTabIcon.tabDropdownList.map((firstChild) => {
+                {parent.tabDropdownList.length > 0 &&
+                  parent.tabDropdownList.map((firstChild) => {
                     return (
                       <li
                         key={firstChild.id}
-                        className={`transition-style cursor-pointer font-poppins-rg`}
+                        className={`cursor-pointer font-poppins-rg`}
                       >
                         {firstChild.tabDropdownList.length > 0 ? (
                           // FirstChild Tab having dropdown
                           <ul
                             className={`relative flex items-center gap-2 p-2 text-[13px]`}
                             onMouseEnter={() =>
-                              setFirstChildTabIsOpen({
-                                id: firstChild.id,
-                                isOpen: true,
-                              })
+                              handleFirstChildHoverState(firstChild.id)
                             }
                             onMouseLeave={() =>
-                              setFirstChildTabIsOpen({ id: "", isOpen: false })
+                              handleFirstChildHoverState(firstChild.id)
                             }
                           >
                             <span
-                              className={`transition-style flex w-full items-center justify-between text-[13px] hover:text-white ${
-                                firstChildTabDetails &&
-                                firstChildTabDetails.id === firstChild.id
+                              className={`flex w-full items-center justify-between text-[13px] hover:text-white ${
+                                tabDetails.firstChild.id === firstChild.id
                                   ? "text-white"
                                   : ""
                               }`}
@@ -658,9 +429,9 @@ const LeftSidebar = ({ width, leftSidbarSizeType }) => {
 
                             {/* Second Children */}
                             <li
-                              className={`transition-style absolute left-full top-0 z-[9999] w-[200px] rounded-r-[5px] bg-[#405189] p-3 font-poppins-rg ${
-                                firstChildTabIsOpen.isOpen &&
-                                firstChildTabIsOpen.id === firstChild.id
+                              className={`absolute left-full top-0 z-[9999] w-[200px] rounded-r-[5px] p-3 font-poppins-rg dark:bg-dark-dencity-300 ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? "bg-light-weight-500" : "bg-light-dencity-900"} ${
+                                hoverState.firstChild.isOpen &&
+                                hoverState.firstChild.id === firstChild.id
                                   ? "visible opacity-100"
                                   : "hidden opacity-0"
                               }`}
@@ -672,23 +443,20 @@ const LeftSidebar = ({ width, leftSidbarSizeType }) => {
                                     key={secondChild.id}
                                     className={`relative flex items-center gap-2 p-2 text-[13px]`}
                                     onMouseEnter={() =>
-                                      setSecondChilTabIsOpen({
-                                        id: secondChild.id,
-                                        isOpen: true,
-                                      })
+                                      handleSecondChildHoverState(
+                                        secondChild.id
+                                      )
                                     }
                                     onMouseLeave={() =>
-                                      setSecondChilTabIsOpen({
-                                        id: "",
-                                        isOpen: false,
-                                      })
+                                      handleSecondChildHoverState(
+                                        secondChild.id
+                                      )
                                     }
                                   >
                                     <span
-                                      className={`transition-style flex w-full items-center justify-between text-[13px] hover:text-white ${
-                                        secondChildTabDetails &&
-                                        secondChildTabDetails.id ===
-                                          secondChild.id
+                                      className={`flex w-full items-center justify-between text-[13px] hover:text-white ${
+                                        tabDetails.secondChild.id ===
+                                        secondChild.id
                                           ? "text-white"
                                           : ""
                                       }`}
@@ -699,9 +467,9 @@ const LeftSidebar = ({ width, leftSidbarSizeType }) => {
 
                                     {/* Third Child */}
                                     <li
-                                      className={`transition-style absolute left-full top-0 z-[9999] w-[200px] rounded-[5px] bg-[#405189] p-3 font-poppins-rg ${
-                                        secondChilTabIsOpen.isOpen &&
-                                        secondChilTabIsOpen.id ===
+                                      className={`absolute left-full top-0 z-[9999] w-[200px] rounded-[5px] p-3 font-poppins-rg dark:bg-dark-dencity-300 ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? "bg-light-weight-500" : "bg-light-dencity-900"} ${
+                                        hoverState.secondChild.isOpen &&
+                                        hoverState.secondChild.id ===
                                           secondChild.id
                                           ? "visible opacity-100"
                                           : "hidden opacity-0"
@@ -716,15 +484,14 @@ const LeftSidebar = ({ width, leftSidbarSizeType }) => {
                                               key={thirdChild.id}
                                             >
                                               <span
-                                                className={`transition-style flex items-center gap-2 p-2 text-[13px] hover:text-white ${
-                                                  thirdChildTabDetails &&
-                                                  thirdChildTabDetails.id ===
-                                                    thirdChild.id
+                                                className={`flex items-center gap-2 p-2 text-[13px] hover:text-white ${
+                                                  tabDetails.thirdChild.id ===
+                                                  thirdChild.id
                                                     ? "text-white"
                                                     : ""
                                                 }`}
                                               >
-                                                {secondChild.tabName}
+                                                {thirdChild.tabName}
                                               </span>
                                             </Link>
                                           )
@@ -738,10 +505,9 @@ const LeftSidebar = ({ width, leftSidbarSizeType }) => {
                                     key={secondChild.id}
                                   >
                                     <span
-                                      className={`transition-style flex items-center gap-2 p-2 text-[13px] hover:text-white ${
-                                        secondChildTabDetails &&
-                                        secondChildTabDetails.id ===
-                                          secondChild.id
+                                      className={`flex items-center gap-2 p-2 text-[13px] hover:text-white ${
+                                        tabDetails.secondChild.id ===
+                                        secondChild.id
                                           ? "text-white"
                                           : ""
                                       }`}
@@ -755,14 +521,9 @@ const LeftSidebar = ({ width, leftSidbarSizeType }) => {
                           </ul>
                         ) : (
                           // FirstChild Tab having no dropdown
-                          <Link href={firstChild.pathName}>
+                          <Link href={firstChild.pathName} key={firstChild.id}>
                             <span
-                              className={`transition-style flex items-center gap-2 p-2 text-[13px] hover:text-white ${
-                                firstChildTabDetails &&
-                                firstChildTabDetails.id === firstChild.id
-                                  ? "text-white"
-                                  : ""
-                              }`}
+                              className={`flex items-center gap-2 p-2 text-[13px] hover:text-white ${tabDetails.firstChild.id === firstChild.id ? "text-white" : ""}`}
                             >
                               {firstChild.tabName}
                             </span>
@@ -787,22 +548,26 @@ const LeftSidebar = ({ width, leftSidbarSizeType }) => {
     >
       {/* NOTE Sidebar Top Logo Section */}
       <div
-        className={`transition-style sticky left-0 top-0 z-[100] h-[70px] w-full bg-[#405189] px-[20px]`}
+        className={`sticky left-0 top-0 z-[100] h-[70px] w-full ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? "bg-light-weight-500" : "bg-light-dencity-900"} px-[20px] dark:bg-dark-dencity-300`}
       >
-        <Link
-          href="/dashboard"
-          className="flex size-full items-center justify-center"
-        >
-          {leftSidbarSizeType === "small-icon-view" ? (
+        <Link href="/dashboard" className="flex-center size-full">
+          {leftSidbarSizeType === sidebarSize.SMALL_ICON_VIEW ? (
             <Image src={logoSmall} alt="logo small" width={25} height={25} />
+          ) : leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? (
+            <Image src={logoLight} alt="logo light" width={100} height={22} />
           ) : (
-            <Image src={logoLight} alt="logo light" width={100} height={25} />
+            <Image
+              src={theme === "light" ? logoDark : logoLight}
+              alt="logo light"
+              width={100}
+              height={22}
+            />
           )}
         </Link>
       </div>
 
       {/* NOTE Tab Section */}
-      {leftSidbarSizeType === "small-icon-view"
+      {leftSidbarSizeType === sidebarSize.SMALL_ICON_VIEW
         ? verticalSmallIconLeftSideView()
         : verticalDefaultLeftSidebarView()}
     </div>

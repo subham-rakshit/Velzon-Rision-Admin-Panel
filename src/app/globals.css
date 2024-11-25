@@ -318,6 +318,10 @@ html .dark::-webkit-scrollbar-thumb {
   .text-11-light400 {
     @apply text-[11px] text-light-weight-400 font-poppins-rg;
   }
+  
+  .text-11-light400-sb {
+    @apply text-[11px] text-light-weight-400 font-poppins-sb;
+  }
 
   .invert-colors {
     @apply invert dark:invert-0;
