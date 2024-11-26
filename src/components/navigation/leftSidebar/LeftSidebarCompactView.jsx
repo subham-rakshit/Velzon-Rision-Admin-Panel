@@ -102,6 +102,16 @@ const LeftSidebarCompactView = ({
                                             href={thirdChild.pathName}
                                           >
                                             <li
+                                              id={thirdChild.id}
+                                              parenttabid={
+                                                thirdChild.parentTabId
+                                              }
+                                              firstchildid={
+                                                thirdChild.firstChildId
+                                              }
+                                              secondchildid={
+                                                thirdChild.secondChildId
+                                              }
                                               className={`${mainPath === thirdChild.id ? "text-light-weight-800" : "text-light-weight-450"} flex-center group pt-2 font-poppins-rg text-[12px] hover:text-light-weight-800`}
                                             >
                                               {thirdChild.tabName}
@@ -118,6 +128,9 @@ const LeftSidebarCompactView = ({
                                   href={secondChild.pathName}
                                 >
                                   <li
+                                    id={secondChild.id}
+                                    parenttabid={secondChild.parentTabId}
+                                    firstchildid={secondChild.firstChildId}
                                     className={`${mainPath === secondChild.id ? "text-light-weight-800" : "text-light-weight-450"} flex-center group pt-3 font-poppins-rg text-[13px] hover:text-light-weight-800`}
                                   >
                                     {secondChild.tabName}
@@ -134,6 +147,8 @@ const LeftSidebarCompactView = ({
                           href={firstChild.pathName}
                         >
                           <li
+                            id={firstChild.id}
+                            parenttabid={firstChild.parentTabId}
                             className={`${mainPath === firstChild.id ? "text-light-weight-800" : "text-light-weight-450"} pt-4 text-center font-poppins-rg text-[14px] hover:text-light-weight-800`}
                           >
                             {firstChild.tabName}

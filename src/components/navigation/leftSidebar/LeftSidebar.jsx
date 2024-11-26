@@ -47,6 +47,7 @@ const LeftSidebar = ({
   const [isFixedBtnCliked, setIsFixedBtnClicked] = useState(false);
 
   useEffect(() => {
+    const elem = document.getElementById(mainPath);
     const newTabDetails = {
       parent: { id: "", isOpen: false },
       firstChild: { id: "", isOpen: false },
@@ -54,65 +55,27 @@ const LeftSidebar = ({
       thirdChild: { id: "", isOpen: false },
     };
 
-    leftSidebarData.some((category) =>
-      category.tabNameList.some((parent) => {
-        if (mainPath.includes(parent.id.toLowerCase())) {
-          newTabDetails.parent = { id: parent.id, isOpen: true };
-        }
+    if (elem.attributes.parenttabid) {
+      newTabDetails.parent = {
+        id: elem.attributes.parenttabid.value,
+        isOpen: true,
+      };
+    }
 
-        return parent.tabDropdownList.some((firstChild) => {
-          if (firstChild.tabDropdownList.length === 0) {
-            if (mainPath === firstChild.id) {
-              newTabDetails.firstChild = { id: firstChild.id, isOpen: true };
-              newTabDetails.parent = { id: parent.id, isOpen: true };
-            }
-          } else {
-            if (mainPath.includes(firstChild.id)) {
-              newTabDetails.firstChild = { id: firstChild.id, isOpen: true };
-              newTabDetails.parent = { id: parent.id, isOpen: true };
-            }
-          }
+    if (elem.attributes.firstchildid) {
+      newTabDetails.firstChild = {
+        id: elem.attributes.firstchildid.value,
+        isOpen: true,
+      };
+    }
 
-          return firstChild.tabDropdownList.some((secondChild) => {
-            if (secondChild.tabDropdownList.length === 0) {
-              if (mainPath === secondChild.id) {
-                newTabDetails.secondChild = {
-                  id: secondChild.id,
-                  isOpen: true,
-                };
-                newTabDetails.firstChild = { id: firstChild.id, isOpen: true };
-                newTabDetails.parent = { id: parent.id, isOpen: true };
-              }
-            } else {
-              if (mainPath.includes(secondChild.id)) {
-                newTabDetails.secondChild = {
-                  id: secondChild.id,
-                  isOpen: true,
-                };
-                newTabDetails.firstChild = { id: firstChild.id, isOpen: true };
-                newTabDetails.parent = { id: parent.id, isOpen: true };
-              }
-            }
+    if (elem.attributes.secondchildid) {
+      newTabDetails.secondChild = {
+        id: elem.attributes.secondchildid.value,
+        isOpen: true,
+      };
+    }
 
-            return secondChild.tabDropdownList.some((thirdChild) => {
-              if (mainPath === thirdChild.id) {
-                newTabDetails.thirdChild = { id: thirdChild.id, isOpen: true };
-                newTabDetails.secondChild = {
-                  id: secondChild.id,
-                  isOpen: true,
-                };
-                newTabDetails.firstChild = { id: firstChild.id, isOpen: true };
-                newTabDetails.parent = { id: parent.id, isOpen: true };
-                return true;
-              }
-              return false;
-            });
-          });
-        });
-      })
-    );
-
-    // If a match was found, update the state
     setTabDetails(newTabDetails);
   }, [mainPath]);
 
@@ -255,6 +218,16 @@ const LeftSidebar = ({
                                               href={thirdChild.pathName}
                                             >
                                               <li
+                                                id={thirdChild.id}
+                                                parenttabid={
+                                                  thirdChild.parentTabId
+                                                }
+                                                firstchildid={
+                                                  thirdChild.firstChildId
+                                                }
+                                                secondchildid={
+                                                  thirdChild.secondChildId
+                                                }
                                                 className={`${mainPath === thirdChild.id ? "text-light-weight-800" : "text-light-weight-450"} flex-start group gap-3 pl-10 pt-4 font-poppins-rg text-[12px] hover:text-light-weight-800`}
                                               >
                                                 <span
@@ -274,6 +247,9 @@ const LeftSidebar = ({
                                     href={secondChild.pathName}
                                   >
                                     <li
+                                      id={secondChild.id}
+                                      parenttabid={secondChild.parentTabId}
+                                      firstchildid={secondChild.firstChildId}
                                       className={`${mainPath === secondChild.id ? "text-light-weight-800" : "text-light-weight-450"} flex-start group gap-3 pl-7 pt-4 font-poppins-rg text-[13px] hover:text-light-weight-800`}
                                     >
                                       <span
@@ -293,6 +269,8 @@ const LeftSidebar = ({
                             href={firstChild.pathName}
                           >
                             <li
+                              id={firstChild.id}
+                              parenttabid={firstChild.parentTabId}
                               className={`${mainPath === firstChild.id ? "text-light-weight-800" : "text-light-weight-450"} flex-start gap-2 pl-2 pt-4 font-poppins-rg text-[14px] hover:text-light-weight-800`}
                             >
                               <BsDash />
@@ -307,6 +285,7 @@ const LeftSidebar = ({
                   // Parent Tab
                   <Link key={parent.id} href={parent.pathName}>
                     <li
+                      id={parent.id}
                       className={`pl-1 pt-5 ${pathname.includes(parent.id.toLowerCase()) ? "text-light-weight-800" : "text-light-weight-450"} hover:text-light-weight-800`}
                     >
                       <div className="flex-start cursor-pointer gap-2">

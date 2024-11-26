@@ -1,7 +1,7 @@
 "use client";
 
 import NextTopLoader from "nextjs-toploader";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import {
   LeftHorizontalSidebar,
@@ -42,14 +42,47 @@ const AuthProtectedLayoutProvider = ({ children }) => {
 
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    const handleResize = () => {
-      const width = window.innerWidth;
+  const handleResize = useCallback(() => {
+    const width = window.innerWidth;
 
-      if (width < 768) {
+    if (width < 768) {
+      // Small Screen
+      setBodyLeftMargin("ml-0");
+      setLeftSiderbarWidth("hidden");
+    } else if (width >= 768 && width < 1025) {
+      // Medium Screen
+      if (toggleButtonStatus) {
+        setBodyLeftMargin("ml-[250px]");
+        setLeftSiderbarWidth("w-[250px]");
+        dispatch(changeLeftSideBarSizeType(sidebarSize.DEFAULT));
+      } else {
         setBodyLeftMargin("ml-0");
-        setLeftSiderbarWidth("hidden");
-      } else if (width >= 768 && width < 1025) {
+        setLeftSiderbarWidth("w-[65px]");
+        dispatch(changeLeftSideBarSizeType(sidebarSize.SMALL_ICON_VIEW));
+      }
+    } else {
+      // Large Screen
+      if (leftSidbarSizeMain === sidebarMainSize.LG) {
+        if (toggleButtonStatus) {
+          setBodyLeftMargin("ml-0");
+          setLeftSiderbarWidth("w-[65px]");
+          dispatch(changeLeftSideBarSizeType(sidebarSize.SMALL_ICON_VIEW));
+        } else {
+          setBodyLeftMargin("ml-[250px]");
+          setLeftSiderbarWidth("w-[250px]");
+          dispatch(changeLeftSideBarSizeType(sidebarSize.DEFAULT));
+        }
+      } else if (leftSidbarSizeMain === sidebarMainSize.MD) {
+        if (toggleButtonStatus) {
+          setBodyLeftMargin("ml-0");
+          setLeftSiderbarWidth("w-[65px]");
+          dispatch(changeLeftSideBarSizeType(sidebarSize.SMALL_ICON_VIEW));
+        } else {
+          setBodyLeftMargin("ml-[180px]");
+          setLeftSiderbarWidth("w-[180px]");
+          dispatch(changeLeftSideBarSizeType(sidebarSize.COMPACT));
+        }
+      } else if (leftSidbarSizeMain === sidebarMainSize.SM) {
         if (toggleButtonStatus) {
           setBodyLeftMargin("ml-[250px]");
           setLeftSiderbarWidth("w-[250px]");
@@ -59,61 +92,30 @@ const AuthProtectedLayoutProvider = ({ children }) => {
           setLeftSiderbarWidth("w-[65px]");
           dispatch(changeLeftSideBarSizeType(sidebarSize.SMALL_ICON_VIEW));
         }
-      } else {
-        // for width > 1024
-        if (leftSidbarSizeMain === sidebarMainSize.LG) {
-          if (toggleButtonStatus) {
-            setBodyLeftMargin("ml-0");
-            setLeftSiderbarWidth("w-[65px]");
-            dispatch(changeLeftSideBarSizeType(sidebarSize.SMALL_ICON_VIEW));
-          } else {
-            setBodyLeftMargin("ml-[250px]");
-            setLeftSiderbarWidth("w-[250px]");
-            dispatch(changeLeftSideBarSizeType(sidebarSize.DEFAULT));
-          }
-        } else if (leftSidbarSizeMain === sidebarMainSize.MD) {
-          if (toggleButtonStatus) {
-            setBodyLeftMargin("ml-0");
-            setLeftSiderbarWidth("w-[65px]");
-            dispatch(changeLeftSideBarSizeType(sidebarSize.SMALL_ICON_VIEW));
-          } else {
-            setBodyLeftMargin("ml-[180px]");
-            setLeftSiderbarWidth("w-[180px]");
-            dispatch(changeLeftSideBarSizeType(sidebarSize.COMPACT));
-          }
-        } else if (leftSidbarSizeMain === sidebarMainSize.SM) {
-          if (toggleButtonStatus) {
-            setBodyLeftMargin("ml-[250px]");
-            setLeftSiderbarWidth("w-[250px]");
-            dispatch(changeLeftSideBarSizeType(sidebarSize.DEFAULT));
-          } else {
-            setBodyLeftMargin("ml-0");
-            setLeftSiderbarWidth("w-[65px]");
-            dispatch(changeLeftSideBarSizeType(sidebarSize.SMALL_ICON_VIEW));
-          }
-        } else if (leftSidbarSizeMain === sidebarMainSize.SM_HOVER) {
-          if (toggleButtonStatus) {
-            setBodyLeftMargin("ml-[250px]");
-            setLeftSiderbarWidth("w-[250px]");
-            dispatch(changeToggleButtonStatus(toggleStatus.CLOSE));
-            dispatch(changeLeftSideBarSizeType(sidebarSize.DEFAULT));
-          } else {
-            setBodyLeftMargin("ml-0");
-            setLeftSiderbarWidth("w-[65px]");
-            dispatch(changeLeftSideBarSizeType(sidebarSize.SMALL_HOVER_VIEW));
-          }
+      } else if (leftSidbarSizeMain === sidebarMainSize.SM_HOVER) {
+        if (toggleButtonStatus) {
+          setBodyLeftMargin("ml-[250px]");
+          setLeftSiderbarWidth("w-[250px]");
+          dispatch(changeToggleButtonStatus(toggleStatus.CLOSE));
+          dispatch(changeLeftSideBarSizeType(sidebarSize.DEFAULT));
+        } else {
+          setBodyLeftMargin("ml-0");
+          setLeftSiderbarWidth("w-[65px]");
+          dispatch(changeLeftSideBarSizeType(sidebarSize.SMALL_HOVER_VIEW));
         }
       }
-    };
+    }
+  }, [toggleButtonStatus, leftSidbarSizeMain, dispatch]);
 
-    handleResize();
+  useEffect(() => {
+    handleResize(); // Run on mount
 
     window.addEventListener("resize", handleResize);
 
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [toggleButtonStatus, dispatch, leftSidbarSizeMain]);
+  }, [handleResize]);
 
   return (
     <>
@@ -132,7 +134,7 @@ const AuthProtectedLayoutProvider = ({ children }) => {
             leftSidbarSizeType={leftSidbarSizeType}
             leftSidbarSizeMain={leftSidbarSizeMain}
             leftSidebarColorType={leftSidebarColorType}
-            toggleButtonStatus = {toggleButtonStatus}
+            toggleButtonStatus={toggleButtonStatus}
           />
         ) : layoutType === layout.TWO_COLUMN ? (
           <LeftTwoColumnSidebar width={leftSidebarWidth} />

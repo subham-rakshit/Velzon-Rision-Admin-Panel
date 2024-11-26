@@ -185,8 +185,18 @@ const LeftSidebarSmallIconView = ({
                                             key={thirdChild.id}
                                           >
                                             <span
+                                              id={thirdChild.id}
+                                              parenttabid={
+                                                thirdChild.parentTabId
+                                              }
+                                              firstchildid={
+                                                thirdChild.firstChildId
+                                              }
+                                              secondchildid={
+                                                thirdChild.secondChildId
+                                              }
                                               className={`flex items-center gap-2 p-2 text-[13px] hover:text-white ${
-                                                tabDetails.thirdChild.id ===
+                                                pathname.split("/")[1] ===
                                                 thirdChild.id
                                                   ? "text-white"
                                                   : ""
@@ -206,9 +216,11 @@ const LeftSidebarSmallIconView = ({
                                   key={secondChild.id}
                                 >
                                   <span
+                                    id={secondChild.id}
+                                    parenttabid={secondChild.parentTabId}
+                                    firstchildid={secondChild.firstChildId}
                                     className={`flex items-center gap-2 p-2 text-[13px] hover:text-white ${
-                                      tabDetails.secondChild.id ===
-                                      secondChild.id
+                                      pathname.split("/")[1] === secondChild.id
                                         ? "text-white"
                                         : ""
                                     }`}
@@ -224,7 +236,9 @@ const LeftSidebarSmallIconView = ({
                         // FirstChild Tab having no dropdown
                         <Link href={firstChild.pathName} key={firstChild.id}>
                           <span
-                            className={`flex items-center gap-2 p-2 text-[13px] hover:text-white ${tabDetails.firstChild.id === firstChild.id ? "text-white" : ""}`}
+                            id={firstChild.id}
+                            parenttabid={firstChild.parentTabId}
+                            className={`flex items-center gap-2 p-2 text-[13px] hover:text-white ${pathname.split("/")[1] === firstChild.id ? "text-white" : ""}`}
                           >
                             {firstChild.tabName}
                           </span>
