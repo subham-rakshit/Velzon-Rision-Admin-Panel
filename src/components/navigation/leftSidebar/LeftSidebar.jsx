@@ -48,35 +48,37 @@ const LeftSidebar = ({
 
   useEffect(() => {
     const elem = document.getElementById(mainPath);
-    const newTabDetails = {
-      parent: { id: "", isOpen: false },
-      firstChild: { id: "", isOpen: false },
-      secondChild: { id: "", isOpen: false },
-      thirdChild: { id: "", isOpen: false },
-    };
-
-    if (elem.attributes.parenttabid) {
-      newTabDetails.parent = {
-        id: elem.attributes.parenttabid.value,
-        isOpen: true,
+    if (elem) {
+      const newTabDetails = {
+        parent: { id: "", isOpen: false },
+        firstChild: { id: "", isOpen: false },
+        secondChild: { id: "", isOpen: false },
+        thirdChild: { id: "", isOpen: false },
       };
-    }
 
-    if (elem.attributes.firstchildid) {
-      newTabDetails.firstChild = {
-        id: elem.attributes.firstchildid.value,
-        isOpen: true,
-      };
-    }
+      if (elem.attributes.parenttabid) {
+        newTabDetails.parent = {
+          id: elem.attributes.parenttabid.value,
+          isOpen: true,
+        };
+      }
 
-    if (elem.attributes.secondchildid) {
-      newTabDetails.secondChild = {
-        id: elem.attributes.secondchildid.value,
-        isOpen: true,
-      };
-    }
+      if (elem.attributes.firstchildid) {
+        newTabDetails.firstChild = {
+          id: elem.attributes.firstchildid.value,
+          isOpen: true,
+        };
+      }
 
-    setTabDetails(newTabDetails);
+      if (elem.attributes.secondchildid) {
+        newTabDetails.secondChild = {
+          id: elem.attributes.secondchildid.value,
+          isOpen: true,
+        };
+      }
+
+      setTabDetails(newTabDetails);
+    }
   }, [mainPath]);
 
   // NOTE Handle Toggle Tabs Functionality

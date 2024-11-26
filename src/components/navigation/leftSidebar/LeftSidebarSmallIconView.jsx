@@ -61,195 +61,237 @@ const LeftSidebarSmallIconView = ({
       className={`relative h-full py-2 text-light-weight-450 dark:bg-dark-dencity-300 ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? "bg-light-weight-500" : "bg-light-dencity-900"}`}
     >
       {leftSidebarData.map((category) =>
-        category.tabNameList.map((parent) => (
-          // Tab Icon Main Container
-          <li
-            key={parent.id}
-            className="relative flex items-center justify-center py-[13px] hover:cursor-pointer"
-            onMouseEnter={() => handleParentHoverState(parent.id)}
-            onMouseLeave={() => handleParentHoverState(parent.id)}
-          >
-            {/* NOTE Parent Icon */}
-            <span
-              className={`text-[22px] ${
-                pathname.includes(parent.id.toLowerCase()) ? "text-white" : ""
-              }`}
+        category.tabNameList.map((parent) =>
+          parent.tabDropdownList.length > 0 ? (
+            // Tab Icon Main Container
+            <li
+              key={parent.id}
+              className="relative flex items-center justify-center py-[13px] hover:cursor-pointer"
+              onMouseEnter={() => handleParentHoverState(parent.id)}
+              onMouseLeave={() => handleParentHoverState(parent.id)}
             >
-              {parent.tabIcon}
-            </span>
-
-            {/* NOTE Parent Dropdown Box */}
-            <ul
-              className={`absolute left-full top-0 z-[9999] w-[200px] rounded-r-[5px] px-2 py-3 font-poppins-rg dark:bg-dark-dencity-300 ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? "bg-light-weight-500" : "bg-light-dencity-900"} ${
-                hoverState.parent.isOpen && hoverState.parent.id === parent.id
-                  ? "visible opacity-100"
-                  : "hidden opacity-0"
-              }`}
-            >
-              {/* Parent Tab Name  */}
+              {/* NOTE Parent Icon */}
               <span
-                className={`flex w-full items-center justify-between text-[15px] group-hover:text-white ${
-                  tabDetails.parent.id === parent.id ? "text-white" : ""
-                } ${parent.tabDropdownList.length > 0 ? "mb-3" : "mb-0"}`}
+                className={`text-[22px] ${
+                  pathname.includes(parent.id.toLowerCase()) ? "text-white" : ""
+                }`}
               >
-                <span>{parent.tabName}</span>
-                {parent.tabDropdownList.length > 0 && (
-                  <IoIosArrowForward
-                    className={`${
-                      hoverState.parent.id === parent.id ? "rotate-90" : ""
-                    }`}
-                  />
-                )}
+                {parent.tabIcon}
               </span>
 
-              {/* First Childrens */}
-              {parent.tabDropdownList.length > 0 &&
-                parent.tabDropdownList.map((firstChild) => {
-                  return (
-                    <li
-                      key={firstChild.id}
-                      className={`cursor-pointer font-poppins-rg`}
-                    >
-                      {firstChild.tabDropdownList.length > 0 ? (
-                        // FirstChild Tab having dropdown
-                        <ul
-                          className={`relative flex items-center gap-2 p-2 text-[13px]`}
-                          onMouseEnter={() =>
-                            handleFirstChildHoverState(firstChild.id)
-                          }
-                          onMouseLeave={() =>
-                            handleFirstChildHoverState(firstChild.id)
-                          }
-                        >
-                          <span
-                            className={`flex w-full items-center justify-between text-[13px] hover:text-white ${
-                              tabDetails.firstChild.id === firstChild.id
-                                ? "text-white"
-                                : ""
-                            }`}
-                          >
-                            <span>{firstChild.tabName}</span>
-                            <IoIosArrowForward />
-                          </span>
+              {/* NOTE Parent Dropdown Box */}
+              <ul
+                className={`absolute left-full top-0 z-[9999] w-[200px] rounded-r-[5px] px-2 py-3 font-poppins-rg dark:bg-dark-dencity-300 ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? "bg-light-weight-500" : "bg-light-dencity-900"} ${
+                  hoverState.parent.isOpen && hoverState.parent.id === parent.id
+                    ? "visible opacity-100"
+                    : "hidden opacity-0"
+                }`}
+              >
+                {/* Parent Tab Name  */}
+                <span
+                  className={`flex w-full items-center justify-between text-[15px] group-hover:text-white ${
+                    tabDetails.parent.id === parent.id ? "text-white" : ""
+                  } ${parent.tabDropdownList.length > 0 ? "mb-3" : "mb-0"}`}
+                >
+                  <span>{parent.tabName}</span>
+                  {parent.tabDropdownList.length > 0 && (
+                    <IoIosArrowForward
+                      className={`${
+                        hoverState.parent.id === parent.id ? "rotate-90" : ""
+                      }`}
+                    />
+                  )}
+                </span>
 
-                          {/* Second Children */}
-                          <li
-                            className={`absolute left-full top-0 z-[9999] w-[200px] rounded-r-[5px] p-3 font-poppins-rg dark:bg-dark-dencity-300 ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? "bg-light-weight-500" : "bg-light-dencity-900"} ${
-                              hoverState.firstChild.isOpen &&
-                              hoverState.firstChild.id === firstChild.id
-                                ? "visible opacity-100"
-                                : "hidden opacity-0"
-                            }`}
+                {/* First Childrens */}
+                {parent.tabDropdownList.length > 0 &&
+                  parent.tabDropdownList.map((firstChild) => {
+                    return (
+                      <li
+                        key={firstChild.id}
+                        className={`cursor-pointer font-poppins-rg`}
+                      >
+                        {firstChild.tabDropdownList.length > 0 ? (
+                          // FirstChild Tab having dropdown
+                          <ul
+                            className={`relative flex items-center gap-2 p-2 text-[13px]`}
+                            onMouseEnter={() =>
+                              handleFirstChildHoverState(firstChild.id)
+                            }
+                            onMouseLeave={() =>
+                              handleFirstChildHoverState(firstChild.id)
+                            }
                           >
-                            {firstChild.tabDropdownList.map((secondChild) =>
-                              // Second Child Having Dropdown
-                              secondChild.tabDropdownList.length > 0 ? (
-                                <ul
-                                  key={secondChild.id}
-                                  className={`relative flex items-center gap-2 p-2 text-[13px]`}
-                                  onMouseEnter={() =>
-                                    handleSecondChildHoverState(secondChild.id)
-                                  }
-                                  onMouseLeave={() =>
-                                    handleSecondChildHoverState(secondChild.id)
-                                  }
-                                >
-                                  <span
-                                    className={`flex w-full items-center justify-between text-[13px] hover:text-white ${
-                                      tabDetails.secondChild.id ===
-                                      secondChild.id
-                                        ? "text-white"
-                                        : ""
-                                    }`}
-                                  >
-                                    <span>{secondChild.tabName}</span>
-                                    <IoIosArrowForward />
-                                  </span>
+                            <span
+                              className={`flex w-full items-center justify-between text-[13px] hover:text-white ${
+                                tabDetails.firstChild.id === firstChild.id
+                                  ? "text-white"
+                                  : ""
+                              }`}
+                            >
+                              <span>{firstChild.tabName}</span>
+                              <IoIosArrowForward />
+                            </span>
 
-                                  {/* Third Child */}
-                                  <li
-                                    className={`absolute left-full top-0 z-[9999] w-[200px] rounded-[5px] p-3 font-poppins-rg dark:bg-dark-dencity-300 ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? "bg-light-weight-500" : "bg-light-dencity-900"} ${
-                                      hoverState.secondChild.isOpen &&
-                                      hoverState.secondChild.id ===
+                            {/* Second Children */}
+                            <li
+                              className={`absolute left-full top-0 z-[9999] w-[200px] rounded-r-[5px] p-3 font-poppins-rg dark:bg-dark-dencity-300 ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? "bg-light-weight-500" : "bg-light-dencity-900"} ${
+                                hoverState.firstChild.isOpen &&
+                                hoverState.firstChild.id === firstChild.id
+                                  ? "visible opacity-100"
+                                  : "hidden opacity-0"
+                              }`}
+                            >
+                              {firstChild.tabDropdownList.map((secondChild) =>
+                                // Second Child Having Dropdown
+                                secondChild.tabDropdownList.length > 0 ? (
+                                  <ul
+                                    key={secondChild.id}
+                                    className={`relative flex items-center gap-2 p-2 text-[13px]`}
+                                    onMouseEnter={() =>
+                                      handleSecondChildHoverState(
                                         secondChild.id
-                                        ? "visible opacity-100"
-                                        : "hidden opacity-0"
-                                    }`}
+                                      )
+                                    }
+                                    onMouseLeave={() =>
+                                      handleSecondChildHoverState(
+                                        secondChild.id
+                                      )
+                                    }
                                   >
-                                    {secondChild.tabDropdownList.map(
-                                      (thirdChild) =>
-                                        thirdChild.tabDropdownList >
-                                        0 ? null : (
-                                          <Link
-                                            href={thirdChild.pathName}
-                                            key={thirdChild.id}
-                                          >
-                                            <span
-                                              id={thirdChild.id}
-                                              parenttabid={
-                                                thirdChild.parentTabId
-                                              }
-                                              firstchildid={
-                                                thirdChild.firstChildId
-                                              }
-                                              secondchildid={
-                                                thirdChild.secondChildId
-                                              }
-                                              className={`flex items-center gap-2 p-2 text-[13px] hover:text-white ${
-                                                pathname.split("/")[1] ===
-                                                thirdChild.id
-                                                  ? "text-white"
-                                                  : ""
-                                              }`}
+                                    <span
+                                      className={`flex w-full items-center justify-between text-[13px] hover:text-white ${
+                                        tabDetails.secondChild.id ===
+                                        secondChild.id
+                                          ? "text-white"
+                                          : ""
+                                      }`}
+                                    >
+                                      <span>{secondChild.tabName}</span>
+                                      <IoIosArrowForward />
+                                    </span>
+
+                                    {/* Third Child */}
+                                    <li
+                                      className={`absolute left-full top-0 z-[9999] w-[200px] rounded-[5px] p-3 font-poppins-rg dark:bg-dark-dencity-300 ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? "bg-light-weight-500" : "bg-light-dencity-900"} ${
+                                        hoverState.secondChild.isOpen &&
+                                        hoverState.secondChild.id ===
+                                          secondChild.id
+                                          ? "visible opacity-100"
+                                          : "hidden opacity-0"
+                                      }`}
+                                    >
+                                      {secondChild.tabDropdownList.map(
+                                        (thirdChild) =>
+                                          thirdChild.tabDropdownList >
+                                          0 ? null : (
+                                            <Link
+                                              href={thirdChild.pathName}
+                                              key={thirdChild.id}
                                             >
-                                              {thirdChild.tabName}
-                                            </span>
-                                          </Link>
-                                        )
-                                    )}
-                                  </li>
-                                </ul>
-                              ) : (
-                                // Second Child Having No Dropdown
-                                <Link
-                                  href={secondChild.pathName}
-                                  key={secondChild.id}
-                                >
-                                  <span
-                                    id={secondChild.id}
-                                    parenttabid={secondChild.parentTabId}
-                                    firstchildid={secondChild.firstChildId}
-                                    className={`flex items-center gap-2 p-2 text-[13px] hover:text-white ${
-                                      pathname.split("/")[1] === secondChild.id
-                                        ? "text-white"
-                                        : ""
-                                    }`}
+                                              <span
+                                                id={thirdChild.id}
+                                                parenttabid={
+                                                  thirdChild.parentTabId
+                                                }
+                                                firstchildid={
+                                                  thirdChild.firstChildId
+                                                }
+                                                secondchildid={
+                                                  thirdChild.secondChildId
+                                                }
+                                                className={`flex items-center gap-2 p-2 text-[13px] hover:text-white ${
+                                                  pathname.split("/")[1] ===
+                                                  thirdChild.id
+                                                    ? "text-white"
+                                                    : ""
+                                                }`}
+                                              >
+                                                {thirdChild.tabName}
+                                              </span>
+                                            </Link>
+                                          )
+                                      )}
+                                    </li>
+                                  </ul>
+                                ) : (
+                                  // Second Child Having No Dropdown
+                                  <Link
+                                    href={secondChild.pathName}
+                                    key={secondChild.id}
                                   >
-                                    {secondChild.tabName}
-                                  </span>
-                                </Link>
-                              )
-                            )}
-                          </li>
-                        </ul>
-                      ) : (
-                        // FirstChild Tab having no dropdown
-                        <Link href={firstChild.pathName} key={firstChild.id}>
-                          <span
-                            id={firstChild.id}
-                            parenttabid={firstChild.parentTabId}
-                            className={`flex items-center gap-2 p-2 text-[13px] hover:text-white ${pathname.split("/")[1] === firstChild.id ? "text-white" : ""}`}
-                          >
-                            {firstChild.tabName}
-                          </span>
-                        </Link>
-                      )}
-                    </li>
-                  );
-                })}
-            </ul>
-          </li>
-        ))
+                                    <span
+                                      id={secondChild.id}
+                                      parenttabid={secondChild.parentTabId}
+                                      firstchildid={secondChild.firstChildId}
+                                      className={`flex items-center gap-2 p-2 text-[13px] hover:text-white ${
+                                        pathname.split("/")[1] ===
+                                        secondChild.id
+                                          ? "text-white"
+                                          : ""
+                                      }`}
+                                    >
+                                      {secondChild.tabName}
+                                    </span>
+                                  </Link>
+                                )
+                              )}
+                            </li>
+                          </ul>
+                        ) : (
+                          // FirstChild Tab having no dropdown
+                          <Link href={firstChild.pathName} key={firstChild.id}>
+                            <span
+                              id={firstChild.id}
+                              parenttabid={firstChild.parentTabId}
+                              className={`flex items-center gap-2 p-2 text-[13px] hover:text-white ${pathname.split("/")[1] === firstChild.id ? "text-white" : ""}`}
+                            >
+                              {firstChild.tabName}
+                            </span>
+                          </Link>
+                        )}
+                      </li>
+                    );
+                  })}
+              </ul>
+            </li>
+          ) : (
+            <Link href={parent.pathName} key={parent.id}>
+              <li
+                id={parent.id}
+                className="relative flex items-center justify-center py-[13px] hover:cursor-pointer"
+                onMouseEnter={() => handleParentHoverState(parent.id)}
+                onMouseLeave={() => handleParentHoverState(parent.id)}
+              >
+                <span
+                  className={`text-[22px] ${
+                    pathname.includes(parent.id.toLowerCase())
+                      ? "text-white"
+                      : ""
+                  }`}
+                >
+                  {parent.tabIcon}
+                </span>
+                <div
+                  className={`absolute left-full top-0 z-[9999] w-[200px] rounded-r-[5px] px-2 py-3 font-poppins-rg dark:bg-dark-dencity-300 ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? "bg-light-weight-500" : "bg-light-dencity-900"} ${
+                    hoverState.parent.isOpen &&
+                    hoverState.parent.id === parent.id
+                      ? "visible opacity-100"
+                      : "hidden opacity-0"
+                  }`}
+                >
+                  <span
+                    className={`flex w-full items-center justify-between text-[15px] group-hover:text-white ${
+                      tabDetails.parent.id === parent.id ? "text-white" : ""
+                    }`}
+                  >
+                    {parent.tabName}
+                  </span>
+                </div>
+              </li>
+            </Link>
+          )
+        )
       )}
     </ul>
   );

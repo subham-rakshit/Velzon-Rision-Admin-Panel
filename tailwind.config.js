@@ -21,16 +21,6 @@ module.exports = {
         "sidebar-bubble": "url('/assets/sidebar/img-4.jpg')",
       },
       fontFamily: {
-        "hk-grotesk": ["var(--font-hk-grotesk)"],
-        inter: ["var(--font-inter)"],
-        jost: ["var(--font-jost)"],
-        montserrat: ["var(--font-montserrat)"],
-        nunito: ["var(--font-nunito)"],
-        "open-sans": ["var(--font-open-sans)"],
-        "public-sans": ["var(--font-public-sans)"],
-        "work-sans": ["var(--font-work-sans)"],
-        outfit: ["var(--font-outfit)"],
-        saira: ["var(--font-saira)"],
         "poppins-extra-light": ["var(--font-poppins-extra-light)"],
         "poppins-light": ["var(--font-poppins-light)"],
         "poppins-rg": ["var(--font-poppins-rg)"],
@@ -41,6 +31,7 @@ module.exports = {
       },
       boxShadow: {
         light: "0 2px 4px rgba(0, 0, 0, 0.1)",
+        right: "3px 0 5px -1px rgba(0, 0, 0, 0.1)",
       },
       colors: {
         dark: {
@@ -73,6 +64,7 @@ module.exports = {
       },
       backgroundColor: {
         dark: {
+          "dencity-50": "#494d51",
           "dencity-100": "#31363C",
           "dencity-200": "#292E32",
           "dencity-220": "#2f343a",
@@ -94,9 +86,11 @@ module.exports = {
         custom: {
           "blue-100": "#e1ebfd",
           "blue-200": "#dff0fa",
+          "blue-300": "#5A6895",
           "blue-400": "#293e4c",
           "blue-500": "#3577F1",
           "blue-550": "#299CDB",
+          "blue-600": "#3d4d82",
 
           "green-50": "#DAF4F0",
           "green-100": "#293E4C",

@@ -51,61 +51,81 @@ const AuthProtectedLayoutProvider = ({ children }) => {
       setLeftSiderbarWidth("hidden");
     } else if (width >= 768 && width < 1025) {
       // Medium Screen
-      if (toggleButtonStatus) {
-        setBodyLeftMargin("ml-[250px]");
-        setLeftSiderbarWidth("w-[250px]");
-        dispatch(changeLeftSideBarSizeType(sidebarSize.DEFAULT));
+      if (layoutType === layout.TWO_COLUMN) {
+        if (toggleButtonStatus) {
+          setBodyLeftMargin("ml-[290px]");
+          setLeftSiderbarWidth("w-[290px]");
+        } else {
+          setBodyLeftMargin("ml-[70px]");
+          setLeftSiderbarWidth("w-[70px]");
+        }
       } else {
-        setBodyLeftMargin("ml-0");
-        setLeftSiderbarWidth("w-[65px]");
-        dispatch(changeLeftSideBarSizeType(sidebarSize.SMALL_ICON_VIEW));
+        if (toggleButtonStatus) {
+          setBodyLeftMargin("ml-[250px]");
+          setLeftSiderbarWidth("w-[250px]");
+          dispatch(changeLeftSideBarSizeType(sidebarSize.DEFAULT));
+        } else {
+          setBodyLeftMargin("ml-0");
+          setLeftSiderbarWidth("w-[65px]");
+          dispatch(changeLeftSideBarSizeType(sidebarSize.SMALL_ICON_VIEW));
+        }
       }
     } else {
       // Large Screen
-      if (leftSidbarSizeMain === sidebarMainSize.LG) {
+      if (layoutType === layout.TWO_COLUMN) {
         if (toggleButtonStatus) {
-          setBodyLeftMargin("ml-0");
-          setLeftSiderbarWidth("w-[65px]");
-          dispatch(changeLeftSideBarSizeType(sidebarSize.SMALL_ICON_VIEW));
+          setBodyLeftMargin("ml-[70px]");
+          setLeftSiderbarWidth("w-[70px]");
         } else {
-          setBodyLeftMargin("ml-[250px]");
-          setLeftSiderbarWidth("w-[250px]");
-          dispatch(changeLeftSideBarSizeType(sidebarSize.DEFAULT));
+          setBodyLeftMargin("ml-[290px]");
+          setLeftSiderbarWidth("w-[290px]");
         }
-      } else if (leftSidbarSizeMain === sidebarMainSize.MD) {
-        if (toggleButtonStatus) {
-          setBodyLeftMargin("ml-0");
-          setLeftSiderbarWidth("w-[65px]");
-          dispatch(changeLeftSideBarSizeType(sidebarSize.SMALL_ICON_VIEW));
-        } else {
-          setBodyLeftMargin("ml-[180px]");
-          setLeftSiderbarWidth("w-[180px]");
-          dispatch(changeLeftSideBarSizeType(sidebarSize.COMPACT));
-        }
-      } else if (leftSidbarSizeMain === sidebarMainSize.SM) {
-        if (toggleButtonStatus) {
-          setBodyLeftMargin("ml-[250px]");
-          setLeftSiderbarWidth("w-[250px]");
-          dispatch(changeLeftSideBarSizeType(sidebarSize.DEFAULT));
-        } else {
-          setBodyLeftMargin("ml-0");
-          setLeftSiderbarWidth("w-[65px]");
-          dispatch(changeLeftSideBarSizeType(sidebarSize.SMALL_ICON_VIEW));
-        }
-      } else if (leftSidbarSizeMain === sidebarMainSize.SM_HOVER) {
-        if (toggleButtonStatus) {
-          setBodyLeftMargin("ml-[250px]");
-          setLeftSiderbarWidth("w-[250px]");
-          dispatch(changeToggleButtonStatus(toggleStatus.CLOSE));
-          dispatch(changeLeftSideBarSizeType(sidebarSize.DEFAULT));
-        } else {
-          setBodyLeftMargin("ml-0");
-          setLeftSiderbarWidth("w-[65px]");
-          dispatch(changeLeftSideBarSizeType(sidebarSize.SMALL_HOVER_VIEW));
+      } else {
+        if (leftSidbarSizeMain === sidebarMainSize.LG) {
+          if (toggleButtonStatus) {
+            setBodyLeftMargin("ml-0");
+            setLeftSiderbarWidth("w-[65px]");
+            dispatch(changeLeftSideBarSizeType(sidebarSize.SMALL_ICON_VIEW));
+          } else {
+            setBodyLeftMargin("ml-[250px]");
+            setLeftSiderbarWidth("w-[250px]");
+            dispatch(changeLeftSideBarSizeType(sidebarSize.DEFAULT));
+          }
+        } else if (leftSidbarSizeMain === sidebarMainSize.MD) {
+          if (toggleButtonStatus) {
+            setBodyLeftMargin("ml-0");
+            setLeftSiderbarWidth("w-[65px]");
+            dispatch(changeLeftSideBarSizeType(sidebarSize.SMALL_ICON_VIEW));
+          } else {
+            setBodyLeftMargin("ml-[180px]");
+            setLeftSiderbarWidth("w-[180px]");
+            dispatch(changeLeftSideBarSizeType(sidebarSize.COMPACT));
+          }
+        } else if (leftSidbarSizeMain === sidebarMainSize.SM) {
+          if (toggleButtonStatus) {
+            setBodyLeftMargin("ml-[250px]");
+            setLeftSiderbarWidth("w-[250px]");
+            dispatch(changeLeftSideBarSizeType(sidebarSize.DEFAULT));
+          } else {
+            setBodyLeftMargin("ml-0");
+            setLeftSiderbarWidth("w-[65px]");
+            dispatch(changeLeftSideBarSizeType(sidebarSize.SMALL_ICON_VIEW));
+          }
+        } else if (leftSidbarSizeMain === sidebarMainSize.SM_HOVER) {
+          if (toggleButtonStatus) {
+            setBodyLeftMargin("ml-[250px]");
+            setLeftSiderbarWidth("w-[250px]");
+            dispatch(changeToggleButtonStatus(toggleStatus.CLOSE));
+            dispatch(changeLeftSideBarSizeType(sidebarSize.DEFAULT));
+          } else {
+            setBodyLeftMargin("ml-0");
+            setLeftSiderbarWidth("w-[65px]");
+            dispatch(changeLeftSideBarSizeType(sidebarSize.SMALL_HOVER_VIEW));
+          }
         }
       }
     }
-  }, [toggleButtonStatus, leftSidbarSizeMain, dispatch]);
+  }, [toggleButtonStatus, leftSidbarSizeMain, dispatch, layoutType]);
 
   useEffect(() => {
     handleResize(); // Run on mount
@@ -124,8 +144,8 @@ const AuthProtectedLayoutProvider = ({ children }) => {
         <NextTopLoader showSpinner={false} color="#e61247" />
       )}
       <div
-        className={`flex min-h-screen w-full ${
-          layoutType === layout.HORIZONTAL ? "flex-col" : ""
+        className={`min-h-screen w-full ${
+          layoutType === layout.HORIZONTAL ? "flex-col" : "flex"
         }`}
       >
         {layoutType === layout.VERTICAL || layoutType === layout.SEMI_BOX ? (
@@ -137,12 +157,18 @@ const AuthProtectedLayoutProvider = ({ children }) => {
             toggleButtonStatus={toggleButtonStatus}
           />
         ) : layoutType === layout.TWO_COLUMN ? (
-          <LeftTwoColumnSidebar width={leftSidebarWidth} />
+          <LeftTwoColumnSidebar
+            width={leftSidebarWidth}
+            leftSidebarColorType={leftSidebarColorType}
+            toggleButtonStatus={toggleButtonStatus}
+          />
         ) : null}
 
         <div
-          className={`flex min-h-screen flex-1 flex-col ${bodyLeftMargin !== "ml-0" ? "transition-300" : "transition-none"} ${
-            layoutType === layout.VERTICAL || layoutType === layout.SEMI_BOX
+          className={`flex min-h-screen flex-1 flex-col ${bodyLeftMargin !== "ml-0" || layoutType === layout.TWO_COLUMN ? "transition-300" : "transition-none"} ${
+            layoutType === layout.VERTICAL ||
+            layoutType === layout.SEMI_BOX ||
+            layoutType === layout.TWO_COLUMN
               ? bodyLeftMargin
               : ""
           }`}
@@ -158,8 +184,8 @@ const AuthProtectedLayoutProvider = ({ children }) => {
           {children}
           <Footer />
         </div>
-        <RightSidebar />
       </div>
+      <RightSidebar />
     </>
   );
 };
