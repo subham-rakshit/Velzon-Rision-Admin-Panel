@@ -4,6 +4,7 @@ import React, { useState } from "react";
 
 import { languagesDetails } from "../../../app/assets/navData/navData";
 
+import { globalStyleObj } from "@/app/assets/styles";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,7 +20,9 @@ const NavbarLanguages = () => {
 
   return (
     <DropdownMenu modal={false}>
-      <DropdownMenuTrigger className="hover:background-light400_dark100 rounded-full p-[5px] sm:p-[10px]">
+      <DropdownMenuTrigger
+        className={`rounded-full p-[5px] hover:bg-light-dencity-400 dark:hover:bg-dark-dencity-100 sm:p-[10px]`}
+      >
         <Image
           src={selectedLanguage.flag}
           alt={selectedLanguage.label}
@@ -30,13 +33,13 @@ const NavbarLanguages = () => {
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align="start"
-        className="background-light900_dark200 w-screen border-none sm:w-fit"
+        className={`${globalStyleObj.backgroundLight900Dark200} w-screen border-none sm:w-fit`}
       >
         {languageArr.map((language) => {
           return (
             <DropdownMenuItem
               key={language.label}
-              className={`flex-start cursor-pointer gap-4`}
+              className={`${globalStyleObj.flexStart} cursor-pointer gap-4`}
               onSelect={() => setSelectedLanguage(language)}
             >
               <Image
@@ -46,7 +49,7 @@ const NavbarLanguages = () => {
                 height={15}
                 className="rounded-[3px]"
               />
-              <span className={`text-13-light500_dark550 pr-8`}>
+              <span className={`${globalStyleObj.text13Light550Dark550} pr-8`}>
                 {language.label}
               </span>
             </DropdownMenuItem>

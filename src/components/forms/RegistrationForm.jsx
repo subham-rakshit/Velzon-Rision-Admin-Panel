@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 
 import { SocialAuthForm, PasswordInputFiled, TextInputFile } from "..";
 
+import { globalStyleObj } from "@/app/assets/styles";
 import ROUTES from "@/constants/routes";
 
 const RegistrationForm = () => {
@@ -113,11 +114,18 @@ const RegistrationForm = () => {
 
   return (
     <>
-      <form className="form-inner-container" onSubmit={handleFromSubmit}>
+      <form
+        className={`${globalStyleObj.formInnerContainer}`}
+        onSubmit={handleFromSubmit}
+      >
         {/* Create Text */}
         <div className="mb-6">
-          <h1 className="form-heading">Create New Account</h1>
-          <p className="form-description">Get your free velzon account now</p>
+          <h1 className={`${globalStyleObj.formHeading}`}>
+            Create New Account
+          </h1>
+          <p className={`${globalStyleObj.formDescription}`}>
+            Get your free velzon account now
+          </p>
         </div>
 
         {/* Form Element */}
@@ -171,7 +179,7 @@ const RegistrationForm = () => {
               placeholderText="Confirm Password"
               onHandleInputs={onHandleInputs}
             />
-            <p className="form-description mt-2 italic">
+            <p className={`${globalStyleObj.formDescription} mt-2 italic`}>
               By registering you agree to the Velzon{" "}
               <Link href="#">
                 <span className="font-poppins-md not-italic text-[#405189] underline">
@@ -184,7 +192,7 @@ const RegistrationForm = () => {
           <button
             type="submit"
             disabled={isProcessing}
-            className={`auth-button mt-3 ${
+            className={`${globalStyleObj.authButton} mt-3 ${
               isProcessing ? "cursor-not-allowed" : ""
             }`}
           >
@@ -200,14 +208,16 @@ const RegistrationForm = () => {
         </div>
         <div className="my-5 flex items-center gap-2">
           <hr className="grow border-t border-dotted border-gray-300" />
-          <span className="auth-direction-text">Create account with</span>
+          <span className={`${globalStyleObj.authDescriptionText}`}>
+            Create account with
+          </span>
           <hr className="grow border-t border-dotted border-gray-300" />
         </div>
         {/* Alternate Sign in */}
         <SocialAuthForm />
       </form>
       {/* Sign Up */}
-      <p className="auth-direction-text">
+      <p className={`${globalStyleObj.authDescriptionText}`}>
         Already have an account?{" "}
         <Link href={ROUTES.LOGIN}>
           <span className="text-[#405189] underline">Signin</span>

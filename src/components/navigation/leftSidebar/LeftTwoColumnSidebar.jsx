@@ -14,6 +14,7 @@ import logoSmall from "../../../app/assets/images/logo-sm.png";
 import leftSidebarData from "../../../app/assets/leftSidebarData/leftSidebarData";
 
 import { sidebarColor } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
+import { globalStyleObj } from "@/app/assets/styles";
 import { changeToggleButtonStatus } from "@/lib/store/features/layoutCustomizer/layoutCustomizerSlice";
 import { useAppDispatch } from "@/lib/store/hooks";
 
@@ -115,19 +116,19 @@ const LeftTwoColumnSidebar = ({
     >
       {/* Icon View */}
       <div
-        className={`custom-left-sidebar-scrollbar flex h-full w-[70px] flex-col items-center overflow-y-auto shadow-xl dark:bg-dark-dencity-200 ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? "bg-custom-blue-600" : "bg-light-dencity-800"}`}
+        className={`custom-left-sidebar-scrollbar ${globalStyleObj.flexColStart} h-full w-[70px] overflow-y-auto shadow-xl dark:bg-dark-dencity-200 ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? "bg-custom-blue-600" : "bg-light-dencity-800"}`}
       >
-        <div className="flex-center min-h-[70px]">
+        <div className={`${globalStyleObj.flexCenter} min-h-[70px]`}>
           <Image src={logoSmall} alt="small logo" width={22} height={22} />
         </div>
 
-        <ul className="my-[10px] flex flex-col items-center gap-2">
+        <ul className={`my-[10px] ${globalStyleObj.flexColStart} gap-2`}>
           {leftSidebarData.map((category) =>
             category.tabNameList.map((tab) =>
               tab.tabDropdownList.length > 0 ? (
                 <li
                   key={tab.id}
-                  className={`flex-center size-[42px] cursor-pointer rounded-[4px] text-[22px] text-light-weight-450 ${
+                  className={`${globalStyleObj.flexCenter} size-[42px] cursor-pointer rounded-[4px] text-[22px] text-light-weight-450 ${
                     pathname.includes(tab.id.toLowerCase())
                       ? "bg-[#5A6895] text-white dark:bg-dark-dencity-50"
                       : ""
@@ -151,7 +152,7 @@ const LeftTwoColumnSidebar = ({
                 >
                   <li
                     id={tab.id}
-                    className={`flex-center size-[42px] rounded-[4px] text-[22px] text-light-weight-450 ${
+                    className={`${globalStyleObj.flexCenter} size-[42px] rounded-[4px] text-[22px] text-light-weight-450 ${
                       pathname.includes(tab.id.toLowerCase())
                         ? "bg-[#5A6895] text-white dark:bg-dark-dencity-50"
                         : ""
@@ -174,7 +175,7 @@ const LeftTwoColumnSidebar = ({
       <div
         className={`h-full flex-1 overflow-hidden dark:bg-dark-dencity-300 ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? "bg-light-weight-500" : "bg-light-dencity-900"}`}
       >
-        <div className="flex-center min-h-[70px]">
+        <div className={`${globalStyleObj.flexCenter} min-h-[70px]`}>
           {leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? (
             <Image src={logoLight} alt="logo light" width={100} height={22} />
           ) : (
@@ -200,7 +201,7 @@ const LeftTwoColumnSidebar = ({
                       // First Child
                       <li key={firstChild.id}>
                         <div
-                          className={`${pathname.includes(firstChild.id.toLowerCase()) ? "text-light-weight-800" : "text-light-weight-450"} flex-start cursor-pointer gap-2 pb-4 font-poppins-rg text-[14px] hover:text-light-weight-800`}
+                          className={`${pathname.includes(firstChild.id.toLowerCase()) ? "text-light-weight-800" : "text-light-weight-450"} ${globalStyleObj.flexStart} cursor-pointer gap-2 pb-4 font-poppins-rg text-[14px] hover:text-light-weight-800`}
                           onClick={() =>
                             handleFirstChildTabToggle(firstChild.id)
                           }
@@ -221,7 +222,7 @@ const LeftTwoColumnSidebar = ({
                               // Second Child
                               <li key={secondChild.id}>
                                 <div
-                                  className={`flex-start cursor-pointer gap-3 pb-4 pl-3 font-poppins-rg text-[13px] ${pathname.includes(secondChild.id) ? "text-light-weight-800" : "text-light-weight-450"} group hover:text-light-weight-800`}
+                                  className={`${globalStyleObj.flexStart} cursor-pointer gap-3 pb-4 pl-3 font-poppins-rg text-[13px] ${pathname.includes(secondChild.id) ? "text-light-weight-800" : "text-light-weight-450"} group hover:text-light-weight-800`}
                                   onClick={() =>
                                     handleSecondChildTabToggle(secondChild.id)
                                   }
@@ -257,7 +258,7 @@ const LeftTwoColumnSidebar = ({
                                             secondchildid={
                                               thirdChild.secondChildId
                                             }
-                                            className={`${mainPath === thirdChild.id ? "text-light-weight-800" : "text-light-weight-450"} flex-start group gap-3 pb-4 pl-6 font-poppins-rg text-[12px] hover:text-light-weight-800`}
+                                            className={`${mainPath === thirdChild.id ? "text-light-weight-800" : "text-light-weight-450"} ${globalStyleObj.flexStart} group gap-3 pb-4 pl-6 font-poppins-rg text-[12px] hover:text-light-weight-800`}
                                           >
                                             <span
                                               className={`size-[5px] rounded-full border border-light-weight-450 group-hover:bg-white ${mainPath === thirdChild.id ? "bg-white" : ""}`}
@@ -279,7 +280,7 @@ const LeftTwoColumnSidebar = ({
                                   id={secondChild.id}
                                   parenttabid={secondChild.parentTabId}
                                   firstchildid={secondChild.firstChildId}
-                                  className={`${mainPath === secondChild.id ? "text-light-weight-800" : "text-light-weight-450"} flex-start group gap-3 pb-4 pl-3 font-poppins-rg text-[13px] hover:text-light-weight-800`}
+                                  className={`${mainPath === secondChild.id ? "text-light-weight-800" : "text-light-weight-450"} ${globalStyleObj.flexStart} group gap-3 pb-4 pl-3 font-poppins-rg text-[13px] hover:text-light-weight-800`}
                                 >
                                   <span
                                     className={`size-[5px] rounded-full border border-light-weight-450 group-hover:bg-white ${mainPath === secondChild.id ? "bg-white" : ""}`}
@@ -297,7 +298,7 @@ const LeftTwoColumnSidebar = ({
                         <li
                           id={firstChild.id}
                           parenttabid={firstChild.parentTabId}
-                          className={`${mainPath === firstChild.id ? "text-light-weight-800" : "text-light-weight-450"} flex-start gap-2 pb-4 font-poppins-rg text-[14px] hover:text-light-weight-800`}
+                          className={`${mainPath === firstChild.id ? "text-light-weight-800" : "text-light-weight-450"} ${globalStyleObj.flexStart} gap-2 pb-4 font-poppins-rg text-[14px] hover:text-light-weight-800`}
                         >
                           <BsDash />
                           {firstChild.tabName}

@@ -1,5 +1,6 @@
 import React from "react";
 
+import { globalStyleObj } from "@/app/assets/styles";
 import { titlesObject } from "@/app/assets/titlesData/titles";
 
 export const metadata = {
@@ -7,7 +8,11 @@ export const metadata = {
 };
 
 const DashboardEcommerce = () => {
-  return <div className="inital-pages-style">DashboardEcommerce</div>;
+  return (
+    <div className={`${globalStyleObj.initialPageStyle}`}>
+      DashboardEcommerce
+    </div>
+  );
 };
 
 export default DashboardEcommerce;

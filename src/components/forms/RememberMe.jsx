@@ -3,6 +3,8 @@
 import { Checkbox, Label } from "flowbite-react";
 import React from "react";
 
+import { globalStyleObj } from "@/app/assets/styles";
+
 const RememberMe = ({
   boxId,
   boxName,
@@ -27,7 +29,7 @@ const RememberMe = ({
       />
       <Label
         htmlFor={boxId}
-        className={`form-lable-text ${checkboxExtraClasses}`}
+        className={`${checkboxExtraClasses} ${globalStyleObj.formLabelText}`}
       >
         Remember me
       </Label>

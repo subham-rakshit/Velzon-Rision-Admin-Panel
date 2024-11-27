@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 
 import { PasswordInputFiled } from "..";
 
+import { globalStyleObj } from "@/app/assets/styles";
 import ROUTES from "@/constants/routes";
 
 const ResetPasswordForm = () => {
@@ -113,11 +114,16 @@ const ResetPasswordForm = () => {
 
   return (
     <>
-      <form className="form-inner-container" onSubmit={handleFromSubmit}>
+      <form
+        className={`${globalStyleObj.formInnerContainer}`}
+        onSubmit={handleFromSubmit}
+      >
         {/* Welcome Text */}
         <div className="mb-6">
-          <h1 className="form-heading">Create new password</h1>
-          <p className="form-description">
+          <h1 className={`${globalStyleObj.formHeading}`}>
+            Create new password
+          </h1>
+          <p className={`${globalStyleObj.formDescription}`}>
             Your new password must be different from pervious used password.
           </p>
         </div>
@@ -157,7 +163,7 @@ const ResetPasswordForm = () => {
           <button
             type="submit"
             disabled={isProcessing}
-            className={`auth-button mt-3 ${
+            className={`${globalStyleObj.authButton} mt-3 ${
               isProcessing ? "cursor-not-allowed" : ""
             }`}
           >
@@ -173,7 +179,7 @@ const ResetPasswordForm = () => {
         </div>
       </form>
       {/* Sign In */}
-      <p className="auth-direction-text text-center">
+      <p className={`${globalStyleObj.authDescriptionText}`}>
         Wait, I remember my password...{" "}
         <Link href={ROUTES.LOGIN}>
           <span className="text-[#405189] underline">Click here</span>

@@ -1,6 +1,8 @@
 import Image from "next/image";
 import React from "react";
 
+import { globalStyleObj } from "@/app/assets/styles";
+
 const UserAuthenticationLayout = ({ children, ...props }) => {
   return (
     <main className="relative min-h-screen w-full bg-[#F3F3F9]">
@@ -8,7 +10,7 @@ const UserAuthenticationLayout = ({ children, ...props }) => {
         {/* Overlay */}
         <div className="absolute inset-0 bg-[#405582]/90 px-2">
           {/* Content */}
-          <div className="flex-col-center size-full gap-4">
+          <div className={`${globalStyleObj.flexColCenter} size-full gap-4`}>
             <Image
               src="/assets/logo-light.png"
               alt="light logo"
@@ -17,7 +19,7 @@ const UserAuthenticationLayout = ({ children, ...props }) => {
               className="bg-cover"
               style={{ width: "auto", height: "auto" }}
             />
-            <h1 className="auth-banner-text">
+            <h1 className={`${globalStyleObj.authBannerText}`}>
               Premium Admin & Dashboard Template
             </h1>
           </div>
@@ -41,7 +43,9 @@ const UserAuthenticationLayout = ({ children, ...props }) => {
         <div className="flex-col-center relative top-[-80px] z-[99] w-full gap-4 px-3 sm:px-5">
           {children}
         </div>
-        <p className="h4-dark-light-mode absolute bottom-0 left-1/2 mb-5 -translate-x-1/2 text-center">
+        <p
+          className={`absolute bottom-0 left-1/2 mb-5 -translate-x-1/2 text-center font-poppins-rg text-[13px] text-light-weight-400`}
+        >
           © 2024 Velzon Crafted with <span className="text-red-500">❤</span>{" "}
           by Themesbrand
         </p>

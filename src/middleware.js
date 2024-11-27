@@ -86,33 +86,33 @@ export async function middleware(request) {
   const redirect = (path) => NextResponse.redirect(new URL(path, request.url));
 
   // Handle Auth Routes
-  if (authRoutes.some((route) => pathname.startsWith(route))) {
-    return token
-      ? redirect(token.isAdmin ? "/dashboard" : "/landing")
-      : NextResponse.next();
-  }
+  // if (authRoutes.some((route) => pathname.startsWith(route))) {
+  //   return token
+  //     ? redirect(token.isAdmin ? "/dashboard" : "/landing")
+  //     : NextResponse.next();
+  // }
 
   // Handle Protected Routes
-  if (protectedRoutes.some((route) => pathname.startsWith(route))) {
-    if (!token) return redirect("/login");
+  // if (protectedRoutes.some((route) => pathname.startsWith(route))) {
+  //   if (!token) return redirect("/login");
 
-    if (!token.isAdmin) {
-      return redirect("/landing");
-    }
+  //   if (!token.isAdmin) {
+  //     return redirect("/landing");
+  //   }
 
-    return NextResponse.next();
-  }
+  //   return NextResponse.next();
+  // }
 
   // Redirect based on the root path
-  if (pathname === "/") {
-    if (!token) {
-      return NextResponse.redirect(new URL("/login", request.url));
-    }
+  // if (pathname === "/") {
+  //   if (!token) {
+  //     return NextResponse.redirect(new URL("/login", request.url));
+  //   }
 
-    return NextResponse.redirect(
-      new URL(token.isAdmin ? "/dashboard" : "/landing", request.url)
-    );
-  }
+  //   return NextResponse.redirect(
+  //     new URL(token.isAdmin ? "/dashboard" : "/landing", request.url)
+  //   );
+  // }
 
   // Allow the request to proceed if no conditions matched
   return NextResponse.next();

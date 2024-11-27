@@ -1,7 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { theme } from "flowbite-react";
 
-import { avatarStatus, layout, layoutThemePrimaryColor, loader, mode, position, rightSidebarOpenStatus, sidebarColor, sidebarGradientColor, sidebarImage, sidebarMainSize, sidebarSize, sidebarView, toggleStatus, topbarColor,  widthType } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
+import {
+  avatarStatus,
+  layout,
+  layoutThemePrimaryColor,
+  loader,
+  mode,
+  position,
+  rightSidebarOpenStatus,
+  sidebarColor,
+  sidebarGradientColor,
+  sidebarImage,
+  sidebarMainSize,
+  sidebarSize,
+  sidebarView,
+  theme,
+  toggleStatus,
+  topbarColor,
+  widthType,
+} from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
 
 const initialState = {
   rightSideBarIsOpen: rightSidebarOpenStatus.CLOSE, // OPEN
@@ -30,7 +47,7 @@ export const layoutCustomizerSlice = createSlice({
     changeRightSideBarIsOpen: (state, action) => {
       state.rightSideBarIsOpen = action.payload;
     },
-    
+
     changeToggleButtonStatus: (state, action) => {
       state.toggleButtonStatus = action.payload;
     },
@@ -42,7 +59,7 @@ export const layoutCustomizerSlice = createSlice({
     changeLeftSideBarSizeType: (state, action) => {
       state.leftSidbarSizeType = action.payload;
     },
-    
+
     changeLeftSidbarSizeMain: (state, action) => {
       state.leftSidbarSizeMain = action.payload;
     },

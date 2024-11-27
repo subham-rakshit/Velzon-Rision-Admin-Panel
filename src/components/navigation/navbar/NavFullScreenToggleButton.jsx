@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 import { MdFullscreen, MdFullscreenExit } from "react-icons/md";
 
+import { globalStyleObj } from "@/app/assets/styles";
+
 const NavFullScreenToggleButton = () => {
   const [isFullScreen, setIsFullScreen] = useState(false);
 
@@ -28,13 +30,19 @@ const NavFullScreenToggleButton = () => {
     <button
       type="button"
       onClick={handleFullScreen}
-      className="hover:background-light400_dark100 flex items-center justify-center rounded-full p-[5px] sm:p-[10px]"
+      className={`${globalStyleObj.flexCenter} rounded-full p-[5px] hover:bg-light-dencity-400 dark:hover:bg-dark-dencity-100 sm:p-[10px]`}
     >
       <span>
         {isFullScreen ? (
-          <MdFullscreenExit size={22} className="icon-light450_dark350" />
+          <MdFullscreenExit
+            size={22}
+            className={`${globalStyleObj.iconLight450Dark350}`}
+          />
         ) : (
-          <MdFullscreen size={22} className="icon-light450_dark350" />
+          <MdFullscreen
+            size={22}
+            className={`${globalStyleObj.iconLight450Dark350}`}
+          />
         )}
       </span>
     </button>

@@ -12,9 +12,6 @@ body {
   min-height: 100vh;
 }
 
-/* background-light900_dark200 */
-
-
 html::-webkit-scrollbar-thumb {
   background-color: #F3F3F9;
   cursor: pointer;
@@ -23,10 +20,6 @@ html .dark::-webkit-scrollbar-thumb {
   background-color: #292E32;
   cursor: pointer;
 }
-
-/* html::-webkit-scrollbar-track {
-  background-color: #cdea68;
-} */
 
 .scrollbar-custom::-webkit-scrollbar {
   width: 5px;
@@ -40,7 +33,7 @@ html .dark::-webkit-scrollbar-thumb {
   border-radius: 4px;
 }
 .dark .scrollbar-custom::-webkit-scrollbar-thumb {
-  background-color: #262a2f; /* Color of the scrollbar main elem */
+  background-color: #262a2f;
   border-radius: 4px;
 }
 .scrollbar-custom::-webkit-scrollbar-hover {
@@ -52,7 +45,7 @@ html .dark::-webkit-scrollbar-thumb {
   display: none;
 }
 
-/* Theme Settings */
+/* BUG Theme Settings */
 
 .rotate-settings-button {
   animation: rotate 2s linear infinite;
@@ -74,42 +67,38 @@ html .dark::-webkit-scrollbar-thumb {
   }
 }
 
-/* Sidebar default styles */
 .sidebar {
   position: fixed;
   top: 0;
   right: 0;
-  height: 100vh; /* Full screen height */
-  width: 380px; /* Sidebar width */
+  height: 100vh;
+  width: 380px;
   background-color: white;
-  transform: translateX(100%); /* Hidden off-screen */
-  transition: transform 0.3s ease-in-out; /* Smooth animation */
-  z-index: 99; /* Ensure it's on top */
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in-out;
+  z-index: 99;
 }
 
-/* Open state */
+
 .sidebar.open {
-  transform: translateX(0); /* Slide into view */
+  transform: translateX(0);
 }
 
-/* Closed state (optional for clarity) */
 .sidebar.closed {
   transform: translateX(100%);
 }
 
-/* Animated span styles */
 .animated-span {
   position: absolute;
   left: 0;
   top: 0;
   height: 3px;
   background-color: #405189;
-  width: 0; /* Start at 0 width */
+  width: 0;
   animation: expandWidth 2s ease-in-out infinite;
-  animation-delay: 1s; /* Delay before each repeat */
+  animation-delay: 1s;
 }
 
-/* Keyframes for width animation */
 @keyframes expandWidth {
   0% {
     width: 0;
@@ -119,7 +108,7 @@ html .dark::-webkit-scrollbar-thumb {
   }
 }
 
-/* Theme Settings */
+/* BUG Theme Settings */
 
 /* NOTE Preloader Spinner */
 .main-tranisiton {
@@ -146,193 +135,20 @@ html .dark::-webkit-scrollbar-thumb {
   .transition-style {
     @apply transition-all duration-500 ease-linear;
   }
-
   .transition-300 {
     @apply transition-all duration-300 ease-in-out;
   }
-
   .custom-scrollbar {
     @apply scrollbar-custom;
   }
-
   .custom-left-sidebar-scrollbar {
     @apply sidebar-custom;
   }
-
-  .auth-section-container {
-    @apply w-full min-h-[100vh] bg-[#F3F3F9];
-  }
-
-  .auth-form-container {
-    @apply w-full px-2;
-  }
-
-  .auth-banner-text {
-    @apply text-[#ffffff80] font-poppins-md text-[15px] text-center;
-  }
-
-  .main-form-container {
-    @apply relative -top-[100px] sm:-top-[200px] lg:-top-[100px] z-[50] flex flex-col items-center justify-center gap-5;
-  }
-
-  .form-inner-container {
-    @apply bg-white w-full max-w-[450px] px-5 sm:px-8 py-8 rounded-md shadow-light;
-  }
-
-  .form-heading {
-    @apply mb-2 text-center font-poppins-md text-light-weight-500 text-[16px];
-  }
-
-  .form-description {
-    @apply text-[13px] font-poppins-rg text-light-weight-400 text-center;
-  }
-
-  .form-lable-text {
-    @apply text-[13px] font-poppins-md text-dark-weight-500;
-  }
-
-  .form-input-text {
-    @apply text-[13px] font-poppins-rg  text-dark-weight-500;
-  }
-
-  .auth-description {
-    @apply text-[#878A99] font-poppins-rg text-sm;
-  }
-
-  .auth-button {
-    @apply bg-[#099885] text-white text-[14px] font-poppins-rg px-2 py-2 rounded-md flex justify-center items-center;
-  }
-
-  .auth-direction-text {
-    @apply text-dark-weight-500 font-poppins-md text-[13px];
-  }
-
-  .inital-pages-style {
-    @apply bg-gray-600 min-h-[500vh];
-  }
-
-  .flex-center {
-    @apply flex justify-center items-center;
-  }
-
-  .flex-col-center {
-    @apply flex flex-col justify-center items-center;
-  }
-
-  .flex-between {
-    @apply flex justify-between items-center;
-  }
-
-  .flex-start {
-    @apply flex justify-start items-center;
-  }
-  .flex-col-start {
-    @apply flex flex-col justify-start items-center;
-  }
-
-  .background-light900_dark200 {
-    @apply bg-light-dencity-900 dark:bg-dark-dencity-200 !important;
-  }
-  .background-light900_dark250 {
-    @apply bg-light-dencity-900 dark:bg-dark-dencity-250;
-  }
-  .background-light900_dark300 {
-    @apply bg-light-dencity-900 dark:bg-dark-dencity-300;
-  }
-  .background-light800_dark300 {
-    @apply bg-light-dencity-800 dark:bg-dark-dencity-300;
-  }
-  .background-light800_dark100 {
-    @apply bg-light-dencity-800 dark:bg-dark-dencity-100;
-  }
-  .background-light700_dark220 {
-    @apply bg-light-dencity-700 dark:bg-dark-dencity-220;
-  }
-  .background-light400_dark100 {
-    @apply bg-light-dencity-400 dark:bg-dark-dencity-100;
-  }
-  .background-light200_dark350 {
-    @apply bg-light-dencity-200 dark:bg-dark-dencity-350;
-  }
-
-  .icon-light450_dark350 {
-    @apply text-light-weight-450 dark:text-dark-weight-350;
-  }
-
-  .no-focus {
-    @apply focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 !important;
-  }
-
-  .bg-color-yankees-blue {
-    @apply bg-accent-yankees-blue;
-  }
-  .bg-sidebar-color-dark-teal-green {
-    @apply bg-[#066b5e];
-  }
-  .bg-sidebar-color-royal-purple {
-    @apply bg-[#5147A3];
-  }
-  .bg-sidebar-color-cobalt-blue {
-    @apply bg-[#2a5fc1];
-  }
-
-  .bg-sidebar-color-gradient-parent {
-    @apply bg-gradient-to-r from-[#3d578a] to-[#10a99a];
-  }
-  .bg-sidebar-color-gradient-first-child {
-    @apply bg-gradient-to-r from-[#3d578a] to-[#10a99a];
-  }
-  .bg-sidebar-color-gradient-second-child {
-    @apply bg-gradient-to-r from-[#2a99dd] to-[#347cef];
-  }
-  .bg-sidebar-color-gradient-third-child {
-    @apply bg-gradient-to-r from-[#2a99dd] to-[#0fb0a6];
-  }
-  .bg-sidebar-color-gradient-fourth-child {
-    @apply bg-gradient-to-r from-[#1d2129] to-[#3b4b7d];
-  }
-
   .text-soft {
     @apply text-[#8A8D9C] font-poppins-rg;
   }
   .text-dark {
     @apply text-[#545A61] font-poppins-md;
-  }
-
-  .text-22-bold-light550_dark550 {
-    @apply text-dark-weight-550 dark:text-light-weight-550 font-poppins-md text-[22px];
-  }
-
-  .text-16-bold-light550_dark550 {
-    @apply text-dark-weight-550 dark:text-light-weight-550 font-poppins-md text-[16px];
-  }
-
-  .text-16-light550_dark550 {
-    @apply text-dark-weight-550 dark:text-light-weight-550 font-poppins-rg text-[16px];
-  }
-
-  .text-13-light500_dark550 {
-    @apply text-dark-weight-550 dark:text-light-weight-550 font-poppins-rg text-[13px];
-  }
-
-  .text-11-light400 {
-    @apply text-[11px] text-light-weight-400 font-poppins-rg;
-  }
-  
-  .text-11-light400-sb {
-    @apply text-[11px] text-light-weight-400 font-poppins-sb;
-  }
-
-  .invert-colors {
-    @apply invert dark:invert-0;
-  }
-
-  .no-focus {
-    @apply focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 !important;
-  }
-
-  .nav-inner-button {
-    @apply bg-[#e1ebfd] dark:bg-[#2b394f] flex items-center gap-1 rounded-full px-3 py-1 hover:bg-[#568df3] hover:text-white;
   }
 }
 

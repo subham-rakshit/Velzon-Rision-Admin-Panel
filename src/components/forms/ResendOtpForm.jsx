@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import { TextInputFile } from "..";
 import ICON from "../../app/assets/jsonData/animate-mail-2.json";
 
+import { globalStyleObj } from "@/app/assets/styles";
 import ROUTES from "@/constants/routes";
 
 // Dynamically import the Player component to disable SSR
@@ -120,11 +121,16 @@ const ResendOtpForm = () => {
 
   return (
     <>
-      <form className="form-inner-container" onSubmit={handleFromSubmit}>
+      <form
+        className={`${globalStyleObj.formInnerContainer}`}
+        onSubmit={handleFromSubmit}
+      >
         {/* Welcome Text */}
         <div className="mb-6 flex flex-col items-center">
-          <h1 className="form-heading">Resend OTP?</h1>
-          <p className="form-description">Resend otp with velzon</p>
+          <h1 className={`${globalStyleObj.formHeading}`}>Resend OTP?</h1>
+          <p className={`${globalStyleObj.formDescription}`}>
+            Resend otp with velzon
+          </p>
 
           <Player
             ref={playerRef}
@@ -159,7 +165,7 @@ const ResendOtpForm = () => {
           <button
             type="submit"
             disabled={isProcessing}
-            className={`auth-button ${
+            className={`${globalStyleObj.authButton} ${
               isProcessing ? "cursor-not-allowed" : ""
             }`}
           >
@@ -175,7 +181,7 @@ const ResendOtpForm = () => {
         </div>
       </form>
 
-      <p className="auth-direction-text text-center">
+      <p className={`${globalStyleObj.authDescriptionText}`}>
         Hold on, I just received my code...{" "}
         <Link href={ROUTES.AUTH_TWO_STEP}>
           <span className="text-[#405189] underline">Click here</span>

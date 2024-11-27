@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import { TextInputFile } from "..";
 import ICON from "../../app/assets/jsonData/animate-mail-2.json";
 
+import { globalStyleObj } from "@/app/assets/styles";
 import ROUTES from "@/constants/routes";
 
 // Dynamically import the Player component to disable SSR
@@ -119,11 +120,16 @@ const ForgotPasswordForm = () => {
 
   return (
     <>
-      <form className="form-inner-container" onSubmit={handleFromSubmit}>
+      <form
+        className={`${globalStyleObj.formInnerContainer}`}
+        onSubmit={handleFromSubmit}
+      >
         {/* Welcome Text */}
         <div className="mb-6 flex flex-col items-center">
-          <h1 className="form-heading">Forgot Password?</h1>
-          <p className="form-description">Reset password with velzon</p>
+          <h1 className={`${globalStyleObj.formHeading}`}>Forgot Password?</h1>
+          <p className={`${globalStyleObj.formDescription}`}>
+            Reset password with velzon
+          </p>
 
           <Player
             ref={playerRef}
@@ -158,7 +164,7 @@ const ForgotPasswordForm = () => {
           <button
             type="submit"
             disabled={isProcessing}
-            className={`auth-button ${
+            className={`${globalStyleObj.authButton} ${
               isProcessing ? "cursor-not-allowed" : ""
             }`}
           >
@@ -174,7 +180,7 @@ const ForgotPasswordForm = () => {
         </div>
       </form>
 
-      <p className="auth-direction-text text-center">
+      <p className={`${globalStyleObj.authDescriptionText}`}>
         Wait, I remember my password...{" "}
         <Link href={ROUTES.LOGIN}>
           <span className="text-[#405189] underline">Click here</span>

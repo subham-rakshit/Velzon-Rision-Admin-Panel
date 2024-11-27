@@ -6,6 +6,7 @@ import { IoIosArrowForward } from "react-icons/io";
 
 import { sidebarColor } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
 import leftSidebarData from "@/app/assets/leftSidebarData/leftSidebarData";
+import { globalStyleObj } from "@/app/assets/styles";
 
 const LeftSidebarSmallIconView = ({
   tabDetails,
@@ -66,7 +67,7 @@ const LeftSidebarSmallIconView = ({
             // Tab Icon Main Container
             <li
               key={parent.id}
-              className="relative flex items-center justify-center py-[13px] hover:cursor-pointer"
+              className={`relative ${globalStyleObj.flexCenter} py-[13px] hover:cursor-pointer`}
               onMouseEnter={() => handleParentHoverState(parent.id)}
               onMouseLeave={() => handleParentHoverState(parent.id)}
             >
@@ -89,7 +90,7 @@ const LeftSidebarSmallIconView = ({
               >
                 {/* Parent Tab Name  */}
                 <span
-                  className={`flex w-full items-center justify-between text-[15px] group-hover:text-white ${
+                  className={`${globalStyleObj.flexBetween} w-full text-[15px] group-hover:text-white ${
                     tabDetails.parent.id === parent.id ? "text-white" : ""
                   } ${parent.tabDropdownList.length > 0 ? "mb-3" : "mb-0"}`}
                 >
@@ -114,7 +115,7 @@ const LeftSidebarSmallIconView = ({
                         {firstChild.tabDropdownList.length > 0 ? (
                           // FirstChild Tab having dropdown
                           <ul
-                            className={`relative flex items-center gap-2 p-2 text-[13px]`}
+                            className={`relative ${globalStyleObj.flexStart} gap-2 p-2 text-[13px]`}
                             onMouseEnter={() =>
                               handleFirstChildHoverState(firstChild.id)
                             }
@@ -123,7 +124,7 @@ const LeftSidebarSmallIconView = ({
                             }
                           >
                             <span
-                              className={`flex w-full items-center justify-between text-[13px] hover:text-white ${
+                              className={`${globalStyleObj.flexBetween} w-full text-[13px] hover:text-white ${
                                 tabDetails.firstChild.id === firstChild.id
                                   ? "text-white"
                                   : ""
@@ -147,7 +148,7 @@ const LeftSidebarSmallIconView = ({
                                 secondChild.tabDropdownList.length > 0 ? (
                                   <ul
                                     key={secondChild.id}
-                                    className={`relative flex items-center gap-2 p-2 text-[13px]`}
+                                    className={`relative ${globalStyleObj.flexStart} gap-2 p-2 text-[13px]`}
                                     onMouseEnter={() =>
                                       handleSecondChildHoverState(
                                         secondChild.id
@@ -160,7 +161,7 @@ const LeftSidebarSmallIconView = ({
                                     }
                                   >
                                     <span
-                                      className={`flex w-full items-center justify-between text-[13px] hover:text-white ${
+                                      className={`${globalStyleObj.flexBetween} w-full text-[13px] hover:text-white ${
                                         tabDetails.secondChild.id ===
                                         secondChild.id
                                           ? "text-white"
@@ -200,7 +201,7 @@ const LeftSidebarSmallIconView = ({
                                                 secondchildid={
                                                   thirdChild.secondChildId
                                                 }
-                                                className={`flex items-center gap-2 p-2 text-[13px] hover:text-white ${
+                                                className={`${globalStyleObj.flexStart} gap-2 p-2 text-[13px] hover:text-white ${
                                                   pathname.split("/")[1] ===
                                                   thirdChild.id
                                                     ? "text-white"
@@ -224,7 +225,7 @@ const LeftSidebarSmallIconView = ({
                                       id={secondChild.id}
                                       parenttabid={secondChild.parentTabId}
                                       firstchildid={secondChild.firstChildId}
-                                      className={`flex items-center gap-2 p-2 text-[13px] hover:text-white ${
+                                      className={`${globalStyleObj.flexStart} gap-2 p-2 text-[13px] hover:text-white ${
                                         pathname.split("/")[1] ===
                                         secondChild.id
                                           ? "text-white"
@@ -244,7 +245,7 @@ const LeftSidebarSmallIconView = ({
                             <span
                               id={firstChild.id}
                               parenttabid={firstChild.parentTabId}
-                              className={`flex items-center gap-2 p-2 text-[13px] hover:text-white ${pathname.split("/")[1] === firstChild.id ? "text-white" : ""}`}
+                              className={`${globalStyleObj.flexStart} gap-2 p-2 text-[13px] hover:text-white ${pathname.split("/")[1] === firstChild.id ? "text-white" : ""}`}
                             >
                               {firstChild.tabName}
                             </span>
@@ -259,7 +260,7 @@ const LeftSidebarSmallIconView = ({
             <Link href={parent.pathName} key={parent.id}>
               <li
                 id={parent.id}
-                className="relative flex items-center justify-center py-[13px] hover:cursor-pointer"
+                className={`relative ${globalStyleObj.flexCenter} py-[13px] hover:cursor-pointer`}
                 onMouseEnter={() => handleParentHoverState(parent.id)}
                 onMouseLeave={() => handleParentHoverState(parent.id)}
               >
@@ -281,7 +282,7 @@ const LeftSidebarSmallIconView = ({
                   }`}
                 >
                   <span
-                    className={`flex w-full items-center justify-between text-[15px] group-hover:text-white ${
+                    className={`${globalStyleObj.flexBetween} w-full text-[15px] group-hover:text-white ${
                       tabDetails.parent.id === parent.id ? "text-white" : ""
                     }`}
                   >

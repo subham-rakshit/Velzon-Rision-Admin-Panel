@@ -9,6 +9,7 @@ import { MdArrowForward } from "react-icons/md";
 import bellSvg from "../../../app/assets/images/svg/bell.svg";
 
 import { notificationsData } from "@/app/assets/navData/navData";
+import { globalStyleObj } from "@/app/assets/styles";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,18 +24,22 @@ const NavbarNotification = () => {
     notificationsData[0]
   );
 
-  const commonBtnStyle =
-    "mx-auto flex-start gap-2 rounded-[4px] bg-custom-green-50 dark:bg-custom-green-450 p-2 font-poppins-rg tracking-wide text-accent-light-green transition-300 hover:bg-custom-green-500 dark:hover:bg-custom-green-500 hover:text-white text-[13px]";
+  const commonBtnStyle = `mx-auto ${globalStyleObj.flexStart} gap-2 rounded-[4px] bg-custom-green-50 dark:bg-custom-green-450 p-2 font-poppins-rg tracking-wide text-accent-light-green transition-300 hover:bg-custom-green-500 dark:hover:bg-custom-green-500 hover:text-white text-[13px]`;
 
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild={true}>
         <button
           type="button"
-          className="hover:background-light400_dark100 flex-center relative m-0 size-[30px] rounded-full p-0 sm:size-[40px]"
+          className={`${globalStyleObj.flexCenter} relative m-0 size-[30px] rounded-full p-0 hover:bg-light-dencity-400 dark:hover:bg-dark-dencity-100 sm:size-[40px]`}
         >
-          <FaRegBell size={20} className="icon-light450_dark350" />
-          <span className="flex-center absolute left-1/2 top-[-8px] rounded-full bg-[#F06548] px-[5px] font-poppins-md text-[10px] font-semibold text-white sm:top-[-5px]">
+          <FaRegBell
+            size={20}
+            className={`${globalStyleObj.iconLight450Dark350}`}
+          />
+          <span
+            className={`${globalStyleObj.flexCenter} absolute left-1/2 top-[-8px] rounded-full bg-[#F06548] px-[5px] font-poppins-md text-[10px] font-semibold text-white sm:top-[-5px]`}
+          >
             3
           </span>
         </button>
@@ -42,20 +47,24 @@ const NavbarNotification = () => {
 
       <DropdownMenuContent
         align="end"
-        className="background-light900_dark200 mt-2 w-screen rounded-lg border-none p-0 shadow-lg sm:max-w-[350px]"
+        className={`${globalStyleObj.backgroundLight900Dark200} mt-2 w-screen rounded-lg border-none p-0 shadow-lg sm:max-w-[350px]`}
       >
         <DropdownMenuLabel className="m-0 bg-[#405189] p-0">
-          <div className="flex w-full items-center justify-between gap-2 px-4 pt-4">
-            <span className="block font-poppins-rg text-[16px] tracking-wider text-white">
+          <div
+            className={`${globalStyleObj.flexBetween} w-full gap-2 px-4 pt-4`}
+          >
+            <span className="font-poppins-light text-[16px] tracking-wider text-white">
               Notifications
             </span>
 
-            <span className="text-13-light500_dark550 flex-start gap-1 rounded-[4px] bg-light-weight-900 px-[10px] py-[2px] tracking-wider dark:bg-dark-dencity-300">
+            <span
+              className={`${globalStyleObj.text13Light550Dark550} gap-1 rounded-[4px] bg-light-weight-900 px-[10px] py-[2px] tracking-wider dark:bg-dark-dencity-300`}
+            >
               4 New
             </span>
           </div>
 
-          <div className="flex-start mt-6 px-2">
+          <div className={`${globalStyleObj.flexStart} mt-6 px-2`}>
             {notificationsData.map((item) => {
               const handleNotificationButton = () => {
                 const notificationObj = notificationsData.find(
@@ -72,8 +81,8 @@ const NavbarNotification = () => {
                   onClick={handleNotificationButton}
                   className={`rounded-t-[5px] px-3 py-2 text-[13px] tracking-wide ${
                     selectedNotification.id === item.id
-                      ? "background-light900_dark300 text-accent-light-blue-400"
-                      : "text-light-weight-450 hover:text-white"
+                      ? `${globalStyleObj.backgroundLight900Dark200} font-poppins-sb text-accent-light-blue-400`
+                      : "font-poppins-light text-light-weight-450 hover:text-white"
                   }`}
                 >
                   {item.id === "all-notification" && item.content.length > 0
@@ -91,19 +100,23 @@ const NavbarNotification = () => {
               if (data.type === "general") {
                 return (
                   <DropdownMenuItem
-                    className="flex-between gap-5 py-4"
+                    className={`${globalStyleObj.flexBetween} gap-5 py-4`}
                     key={data.id}
                   >
                     <div className="flex items-start gap-2">
                       <span
                         style={{ backgroundColor: `${data.iconBgColor}` }}
-                        className="flex-center size-[25px] rounded-full p-1"
+                        className={`${globalStyleObj.flexCenter} size-[25px] rounded-full p-1`}
                       >
                         {data.icon}
                       </span>
-                      <div className="text-13-light500_dark550 flex flex-col justify-center gap-1 text-left">
+                      <div
+                        className={`${globalStyleObj.text13Light550Dark550} flex flex-col justify-center gap-1 text-left`}
+                      >
                         <p>{data.notificationText}</p>
-                        <p className="text-11-light400 flex-start gap-1">
+                        <p
+                          className={`${globalStyleObj.text11Light400} ${globalStyleObj.flexStart} gap-1`}
+                        >
                           <FaRegClock size={11} />
                           {data.time}
                         </p>
@@ -118,7 +131,7 @@ const NavbarNotification = () => {
               } else {
                 return (
                   <DropdownMenuItem
-                    className="flex-between gap-5 py-4"
+                    className={`${globalStyleObj.flexBetween} gap-5 py-4`}
                     key={data.id}
                   >
                     <div className="flex items-start gap-2">
@@ -129,12 +142,16 @@ const NavbarNotification = () => {
                         height={30}
                         className="rounded-full"
                       />
-                      <div className="text-13-light500_dark550 flex flex-col justify-center gap-1 text-left">
+                      <div
+                        className={`${globalStyleObj.text13Light550Dark550} flex flex-col justify-center gap-1 text-left`}
+                      >
                         <h4>{data.username}</h4>
                         <p className="text-light-weight-400">
                           {data.notificationText}
                         </p>
-                        <p className="text-11-light400 flex-start gap-1">
+                        <p
+                          className={`${globalStyleObj.text11Light400} ${globalStyleObj.flexStart} gap-1`}
+                        >
                           <FaRegClock size={11} />
                           {data.time}
                         </p>
@@ -149,7 +166,7 @@ const NavbarNotification = () => {
               }
             })}
             <DropdownMenuItem
-              className="rounded-[5px] text-center text-[14px] font-medium"
+              className="rounded-[5px] text-center font-poppins-rg text-[14px]"
               as="div"
             >
               {/* TODO Create redirect to notifications page  */}
@@ -172,9 +189,11 @@ const NavbarNotification = () => {
             </DropdownMenuItem>
           </DropdownMenuGroup>
         ) : (
-          <DropdownMenuItem className="flex min-h-[200px] flex-col items-center justify-center gap-4 px-4">
-            <Image src={bellSvg} alt="bell" width={80} height={80} />
-            <p className="text-center text-[18px] font-[500] text-dark-weight-550 dark:text-light-weight-550">
+          <DropdownMenuItem
+            className={`${globalStyleObj.flexColCenter} min-h-[200px] gap-4 px-4`}
+          >
+            <Image src={bellSvg} alt="bell" width={70} height={70} />
+            <p className="text-center font-poppins-md text-[18px] text-dark-weight-550 dark:text-light-weight-550">
               Hey! You have no any
               <br />
               notifications

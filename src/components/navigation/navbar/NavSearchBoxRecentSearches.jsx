@@ -15,6 +15,9 @@ import avarat2 from "../../../app/assets/images/users/avatar-2.jpg";
 import avarat3 from "../../../app/assets/images/users/avatar-3.jpg";
 import avarat5 from "../../../app/assets/images/users/avatar-5.jpg";
 
+import { globalStyleObj } from "@/app/assets/styles";
+import ROUTES from "@/constants/routes";
+
 const pagesContent = [
   {
     id: "pages_ana_dash_1",
@@ -54,8 +57,7 @@ const membersContent = [
   },
 ];
 
-const btnStyle =
-  "flex-start gap-1 bg-custom-blue-100 dark:bg-custom-green-100 rounded-full px-3 py-1 hover:bg-custom-blue-500 dark:hover:bg-custom-blue-500 hover:text-white";
+const btnStyle = `${globalStyleObj.flexStart} gap-1 bg-custom-blue-100 dark:bg-custom-green-100 rounded-full px-3 py-1 hover:bg-custom-blue-500 dark:hover:bg-custom-blue-500 hover:text-white`;
 
 const NavSearchBoxRecentSearches = ({
   isRecentSearchOpen,
@@ -69,22 +71,26 @@ const NavSearchBoxRecentSearches = ({
         duration: 0.3,
         ease: "easeInOut",
       }}
-      className={`background-light900_dark200 absolute left-0 top-full mt-px flex h-[385px] min-w-[320px] flex-col rounded-[3px] pt-4 shadow-light`}
+      className={`${globalStyleObj.backgroundLight900Dark200} absolute left-0 top-full mt-px flex h-[385px] min-w-[320px] flex-col rounded-[3px] pt-4 shadow-light`}
     >
       {/* NOTE Scrollable Content */}
       <div className="custom-scrollbar h-full overflow-y-auto">
-        <h3 className="text-13-light500_dark550 px-5 uppercase tracking-wide">
+        <h3
+          className={`${globalStyleObj.text13Light550Dark550} px-5 uppercase tracking-wide`}
+        >
           Recent Searches
         </h3>
         {/* Buttons */}
-        <div className="flex-start mt-2 gap-2 px-5 font-poppins-rg text-[11px] text-[#568df3]">
-          <Link href="/">
+        <div
+          className={`${globalStyleObj.flexStart} mt-2 gap-2 px-5 font-poppins-rg text-[11px] text-[#568df3]`}
+        >
+          <Link href={ROUTES.DASHBOARD_ECOMMERCE}>
             <button className={btnStyle}>
               how to setup
               <MdSearch />
             </button>
           </Link>
-          <Link href="/">
+          <Link href={ROUTES.DASHBOARD_ECOMMERCE}>
             <button className={btnStyle}>
               buttons
               <MdSearch />
@@ -101,10 +107,12 @@ const NavSearchBoxRecentSearches = ({
             <li
               key={content.id}
               onClick={() => setIsRecentSearchOpen(false)}
-              className={`flex-start cursor-pointer gap-2 px-5 py-3 hover:bg-light-dencity-800 dark:hover:bg-dark-dencity-500`}
+              className={`${globalStyleObj.flexStart} cursor-pointer gap-2 px-5 py-3 hover:bg-light-dencity-800 dark:hover:bg-dark-dencity-500`}
             >
               <span>{content.icon}</span>
-              <span className={`text-13-light500_dark550`}>{content.text}</span>
+              <span className={`${globalStyleObj.text13Light550Dark550}`}>
+                {content.text}
+              </span>
             </li>
           ))}
         </ul>
@@ -118,7 +126,7 @@ const NavSearchBoxRecentSearches = ({
             <li
               key={member.id}
               onClick={() => setIsRecentSearchOpen(false)}
-              className={`flex-start cursor-pointer gap-2 px-5 py-3 hover:bg-light-dencity-800 dark:hover:bg-dark-dencity-500`}
+              className={`${globalStyleObj.flexStart} cursor-pointer gap-2 px-5 py-3 hover:bg-light-dencity-800 dark:hover:bg-dark-dencity-500`}
             >
               <Image
                 src={member.userAvater}
@@ -128,10 +136,12 @@ const NavSearchBoxRecentSearches = ({
                 className="rounded-full"
               />
               <span className="text-dark flex flex-col gap-1 font-poppins-md text-[13px]">
-                <span className={`text-13-light500_dark550`}>
+                <span className={`${globalStyleObj.text13Light550Dark550}`}>
                   {member.name}
                 </span>
-                <span className="text-11-light400">{member.designation}</span>
+                <span className={`${globalStyleObj.text11Light400}`}>
+                  {member.designation}
+                </span>
               </span>
             </li>
           ))}
@@ -142,7 +152,7 @@ const NavSearchBoxRecentSearches = ({
       <div className="mt-auto w-full py-3">
         <button
           type="button"
-          className="mx-auto flex items-center gap-1 rounded-[3px] bg-[#405189] px-3 py-2 text-[11px] text-white hover:bg-[#3c4c80]"
+          className={`mx-auto ${globalStyleObj.flexStart} gap-1 rounded-[3px] bg-[#405189] px-3 py-2 text-[11px] text-white hover:bg-[#3c4c80]`}
         >
           View All Results
           <MdOutlineArrowForward />

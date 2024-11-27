@@ -9,6 +9,7 @@ import {
   sidebarSize,
 } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
 import leftSidebarData from "@/app/assets/leftSidebarData/leftSidebarData";
+import { globalStyleObj } from "@/app/assets/styles";
 import { TransitionLink } from "@/components";
 
 const LeftSidebarCompactView = ({
@@ -23,11 +24,14 @@ const LeftSidebarCompactView = ({
 }) => {
   return (
     <ul
-      className={`custom-left-sidebar-scrollbar h-[calc(100vh-70px)] overflow-y-auto px-2 dark:bg-dark-dencity-300 ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? "bg-light-weight-500" : "bg-light-dencity-900"}`}
+      className={`custom-left-sidebar-scrollbar h-[calc(100vh-70px)] overflow-y-auto dark:bg-dark-dencity-300 ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? "bg-light-weight-500" : "bg-light-dencity-900"}`}
     >
       {leftSidebarData.map((category) => (
         // Main Category Container
-        <li key={category.tabCategory} className={`flex-col-center py-[10px]`}>
+        <li
+          key={category.tabCategory}
+          className={`${globalStyleObj.flexColCenter} py-[10px]`}
+        >
           <span
             className={`${leftSidbarSizeType === sidebarSize.SMALL_ICON_VIEW ? "hidden" : "inline"} text-11-light400-sb uppercase tracking-widest underline`}
           >
@@ -40,7 +44,7 @@ const LeftSidebarCompactView = ({
                 <li key={parent.id} className={`pt-5`}>
                   {/* Parent Tab */}
                   <div
-                    className={`flex-col-center cursor-pointer gap-1 ${pathname.includes(parent.id.toLowerCase()) ? "text-light-weight-800" : "text-light-weight-450"} hover:text-light-weight-800`}
+                    className={`${globalStyleObj.flexColCenter} cursor-pointer gap-1 ${pathname.includes(parent.id.toLowerCase()) ? "text-light-weight-800" : "text-light-weight-450"} hover:text-light-weight-800`}
                     onClick={() => handleParentTabToggle(parent.id)}
                   >
                     <span className="text-[18px]">{parent.tabIcon}</span>
@@ -57,7 +61,7 @@ const LeftSidebarCompactView = ({
                         // First Child
                         <li key={firstChild.id}>
                           <div
-                            className={`${pathname.includes(firstChild.id.toLowerCase()) ? "text-light-weight-800" : "text-light-weight-450"} flex-center cursor-pointer gap-1 pt-4 font-poppins-rg text-[14px] hover:text-light-weight-800`}
+                            className={`${pathname.includes(firstChild.id.toLowerCase()) ? "text-light-weight-800" : "text-light-weight-450"} ${globalStyleObj.flexCenter} cursor-pointer gap-1 pt-4 font-poppins-rg text-[14px] hover:text-light-weight-800`}
                             onClick={() =>
                               handleFirstChildTabToggle(firstChild.id)
                             }
@@ -77,7 +81,7 @@ const LeftSidebarCompactView = ({
                                 // Second Child
                                 <li key={secondChild.id}>
                                   <div
-                                    className={`flex-center cursor-pointer gap-1 pt-3 font-poppins-rg text-[13px] ${pathname.includes(secondChild.id) ? "text-light-weight-800" : "text-light-weight-450"} group hover:text-light-weight-800`}
+                                    className={`${globalStyleObj.flexCenter} cursor-pointer gap-1 pt-3 font-poppins-rg text-[13px] ${pathname.includes(secondChild.id) ? "text-light-weight-800" : "text-light-weight-450"} group hover:text-light-weight-800`}
                                     onClick={() =>
                                       handleSecondChildTabToggle(secondChild.id)
                                     }
@@ -112,7 +116,7 @@ const LeftSidebarCompactView = ({
                                               secondchildid={
                                                 thirdChild.secondChildId
                                               }
-                                              className={`${mainPath === thirdChild.id ? "text-light-weight-800" : "text-light-weight-450"} flex-center group pt-2 font-poppins-rg text-[12px] hover:text-light-weight-800`}
+                                              className={`${mainPath === thirdChild.id ? "text-light-weight-800" : "text-light-weight-450"} ${globalStyleObj.flexCenter} group pt-2 font-poppins-rg text-[12px] hover:text-light-weight-800`}
                                             >
                                               {thirdChild.tabName}
                                             </li>
@@ -131,7 +135,7 @@ const LeftSidebarCompactView = ({
                                     id={secondChild.id}
                                     parenttabid={secondChild.parentTabId}
                                     firstchildid={secondChild.firstChildId}
-                                    className={`${mainPath === secondChild.id ? "text-light-weight-800" : "text-light-weight-450"} flex-center group pt-3 font-poppins-rg text-[13px] hover:text-light-weight-800`}
+                                    className={`${mainPath === secondChild.id ? "text-light-weight-800" : "text-light-weight-450"} ${globalStyleObj.flexCenter} group pt-3 font-poppins-rg text-[13px] hover:text-light-weight-800`}
                                   >
                                     {secondChild.tabName}
                                   </li>
@@ -164,7 +168,9 @@ const LeftSidebarCompactView = ({
                   <li
                     className={`pt-5 ${pathname.includes(parent.id.toLowerCase()) ? "text-light-weight-800" : "text-light-weight-450"} hover:text-light-weight-800`}
                   >
-                    <div className="flex-col-center cursor-pointer gap-1">
+                    <div
+                      className={`${globalStyleObj.flexColCenter} cursor-pointer gap-1`}
+                    >
                       <span className="text-[18px]">{parent.tabIcon}</span>
                       <span className="font-poppins-rg text-[15px]">
                         {parent.tabName}

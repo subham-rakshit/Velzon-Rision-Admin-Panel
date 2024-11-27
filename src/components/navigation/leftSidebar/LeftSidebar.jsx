@@ -20,6 +20,7 @@ import {
   sidebarMainSize,
   toggleStatus,
 } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
+import { globalStyleObj } from "@/app/assets/styles";
 import { LeftSidebarCompactView, LeftSidebarSmallIconView } from "@/components";
 import { changeToggleButtonStatus } from "@/lib/store/features/layoutCustomizer/layoutCustomizerSlice";
 import { useAppDispatch } from "@/lib/store/hooks";
@@ -138,7 +139,7 @@ const LeftSidebar = ({
             className={`${leftSidbarSizeType === sidebarSize.SMALL_ICON_VIEW ? "py-0" : "py-[10px]"}`}
           >
             <span
-              className={`${leftSidbarSizeType === sidebarSize.SMALL_ICON_VIEW ? "hidden" : "inline"} text-11-light400-sb uppercase tracking-widest`}
+              className={`${leftSidbarSizeType === sidebarSize.SMALL_ICON_VIEW ? "hidden" : "inline"} ${globalStyleObj.text11Light400Semibold} uppercase tracking-widest`}
             >
               {category.tabCategory}
             </span>
@@ -149,7 +150,7 @@ const LeftSidebar = ({
                   <li key={parent.id} className={`pl-1 pt-5`}>
                     {/* Parent Tab */}
                     <div
-                      className={`flex-start cursor-pointer gap-2 ${pathname.includes(parent.id.toLowerCase()) ? "text-light-weight-800" : "text-light-weight-450"} hover:text-light-weight-800`}
+                      className={`${globalStyleObj.flexStart} cursor-pointer gap-2 ${pathname.includes(parent.id.toLowerCase()) ? "text-light-weight-800" : "text-light-weight-450"} hover:text-light-weight-800`}
                       onClick={() => handleParentTabToggle(parent.id)}
                     >
                       <span className="text-[18px]">{parent.tabIcon}</span>
@@ -169,7 +170,7 @@ const LeftSidebar = ({
                           // First Child
                           <li key={firstChild.id}>
                             <div
-                              className={`${pathname.includes(firstChild.id.toLowerCase()) ? "text-light-weight-800" : "text-light-weight-450"} flex-start cursor-pointer gap-2 pl-2 pt-4 font-poppins-rg text-[14px] hover:text-light-weight-800`}
+                              className={`${pathname.includes(firstChild.id.toLowerCase()) ? "text-light-weight-800" : "text-light-weight-450"} ${globalStyleObj.flexStart} cursor-pointer gap-2 pl-2 pt-4 font-poppins-rg text-[14px] hover:text-light-weight-800`}
                               onClick={() =>
                                 handleFirstChildTabToggle(firstChild.id)
                               }
@@ -190,7 +191,7 @@ const LeftSidebar = ({
                                   // Second Child
                                   <li key={secondChild.id}>
                                     <div
-                                      className={`flex-start cursor-pointer gap-3 pl-7 pt-4 font-poppins-rg text-[13px] ${pathname.includes(secondChild.id) ? "text-light-weight-800" : "text-light-weight-450"} group hover:text-light-weight-800`}
+                                      className={`${globalStyleObj.flexStart} cursor-pointer gap-3 pl-7 pt-4 font-poppins-rg text-[13px] ${pathname.includes(secondChild.id) ? "text-light-weight-800" : "text-light-weight-450"} group hover:text-light-weight-800`}
                                       onClick={() =>
                                         handleSecondChildTabToggle(
                                           secondChild.id
@@ -230,7 +231,7 @@ const LeftSidebar = ({
                                                 secondchildid={
                                                   thirdChild.secondChildId
                                                 }
-                                                className={`${mainPath === thirdChild.id ? "text-light-weight-800" : "text-light-weight-450"} flex-start group gap-3 pl-10 pt-4 font-poppins-rg text-[12px] hover:text-light-weight-800`}
+                                                className={`${mainPath === thirdChild.id ? "text-light-weight-800" : "text-light-weight-450"}  ${globalStyleObj.flexStart} group gap-3 pl-10 pt-4 font-poppins-rg text-[12px] hover:text-light-weight-800`}
                                               >
                                                 <span
                                                   className={`size-[5px] rounded-full border border-light-weight-450 group-hover:bg-white ${mainPath === thirdChild.id ? "bg-white" : ""}`}
@@ -252,7 +253,7 @@ const LeftSidebar = ({
                                       id={secondChild.id}
                                       parenttabid={secondChild.parentTabId}
                                       firstchildid={secondChild.firstChildId}
-                                      className={`${mainPath === secondChild.id ? "text-light-weight-800" : "text-light-weight-450"} flex-start group gap-3 pl-7 pt-4 font-poppins-rg text-[13px] hover:text-light-weight-800`}
+                                      className={`${mainPath === secondChild.id ? "text-light-weight-800" : "text-light-weight-450"}  ${globalStyleObj.flexStart} group gap-3 pl-7 pt-4 font-poppins-rg text-[13px] hover:text-light-weight-800`}
                                     >
                                       <span
                                         className={`size-[5px] rounded-full border border-light-weight-450 group-hover:bg-white ${mainPath === secondChild.id ? "bg-white" : ""}`}
@@ -273,7 +274,7 @@ const LeftSidebar = ({
                             <li
                               id={firstChild.id}
                               parenttabid={firstChild.parentTabId}
-                              className={`${mainPath === firstChild.id ? "text-light-weight-800" : "text-light-weight-450"} flex-start gap-2 pl-2 pt-4 font-poppins-rg text-[14px] hover:text-light-weight-800`}
+                              className={`${mainPath === firstChild.id ? "text-light-weight-800" : "text-light-weight-450"} ${globalStyleObj.flexStart} gap-2 pl-2 pt-4 font-poppins-rg text-[14px] hover:text-light-weight-800`}
                             >
                               <BsDash />
                               {firstChild.tabName}
@@ -290,7 +291,9 @@ const LeftSidebar = ({
                       id={parent.id}
                       className={`pl-1 pt-5 ${pathname.includes(parent.id.toLowerCase()) ? "text-light-weight-800" : "text-light-weight-450"} hover:text-light-weight-800`}
                     >
-                      <div className="flex-start cursor-pointer gap-2">
+                      <div
+                        className={`${globalStyleObj.flexStart} cursor-pointer gap-2`}
+                      >
                         <span className="text-[18px]">{parent.tabIcon}</span>
                         <span className="font-poppins-rg text-[15px]">
                           {parent.tabName}
@@ -322,7 +325,7 @@ const LeftSidebar = ({
                 // Tab Icon Main Container
                 <li
                   key={parent.id}
-                  className="flex items-center justify-center py-[13px] hover:cursor-pointer"
+                  className={`${globalStyleObj.flexCenter} py-[13px] hover:cursor-pointer`}
                 >
                   {/* NOTE Parent Icon */}
                   <span
@@ -370,40 +373,66 @@ const LeftSidebar = ({
       >
         <Link
           href="/dashboard"
-          className={`${leftSidbarSizeType === sidebarSize.SMALL_HOVER_VIEW ? "hidden" : "flex-center"} size-full`}
+          className={`${leftSidbarSizeType === sidebarSize.SMALL_HOVER_VIEW ? "hidden" : `${globalStyleObj.flexCenter}`} size-full`}
         >
           {leftSidbarSizeType === sidebarSize.SMALL_ICON_VIEW ? (
-            <Image src={logoSmall} alt="logo small" width={25} height={25} />
+            <Image
+              src={logoSmall}
+              alt="logo small"
+              width={25}
+              height={25}
+              style={{ width: "auto", height: "auto" }}
+            />
           ) : leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? (
-            <Image src={logoLight} alt="logo light" width={100} height={22} />
+            <Image
+              src={logoLight}
+              alt="logo light"
+              width={100}
+              height={22}
+              style={{ width: "auto", height: "auto" }}
+            />
           ) : (
             <Image
               src={theme === "light" ? logoDark : logoLight}
               alt="logo light"
               width={100}
               height={22}
+              style={{ width: "auto", height: "auto" }}
             />
           )}
         </Link>
 
         <div
-          className={`${leftSidbarSizeType === sidebarSize.SMALL_HOVER_VIEW ? "flex-between transition-300" : "hidden"} h-full`}
+          className={`${leftSidbarSizeType === sidebarSize.SMALL_HOVER_VIEW ? `${globalStyleObj.flexBetween} transition-300` : "hidden"} h-full`}
         >
           <Link
             href="/dashboard"
-            className={`flex-start transition-300 h-full w-fit`}
+            className={`${globalStyleObj.flexStart} transition-300 h-full w-fit`}
           >
             {leftSidbarSizeMain === sidebarMainSize.SM_HOVER &&
             !isContainerHover ? (
-              <Image src={logoSmall} alt="logo small" width={25} height={25} />
+              <Image
+                src={logoSmall}
+                alt="logo small"
+                width={25}
+                height={25}
+                style={{ width: "auto", height: "auto" }}
+              />
             ) : leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? (
-              <Image src={logoLight} alt="logo light" width={100} height={22} />
+              <Image
+                src={logoLight}
+                alt="logo light"
+                width={100}
+                height={22}
+                style={{ width: "auto", height: "auto" }}
+              />
             ) : (
               <Image
                 src={theme === "light" ? logoDark : logoLight}
                 alt="logo light"
                 width={100}
                 height={22}
+                style={{ width: "auto", height: "auto" }}
               />
             )}
           </Link>
@@ -413,7 +442,9 @@ const LeftSidebar = ({
             className={`${isContainerHover ? "visible" : "hidden"}`}
             onClick={handleSmallHoverIconFixedButton}
           >
-            <span className="flex-center size-[16px] rounded-full border-2 border-light-weight-400 dark:border-light-weight-450">
+            <span
+              className={`${globalStyleObj.flexCenter} size-[16px] rounded-full border-2 border-light-weight-400 dark:border-light-weight-450`}
+            >
               <span
                 className={`${isFixedBtnCliked ? "opacity-100" : "opacity-0"} size-[8px] rounded-full bg-light-weight-400 dark:bg-light-weight-450`}
               ></span>

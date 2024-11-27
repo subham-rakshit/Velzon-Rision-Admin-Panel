@@ -8,6 +8,7 @@ import {
   sidebarSize,
   toggleStatus,
 } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
+import { globalStyleObj } from "@/app/assets/styles";
 import { changeToggleButtonStatus } from "@/lib/store/features/layoutCustomizer/layoutCustomizerSlice";
 import { useAppDispatch } from "@/lib/store/hooks";
 
@@ -33,7 +34,6 @@ const ToggleButton = ({
 
   const defaultToggleButton = () => (
     <>
-      {/* After Medium screen btn */}
       <button
         onClick={handleSidebarToggel}
         type="button"
@@ -42,7 +42,10 @@ const ToggleButton = ({
         {["bar_1", "bar_2", "bar_3"].map((bar) => {
           let dynamicClasses;
 
-          if (leftSidbarSizeType === sidebarSize.SMALL_ICON_VIEW) {
+          if (
+            leftSidbarSizeType === sidebarSize.SMALL_ICON_VIEW ||
+            toggleButtonStatus
+          ) {
             switch (bar) {
               case "bar_1":
                 dynamicClasses =
@@ -73,7 +76,7 @@ const ToggleButton = ({
           return (
             <span
               key={bar}
-              className={`background-light200_dark350 transition-300 my-[4px] block h-[2px] rounded-sm ${dynamicClasses}`}
+              className={`${globalStyleObj.backgroundLight200Dark350} transition-300 my-[4px] block h-[2px] rounded-sm ${dynamicClasses}`}
             ></span>
           );
         })}
@@ -123,7 +126,7 @@ const ToggleButton = ({
           return (
             <span
               key={bar}
-              className={`background-light200_dark350 transition-300 my-[4px] block h-[2px] rounded-sm ${dynamicClasses}`}
+              className={`${globalStyleObj.backgroundLight200Dark350} transition-300 my-[4px] block h-[2px] rounded-sm ${dynamicClasses}`}
             ></span>
           );
         })}
@@ -151,7 +154,7 @@ const ToggleButton = ({
           return (
             <span
               key={bar}
-              className={`background-light200_dark350 transition-300 my-[4px] block h-[2px] rounded-sm ${dynamicClasses}`}
+              className={`${globalStyleObj.backgroundLight200Dark350} transition-300 my-[4px] block h-[2px] rounded-sm ${dynamicClasses}`}
             ></span>
           );
         })}

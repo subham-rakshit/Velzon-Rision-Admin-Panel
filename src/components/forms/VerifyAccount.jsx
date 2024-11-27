@@ -7,6 +7,7 @@ import { AiOutlineMail } from "react-icons/ai";
 import { ClipLoader } from "react-spinners";
 import { toast } from "react-toastify";
 
+import { globalStyleObj } from "@/app/assets/styles";
 import ROUTES from "@/constants/routes";
 
 const VerifyAccount = () => {
@@ -25,9 +26,6 @@ const VerifyAccount = () => {
 
   // NOTE: Handle OnChange
   const handleOnChange = (e, index) => {
-    console.log(index);
-    console.log(e.target.value);
-
     const value = e.target.value;
 
     // Check value isNaN
@@ -164,18 +162,25 @@ const VerifyAccount = () => {
 
   return (
     <>
-      <form onSubmit={handleVerifyAccount} className="form-inner-container">
+      <form
+        onSubmit={handleVerifyAccount}
+        className={`${globalStyleObj.formInnerContainer}`}
+      >
         <div className="flex flex-col items-center justify-center gap-5">
           <div className="rounded-full bg-[#F3F6F9] p-5">
             <AiOutlineMail color="#405189" size="65" />
           </div>
 
-          <div className="text-center font-hk-grotesk">
-            <h1 className="form-heading">Verify Your Email</h1>
-            <p className="form-description">
+          <div>
+            <h1 className={`${globalStyleObj.formHeading}`}>
+              Verify Your Email
+            </h1>
+            <p className={`${globalStyleObj.formDescription}`}>
               Please click the below button to proceed
             </p>
-            <p className="form-description font-[600]">example@abc.com</p>
+            <p className="text-center font-poppins-sb text-[13px] text-light-weight-400">
+              example@abc.com
+            </p>
           </div>
 
           <div className="my-5 flex w-full items-center justify-center gap-4">
@@ -197,7 +202,7 @@ const VerifyAccount = () => {
           <button
             type="submit"
             disabled={isProcessing}
-            className={`auth-button w-full ${
+            className={`${globalStyleObj.authButton} w-full ${
               isProcessing ? "cursor-not-allowed" : ""
             }`}
           >
@@ -213,7 +218,7 @@ const VerifyAccount = () => {
         </div>
       </form>
 
-      <p className="auth-direction-text text-center">
+      <p className={`${globalStyleObj.authDescriptionText}`}>
         Didn&apos;t receive a code ?{" "}
         <Link href={ROUTES.AUTH_OTP_RESEND}>
           <span className="text-[#405189] underline">Resend</span>

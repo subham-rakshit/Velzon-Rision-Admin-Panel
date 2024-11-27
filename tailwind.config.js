@@ -76,6 +76,7 @@ module.exports = {
           "dencity-600": "#1A1D21",
         },
         light: {
+          "dencity-100": "#e1e1e3",
           "dencity-200": "#9fa1ad",
           "dencity-400": "#e6eefd",
           "dencity-700": "#eff2f7",

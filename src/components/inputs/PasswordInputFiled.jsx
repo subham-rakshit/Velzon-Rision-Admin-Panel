@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 import { IoAlertCircleOutline, IoEye, IoEyeOff } from "react-icons/io5";
 
+import { globalStyleObj } from "@/app/assets/styles";
 import ROUTES from "@/constants/routes";
 
 const PasswordInputFiled = ({
@@ -51,7 +52,7 @@ const PasswordInputFiled = ({
           <Label
             htmlFor={inputId}
             value={labelText}
-            className={`${labelClasses} form-lable-text`}
+            className={`${labelClasses} ${globalStyleObj.formLabelText}`}
           />
           {pathname.includes("register") && (
             <span className="ml-1 font-bold text-red-500">*</span>
@@ -72,7 +73,7 @@ const PasswordInputFiled = ({
           name={inputName}
           value={inputValue}
           placeholder={placeholderText}
-          className={`form-input-text w-full rounded-lg ${
+          className={`${globalStyleObj.formInputText} w-full rounded-lg ${
             isBlank ? "border-2 border-red-500" : ""
           } ${inputExtraClasses}`}
           sizes="sm"

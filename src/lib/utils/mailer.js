@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import {
   resetPasswordTokenEmailTemplate,
   verificationEmailTemplate,
-} from "../../../emails/mail-html-templates";
+} from "../emails/mail-html-templates";
 
 import UserModel from "@/model/User";
 

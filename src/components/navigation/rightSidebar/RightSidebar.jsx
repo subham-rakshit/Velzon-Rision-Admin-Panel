@@ -2,6 +2,7 @@
 
 import { motion, useTime, useTransform } from "framer-motion";
 import Image from "next/image";
+import { useTheme } from "next-themes";
 import React from "react";
 import { FaCog, FaCheckCircle } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
@@ -9,7 +10,6 @@ import { ClipLoader } from "react-spinners";
 
 import {
   rightSidebarThemeData,
-  rightSidbarColorSchemaData,
   rightSidbarLayoutWidthData,
   rightSidbarLayoutPositionData,
   rightSidbarTopbarColorData,
@@ -17,12 +17,13 @@ import {
   rightSidebarImagesData,
   rightSidebarPrimaryColorData,
 } from "@/app/assets/rightSidebarData/rightSidebarData";
+import { globalStyleObj } from "@/app/assets/styles";
+import { CommonRightSidebarLayout } from "@/components";
 import {
   changeLayoutType,
   changeRightSideBarIsOpen,
   changeSidebarUserProfileAvtarType,
   changeLayoutThemeType,
-  changeLayoutModeType,
   changeLayoutWidthType,
   changeLayoutPositionType,
   changeTopbarColorType,
@@ -42,7 +43,6 @@ const RightSidebar = () => {
     rightSideBarIsOpen,
     sidebarUserProfileAvtarType,
     layoutThemeType,
-    layoutModeType,
     layoutWidthType,
     layoutPositionType,
     topbarColorType,
@@ -56,6 +56,7 @@ const RightSidebar = () => {
   } = useAppSelector((state) => state.layout);
 
   const dispatch = useAppDispatch();
+  const { theme, setTheme } = useTheme();
   const time = useTime();
   const rotate = useTransform(time, [0, 2000], [0, 360], {
     clamp: rightSideBarIsOpen,
@@ -73,11 +74,11 @@ const RightSidebar = () => {
   return (
     <>
       {/* NOTE Settings Button */}
-      <div className="md:flex-center fixed left-full top-[calc(100vh-80px)] hidden w-[120px] -translate-x-full pb-8">
+      <div className="fixed left-full top-[calc(100vh-90px)] hidden w-[120px] -translate-x-full md:flex md:items-center md:justify-center">
         <motion.button
           style={{ rotate }}
           onClick={() => dispatch(changeRightSideBarIsOpen(true))}
-          className="flex size-[50px] items-center justify-center rounded-full bg-[#299CDB]"
+          className={`${globalStyleObj.flexCenter} size-[50px] rounded-full bg-[#299CDB]`}
         >
           <FaCog size={22} color="white" />
         </motion.button>
@@ -91,7 +92,9 @@ const RightSidebar = () => {
         className={`fixed right-0 top-0 z-[99] h-screen w-[380px] bg-white`}
       >
         {/* NOTE Header */}
-        <div className="flex h-[60px] w-full items-center justify-between bg-[#505f93] px-[16px]">
+        <div
+          className={`${globalStyleObj.flexBetween} h-[60px] w-full bg-[#505f93] px-[16px]`}
+        >
           <h1 className="font-poppins-md text-[16px] text-white">
             Theme Customizer
           </h1>
@@ -105,39 +108,36 @@ const RightSidebar = () => {
         </div>
 
         {/* NOTE Inner */}
-        <div className="custom-left-sidebar-scrollbar h-[calc(100vh-60px)] overflow-y-auto p-[25px] shadow-light">
+        <div
+          className={`custom-left-sidebar-scrollbar ${globalStyleObj.backgroundLight900Dark200} h-[calc(100vh-60px)] overflow-y-auto p-[25px] shadow-light`}
+        >
           {/* NOTE Layouts */}
           <div>
-            <h3 className="font-poppins-rg text-[13px] uppercase text-[#665057]">
+            <h3
+              className={`${globalStyleObj.text13Light550Dark550Sb} uppercase`}
+            >
               Layout
             </h3>
-            <p className="text-soft text-[13px]">Choose your layout</p>
-            <div className="mt-5 flex flex-wrap items-center gap-3">
+            <p className={`${globalStyleObj.text13Light400}`}>
+              Choose your layout
+            </p>
+            <div className={`mt-5 ${globalStyleObj.flexStart} flex-wrap gap-3`}>
               {/* Vertical Layout */}
               <button
                 type="button"
                 className="group flex cursor-pointer flex-col items-center gap-1"
                 onClick={() => dispatch(changeLayoutType("vertical"))}
               >
-                <span
-                  className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
-                    layoutType === "vertical" ? "border border-[#405189]" : ""
+                <div
+                  className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] group-hover:shadow-light ${
+                    layoutType === "vertical"
+                      ? "border border-[#405189]"
+                      : "border dark:border-dark-weight-550"
                   }`}
                 >
-                  <span className="flex size-full gap-2">
-                    <span className="flex h-full w-[25px] flex-col bg-[#f3f6f9] p-[4px]">
-                      <span className="h-[8px] w-full rounded-lg bg-[#e2e5ed]"></span>
-                      <span className="flex h-full flex-col justify-center gap-1">
-                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
-                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
-                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
-                      </span>
-                    </span>
-                    <span className="flex size-full flex-col justify-between">
-                      <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
-                      <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
-                    </span>
-                  </span>
+                  <div className="flex size-full gap-2">
+                    <CommonRightSidebarLayout />
+                  </div>
                   {layoutType === "vertical" && (
                     <FaCheckCircle
                       color="#405189"
@@ -145,10 +145,12 @@ const RightSidebar = () => {
                       className="absolute right-[7px] top-[7px]"
                     />
                   )}
-                </span>
-                <span className="mx-auto font-poppins-md text-[13px] tracking-wide text-[#665057]">
+                </div>
+                <h4
+                  className={`mx-auto tracking-wide ${globalStyleObj.text13Light550Dark550Md}`}
+                >
                   Vertical
-                </span>
+                </h4>
               </button>
 
               {/* Horizontal Layout */}
@@ -157,24 +159,41 @@ const RightSidebar = () => {
                 className="group flex cursor-pointer flex-col items-center gap-1"
                 onClick={() => dispatch(changeLayoutType("horizontal"))}
               >
-                <span
-                  className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
-                    layoutType === "horizontal" ? "border-[#405189]" : ""
+                <div
+                  className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] group-hover:shadow-light ${
+                    layoutType === "horizontal"
+                      ? "border border-[#405189]"
+                      : "border dark:border-dark-weight-550"
                   }`}
                 >
-                  <span className="flex size-full flex-col justify-between gap-2">
-                    <span className="flex w-full flex-col">
-                      <span className="flex h-[17px] w-full items-center justify-between bg-[#f3f6f9] px-[5px]">
-                        <span className="size-[8px] rounded-full bg-[#e2e5ed]"></span>
-                        <span className="flex items-center gap-2">
-                          <span className="h-[4px] w-[16px] bg-[#e2e5ed]"></span>
-                          <span className="h-[4px] w-[16px] bg-[#e2e5ed]"></span>
-                        </span>
-                      </span>
-                      <span className="mt-[4px] h-[8px] w-full bg-[#f3f6f9]"></span>
-                    </span>
-                    <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
-                  </span>
+                  <div className="flex size-full flex-col justify-between gap-2">
+                    <div className="flex w-full flex-col">
+                      <div
+                        className={`flex h-[17px] w-full items-center justify-between ${globalStyleObj.layoutBoxBackgroundLightDark} px-[5px]`}
+                      >
+                        <span
+                          className={`size-[8px] rounded-full ${globalStyleObj.layoutInnerBoxBackgroundLightDark}`}
+                        ></span>
+
+                        <div className="flex items-center gap-2">
+                          <span
+                            className={`h-[4px] w-[16px] ${globalStyleObj.layoutInnerBoxBackgroundLightDark}`}
+                          ></span>
+                          <span
+                            className={`h-[4px] w-[16px] ${globalStyleObj.layoutInnerBoxBackgroundLightDark}`}
+                          ></span>
+                        </div>
+                      </div>
+
+                      <div
+                        className={`mt-[4px] h-[8px] w-full ${globalStyleObj.layoutBoxBackgroundLightDark}`}
+                      ></div>
+                    </div>
+
+                    <div
+                      className={`h-[8px] w-full ${globalStyleObj.layoutBoxBackgroundLightDark}`}
+                    ></div>
+                  </div>
 
                   {layoutType === "horizontal" && (
                     <FaCheckCircle
@@ -183,10 +202,12 @@ const RightSidebar = () => {
                       className="absolute right-[7px] top-[7px]"
                     />
                   )}
-                </span>
-                <span className="mx-auto font-poppins-md text-[13px] tracking-wide text-[#665057]">
+                </div>
+                <h4
+                  className={`mx-auto tracking-wide ${globalStyleObj.text13Light550Dark550Md}`}
+                >
                   Horizontal
-                </span>
+                </h4>
               </button>
 
               {/* Two Column Layout */}
@@ -195,32 +216,59 @@ const RightSidebar = () => {
                 className="group flex cursor-pointer flex-col items-center gap-1"
                 onClick={() => dispatch(changeLayoutType("two-column"))}
               >
-                <span
-                  className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
-                    layoutType === "two-column" ? "border border-[#405189]" : ""
+                <div
+                  className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] group-hover:shadow-light ${
+                    layoutType === "two-column"
+                      ? "border border-[#405189]"
+                      : "border dark:border-dark-weight-550"
                   }`}
                 >
-                  <span className="flex size-full gap-1">
-                    <span className="flex h-full w-[10px] flex-col bg-[#f3f6f9]">
-                      <span className="h-[8px] w-full bg-[#e2e5ed]"></span>
-                      <span className="flex h-full flex-col justify-center gap-1">
-                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
-                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
-                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
-                      </span>
-                    </span>
+                  <div className="flex size-full gap-1">
+                    <div
+                      className={`flex h-full w-[10px] flex-col ${globalStyleObj.layoutBoxBackgroundLightDark}`}
+                    >
+                      <span
+                        className={`h-[8px] w-full ${globalStyleObj.layoutInnerBoxBackgroundLightDark}`}
+                      ></span>
+                      <div className="flex h-full flex-col justify-center gap-1">
+                        <span
+                          className={`h-[4px] w-full ${globalStyleObj.layoutInnerBoxBackgroundLightDark}`}
+                        ></span>
+                        <span
+                          className={`h-[4px] w-full ${globalStyleObj.layoutInnerBoxBackgroundLightDark}`}
+                        ></span>
+                        <span
+                          className={`h-[4px] w-full ${globalStyleObj.layoutInnerBoxBackgroundLightDark}`}
+                        ></span>
+                      </div>
+                    </div>
 
-                    <span className="flex h-full w-[25px] flex-col gap-1 bg-[#f3f6f9] p-[4px]">
-                      <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
-                      <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
-                      <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
-                      <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
-                    </span>
-                    <span className="flex size-full flex-col justify-between">
-                      <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
-                      <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
-                    </span>
-                  </span>
+                    <div
+                      className={`flex h-full w-[25px] flex-col gap-1 ${globalStyleObj.layoutBoxBackgroundLightDark} p-[4px]`}
+                    >
+                      <span
+                        className={`h-[4px] w-full ${globalStyleObj.layoutInnerBoxBackgroundLightDark}`}
+                      ></span>
+                      <span
+                        className={`h-[4px] w-full ${globalStyleObj.layoutInnerBoxBackgroundLightDark}`}
+                      ></span>
+                      <span
+                        className={`h-[4px] w-full ${globalStyleObj.layoutInnerBoxBackgroundLightDark}`}
+                      ></span>
+                      <span
+                        className={`h-[4px] w-full ${globalStyleObj.layoutInnerBoxBackgroundLightDark}`}
+                      ></span>
+                    </div>
+
+                    <div className="flex size-full flex-col justify-between">
+                      <div
+                        className={`h-[8px] w-full ${globalStyleObj.layoutBoxBackgroundLightDark}`}
+                      ></div>
+                      <div
+                        className={`h-[8px] w-full ${globalStyleObj.layoutBoxBackgroundLightDark}`}
+                      ></div>
+                    </div>
+                  </div>
 
                   {layoutType === "two-column" && (
                     <FaCheckCircle
@@ -229,8 +277,10 @@ const RightSidebar = () => {
                       className="absolute right-[7px] top-[7px]"
                     />
                   )}
-                </span>
-                <span className="mx-auto font-poppins-md text-[13px] tracking-wide text-[#665057]">
+                </div>
+                <span
+                  className={`mx-auto tracking-wide ${globalStyleObj.text13Light550Dark550Md}`}
+                >
                   Two Column
                 </span>
               </button>
@@ -241,25 +291,16 @@ const RightSidebar = () => {
                 className="group flex cursor-pointer flex-col items-center gap-1"
                 onClick={() => dispatch(changeLayoutType("semi-box"))}
               >
-                <span
-                  className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
-                    layoutType === "semi-box" ? "border border-[#405189]" : ""
+                <div
+                  className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] group-hover:shadow-light ${
+                    layoutType === "semi-box"
+                      ? "border border-[#405189]"
+                      : "border dark:border-dark-weight-550"
                   }`}
                 >
-                  <span className="flex size-full gap-2 p-1">
-                    <span className="flex h-full w-[25px] flex-col bg-[#f3f6f9] p-[4px]">
-                      <span className="h-[8px] w-full rounded-lg bg-[#e2e5ed]"></span>
-                      <span className="flex h-full flex-col justify-center gap-1">
-                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
-                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
-                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
-                      </span>
-                    </span>
-                    <span className="flex size-full flex-col justify-between">
-                      <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
-                      <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
-                    </span>
-                  </span>
+                  <div className="flex size-full gap-2 p-1">
+                    <CommonRightSidebarLayout />
+                  </div>
 
                   {layoutType === "semi-box" && (
                     <FaCheckCircle
@@ -268,8 +309,10 @@ const RightSidebar = () => {
                       className="absolute right-[7px] top-[7px]"
                     />
                   )}
-                </span>
-                <span className="mx-auto font-poppins-md text-[13px] tracking-wide text-[#665057]">
+                </div>
+                <span
+                  className={`mx-auto tracking-wide ${globalStyleObj.text13Light550Dark550Md}`}
+                >
                   Semi Box
                 </span>
               </button>
@@ -280,7 +323,7 @@ const RightSidebar = () => {
           <div className="my-5 flex items-center gap-2">
             <button
               type="button"
-              className={`flex w-[40px] cursor-pointer rounded-full border border-[#bdbfc7] px-[3px] py-[2px] ${
+              className={`flex w-[40px] cursor-pointer rounded-full border border-[#bdbfc7] px-[3px] py-[2px] dark:border-dark-weight-550 ${
                 sidebarUserProfileAvtarType === "hide"
                   ? "justify-end border-[#4f5e92] bg-[#4f5e92]"
                   : "justify-start border-[#bdbfc7] bg-transparent"
@@ -291,24 +334,28 @@ const RightSidebar = () => {
                 className={`size-[14px] rounded-full ${
                   sidebarUserProfileAvtarType === "hide"
                     ? "bg-white"
-                    : "bg-[#bdbfc7]"
+                    : "bg-[#bdbfc7] dark:bg-[#494b52]"
                 }`}
                 layout
                 transition={{ type: "spring", stiffness: 800, damping: 30 }}
               />
             </button>
 
-            <span className="font-poppins-md text-[13px] tracking-wide text-[#000]">
+            <span className={`${globalStyleObj.text13Light600Dark450}`}>
               Sidebar User Profile Avatar
             </span>
           </div>
 
           {/* NOTE Theme */}
           <div>
-            <h3 className="font-poppins-rg text-[13px] uppercase text-[#665057]">
+            <h3
+              className={`${globalStyleObj.text13Light550Dark550Sb} uppercase`}
+            >
               Theme
             </h3>
-            <p className="text-soft text-[13px]">Choose your suitable Theme.</p>
+            <p className={`${globalStyleObj.text13Light400}`}>
+              Choose your suitable Theme.
+            </p>
 
             <div className="mt-5 flex flex-wrap gap-3">
               {rightSidebarThemeData.map((theme) => (
@@ -316,11 +363,13 @@ const RightSidebar = () => {
                   type="button"
                   key={theme.id}
                   className="group flex cursor-pointer flex-col items-center gap-1"
-                  onClick={() => dispatch(changeLayoutThemeType(theme.id))}
+                  onClick={() => dispatch(changeLayoutThemeType("default"))}
                 >
-                  <span
-                    className={`relative overflow-hidden rounded-[5px] border group-hover:shadow-light ${
-                      layoutThemeType === theme.id ? "border-[#405189]" : ""
+                  <div
+                    className={`relative overflow-hidden rounded-[5px] group-hover:shadow-light ${
+                      layoutThemeType === "default"
+                        ? "border border-[#405189]"
+                        : "border dark:border-dark-weight-550"
                     }`}
                   >
                     <Image
@@ -329,15 +378,17 @@ const RightSidebar = () => {
                       width={145}
                       height={125}
                     />
-                    {layoutThemeType === theme.id && (
+                    {layoutThemeType === "default" && (
                       <FaCheckCircle
                         color="#405189"
                         size={13}
                         className="absolute right-[7px] top-[7px]"
                       />
                     )}
-                  </span>
-                  <span className="mx-auto font-poppins-md text-[13px] tracking-wide text-[#665057]">
+                  </div>
+                  <span
+                    className={`mx-auto tracking-wide ${globalStyleObj.text13Light550Dark550Md}`}
+                  >
                     {theme.label}
                   </span>
                 </button>
@@ -347,90 +398,101 @@ const RightSidebar = () => {
 
           {/* NOTE Color Schema */}
           <div className="mt-5">
-            <h3 className="font-poppins-rg text-[13px] uppercase text-[#665057]">
+            <h3
+              className={`${globalStyleObj.text13Light550Dark550Sb} uppercase`}
+            >
               Color Schema
             </h3>
-            <p className="text-soft text-[13px]">
+            <p className={`${globalStyleObj.text13Light400}`}>
               Choose Light or Dark Schema.
             </p>
             <div className="mt-5 flex flex-wrap items-center gap-3">
-              {rightSidbarColorSchemaData.map((color) => (
-                <button
-                  type="button"
-                  key={color.id}
-                  className="group flex cursor-pointer flex-col items-center gap-1"
-                  onClick={() => dispatch(changeLayoutModeType(color.id))}
+              <button
+                type="button"
+                className="group flex cursor-pointer flex-col items-center gap-1"
+                onClick={() => setTheme("light")}
+              >
+                <div
+                  className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] group-hover:shadow-light ${
+                    theme === "light"
+                      ? "border border-[#405189]"
+                      : "border dark:border-dark-weight-550"
+                  }`}
                 >
-                  <span
-                    className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] group-hover:shadow-light ${
-                      layoutModeType === color.id
-                        ? "border border-[#405189]"
-                        : "border"
-                    } ${color.id === "dark" ? "bg-[#212529]" : ""}`}
-                  >
-                    <span className="flex size-full gap-2">
+                  <div className="flex size-full gap-2">
+                    <CommonRightSidebarLayout />
+                  </div>
+                  {theme === "light" && (
+                    <FaCheckCircle
+                      color="#405189"
+                      size={13}
+                      className="absolute right-[7px] top-[7px]"
+                    />
+                  )}
+                </div>
+                <h4
+                  className={`mx-auto tracking-wide ${globalStyleObj.text13Light550Dark550Md}`}
+                >
+                  Light
+                </h4>
+              </button>
+
+              <button
+                type="button"
+                className="group flex cursor-pointer flex-col items-center gap-1"
+                onClick={() => setTheme("dark")}
+              >
+                <div
+                  className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] group-hover:shadow-light ${
+                    theme === "dark"
+                      ? "border border-[#405189]"
+                      : "border dark:border-dark-weight-550"
+                  }`}
+                >
+                  <div className="flex size-full gap-2 bg-dark-dencity-200 dark:bg-[#313437]">
+                    <div
+                      className={`flex h-full w-[25px] flex-col bg-[#46494B] p-[4px]`}
+                    >
                       <span
-                        className={`flex h-full w-[25px] flex-col bg-[#f3f6f9] p-[4px] ${
-                          color.id === "dark" ? "bg-[#383b3f]" : "bg-[#f3f6f9]"
-                        }`}
-                      >
-                        <span
-                          className={`h-[8px] w-full rounded-lg ${
-                            color.id === "dark"
-                              ? "bg-[#4c4f53]"
-                              : "bg-[#e2e5ed]"
-                          }`}
-                        ></span>
-                        <span className="flex h-full flex-col justify-center gap-1">
-                          {["box-1", "box-2", "box-3"].map((box) => (
-                            <span
-                              key={box}
-                              className={`h-[4px] w-full ${
-                                color.id === "dark"
-                                  ? "bg-[#4c4f53]"
-                                  : "bg-[#e2e5ed]"
-                              }`}
-                            ></span>
-                          ))}
-                        </span>
-                      </span>
-                      <span
-                        className={`flex size-full flex-col justify-between`}
-                      >
-                        {["inner-box-1", "inner-box-2"].map((innerBox) => (
-                          <span
-                            key={innerBox}
-                            className={`h-[8px] w-full bg-[#f3f6f9] ${
-                              color.id === "dark"
-                                ? "bg-[#383b3f]"
-                                : "bg-[#e2e5ed]"
-                            }`}
-                          ></span>
-                        ))}
-                      </span>
-                    </span>
-                    {layoutModeType === color.id && (
-                      <FaCheckCircle
-                        color="#405189"
-                        size={13}
-                        className="absolute right-[7px] top-[7px]"
-                      />
-                    )}
-                  </span>
-                  <span className="mx-auto font-poppins-md text-[13px] tracking-wide text-[#665057]">
-                    {color.label}
-                  </span>
-                </button>
-              ))}
+                        className={`h-[8px] w-full rounded-lg bg-[#595C5D]`}
+                      ></span>
+                      <div className="flex h-full flex-col justify-center gap-1">
+                        <span className={`h-[4px] w-full bg-[#595C5D]`}></span>
+                        <span className={`h-[4px] w-full bg-[#595C5D]`}></span>
+                        <span className={`h-[4px] w-full bg-[#595C5D]`}></span>
+                      </div>
+                    </div>
+
+                    <div className="flex size-full flex-col justify-between">
+                      <div className={`h-[8px] w-full bg-[#46494B]`}></div>
+                      <div className={`h-[8px] w-full bg-[#46494B]`}></div>
+                    </div>
+                  </div>
+                  {theme === "dark" && (
+                    <FaCheckCircle
+                      color="#fff"
+                      size={13}
+                      className="absolute right-[7px] top-[7px]"
+                    />
+                  )}
+                </div>
+                <h4
+                  className={`mx-auto tracking-wide ${globalStyleObj.text13Light550Dark550Md}`}
+                >
+                  Dark
+                </h4>
+              </button>
             </div>
           </div>
 
           {/* NOTE Layout Width */}
           <div className="mt-5">
-            <h3 className="font-poppins-rg text-[13px] uppercase text-[#665057]">
+            <h3
+              className={`${globalStyleObj.text13Light550Dark550Sb} uppercase`}
+            >
               Layout Width
             </h3>
-            <p className="text-soft text-[13px]">
+            <p className={`${globalStyleObj.text13Light400}`}>
               Choose Fluid or Boxed layout.
             </p>
             <div className="mt-5 flex flex-wrap items-center gap-3">
@@ -441,44 +503,22 @@ const RightSidebar = () => {
                   className="group flex cursor-pointer flex-col items-center gap-1"
                   onClick={() => dispatch(changeLayoutWidthType(width.id))}
                 >
-                  <span
+                  <div
                     className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
                       layoutWidthType === width.id
                         ? "border border-[#405189]"
-                        : ""
+                        : "border dark:border-dark-weight-550"
                     } ${width.id === "boxed" ? "px-2" : "px-0"}`}
                   >
-                    <span
+                    <div
                       className={`flex size-full gap-2 ${
-                        width.id === "boxed" ? "border-x border-[#e2e5ed]" : ""
+                        width.id === "boxed"
+                          ? "border-x dark:border-dark-weight-550"
+                          : ""
                       }`}
                     >
-                      <span
-                        className={`flex h-full w-[25px] flex-col bg-[#f3f6f9] p-[4px]`}
-                      >
-                        <span
-                          className={`h-[8px] w-full rounded-lg bg-[#e2e5ed]`}
-                        ></span>
-                        <span className="flex h-full flex-col justify-center gap-1">
-                          {["w-box-1", "w-box-2", "w-box-3"].map((box) => (
-                            <span
-                              key={box}
-                              className={`h-[4px] w-full bg-[#e2e5ed]`}
-                            ></span>
-                          ))}
-                        </span>
-                      </span>
-                      <span
-                        className={`flex size-full flex-col justify-between`}
-                      >
-                        {["w-inner-box-1", "w-inner-box-2"].map((innerBox) => (
-                          <span
-                            key={innerBox}
-                            className={`h-[8px] w-full bg-[#f3f6f9]`}
-                          ></span>
-                        ))}
-                      </span>
-                    </span>
+                      <CommonRightSidebarLayout />
+                    </div>
                     {layoutWidthType === width.id && (
                       <FaCheckCircle
                         color="#405189"
@@ -486,10 +526,12 @@ const RightSidebar = () => {
                         className="absolute right-[7px] top-[7px]"
                       />
                     )}
-                  </span>
-                  <span className="mx-auto font-poppins-md text-[13px] tracking-wide text-[#665057]">
+                  </div>
+                  <h4
+                    className={`mx-auto tracking-wide ${globalStyleObj.text13Light550Dark550Md}`}
+                  >
                     {width.label}
-                  </span>
+                  </h4>
                 </button>
               ))}
             </div>
@@ -497,21 +539,23 @@ const RightSidebar = () => {
 
           {/* NOTE Layout Position */}
           <div className="mt-5">
-            <h3 className="font-poppins-rg text-[13px] uppercase text-[#665057]">
+            <h3
+              className={`${globalStyleObj.text13Light550Dark550Sb} uppercase`}
+            >
               Layout Position
             </h3>
-            <p className="text-soft text-[13px]">
+            <p className={`${globalStyleObj.text13Light400}`}>
               Choose Fixed or Scrollable Layout Position.
             </p>
 
-            <div className="mt-5 overflow-hidden rounded-[3px]">
+            <div className="mt-5 overflow-hidden rounded-[4px]">
               {rightSidbarLayoutPositionData.map((position) => (
                 <button
                   key={position.id}
-                  className={`w-[95px] cursor-pointer py-[6px] font-poppins-rg text-[13px] transition-all duration-500 ease-in-out ${
+                  className={`w-[95px] cursor-pointer py-[6px] font-poppins-md text-[13px] ${
                     layoutPositionType === position.id
-                      ? "bg-[#d4ebf8] text-[#659cdb]"
-                      : "bg-[#f3f6f9] text-black"
+                      ? "transition-300 bg-[#d4ebf8] text-[#279CDB] dark:bg-[#223D4D]"
+                      : `${globalStyleObj.layoutBoxBackgroundLightDark} ${globalStyleObj.text13Light600Dark400} transition-300`
                   }`}
                   onClick={() =>
                     dispatch(changeLayoutPositionType(position.id))
@@ -525,10 +569,12 @@ const RightSidebar = () => {
 
           {/* NOTE Topbar Color */}
           <div className="mt-5">
-            <h3 className="font-poppins-rg text-[13px] uppercase text-[#665057]">
+            <h3
+              className={`${globalStyleObj.text13Light550Dark550Sb} uppercase`}
+            >
               Topbar Color
             </h3>
-            <p className="text-soft text-[13px]">
+            <p className={`${globalStyleObj.text13Light400}`}>
               Choose Light or Dark Topbar Color.
             </p>
             <div className="mt-5 flex flex-wrap items-center gap-3">
@@ -541,46 +587,20 @@ const RightSidebar = () => {
                     dispatch(changeTopbarColorType(topbarColor.id))
                   }
                 >
-                  <span
+                  <div
                     className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
                       topbarColorType === topbarColor.id
                         ? "border border-[#405189]"
-                        : ""
+                        : "border dark:border-dark-weight-550"
                     }`}
                   >
-                    <span className={`flex size-full gap-2`}>
-                      <span
-                        className={`flex h-full w-[25px] flex-col bg-[#f3f6f9] p-[4px]`}
-                      >
-                        <span
-                          className={`h-[8px] w-full rounded-lg bg-[#e2e5ed]`}
-                        ></span>
-                        <span className="flex h-full flex-col justify-center gap-1">
-                          {["c-box-1", "c-box-2", "c-box-3"].map((box) => (
-                            <span
-                              key={box}
-                              className={`h-[4px] w-full bg-[#e2e5ed]`}
-                            ></span>
-                          ))}
-                        </span>
-                      </span>
-                      <span
-                        className={`flex size-full flex-col justify-between`}
-                      >
-                        {["c-inner-box-1", "c-inner-box-2"].map(
-                          (innerBox, index) => (
-                            <span
-                              key={innerBox}
-                              className={`h-[8px] w-full ${
-                                topbarColor.id === "dark-color" && index === 0
-                                  ? "bg-[#405189]"
-                                  : "bg-[#f3f6f9]"
-                              }`}
-                            ></span>
-                          )
-                        )}
-                      </span>
-                    </span>
+                    <div className={`flex size-full gap-2`}>
+                      {topbarColor.id === "dark-color" ? (
+                        <CommonRightSidebarLayout extraClass="bg-[#405189]" />
+                      ) : (
+                        <CommonRightSidebarLayout />
+                      )}
+                    </div>
                     {topbarColorType === topbarColor.id && (
                       <FaCheckCircle
                         color="#405189"
@@ -588,10 +608,12 @@ const RightSidebar = () => {
                         className="absolute right-[7px] top-[7px]"
                       />
                     )}
-                  </span>
-                  <span className="mx-auto font-poppins-md text-[13px] tracking-wide text-[#665057]">
+                  </div>
+                  <h4
+                    className={`mx-auto tracking-wide ${globalStyleObj.text13Light550Dark550Md}`}
+                  >
                     {topbarColor.label}
-                  </span>
+                  </h4>
                 </button>
               ))}
             </div>
@@ -599,10 +621,14 @@ const RightSidebar = () => {
 
           {/* NOTE Sidebar Size */}
           <div className="mt-5">
-            <h3 className="font-poppins-rg text-[13px] uppercase text-[#665057]">
+            <h3
+              className={`${globalStyleObj.text13Light550Dark550Sb} uppercase`}
+            >
               Sidebar Size
             </h3>
-            <p className="text-soft text-[13px]">Choose a size of Sidebar.</p>
+            <p className={`${globalStyleObj.text13Light400}`}>
+              Choose a size of Sidebar.
+            </p>
             <div className="mt-5 flex flex-wrap items-center gap-2">
               {/* Default Size */}
               <button
@@ -610,25 +636,16 @@ const RightSidebar = () => {
                 className="group flex cursor-pointer flex-col items-center gap-1"
                 onClick={() => dispatch(changeLeftSidbarSizeMain("lg"))}
               >
-                <span
-                  className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
-                    leftSidbarSizeMain === "lg" ? "border border-[#405189]" : ""
+                <div
+                  className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] group-hover:shadow-light ${
+                    leftSidbarSizeMain === "lg"
+                      ? "border border-[#405189]"
+                      : "border dark:border-dark-weight-550"
                   }`}
                 >
-                  <span className="flex size-full gap-2">
-                    <span className="flex h-full w-[25px] flex-col bg-[#f3f6f9] p-[4px]">
-                      <span className="h-[8px] w-full rounded-lg bg-[#e2e5ed]"></span>
-                      <span className="flex h-full flex-col justify-center gap-1">
-                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
-                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
-                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
-                      </span>
-                    </span>
-                    <span className="flex size-full flex-col justify-between">
-                      <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
-                      <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
-                    </span>
-                  </span>
+                  <div className="flex size-full gap-2">
+                    <CommonRightSidebarLayout />
+                  </div>
                   {leftSidbarSizeMain === "lg" && (
                     <FaCheckCircle
                       color="#405189"
@@ -636,10 +653,12 @@ const RightSidebar = () => {
                       className="absolute right-[7px] top-[7px]"
                     />
                   )}
-                </span>
-                <span className="mx-auto font-poppins-md text-[13px] tracking-wide text-[#665057]">
+                </div>
+                <h4
+                  className={`mx-auto tracking-wide ${globalStyleObj.text13Light550Dark550Md}`}
+                >
                   Default
-                </span>
+                </h4>
               </button>
 
               {/* Compact Size */}
@@ -648,25 +667,38 @@ const RightSidebar = () => {
                 className="group flex cursor-pointer flex-col items-center gap-1"
                 onClick={() => dispatch(changeLeftSidbarSizeMain("md"))}
               >
-                <span
+                <div
                   className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
-                    leftSidbarSizeMain === "md" ? "border-[#405189]" : ""
+                    leftSidbarSizeMain === "md"
+                      ? "border border-[#405189]"
+                      : "border dark:border-dark-weight-550"
                   }`}
                 >
-                  <span className="flex size-full gap-2">
-                    <span className="flex h-full w-[17px] flex-col bg-[#f3f6f9] p-[4px]">
-                      <span className="h-[8px] w-full rounded-full bg-[#e2e5ed]"></span>
-                      <span className="flex h-full flex-col justify-center gap-1">
-                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
-                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
-                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
-                      </span>
-                    </span>
-                    <span className="flex size-full flex-col justify-between">
-                      <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
-                      <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
-                    </span>
-                  </span>
+                  <div className="flex size-full gap-2">
+                    <div
+                      className={`flex h-full w-[17px] flex-col ${globalStyleObj.layoutBoxBackgroundLightDark} p-[4px]`}
+                    >
+                      <span
+                        className={`h-[8px] w-full rounded-full ${globalStyleObj.layoutInnerBoxBackgroundLightDark}`}
+                      ></span>
+                      <div className="flex h-full flex-col justify-center gap-1">
+                        {["box-1", "box-2", "box-3"].map((box) => (
+                          <span
+                            key={box}
+                            className={`h-[4px] w-full ${globalStyleObj.layoutInnerBoxBackgroundLightDark}`}
+                          ></span>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="flex size-full flex-col justify-between">
+                      {["box-1", "box-2"].map((box) => (
+                        <div
+                          key={box}
+                          className={`h-[8px] w-full ${globalStyleObj.layoutBoxBackgroundLightDark}`}
+                        ></div>
+                      ))}
+                    </div>
+                  </div>
 
                   {leftSidbarSizeMain === "md" && (
                     <FaCheckCircle
@@ -675,10 +707,12 @@ const RightSidebar = () => {
                       className="absolute right-[7px] top-[7px]"
                     />
                   )}
-                </span>
-                <span className="mx-auto font-poppins-md text-[13px] tracking-wide text-[#665057]">
+                </div>
+                <h4
+                  className={`mx-auto tracking-wide ${globalStyleObj.text13Light550Dark550Md}`}
+                >
                   Compact
-                </span>
+                </h4>
               </button>
 
               {/* Small (Icon View) Size */}
@@ -687,26 +721,39 @@ const RightSidebar = () => {
                 className="group flex cursor-pointer flex-col items-center gap-1"
                 onClick={() => dispatch(changeLeftSidbarSizeMain("sm"))}
               >
-                <span
-                  className={`relative h-[70px] w-[110px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
-                    leftSidbarSizeMain === "sm" ? "border border-[#405189]" : ""
+                <div
+                  className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
+                    leftSidbarSizeMain === "sm"
+                      ? "border border-[#405189]"
+                      : "border dark:border-dark-weight-550"
                   }`}
                 >
-                  <span className="flex size-full gap-1">
-                    <span className="flex h-full w-[10px] flex-col bg-[#f3f6f9]">
-                      <span className="h-[8px] w-full bg-[#e2e5ed]"></span>
-                      <span className="flex h-full flex-col justify-center gap-1">
-                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
-                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
-                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
-                      </span>
-                    </span>
+                  <div className="flex size-full gap-1">
+                    <div
+                      className={`flex h-full w-[10px] flex-col ${globalStyleObj.layoutBoxBackgroundLightDark}`}
+                    >
+                      <span
+                        className={`h-[8px] w-full ${globalStyleObj.layoutInnerBoxBackgroundLightDark}`}
+                      ></span>
+                      <div className="flex h-full flex-col justify-center gap-1">
+                        {["box-1", "box-2", "box-3"].map((box) => (
+                          <span
+                            key={box}
+                            className={`h-[4px] w-full ${globalStyleObj.layoutInnerBoxBackgroundLightDark}`}
+                          ></span>
+                        ))}
+                      </div>
+                    </div>
 
-                    <span className="flex size-full flex-col justify-between">
-                      <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
-                      <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
-                    </span>
-                  </span>
+                    <div className="flex size-full flex-col justify-between">
+                      {["box-1", "box-2"].map((box) => (
+                        <div
+                          key={box}
+                          className={`h-[8px] w-full ${globalStyleObj.layoutBoxBackgroundLightDark}`}
+                        ></div>
+                      ))}
+                    </div>
+                  </div>
 
                   {leftSidbarSizeMain === "sm" && (
                     <FaCheckCircle
@@ -715,10 +762,12 @@ const RightSidebar = () => {
                       className="absolute right-[7px] top-[7px]"
                     />
                   )}
-                </span>
-                <span className="mx-auto text-center font-poppins-md text-[13px] tracking-tighter text-[#665057]">
-                  Small (Icon View)
-                </span>
+                </div>
+                <h4
+                  className={`mx-auto tracking-wide ${globalStyleObj.text13Light550Dark550Md}`}
+                >
+                  Small Icon
+                </h4>
               </button>
 
               {/* Small Hover View Size */}
@@ -727,28 +776,39 @@ const RightSidebar = () => {
                 className="group flex cursor-pointer flex-col items-center gap-1"
                 onClick={() => dispatch(changeLeftSidbarSizeMain("sm-hover"))}
               >
-                <span
-                  className={`relative h-[70px] w-[110px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
+                <div
+                  className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
                     leftSidbarSizeMain === "sm-hover"
                       ? "border border-[#405189]"
-                      : ""
+                      : "border dark:border-dark-weight-550"
                   }`}
                 >
-                  <span className="flex size-full gap-1">
-                    <span className="flex h-full w-[10px] flex-col bg-[#f3f6f9]">
-                      <span className="h-[8px] w-full bg-[#e2e5ed]"></span>
-                      <span className="flex h-full flex-col justify-center gap-1">
-                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
-                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
-                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
-                      </span>
-                    </span>
+                  <div className="flex size-full gap-1">
+                    <div
+                      className={`flex h-full w-[10px] flex-col ${globalStyleObj.layoutBoxBackgroundLightDark}`}
+                    >
+                      <span
+                        className={`h-[8px] w-full ${globalStyleObj.layoutInnerBoxBackgroundLightDark}`}
+                      ></span>
+                      <div className="flex h-full flex-col justify-center gap-1">
+                        {["box-1", "box-2", "box-3"].map((box) => (
+                          <span
+                            key={box}
+                            className={`h-[4px] w-full ${globalStyleObj.layoutInnerBoxBackgroundLightDark}`}
+                          ></span>
+                        ))}
+                      </div>
+                    </div>
 
-                    <span className="flex size-full flex-col justify-between">
-                      <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
-                      <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
-                    </span>
-                  </span>
+                    <div className="flex size-full flex-col justify-between">
+                      {["box-1", "box-2"].map((box) => (
+                        <div
+                          key={box}
+                          className={`h-[8px] w-full ${globalStyleObj.layoutBoxBackgroundLightDark}`}
+                        ></div>
+                      ))}
+                    </div>
+                  </div>
 
                   {leftSidbarSizeMain === "sm-hover" && (
                     <FaCheckCircle
@@ -757,20 +817,26 @@ const RightSidebar = () => {
                       className="absolute right-[7px] top-[7px]"
                     />
                   )}
-                </span>
-                <span className="mx-auto text-center font-poppins-md text-[13px] tracking-tighter text-[#665057]">
-                  Small Hover View
-                </span>
+                </div>
+                <h4
+                  className={`mx-auto tracking-wide ${globalStyleObj.text13Light550Dark550Md}`}
+                >
+                  Small Hover
+                </h4>
               </button>
             </div>
           </div>
 
           {/* NOTE Sidebar View */}
           <div className="mt-5">
-            <h3 className="font-poppins-rg text-[13px] uppercase text-[#665057]">
-              Sidebar Size
+            <h3
+              className={`${globalStyleObj.text13Light550Dark550Sb} uppercase`}
+            >
+              Sidebar View
             </h3>
-            <p className="text-soft text-[13px]">Choose a size of Sidebar.</p>
+            <p className={`${globalStyleObj.text13Light400}`}>
+              Choose Default or Detached Sidebar view.
+            </p>
 
             <div className="mt-5 flex flex-wrap items-center gap-2">
               {/* Default View */}
@@ -779,27 +845,16 @@ const RightSidebar = () => {
                 className="group flex cursor-pointer flex-col items-center gap-1"
                 onClick={() => dispatch(changeLeftSidebarViewType("default"))}
               >
-                <span
+                <div
                   className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
                     leftSidebarViewType === "default"
                       ? "border border-[#405189]"
-                      : ""
+                      : "border dark:border-dark-weight-550"
                   }`}
                 >
-                  <span className="flex size-full gap-2">
-                    <span className="flex h-full w-[25px] flex-col bg-[#f3f6f9] p-[4px]">
-                      <span className="h-[8px] w-full rounded-lg bg-[#e2e5ed]"></span>
-                      <span className="flex h-full flex-col justify-center gap-1">
-                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
-                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
-                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
-                      </span>
-                    </span>
-                    <span className="flex size-full flex-col justify-between">
-                      <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
-                      <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
-                    </span>
-                  </span>
+                  <div className="flex size-full gap-2">
+                    <CommonRightSidebarLayout />
+                  </div>
                   {leftSidebarViewType === "default" && (
                     <FaCheckCircle
                       color="#405189"
@@ -807,10 +862,12 @@ const RightSidebar = () => {
                       className="absolute right-[7px] top-[7px]"
                     />
                   )}
-                </span>
-                <span className="mx-auto font-poppins-md text-[13px] tracking-wide text-[#665057]">
+                </div>
+                <h4
+                  className={`mx-auto tracking-wide ${globalStyleObj.text13Light550Dark550Md}`}
+                >
                   Default
-                </span>
+                </h4>
               </button>
 
               {/* Detached View */}
@@ -819,28 +876,45 @@ const RightSidebar = () => {
                 className="group flex cursor-pointer flex-col items-center gap-1"
                 onClick={() => dispatch(changeLeftSidebarViewType("detached"))}
               >
-                <span
+                <div
                   className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
-                    leftSidebarViewType === "detached" ? "border-[#405189]" : ""
+                    leftSidebarViewType === "detached"
+                      ? "border border-[#405189]"
+                      : "border dark:border-dark-weight-550"
                   }`}
                 >
-                  <span className="flex size-full flex-col justify-between gap-1">
-                    <span className="flex h-[17px] w-full items-center justify-between bg-[#f3f6f9] px-[5px]">
-                      <span className="size-[8px] rounded-full bg-[#e2e5ed]"></span>
-                      <span className="flex items-center gap-2">
-                        <span className="h-[4px] w-[16px] bg-[#e2e5ed]"></span>
-                        <span className="h-[4px] w-[16px] bg-[#e2e5ed]"></span>
-                      </span>
-                    </span>
+                  <div className="flex size-full flex-col justify-between gap-1">
+                    <div
+                      className={`flex min-h-[15px] w-full items-center justify-between ${globalStyleObj.layoutBoxBackgroundLightDark} px-[5px]`}
+                    >
+                      <span
+                        className={`size-[8px] rounded-full ${globalStyleObj.layoutInnerBoxBackgroundLightDark}`}
+                      ></span>
+                      <div className="flex items-center gap-2">
+                        <span
+                          className={`h-[4px] w-[16px] ${globalStyleObj.layoutInnerBoxBackgroundLightDark}`}
+                        ></span>
+                        <span
+                          className={`h-[4px] w-[16px] ${globalStyleObj.layoutInnerBoxBackgroundLightDark}`}
+                        ></span>
+                      </div>
+                    </div>
 
-                    <span className=" ml-1 mt-[4px] flex h-full w-[24px] flex-col items-center gap-1 rounded-[4px] bg-[#f3f6f9] p-1">
-                      <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
-                      <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
-                      <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
-                    </span>
+                    <div
+                      className={`ml-[8px] flex h-full w-[24px] flex-col items-center gap-1 rounded-[3px] ${globalStyleObj.layoutBoxBackgroundLightDark} p-1`}
+                    >
+                      {["box-1", "box-2", "box-3"].map((box) => (
+                        <span
+                          key={box}
+                          className={`h-[4px] w-full ${globalStyleObj.layoutInnerBoxBackgroundLightDark}`}
+                        ></span>
+                      ))}
+                    </div>
 
-                    <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
-                  </span>
+                    <div
+                      className={`min-h-[8px] w-full ${globalStyleObj.layoutBoxBackgroundLightDark}`}
+                    ></div>
+                  </div>
 
                   {leftSidebarViewType === "detached" && (
                     <FaCheckCircle
@@ -849,20 +923,24 @@ const RightSidebar = () => {
                       className="absolute right-[7px] top-[7px]"
                     />
                   )}
-                </span>
-                <span className="mx-auto font-poppins-md text-[13px] tracking-wide text-[#665057]">
+                </div>
+                <h4
+                  className={`mx-auto tracking-wide ${globalStyleObj.text13Light550Dark550Md}`}
+                >
                   Detached
-                </span>
+                </h4>
               </button>
             </div>
           </div>
 
           {/* NOTE Sidebar Color */}
           <div className="mt-5">
-            <h3 className="font-poppins-rg text-[13px] uppercase text-[#665057]">
+            <h3
+              className={`${globalStyleObj.text13Light550Dark550Sb} uppercase`}
+            >
               Sidebar Color
             </h3>
-            <p className="text-soft text-[13px]">
+            <p className={`${globalStyleObj.text13Light400}`}>
               Choose Light or Dark Sidebar Color.
             </p>
 
@@ -876,23 +954,23 @@ const RightSidebar = () => {
                     dispatch(changeLeftSidebarColorType(eachColor.id))
                   }
                 >
-                  <span
+                  <div
                     className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
                       leftSidebarColorType === eachColor.id
                         ? "border border-[#405189]"
-                        : ""
+                        : "border dark:border-dark-weight-550"
                     }`}
                   >
-                    <span className="flex size-full gap-2">
-                      <span
+                    <div className="flex size-full gap-2">
+                      <div
                         className={`flex h-full w-[25px] flex-col p-[4px] ${
                           eachColor.leftColor
-                        } ${index === 0 ? "border-r" : ""}`}
+                        } ${index === 0 ? "border-r dark:border-none" : ""}`}
                       >
                         <span
                           className={`h-[8px] w-full rounded-lg ${eachColor.leftInnerColor}`}
                         ></span>
-                        <span className="flex h-full flex-col justify-center gap-1">
+                        <div className="flex h-full flex-col justify-center gap-1">
                           <span
                             className={`h-[4px] w-full ${eachColor.leftInnerColor}`}
                           ></span>
@@ -902,13 +980,17 @@ const RightSidebar = () => {
                           <span
                             className={`h-[4px] w-full ${eachColor.leftInnerColor}`}
                           ></span>
-                        </span>
-                      </span>
-                      <span className="flex size-full flex-col justify-between">
-                        <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
-                        <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
-                      </span>
-                    </span>
+                        </div>
+                      </div>
+                      <div className="flex size-full flex-col justify-between">
+                        <div
+                          className={`h-[8px] w-full ${globalStyleObj.layoutBoxBackgroundLightDark}`}
+                        ></div>
+                        <div
+                          className={`h-[8px] w-full ${globalStyleObj.layoutBoxBackgroundLightDark}`}
+                        ></div>
+                      </div>
+                    </div>
                     {leftSidebarColorType === eachColor.id && (
                       <FaCheckCircle
                         color="#405189"
@@ -916,16 +998,20 @@ const RightSidebar = () => {
                         className="absolute right-[7px] top-[7px]"
                       />
                     )}
-                  </span>
-                  <span className="mx-auto font-poppins-md text-[13px] tracking-wide text-[#665057]">
+                  </div>
+                  <h4
+                    className={`mx-auto tracking-wide ${globalStyleObj.text13Light550Dark550Md}`}
+                  >
                     {eachColor.label}
-                  </span>
+                  </h4>
                 </button>
               ))}
             </div>
 
             {leftSidebarColorType === "gradient-bg-color" && (
-              <div className="mt-4 flex flex-wrap items-center gap-2 rounded-[4px] bg-[#f3f6f9] px-[16px] py-[8px]">
+              <div
+                className={`mt-4 flex flex-wrap items-center gap-2 rounded-[4px] ${globalStyleObj.layoutBoxBackgroundLightDark} px-[16px] py-[8px]`}
+              >
                 {rightSidbarColorData[2].childrenElem.map((eachChild) => (
                   <button
                     key={eachChild.id}
@@ -948,10 +1034,14 @@ const RightSidebar = () => {
 
           {/* NOTE Sidebar Images */}
           <div className="mt-5">
-            <h3 className="font-poppins-rg text-[13px] uppercase text-[#665057]">
+            <h3
+              className={`${globalStyleObj.text13Light550Dark550Sb} uppercase`}
+            >
               Sidebar Images
             </h3>
-            <p className="text-soft text-[13px]">Choose a image of Sidebar.</p>
+            <p className={`${globalStyleObj.text13Light400}`}>
+              Choose a image of Sidebar.
+            </p>
 
             <div className="mt-5 flex flex-wrap items-center gap-3">
               {rightSidebarImagesData.map((imgBtn, index) => (
@@ -963,7 +1053,7 @@ const RightSidebar = () => {
                   } ${
                     leftSidebarImageType === imgBtn.id
                       ? "border border-[#405189]"
-                      : "border"
+                      : "border dark:border-dark-weight-550"
                   }`}
                   onClick={() =>
                     dispatch(changeLeftSidebarImageType(imgBtn.id))
@@ -976,7 +1066,7 @@ const RightSidebar = () => {
                         color="#fff"
                         className="z-[99] rounded-full border border-[#405189]"
                       />
-                      <span className="absolute inset-0 size-full bg-[#405582]/50"></span>
+                      <div className="absolute inset-0 size-full bg-[#405582]/30 dark:bg-[#405582]/90"></div>
                     </>
                   ) : index === 0 ? (
                     <MdClose size={16} />
@@ -988,10 +1078,14 @@ const RightSidebar = () => {
 
           {/* NOTE Sidebar Primary Color */}
           <div className="mt-5">
-            <h3 className="font-poppins-rg text-[13px] uppercase text-[#665057]">
+            <h3
+              className={`${globalStyleObj.text13Light550Dark550Sb} uppercase`}
+            >
               Primary Color
             </h3>
-            <p className="text-soft text-[13px]">Choose a color of Primary.</p>
+            <p className={`${globalStyleObj.text13Light400}`}>
+              Choose a color of Primary.
+            </p>
 
             <div className="mt-4 flex flex-wrap items-center gap-3">
               {rightSidebarPrimaryColorData.map((pColor) => (
@@ -1015,10 +1109,14 @@ const RightSidebar = () => {
 
           {/* Preloader */}
           <div className="mt-5">
-            <h3 className="font-poppins-rg text-[13px] uppercase text-[#665057]">
+            <h3
+              className={`${globalStyleObj.text13Light550Dark550Sb} uppercase`}
+            >
               Preloader
             </h3>
-            <p className="text-soft text-[13px]">Choose a preloader.</p>
+            <p className={`${globalStyleObj.text13Light400}`}>
+              Choose a preloader.
+            </p>
 
             <div className="mt-4 flex flex-wrap items-center gap-3">
               {/* Top Loader */}
@@ -1027,13 +1125,15 @@ const RightSidebar = () => {
                 className="group flex cursor-pointer flex-col items-center gap-1"
                 onClick={() => dispatch(changePreloader("top-loader"))}
               >
-                <span
+                <div
                   className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
-                    preloader === "top-loader" ? "border border-[#405189]" : ""
+                    preloader === "top-loader"
+                      ? "border border-[#405189]"
+                      : "border dark:border-dark-weight-550"
                   }`}
                 >
-                  <span className="relative flex size-full gap-2">
-                    <motion.span
+                  <div className="relative flex size-full gap-2">
+                    <motion.div
                       initial={{ width: 0 }}
                       animate={{ width: [0, "100%"] }}
                       transition={{
@@ -1042,21 +1142,11 @@ const RightSidebar = () => {
                         repeat: Infinity,
                         repeatDelay: 1,
                       }}
-                      className="absolute left-0 top-0 h-[3px] bg-[#405189]"
-                    ></motion.span>
-                    <span className="flex h-full w-[25px] flex-col bg-[#f3f6f9] p-[4px]">
-                      <span className="h-[8px] w-full rounded-lg bg-[#e2e5ed]"></span>
-                      <span className="flex h-full flex-col justify-center gap-1">
-                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
-                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
-                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
-                      </span>
-                    </span>
-                    <span className="flex size-full flex-col justify-between">
-                      <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
-                      <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
-                    </span>
-                  </span>
+                      className="absolute left-0 top-0 h-[3px] bg-[#e61247]"
+                    ></motion.div>
+
+                    <CommonRightSidebarLayout />
+                  </div>
                   {preloader === "top-loader" && (
                     <FaCheckCircle
                       color="#405189"
@@ -1064,10 +1154,10 @@ const RightSidebar = () => {
                       className="absolute right-[7px] top-[7px]"
                     />
                   )}
-                </span>
-                <span className="mx-auto font-poppins-md text-[13px] tracking-wide text-[#665057]">
+                </div>
+                <h4 className="mx-auto font-poppins-md text-[13px] tracking-wide text-[#665057]">
                   Top Loader
-                </span>
+                </h4>
               </button>
 
               {/* Spinner */}
@@ -1076,12 +1166,14 @@ const RightSidebar = () => {
                 className="group flex cursor-pointer flex-col items-center gap-1"
                 onClick={() => dispatch(changePreloader("spinner"))}
               >
-                <span
+                <div
                   className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
-                    preloader === "spinner" ? "border border-[#405189]" : ""
+                    preloader === "spinner"
+                      ? "border border-[#405189]"
+                      : "border dark:border-dark-weight-550"
                   }`}
                 >
-                  <span className="relative flex size-full gap-2">
+                  <div className="relative flex size-full gap-2">
                     <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
                       <ClipLoader
                         size={25}
@@ -1090,19 +1182,9 @@ const RightSidebar = () => {
                         cssOverride={{ borderWidth: "3px" }}
                       />
                     </span>
-                    <span className="flex h-full w-[25px] flex-col bg-[#f3f6f9] p-[4px]">
-                      <span className="h-[8px] w-full rounded-lg bg-[#e2e5ed]"></span>
-                      <span className="flex h-full flex-col justify-center gap-1">
-                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
-                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
-                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
-                      </span>
-                    </span>
-                    <span className="flex size-full flex-col justify-between">
-                      <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
-                      <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
-                    </span>
-                  </span>
+
+                    <CommonRightSidebarLayout />
+                  </div>
                   {preloader === "spinner" && (
                     <FaCheckCircle
                       color="#405189"
@@ -1110,10 +1192,10 @@ const RightSidebar = () => {
                       className="absolute right-[7px] top-[7px]"
                     />
                   )}
-                </span>
-                <span className="mx-auto font-poppins-md text-[13px] tracking-wide text-[#665057]">
+                </div>
+                <h4 className="mx-auto font-poppins-md text-[13px] tracking-wide text-[#665057]">
                   Spinner
-                </span>
+                </h4>
               </button>
 
               {/* Disable */}
@@ -1122,25 +1204,16 @@ const RightSidebar = () => {
                 className="group flex cursor-pointer flex-col items-center gap-1"
                 onClick={() => dispatch(changePreloader("disable"))}
               >
-                <span
+                <div
                   className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
-                    preloader === "disable" ? "border border-[#405189]" : ""
+                    preloader === "disable"
+                      ? "border border-[#405189]"
+                      : "border dark:border-dark-weight-550"
                   }`}
                 >
-                  <span className="flex size-full gap-2">
-                    <span className="flex h-full w-[25px] flex-col bg-[#f3f6f9] p-[4px]">
-                      <span className="h-[8px] w-full rounded-lg bg-[#e2e5ed]"></span>
-                      <span className="flex h-full flex-col justify-center gap-1">
-                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
-                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
-                        <span className="h-[4px] w-full bg-[#e2e5ed]"></span>
-                      </span>
-                    </span>
-                    <span className="flex size-full flex-col justify-between">
-                      <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
-                      <span className="h-[8px] w-full bg-[#f3f6f9]"></span>
-                    </span>
-                  </span>
+                  <div className="flex size-full gap-2">
+                    <CommonRightSidebarLayout />
+                  </div>
                   {preloader === "disable" && (
                     <FaCheckCircle
                       color="#405189"
@@ -1148,10 +1221,10 @@ const RightSidebar = () => {
                       className="absolute right-[7px] top-[7px]"
                     />
                   )}
-                </span>
-                <span className="mx-auto font-poppins-md text-[13px] tracking-wide text-[#665057]">
+                </div>
+                <h4 className="mx-auto font-poppins-md text-[13px] tracking-wide text-[#665057]">
                   Disable
-                </span>
+                </h4>
               </button>
             </div>
           </div>

@@ -16,6 +16,7 @@ import {
   profileDataGroup1,
   profileDataGroup2,
 } from "@/app/assets/navData/navData";
+import { globalStyleObj } from "@/app/assets/styles";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -146,9 +147,9 @@ const NavProfile = () => {
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger
           asChild
-          className="md:background-light800_dark100 h-full cursor-pointer px-4"
+          className="h-full cursor-pointer px-4 sm:ml-2 md:bg-light-dencity-800 md:dark:bg-dark-dencity-100"
         >
-          <span className="flex items-center gap-[10px]">
+          <span className={`${globalStyleObj.flexStart} gap-[10px]`}>
             <Image
               alt="User settings"
               src={avatarImg}
@@ -161,12 +162,14 @@ const NavProfile = () => {
                 <BeatLoader size={5} color="#b9b1b1" />
               ) : (
                 <>
-                  <span className={`text-13-light500_dark550`}>
+                  <span className={`${globalStyleObj.text13Light550Dark550}`}>
                     {session && session.data
                       ? session.data.user.username
                       : profileName}
                   </span>
-                  <span className={`text-11-light400`}>Founder</span>
+                  <span className={`${globalStyleObj.text11Light400}`}>
+                    Founder
+                  </span>
                 </>
               )}
             </span>
@@ -175,13 +178,13 @@ const NavProfile = () => {
         <DropdownMenuContent
           align="end"
           side="bottom"
-          className="background-light900_dark200 border-none px-3 py-2"
+          className={`${globalStyleObj.backgroundLight900Dark200} border-none px-3 py-2`}
         >
           <DropdownMenuLabel>
             {isFetching ? (
               <BeatLoader size={3} color="#b9b1b1" />
             ) : (
-              <span className="font-poppins-extra-light text-[12px] tracking-wide text-light-weight-400">
+              <span className="font-poppins-light text-[12px] tracking-wide text-light-weight-400">
                 {`Welcome ${session && session.data ? session.data.user.username : profileName}!`}
               </span>
             )}
@@ -194,7 +197,7 @@ const NavProfile = () => {
               <Link key={tab.id} href={tab.linkAddress}>
                 <DropdownMenuItem className="cursor-pointer">
                   {tab.icon}
-                  <span className="font-poppins-rg text-[13px] text-dark-weight-600 dark:text-light-weight-400">
+                  <span className={`${globalStyleObj.text13Light600Dark400}`}>
                     {tab.label}
                   </span>
                 </DropdownMenuItem>
@@ -209,12 +212,14 @@ const NavProfile = () => {
               <Link key={tabData.id} href={tabData.linkAddress}>
                 <DropdownMenuItem className="cursor-pointer">
                   {tabData.icon}
-                  <span className="flex-between w-full">
-                    <span className="font-poppins-rg text-[13px] text-dark-weight-600 dark:text-light-weight-400">
+                  <span className={`${globalStyleObj.flexBetween} w-full`}>
+                    <span className={`${globalStyleObj.text13Light600Dark400}`}>
                       {tabData.label}
                     </span>
                     {tabData.subLabel ? (
-                      <span className="ml-2 font-poppins-md text-[13px] text-dark-weight-600 dark:text-light-weight-450">
+                      <span
+                        className={`${globalStyleObj.text13Light600Dark450} ml-2`}
+                      >
                         {tabData.subLabel}
                       </span>
                     ) : tabData.isNew ? (
@@ -234,7 +239,7 @@ const NavProfile = () => {
               className="cursor-pointer"
             >
               <MdLogout size={16} color="#878a99" />
-              <span className="font-poppins-rg text-[13px] text-dark-weight-600 dark:text-light-weight-400">
+              <span className={`${globalStyleObj.text13Light600Dark400}`}>
                 Logout
               </span>
             </DropdownMenuItem>

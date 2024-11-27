@@ -15,6 +15,7 @@ import {
 } from "../..";
 
 import { layout } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
+import { globalStyleObj } from "@/app/assets/styles";
 
 const Navbar = ({
   topbarColorType,
@@ -25,9 +26,9 @@ const Navbar = ({
 }) => {
   return (
     <nav
-      className={`background-light900_dark200 flex-between sticky top-0 h-[70px] shadow-light ${layoutType === layout.HORIZONTAL ? "px-10" : "px-5"}`}
+      className={`${globalStyleObj.backgroundLight900Dark200} ${globalStyleObj.flexBetween} sticky top-0 h-[70px] shadow-light ${layoutType === layout.HORIZONTAL ? "px-10" : "px-5"}`}
     >
-      <div className="flex-start h-full gap-2 md:gap-5">
+      <div className={`${globalStyleObj.flexStart} h-full gap-2 md:gap-5`}>
         {layoutType === layout.HORIZONTAL && <NavLogo />}
 
         <ToggleButton
@@ -39,7 +40,9 @@ const Navbar = ({
         <NavSearchBox leftSidbarSizeType={leftSidbarSizeType} />
       </div>
 
-      <div className="flex-start h-full gap-2 sm:gap-0 lg:gap-2">
+      <div
+        className={`${globalStyleObj.flexStart} h-full gap-2 sm:gap-0 lg:gap-2`}
+      >
         <NavbarSearchSmallDevice />
 
         <NavbarLanguages />

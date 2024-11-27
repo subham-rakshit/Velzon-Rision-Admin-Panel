@@ -6,6 +6,7 @@ import { BiCategoryAlt } from "react-icons/bi";
 import { IoIosArrowForward } from "react-icons/io";
 
 import { webAppsData } from "@/app/assets/navData/navData";
+import { globalStyleObj } from "@/app/assets/styles";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,30 +20,35 @@ import {
 const NavbarWebApps = ({ topbarColorType }) => {
   return (
     <DropdownMenu modal={false}>
-      <DropdownMenuTrigger className="hover:background-light400_dark100 rounded-full p-[5px] sm:p-[10px]">
-        <BiCategoryAlt size={20} className="icon-light450_dark350" />
+      <DropdownMenuTrigger className="rounded-full p-[5px] hover:bg-light-dencity-400 dark:hover:bg-dark-dencity-100 sm:p-[10px]">
+        <BiCategoryAlt
+          size={20}
+          className={`${globalStyleObj.iconLight450Dark350}`}
+        />
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align="end"
-        className="background-light900_dark200 w-screen gap-2 border-none sm:max-w-[320px]"
+        className={`${globalStyleObj.backgroundLight900Dark200} w-screen gap-2 border-none sm:max-w-[320px]`}
       >
-        <DropdownMenuLabel className="flex-between">
-          Web Apps
+        <DropdownMenuLabel className={`${globalStyleObj.flexBetween}`}>
+          <span className={`${globalStyleObj.text16Light550Dark550}`}>
+            Web Apps
+          </span>
           <button
             type="button"
-            className="flex-start gap-1 rounded-[3px] bg-custom-blue-200 px-2 py-1 text-[11px] text-accent-light-blue hover:bg-custom-blue-500 hover:text-white dark:bg-custom-green-100 dark:hover:bg-custom-blue-500"
+            className={`${globalStyleObj.flexStart} gap-1 rounded-[3px] bg-custom-blue-200 px-2 py-1 text-[11px] text-accent-light-blue hover:bg-custom-blue-500 hover:text-white dark:bg-custom-green-100 dark:hover:bg-custom-blue-500`}
           >
             View All Apps
             <IoIosArrowForward />
           </button>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuGroup className="flex-center flex-wrap">
+        <DropdownMenuGroup className={`${globalStyleObj.flexCenter} flex-wrap`}>
           {webAppsData.map((app) => {
             return (
               <DropdownMenuItem
                 key={app.id}
-                className={`flex-col-center h-[90px] w-[100px] cursor-pointer gap-3 rounded-[4px]`}
+                className={`${globalStyleObj.flexColCenter} h-[90px] w-[100px] cursor-pointer gap-3 rounded-[4px]`}
               >
                 <Image
                   src={app.appImage}
@@ -50,7 +56,9 @@ const NavbarWebApps = ({ topbarColorType }) => {
                   width={20}
                   height={20}
                 />
-                <span className="text-13-light500_dark550 tracking-wide">
+                <span
+                  className={`${globalStyleObj.text13Light550Dark550} tracking-wide`}
+                >
                   {app.appName}
                 </span>
               </DropdownMenuItem>

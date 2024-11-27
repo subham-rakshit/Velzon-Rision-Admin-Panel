@@ -5,6 +5,8 @@ import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 import { IoAlertCircleOutline } from "react-icons/io5";
 
+import { globalStyleObj } from "@/app/assets/styles";
+
 const TextInputFile = ({
   labelText,
   labelClasses,
@@ -45,7 +47,7 @@ const TextInputFile = ({
         <Label
           htmlFor={inputId}
           value={labelText}
-          className={`${labelClasses} form-lable-text`}
+          className={`${labelClasses} ${globalStyleObj.formLabelText}`}
         />
         {pathname.includes("register") && (
           <span className="ml-1 font-bold text-red-500">*</span>
@@ -58,7 +60,7 @@ const TextInputFile = ({
           value={inputValue}
           type="text"
           placeholder={inputPlaceholder}
-          className={`form-input-text !dark:bg-white w-full rounded-lg bg-white ${
+          className={`${globalStyleObj.formInputText} !dark:bg-white w-full rounded-lg bg-white ${
             isBlank ? "border-2 border-red-500" : ""
           } ${inputExtraClasses}`}
           sizes="sm"

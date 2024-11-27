@@ -13,6 +13,7 @@ import {
   TextInputFile,
 } from "..";
 
+import { globalStyleObj } from "@/app/assets/styles";
 import ROUTES from "@/constants/routes";
 
 const LoginForm = () => {
@@ -127,11 +128,16 @@ const LoginForm = () => {
 
   return (
     <>
-      <form className="form-inner-container" onSubmit={handleFromSubmit}>
+      <form
+        className={`${globalStyleObj.formInnerContainer}`}
+        onSubmit={handleFromSubmit}
+      >
         {/* Welcome Text */}
         <div className="mb-6">
-          <h1 className="form-heading">Welcome Back !</h1>
-          <p className="form-description">Sign in to continue to Velzon</p>
+          <h1 className={`${globalStyleObj.formHeading}`}>Welcome Back !</h1>
+          <p className={`${globalStyleObj.formDescription}`}>
+            Sign in to continue to Velzon
+          </p>
         </div>
 
         {/* Form Element */}
@@ -167,7 +173,7 @@ const LoginForm = () => {
           <button
             type="submit"
             disabled={isProcessing}
-            className={`auth-button mt-3 ${
+            className={`${globalStyleObj.authButton} mt-3 ${
               isProcessing ? "cursor-not-allowed" : ""
             }`}
           >
@@ -183,14 +189,16 @@ const LoginForm = () => {
         </div>
         <div className="my-5 flex items-center gap-2">
           <hr className="grow border-t border-dotted border-gray-300" />
-          <span className="auth-direction-text">Sign in with</span>
+          <span className={`${globalStyleObj.authDescriptionText}`}>
+            Sign in with
+          </span>
           <hr className="grow border-t border-dotted border-gray-300" />
         </div>
         {/* Alternate Sign in */}
         <SocialAuthForm isRememberMe={loginData.rememberMe} />
       </form>
       {/* Sign Up */}
-      <p className="auth-direction-text text-center">
+      <p className={`${globalStyleObj.authDescriptionText}`}>
         Don&apos;t have an account?{" "}
         <Link href={ROUTES.REGISTER}>
           <span className="text-[#405189] underline">Signup</span>

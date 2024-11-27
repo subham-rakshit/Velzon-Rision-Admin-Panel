@@ -7,6 +7,7 @@ import { PiShoppingCartSimpleBold } from "react-icons/pi";
 import { RiShoppingBagLine } from "react-icons/ri";
 
 import { myCartData } from "@/app/assets/navData/navData";
+import { globalStyleObj } from "@/app/assets/styles";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -35,10 +36,15 @@ const NavbarMyCart = () => {
       <DropdownMenuTrigger asChild>
         <button
           type="button"
-          className="hover:background-light400_dark100 flex-center relative m-0 size-[30px] rounded-full p-0 sm:size-[40px]"
+          className={`${globalStyleObj.flexCenter} relative m-0 size-[30px] rounded-full p-0 hover:bg-light-dencity-400 dark:hover:bg-dark-dencity-100 sm:size-[40px]`}
         >
-          <RiShoppingBagLine size={20} className="icon-light450_dark350" />
-          <span className="flex-center absolute left-1/2 top-[-8px] rounded-full bg-[#299CDB] px-[5px] font-poppins-md text-[10px] font-semibold text-white sm:top-[-5px]">
+          <RiShoppingBagLine
+            size={20}
+            className={`${globalStyleObj.iconLight450Dark350}`}
+          />
+          <span
+            className={`${globalStyleObj.flexCenter} absolute left-1/2 top-[-8px] rounded-full bg-[#299CDB] px-[5px] font-poppins-md text-[10px] font-semibold text-white sm:top-[-5px]`}
+          >
             {cartData.length}
           </span>
         </button>
@@ -46,11 +52,15 @@ const NavbarMyCart = () => {
 
       <DropdownMenuContent
         align="end"
-        className="background-light900_dark200 max-h-[460px] w-screen gap-2 border-none sm:max-w-[420px]"
+        className={`${globalStyleObj.backgroundLight900Dark200} max-h-[460px] w-screen gap-2 border-none sm:max-w-[420px]`}
       >
-        <DropdownMenuLabel className="flex-between">
-          <span className="text-16-light550_dark550">My Cart</span>
-          <span className="flex-start gap-1 rounded-[4px] bg-custom-yellow-100 px-2 py-1 font-poppins-rg text-[11px] tracking-wider text-accent-light-yellow dark:bg-custom-yellow-400">
+        <DropdownMenuLabel className={`${globalStyleObj.flexBetween}`}>
+          <span className={`${globalStyleObj.text16Light550Dark550}`}>
+            My Cart
+          </span>
+          <span
+            className={`gap-1 rounded-[4px] bg-custom-yellow-100 px-2 py-1 font-poppins-rg text-[11px] tracking-wider text-accent-light-yellow dark:bg-custom-yellow-400`}
+          >
             {cartData.length} items
           </span>
         </DropdownMenuLabel>
@@ -70,10 +80,10 @@ const NavbarMyCart = () => {
                 <DropdownMenuItem
                   key={item.id}
                   id={item.id}
-                  className={`flex-between gap-2`}
+                  className={`${globalStyleObj.flexBetween} gap-2`}
                   as="div"
                 >
-                  <div className="flex-start gap-4">
+                  <div className={`${globalStyleObj.flexStart} gap-4`}>
                     <Image
                       src={item.productImage}
                       alt={item.productName}
@@ -82,15 +92,21 @@ const NavbarMyCart = () => {
                       className="rounded-full bg-light-dencity-800 p-2 dark:bg-dark-dencity-300"
                     />
                     <span>
-                      <span className="text-13-light500_dark550 mb-1 block">
+                      <span
+                        className={`${globalStyleObj.text13Light550Dark550} mb-1 block`}
+                      >
                         {item.productName}
                       </span>
-                      <span className="text-11-light400 block">
+                      <span
+                        className={`${globalStyleObj.text11Light400} block`}
+                      >
                         {`Quantity: ${item.productQuantity} x $${item.productPrice}`}
                       </span>
                     </span>
                   </div>
-                  <span className="flex-start text-16-light550_dark550 gap-3">
+                  <span
+                    className={`${globalStyleObj.flexStart} ${globalStyleObj.text16Light550Dark550} gap-3`}
+                  >
                     <span className="font-poppins-md">{`$${
                       item.productQuantity * item.productPrice
                     }`}</span>
@@ -106,11 +122,15 @@ const NavbarMyCart = () => {
               );
             })
           ) : (
-            <DropdownMenuItem className="flex-col-center w-full gap-4">
+            <DropdownMenuItem
+              className={`${globalStyleObj.flexColCenter} w-full gap-4`}
+            >
               <span className="rounded-full bg-custom-blue-200 p-5 dark:bg-custom-blue-400">
                 <PiShoppingCartSimpleBold size={35} color="#299CDB" />
               </span>
-              <p className="text-16-light550_dark550">Your Cart is Empty!</p>
+              <p className={`${globalStyleObj.text16Light550Dark550}`}>
+                Your Cart is Empty!
+              </p>
               <button
                 type="button"
                 className="rounded-[4px] bg-custom-green-400 px-5 py-2 font-poppins-rg text-[13px] tracking-wide text-white hover:bg-custom-green-500"
@@ -126,7 +146,7 @@ const NavbarMyCart = () => {
         <DropdownMenuGroup>
           <DropdownMenuItem
             as="div"
-            className="flex-between text-16-bold-light550_dark550"
+            className={`${globalStyleObj.flexBetween} ${globalStyleObj.text16Light550Dark550}`}
           >
             <span className="text-light-weight-400">Total:</span>
             <span>{`$${totalPrice}`}</span>
