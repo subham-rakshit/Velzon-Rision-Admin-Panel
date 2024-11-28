@@ -215,7 +215,7 @@ const LeftTwoColumnSidebar = ({
                         </div>
 
                         <ul
-                          className={`${tabDetails.firstChild.id === firstChild.id && tabDetails.firstChild.isOpen ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"} custom-left-sidebar-scrollbar overflow-y-auto transition-all duration-500`}
+                          className={`${tabDetails.firstChild.id === firstChild.id && tabDetails.firstChild.isOpen ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"} overflow-y-hidden transition-all duration-500`}
                         >
                           {firstChild.tabDropdownList.map((secondChild) =>
                             secondChild.tabDropdownList.length > 0 ? (
@@ -238,7 +238,7 @@ const LeftTwoColumnSidebar = ({
                                 </div>
 
                                 <ul
-                                  className={`${tabDetails.secondChild.id === secondChild.id && tabDetails.secondChild.isOpen ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"} custom-left-sidebar-scrollbar overflow-y-auto transition-all duration-500`}
+                                  className={`${tabDetails.secondChild.id === secondChild.id && tabDetails.secondChild.isOpen ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"} overflow-y-hidden transition-all duration-500`}
                                 >
                                   {secondChild.tabDropdownList.map(
                                     (thirdChild) =>

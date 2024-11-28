@@ -12,12 +12,11 @@ import TextInputFile from "./inputs/TextInputFile";
 import Footer from "./layoutsStyle/Footer";
 import LoadingUI from "./layoutsStyle/LoadingUI";
 import AuthProtectedLayoutProvider from "./navigation/AuthProtectedLayoutProvider";
-import LeftHorizontalSidebar from "./navigation/leftSidebar/LeftHorizontalSidebar";
+import HorizontalSidebar from "./navigation/horizontalNavigationbar/HorizontalSidebar";
 import LeftSidebar from "./navigation/leftSidebar/LeftSidebar";
 import LeftSidebarCompactView from "./navigation/leftSidebar/LeftSidebarCompactView";
 import LeftSidebarSmallIconView from "./navigation/leftSidebar/LeftSidebarSmallIconView";
 import LeftTwoColumnSidebar from "./navigation/leftSidebar/LeftTwoColumnSidebar";
-import TransitionLink from "./navigation/leftSidebar/TransitionLink";
 import Navbar from "./navigation/navbar/Navbar";
 import NavbarLanguages from "./navigation/navbar/NavbarLanguages";
 import NavbarMyCart from "./navigation/navbar/NavbarMyCart";
@@ -33,6 +32,7 @@ import NavSearchBoxRecentSearches from "./navigation/navbar/NavSearchBoxRecentSe
 import ToggleButton from "./navigation/navbar/ToggleButton";
 import CommonRightSidebarLayout from "./navigation/rightSidebar/CommonRightSidebarLayout";
 import RightSidebar from "./navigation/rightSidebar/RightSidebar";
+import TransitionLink from "./navigation/TransitionLink";
 
 export {
   SocialAuthForm,
@@ -60,7 +60,7 @@ export {
   NavProfile,
   LeftSidebar,
   LeftTwoColumnSidebar,
-  LeftHorizontalSidebar,
+  HorizontalSidebar,
   LeftSidebarSmallIconView,
   LeftSidebarCompactView,
   TransitionLink,

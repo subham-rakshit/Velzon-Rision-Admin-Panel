@@ -1,5 +1,4 @@
 import { BsStack } from "react-icons/bs";
-import { FaPencilRuler } from "react-icons/fa";
 import { FiMapPin } from "react-icons/fi";
 import { MdOutlineAccountCircle } from "react-icons/md";
 import {
@@ -11,6 +10,7 @@ import {
   RiFileList3Line,
   RiLayoutGridLine,
   RiPieChart2Line,
+  RiPencilRuler2Line,
   RiCompasses2Fill,
   RiShareLine,
 } from "react-icons/ri";
@@ -1103,7 +1103,7 @@ const leftSidebarData = [
       {
         id: "base-ui",
         tabName: "Base UI",
-        tabIcon: <FaPencilRuler />,
+        tabIcon: <RiPencilRuler2Line />,
         tabDropdownList: [
           {
             id: "base-ui-alerts",

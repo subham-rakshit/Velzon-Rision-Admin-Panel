@@ -8,11 +8,11 @@ import React, { useEffect, useState } from "react";
 import { BsDash } from "react-icons/bs";
 import { IoIosArrowForward } from "react-icons/io";
 
-import TransitionLink from "./TransitionLink";
 import logoDark from "../../../app/assets/images/logo-dark.png";
 import logoLight from "../../../app/assets/images/logo-light.png";
 import logoSmall from "../../../app/assets/images/logo-sm.png";
 import leftSidebarData from "../../../app/assets/leftSidebarData/leftSidebarData";
+import TransitionLink from "../TransitionLink";
 
 import {
   sidebarColor,
@@ -163,7 +163,7 @@ const LeftSidebar = ({
                     </div>
 
                     <ul
-                      className={`${tabDetails.parent.id === parent.id && tabDetails.parent.isOpen ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"} custom-left-sidebar-scrollbar overflow-y-auto transition-all duration-500`}
+                      className={`${tabDetails.parent.id === parent.id && tabDetails.parent.isOpen ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"} overflow-y-hidden transition-all duration-500`}
                     >
                       {parent.tabDropdownList.map((firstChild) =>
                         firstChild.tabDropdownList.length > 0 ? (
@@ -184,7 +184,7 @@ const LeftSidebar = ({
                             </div>
 
                             <ul
-                              className={`${tabDetails.firstChild.id === firstChild.id && tabDetails.firstChild.isOpen ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"} custom-left-sidebar-scrollbar overflow-y-auto transition-all duration-500`}
+                              className={`${tabDetails.firstChild.id === firstChild.id && tabDetails.firstChild.isOpen ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"} overflow-y-hidden transition-all duration-500`}
                             >
                               {firstChild.tabDropdownList.map((secondChild) =>
                                 secondChild.tabDropdownList.length > 0 ? (
@@ -209,7 +209,7 @@ const LeftSidebar = ({
                                     </div>
 
                                     <ul
-                                      className={`${tabDetails.secondChild.id === secondChild.id && tabDetails.secondChild.isOpen ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"} custom-left-sidebar-scrollbar overflow-y-auto transition-all duration-500`}
+                                      className={`${tabDetails.secondChild.id === secondChild.id && tabDetails.secondChild.isOpen ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"} overflow-y-hidden transition-all duration-500`}
                                     >
                                       {secondChild.tabDropdownList.map(
                                         (thirdChild) =>

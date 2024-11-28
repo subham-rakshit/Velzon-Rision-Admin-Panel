@@ -4,13 +4,13 @@ import NextTopLoader from "nextjs-toploader";
 import React, { useCallback, useEffect, useState } from "react";
 
 import {
-  LeftHorizontalSidebar,
   LeftSidebar,
   LeftTwoColumnSidebar,
   Navbar,
   RightSidebar,
   Footer,
   LoadingUI,
+  HorizontalSidebar,
 } from "..";
 
 import {
@@ -39,6 +39,7 @@ const AuthProtectedLayoutProvider = ({ children }) => {
 
   const [bodyLeftMargin, setBodyLeftMargin] = useState("");
   const [leftSidebarWidth, setLeftSiderbarWidth] = useState("");
+  const [horizontalNavHeight, setHorizontalNavHeight] = useState("");
 
   const dispatch = useAppDispatch();
 
@@ -47,11 +48,27 @@ const AuthProtectedLayoutProvider = ({ children }) => {
 
     if (width < 768) {
       // Small Screen
-      setBodyLeftMargin("ml-0");
-      setLeftSiderbarWidth("hidden");
+      if (layoutType === layout.HORIZONTAL) {
+        if (toggleButtonStatus) {
+          setHorizontalNavHeight("max-h-[355px]");
+        } else {
+          setHorizontalNavHeight("h-0");
+          // dispatch(changeToggleButtonStatus(true));
+        }
+      } else {
+        setBodyLeftMargin("ml-0");
+        setLeftSiderbarWidth("hidden");
+      }
     } else if (width >= 768 && width < 1025) {
       // Medium Screen
-      if (layoutType === layout.TWO_COLUMN) {
+      if (layoutType === layout.HORIZONTAL) {
+        if (toggleButtonStatus) {
+          setHorizontalNavHeight("max-h-[355px]");
+        } else {
+          setHorizontalNavHeight("h-0");
+          // dispatch(changeToggleButtonStatus(true));
+        }
+      } else if (layoutType === layout.TWO_COLUMN) {
         if (toggleButtonStatus) {
           setBodyLeftMargin("ml-[290px]");
           setLeftSiderbarWidth("w-[290px]");
@@ -72,7 +89,10 @@ const AuthProtectedLayoutProvider = ({ children }) => {
       }
     } else {
       // Large Screen
-      if (layoutType === layout.TWO_COLUMN) {
+      if (layoutType === layout.HORIZONTAL) {
+        setHorizontalNavHeight("h-[48px]");
+        dispatch(changeToggleButtonStatus(false));
+      } else if (layoutType === layout.TWO_COLUMN) {
         if (toggleButtonStatus) {
           setBodyLeftMargin("ml-[70px]");
           setLeftSiderbarWidth("w-[70px]");
@@ -180,7 +200,9 @@ const AuthProtectedLayoutProvider = ({ children }) => {
             leftSidbarSizeType={leftSidbarSizeType}
             leftSidbarSizeMain={leftSidbarSizeMain}
           />
-          {layoutType === layout.HORIZONTAL && <LeftHorizontalSidebar />}
+          {layoutType === layout.HORIZONTAL && (
+            <HorizontalSidebar resizeHeight={horizontalNavHeight} />
+          )}
           {children}
           <Footer />
         </div>

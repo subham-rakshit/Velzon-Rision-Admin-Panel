@@ -19,7 +19,7 @@ const LeftSidebarSmallIconView = ({
     secondChild: { id: "", isOpen: false },
   });
 
-  // NOTE Handle Hove State Functionality
+  // NOTE Handle Hover State Functionality
   const handleParentHoverState = (parentId) => {
     setHoverState((prev) => ({
       ...prev,

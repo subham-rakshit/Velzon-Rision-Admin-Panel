@@ -26,7 +26,7 @@ const Navbar = ({
 }) => {
   return (
     <nav
-      className={`${globalStyleObj.backgroundLight900Dark200} ${globalStyleObj.flexBetween} sticky top-0 h-[70px] shadow-light ${layoutType === layout.HORIZONTAL ? "px-10" : "px-5"}`}
+      className={`${globalStyleObj.backgroundLight900Dark200} ${globalStyleObj.flexBetween} sticky top-0 h-[70px] shadow-light ${layoutType === layout.HORIZONTAL ? "px-5 md:px-10 lg:px-[50px]" : "px-5"}`}
     >
       <div className={`${globalStyleObj.flexStart} h-full gap-2 md:gap-5`}>
         {layoutType === layout.HORIZONTAL && <NavLogo />}
