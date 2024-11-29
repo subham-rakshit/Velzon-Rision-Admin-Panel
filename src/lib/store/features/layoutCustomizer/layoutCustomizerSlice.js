@@ -23,9 +23,10 @@ import {
 const initialState = {
   rightSideBarIsOpen: rightSidebarOpenStatus.CLOSE, // OPEN
   toggleButtonStatus: toggleStatus.CLOSE, // OPEN
+  toggleSmallButtonStatus: toggleStatus.CLOSE, // OPEN
   layoutType: layout.VERTICAL, // HORIZONTAL, TWO_COLUMN, SEMI_BOX
   sidebarUserProfileAvtarType: avatarStatus.SHOW, // HIDE
-  layoutThemeType: theme.DEFAULT, // SASS, CORPORATE, GALAXY, MATERIAL, CREATIVE, MINIMAL, MORDERN, INTERACTIVE, CLASSIC, VINTAGE
+  layoutThemeType: theme.DEFAULT,
   layoutModeType: mode.LIGHT, // DARK
   layoutWidthType: widthType.FLUID, // BOXED
   layoutPositionType: position.FIXED, // SCROLLABLE
@@ -50,6 +51,10 @@ export const layoutCustomizerSlice = createSlice({
 
     changeToggleButtonStatus: (state, action) => {
       state.toggleButtonStatus = action.payload;
+    },
+
+    changeToggleSmallButtonStatus: (state, action) => {
+      state.toggleSmallButtonStatus = action.payload;
     },
 
     changeLayoutType: (state, action) => {
@@ -121,6 +126,7 @@ export const layoutCustomizerSlice = createSlice({
 export const {
   changeRightSideBarIsOpen,
   changeToggleButtonStatus,
+  changeToggleSmallButtonStatus,
   changeLayoutType,
   changeLeftSideBarSizeType,
   changeSidebarUserProfileAvtarType,

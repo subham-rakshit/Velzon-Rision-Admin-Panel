@@ -30,7 +30,6 @@ const HorizontalSidebar = ({ resizeHeight }) => {
 
   const [moreTabIsOpen, setMoreTabIsOpen] = useState(false);
   const [moreTabOnHover, setMoreTabOnHover] = useState(false);
-  console.log(moreTabOnHover);
 
   const moreTabs = useMemo(
     () => [

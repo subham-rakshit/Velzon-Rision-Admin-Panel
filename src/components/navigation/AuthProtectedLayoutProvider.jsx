@@ -30,11 +30,11 @@ const AuthProtectedLayoutProvider = ({ children }) => {
   const {
     layoutType,
     leftSidbarSizeType,
-    leftSidebarColorType,
     leftSidbarSizeMain,
     topbarColorType,
     preloader,
     toggleButtonStatus,
+    toggleSmallButtonStatus,
   } = useAppSelector((state) => state.layout);
 
   const [bodyLeftMargin, setBodyLeftMargin] = useState("");
@@ -53,11 +53,16 @@ const AuthProtectedLayoutProvider = ({ children }) => {
           setHorizontalNavHeight("max-h-[355px]");
         } else {
           setHorizontalNavHeight("h-0");
-          // dispatch(changeToggleButtonStatus(true));
         }
       } else {
-        setBodyLeftMargin("ml-0");
-        setLeftSiderbarWidth("hidden");
+        // IDEA
+        if (toggleSmallButtonStatus) {
+          setLeftSiderbarWidth("w-[250px]");
+          dispatch(changeLeftSideBarSizeType(sidebarSize.DEFAULT));
+        } else {
+          setBodyLeftMargin("ml-0");
+          setLeftSiderbarWidth("hidden");
+        }
       }
     } else if (width >= 768 && width < 1025) {
       // Medium Screen
@@ -145,7 +150,13 @@ const AuthProtectedLayoutProvider = ({ children }) => {
         }
       }
     }
-  }, [toggleButtonStatus, leftSidbarSizeMain, dispatch, layoutType]);
+  }, [
+    toggleButtonStatus,
+    toggleSmallButtonStatus,
+    leftSidbarSizeMain,
+    dispatch,
+    layoutType,
+  ]);
 
   useEffect(() => {
     handleResize(); // Run on mount
@@ -169,19 +180,9 @@ const AuthProtectedLayoutProvider = ({ children }) => {
         }`}
       >
         {layoutType === layout.VERTICAL || layoutType === layout.SEMI_BOX ? (
-          <LeftSidebar
-            width={leftSidebarWidth}
-            leftSidbarSizeType={leftSidbarSizeType}
-            leftSidbarSizeMain={leftSidbarSizeMain}
-            leftSidebarColorType={leftSidebarColorType}
-            toggleButtonStatus={toggleButtonStatus}
-          />
+          <LeftSidebar width={leftSidebarWidth} />
         ) : layoutType === layout.TWO_COLUMN ? (
-          <LeftTwoColumnSidebar
-            width={leftSidebarWidth}
-            leftSidebarColorType={leftSidebarColorType}
-            toggleButtonStatus={toggleButtonStatus}
-          />
+          <LeftTwoColumnSidebar width={leftSidebarWidth} />
         ) : null}
 
         <div
@@ -199,6 +200,7 @@ const AuthProtectedLayoutProvider = ({ children }) => {
             topbarColorType={topbarColorType}
             leftSidbarSizeType={leftSidbarSizeType}
             leftSidbarSizeMain={leftSidbarSizeMain}
+            toggleSmallButtonStatus={toggleSmallButtonStatus}
           />
           {layoutType === layout.HORIZONTAL && (
             <HorizontalSidebar resizeHeight={horizontalNavHeight} />

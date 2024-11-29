@@ -9,7 +9,10 @@ import {
   toggleStatus,
 } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
 import { globalStyleObj } from "@/app/assets/styles";
-import { changeToggleButtonStatus } from "@/lib/store/features/layoutCustomizer/layoutCustomizerSlice";
+import {
+  changeToggleButtonStatus,
+  changeToggleSmallButtonStatus,
+} from "@/lib/store/features/layoutCustomizer/layoutCustomizerSlice";
 import { useAppDispatch } from "@/lib/store/hooks";
 
 const ToggleButton = ({
@@ -17,13 +20,19 @@ const ToggleButton = ({
   leftSidbarSizeType,
   toggleButtonStatus,
   leftSidbarSizeMain,
+  toggleSmallButtonStatus,
 }) => {
   const dispatch = useAppDispatch();
 
   const handleSidebarToggel = () => {
     const status = toggleButtonStatus === toggleStatus.CLOSE;
+    const statusSmDevice = toggleSmallButtonStatus === toggleStatus.CLOSE;
 
-    dispatch(changeToggleButtonStatus(status));
+    if (window.innerWidth < 768 && layoutType !== layout.HORIZONTAL) {
+      dispatch(changeToggleSmallButtonStatus(statusSmDevice));
+    } else {
+      dispatch(changeToggleButtonStatus(status));
+    }
   };
 
   return (
@@ -37,7 +46,9 @@ const ToggleButton = ({
 
         if (
           leftSidbarSizeType === sidebarSize.SMALL_ICON_VIEW ||
-          (layoutType === layout.HORIZONTAL && !toggleButtonStatus)
+          (layoutType === layout.HORIZONTAL && !toggleButtonStatus) ||
+          (layoutType === layout.TWO_COLUMN && toggleButtonStatus) ||
+          window.innerWidth < 768
         ) {
           switch (bar) {
             case "bar_1":
