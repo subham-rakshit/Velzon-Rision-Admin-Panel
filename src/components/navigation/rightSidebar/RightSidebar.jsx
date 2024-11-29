@@ -116,7 +116,7 @@ const RightSidebar = ({ isScrollTop }) => {
     <>
       {/* NOTE Settings Button */}
       <div
-        className={`fixed left-full hidden -translate-x-full gap-2 md:flex md:flex-col md:items-center md:justify-center md:px-5 ${isScrollTop ? "top-[calc(100vh-138px)]" : "top-[calc(100vh-90px)]"}`}
+        className={`fixed left-full flex -translate-x-full flex-col items-center justify-center gap-2 px-5 ${isScrollTop ? "top-[calc(100vh-138px)]" : "top-[calc(100vh-90px)]"}`}
       >
         <motion.button
           initial={{ y: 0, opacity: 1 }}
@@ -139,7 +139,7 @@ const RightSidebar = ({ isScrollTop }) => {
         <motion.button
           style={{ rotate }}
           onClick={() => setRightSidebarIsOpen(true)}
-          className={`${globalStyleObj.flexCenter} size-[50px] rounded-full bg-[#299CDB]`}
+          className={`${globalStyleObj.flexCenter} size-0 rounded-full bg-[#299CDB] md:size-[50px]`}
         >
           <FaCog size={22} color="white" />
         </motion.button>

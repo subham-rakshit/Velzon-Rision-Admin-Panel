@@ -31,6 +31,7 @@ export const globalStyleObj = {
   backgroundLight900Dark200: "bg-light-dencity-900 dark:bg-dark-dencity-200",
   backgroundLight900Dark250: "bg-light-dencity-900 dark:bg-dark-dencity-250",
   backgroundLight900Dark300: "bg-light-dencity-900 dark:bg-dark-dencity-300",
+  backgroundLight800Dark600: "bg-light-dencity-800 dark:bg-dark-dencity-600",
   backgroundLight800Dark300: "bg-light-dencity-800 dark:bg-dark-dencity-300",
   backgroundLight800Dark100: "bg-light-dencity-800 dark:bg-dark-dencity-100",
   backgroundLight700Dark220: "bg-light-dencity-700 dark:bg-dark-dencity-220",
