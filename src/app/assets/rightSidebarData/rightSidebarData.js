@@ -10,7 +10,7 @@ export const rightSidebarThemeData = [
 
 export const rightSidbarLayoutWidthData = [
   {
-    id: "fluid",
+    id: `fluid`,
     label: "Fluid",
   },
   {

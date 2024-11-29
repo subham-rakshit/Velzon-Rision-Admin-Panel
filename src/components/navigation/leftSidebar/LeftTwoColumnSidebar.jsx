@@ -15,6 +15,7 @@ import leftSidebarData from "../../../app/assets/leftSidebarData/leftSidebarData
 
 import { sidebarColor } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
 import { globalStyleObj } from "@/app/assets/styles";
+import ROUTES from "@/constants/routes";
 import {
   changeToggleButtonStatus,
   changeToggleSmallButtonStatus,
@@ -127,7 +128,9 @@ const LeftTwoColumnSidebar = ({ width }) => {
           className={`custom-left-sidebar-scrollbar ${globalStyleObj.flexColStart} h-full w-[70px] overflow-y-auto shadow-xl dark:bg-dark-dencity-200 ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? "bg-custom-blue-600" : "bg-light-dencity-800"}`}
         >
           <div className={`${globalStyleObj.flexCenter} min-h-[70px]`}>
-            <Image src={logoSmall} alt="small logo" width={22} height={22} />
+            <Link href={ROUTES.DASHBOARD_ECOMMERCE}>
+              <Image src={logoSmall} alt="small logo" width={22} height={22} />
+            </Link>
           </div>
 
           <ul className={`my-[10px] ${globalStyleObj.flexColStart} gap-2`}>
@@ -185,14 +188,23 @@ const LeftTwoColumnSidebar = ({ width }) => {
         >
           <div className={`${globalStyleObj.flexCenter} min-h-[70px]`}>
             {leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? (
-              <Image src={logoLight} alt="logo light" width={100} height={22} />
+              <Link href={ROUTES.DASHBOARD_ECOMMERCE}>
+                <Image
+                  src={logoLight}
+                  alt="logo light"
+                  width={100}
+                  height={22}
+                />
+              </Link>
             ) : (
-              <Image
-                src={theme === "light" ? logoDark : logoLight}
-                alt="logo light"
-                width={100}
-                height={22}
-              />
+              <Link href={ROUTES.DASHBOARD_ECOMMERCE}>
+                <Image
+                  src={theme === "light" ? logoDark : logoLight}
+                  alt="logo light"
+                  width={100}
+                  height={22}
+                />
+              </Link>
             )}
           </div>
 

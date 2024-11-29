@@ -17,7 +17,7 @@ import {
   DropdownMenuGroup,
 } from "@/components/ui/dropdown-menu";
 
-const NavbarWebApps = ({ topbarColorType }) => {
+const NavbarWebApps = () => {
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger className="rounded-full p-[5px] hover:bg-light-dencity-400 dark:hover:bg-dark-dencity-100 sm:p-[10px]">

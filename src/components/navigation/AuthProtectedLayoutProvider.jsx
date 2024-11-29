@@ -1,7 +1,7 @@
 "use client";
 
 import NextTopLoader from "nextjs-toploader";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import {
   LeftSidebar,
@@ -29,9 +29,7 @@ import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 const AuthProtectedLayoutProvider = ({ children }) => {
   const {
     layoutType,
-    leftSidbarSizeType,
-    leftSidbarSizeMain,
-    topbarColorType,
+    leftSidebarSizeMain,
     preloader,
     toggleButtonStatus,
     toggleSmallButtonStatus,
@@ -40,6 +38,8 @@ const AuthProtectedLayoutProvider = ({ children }) => {
   const [bodyLeftMargin, setBodyLeftMargin] = useState("");
   const [leftSidebarWidth, setLeftSiderbarWidth] = useState("");
   const [horizontalNavHeight, setHorizontalNavHeight] = useState("");
+  const [isScrollTop, setIsScrollTop] = useState(false);
+  const handleScrolled = useRef(false);
 
   const dispatch = useAppDispatch();
 
@@ -55,7 +55,6 @@ const AuthProtectedLayoutProvider = ({ children }) => {
           setHorizontalNavHeight("h-0");
         }
       } else {
-        // IDEA
         if (toggleSmallButtonStatus) {
           setLeftSiderbarWidth("w-[250px]");
           dispatch(changeLeftSideBarSizeType(sidebarSize.DEFAULT));
@@ -106,7 +105,7 @@ const AuthProtectedLayoutProvider = ({ children }) => {
           setLeftSiderbarWidth("w-[290px]");
         }
       } else {
-        if (leftSidbarSizeMain === sidebarMainSize.LG) {
+        if (leftSidebarSizeMain === sidebarMainSize.LG) {
           if (toggleButtonStatus) {
             setBodyLeftMargin("ml-0");
             setLeftSiderbarWidth("w-[65px]");
@@ -116,7 +115,7 @@ const AuthProtectedLayoutProvider = ({ children }) => {
             setLeftSiderbarWidth("w-[250px]");
             dispatch(changeLeftSideBarSizeType(sidebarSize.DEFAULT));
           }
-        } else if (leftSidbarSizeMain === sidebarMainSize.MD) {
+        } else if (leftSidebarSizeMain === sidebarMainSize.MD) {
           if (toggleButtonStatus) {
             setBodyLeftMargin("ml-0");
             setLeftSiderbarWidth("w-[65px]");
@@ -126,7 +125,7 @@ const AuthProtectedLayoutProvider = ({ children }) => {
             setLeftSiderbarWidth("w-[180px]");
             dispatch(changeLeftSideBarSizeType(sidebarSize.COMPACT));
           }
-        } else if (leftSidbarSizeMain === sidebarMainSize.SM) {
+        } else if (leftSidebarSizeMain === sidebarMainSize.SM) {
           if (toggleButtonStatus) {
             setBodyLeftMargin("ml-[250px]");
             setLeftSiderbarWidth("w-[250px]");
@@ -136,7 +135,7 @@ const AuthProtectedLayoutProvider = ({ children }) => {
             setLeftSiderbarWidth("w-[65px]");
             dispatch(changeLeftSideBarSizeType(sidebarSize.SMALL_ICON_VIEW));
           }
-        } else if (leftSidbarSizeMain === sidebarMainSize.SM_HOVER) {
+        } else if (leftSidebarSizeMain === sidebarMainSize.SM_HOVER) {
           if (toggleButtonStatus) {
             setBodyLeftMargin("ml-[250px]");
             setLeftSiderbarWidth("w-[250px]");
@@ -153,11 +152,12 @@ const AuthProtectedLayoutProvider = ({ children }) => {
   }, [
     toggleButtonStatus,
     toggleSmallButtonStatus,
-    leftSidbarSizeMain,
+    leftSidebarSizeMain,
     dispatch,
     layoutType,
   ]);
 
+  // NOTE For Resize
   useEffect(() => {
     handleResize(); // Run on mount
 
@@ -167,6 +167,25 @@ const AuthProtectedLayoutProvider = ({ children }) => {
       window.removeEventListener("resize", handleResize);
     };
   }, [handleResize]);
+
+  // NOTE For Scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 200 && !handleScrolled.current) {
+        setIsScrollTop(true);
+        handleScrolled.current = true;
+      } else if (window.scrollY <= 200 && handleScrolled.current) {
+        setIsScrollTop(false);
+        handleScrolled.current = false;
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
     <>
@@ -194,14 +213,7 @@ const AuthProtectedLayoutProvider = ({ children }) => {
               : ""
           }`}
         >
-          <Navbar
-            toggleButtonStatus={toggleButtonStatus}
-            layoutType={layoutType}
-            topbarColorType={topbarColorType}
-            leftSidbarSizeType={leftSidbarSizeType}
-            leftSidbarSizeMain={leftSidbarSizeMain}
-            toggleSmallButtonStatus={toggleSmallButtonStatus}
-          />
+          <Navbar layoutType={layoutType} />
           {layoutType === layout.HORIZONTAL && (
             <HorizontalSidebar resizeHeight={horizontalNavHeight} />
           )}
@@ -209,7 +221,7 @@ const AuthProtectedLayoutProvider = ({ children }) => {
           <Footer />
         </div>
       </div>
-      <RightSidebar />
+      <RightSidebar isScrollTop={isScrollTop} />
     </>
   );
 };

@@ -14,6 +14,7 @@ import {
   sidebarMainSize,
   sidebarSize,
   sidebarView,
+  sidebarVisibility,
   theme,
   toggleStatus,
   topbarColor,
@@ -31,8 +32,9 @@ const initialState = {
   layoutWidthType: widthType.FLUID, // BOXED
   layoutPositionType: position.FIXED, // SCROLLABLE
   topbarColorType: topbarColor.LIGHT_COLOR, // DARK_COLOR
-  leftSidbarSizeType: sidebarSize.DEFAULT, // COMPACT, SMALL_ICON_VIEW, SMALL_HOVER_VIEW
-  leftSidbarSizeMain: sidebarMainSize.LG, // MD, SM, SM_HOVER
+  leftSidebarSizeType: sidebarSize.DEFAULT, // COMPACT, SMALL_ICON_VIEW, SMALL_HOVER_VIEW
+  leftSidebarSizeMain: sidebarMainSize.LG, // MD, SM, SM_HOVER
+  leftSidebarVisibilityType: sidebarVisibility.SHOW, // HIDDEN
   leftSidebarViewType: sidebarView.DEFAULT, // detached
   leftSidebarColorType: sidebarColor.DARK_BG_COLOR, // LIGHT_BG_COLOR,  GRADIENT_BG_COLOR
   leftSidebarGradientColorType: sidebarGradientColor.GRADIENT_BG_COLOR, // SEC_CHILD_GRADIENT_BG_COLOR, THIRD_CHILD_GRADIENT_BG_COLOR, FOURTH_CHILD_GRADIENT_BG_COLOR
@@ -62,11 +64,15 @@ export const layoutCustomizerSlice = createSlice({
     },
 
     changeLeftSideBarSizeType: (state, action) => {
-      state.leftSidbarSizeType = action.payload;
+      state.leftSidebarSizeType = action.payload;
     },
 
-    changeLeftSidbarSizeMain: (state, action) => {
-      state.leftSidbarSizeMain = action.payload;
+    changeLeftSidebarSizeMain: (state, action) => {
+      state.leftSidebarSizeMain = action.payload;
+    },
+
+    changeLeftSidebarVisibilityType: (state, action) => {
+      state.leftSidebarVisibilityType = action.payload;
     },
 
     changeSidebarUserProfileAvtarType: (state, action) => {
@@ -135,8 +141,9 @@ export const {
   changeLayoutWidthType,
   changeLayoutPositionType,
   changeTopbarColorType,
-  changeLeftSidbarSizeType,
-  changeLeftSidbarSizeMain,
+  changeLeftSidebarSizeType,
+  changeLeftSidebarSizeMain,
+  changeLeftSidebarVisibilityType,
   changeLeftSidebarViewType,
   changeLeftSidebarColorType,
   changeLeftSidebarGradientColorType,

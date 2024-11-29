@@ -17,7 +17,7 @@ const LeftSidebarCompactView = ({
   mainPath,
   tabDetails,
   leftSidebarColorType,
-  leftSidbarSizeType,
+  leftSidebarSizeType,
   handleParentTabToggle,
   handleFirstChildTabToggle,
   handleSecondChildTabToggle,
@@ -33,7 +33,7 @@ const LeftSidebarCompactView = ({
           className={`${globalStyleObj.flexColCenter} py-[10px]`}
         >
           <span
-            className={`${leftSidbarSizeType === sidebarSize.SMALL_ICON_VIEW ? "hidden" : "inline"} ${globalStyleObj.text11Light400Semibold} uppercase tracking-widest underline`}
+            className={`${leftSidebarSizeType === sidebarSize.SMALL_ICON_VIEW ? "hidden" : "inline"} ${globalStyleObj.text11Light400Semibold} uppercase tracking-widest underline`}
           >
             {category.tabCategory}
           </span>

@@ -30,8 +30,8 @@ import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 
 const LeftSidebar = ({ width }) => {
   const {
-    leftSidbarSizeType,
-    leftSidbarSizeMain,
+    leftSidebarSizeType,
+    leftSidebarSizeMain,
     leftSidebarColorType,
     toggleButtonStatus,
     toggleSmallButtonStatus,
@@ -140,10 +140,10 @@ const LeftSidebar = ({ width }) => {
           // Main Category Container
           <li
             key={category.tabCategory}
-            className={`${leftSidbarSizeType === sidebarSize.SMALL_ICON_VIEW ? "py-0" : "py-[10px]"}`}
+            className={`${leftSidebarSizeType === sidebarSize.SMALL_ICON_VIEW ? "py-0" : "py-[10px]"}`}
           >
             <span
-              className={`${leftSidbarSizeType === sidebarSize.SMALL_ICON_VIEW ? "hidden" : "inline"} ${globalStyleObj.text11Light400Semibold} uppercase tracking-widest`}
+              className={`${leftSidebarSizeType === sidebarSize.SMALL_ICON_VIEW ? "hidden" : "inline"} ${globalStyleObj.text11Light400Semibold} uppercase tracking-widest`}
             >
               {category.tabCategory}
             </span>
@@ -358,22 +358,22 @@ const LeftSidebar = ({ width }) => {
       ></div>
 
       <div
-        className={`h-screen ${
-          leftSidbarSizeType === sidebarSize.SMALL_ICON_VIEW
-            ? "sticky"
-            : leftSidbarSizeType === sidebarSize.SMALL_HOVER_VIEW &&
+        className={`min-h-full ${
+          leftSidebarSizeType === sidebarSize.SMALL_ICON_VIEW
+            ? ""
+            : leftSidebarSizeType === sidebarSize.SMALL_HOVER_VIEW &&
                 isFixedBtnCliked
               ? "sticky"
               : "fixed"
         } ${isContainerHover ? "w-[250px]" : width} sm:transition-300 left-0 top-0 z-[99] `}
         onMouseEnter={() =>
-          leftSidbarSizeType === sidebarSize.SMALL_HOVER_VIEW &&
+          leftSidebarSizeType === sidebarSize.SMALL_HOVER_VIEW &&
           !isFixedBtnCliked
             ? setIsContainerHover(true)
             : null
         }
         onMouseLeave={() =>
-          leftSidbarSizeType === sidebarSize.SMALL_HOVER_VIEW &&
+          leftSidebarSizeType === sidebarSize.SMALL_HOVER_VIEW &&
           !isFixedBtnCliked
             ? setIsContainerHover(false)
             : null
@@ -385,9 +385,9 @@ const LeftSidebar = ({ width }) => {
         >
           <Link
             href="/dashboard"
-            className={`${leftSidbarSizeType === sidebarSize.SMALL_HOVER_VIEW ? "hidden" : `${globalStyleObj.flexCenter}`} size-full`}
+            className={`${leftSidebarSizeType === sidebarSize.SMALL_HOVER_VIEW ? "hidden" : `${globalStyleObj.flexCenter}`} size-full `}
           >
-            {leftSidbarSizeType === sidebarSize.SMALL_ICON_VIEW ? (
+            {leftSidebarSizeType === sidebarSize.SMALL_ICON_VIEW ? (
               <Image
                 src={logoSmall}
                 alt="logo small"
@@ -415,13 +415,13 @@ const LeftSidebar = ({ width }) => {
           </Link>
 
           <div
-            className={`${leftSidbarSizeType === sidebarSize.SMALL_HOVER_VIEW ? `${globalStyleObj.flexBetween} transition-300` : "hidden"} h-full`}
+            className={`${leftSidebarSizeType === sidebarSize.SMALL_HOVER_VIEW ? `${globalStyleObj.flexBetween} transition-300` : "hidden"} h-full`}
           >
             <Link
               href="/dashboard"
               className={`${globalStyleObj.flexStart} transition-300 h-full w-fit`}
             >
-              {leftSidbarSizeMain === sidebarMainSize.SM_HOVER &&
+              {leftSidebarSizeMain === sidebarMainSize.SM_HOVER &&
               !isContainerHover ? (
                 <Image
                   src={logoSmall}
@@ -466,60 +466,60 @@ const LeftSidebar = ({ width }) => {
         </div>
 
         {/* NOTE Left Sidebar Changes According Sizes */}
-        {leftSidbarSizeMain === sidebarMainSize.LG &&
-        leftSidbarSizeType === sidebarSize.DEFAULT ? (
+        {leftSidebarSizeMain === sidebarMainSize.LG &&
+        leftSidebarSizeType === sidebarSize.DEFAULT ? (
           verticalDefaultLeftSidebarView()
-        ) : leftSidbarSizeMain === sidebarMainSize.LG &&
-          leftSidbarSizeType === sidebarSize.SMALL_ICON_VIEW ? (
+        ) : leftSidebarSizeMain === sidebarMainSize.LG &&
+          leftSidebarSizeType === sidebarSize.SMALL_ICON_VIEW ? (
           <LeftSidebarSmallIconView
             tabDetails={tabDetails}
             leftSidebarColorType={leftSidebarColorType}
             pathname={pathname}
           />
-        ) : leftSidbarSizeMain === sidebarMainSize.MD &&
-          leftSidbarSizeType === sidebarSize.DEFAULT ? (
+        ) : leftSidebarSizeMain === sidebarMainSize.MD &&
+          leftSidebarSizeType === sidebarSize.DEFAULT ? (
           verticalDefaultLeftSidebarView()
-        ) : leftSidbarSizeMain === sidebarMainSize.MD &&
-          leftSidbarSizeType === sidebarSize.SMALL_ICON_VIEW ? (
+        ) : leftSidebarSizeMain === sidebarMainSize.MD &&
+          leftSidebarSizeType === sidebarSize.SMALL_ICON_VIEW ? (
           <LeftSidebarSmallIconView
             tabDetails={tabDetails}
             leftSidebarColorType={leftSidebarColorType}
             pathname={pathname}
           />
-        ) : leftSidbarSizeMain === sidebarMainSize.MD &&
-          leftSidbarSizeType === sidebarSize.COMPACT ? (
+        ) : leftSidebarSizeMain === sidebarMainSize.MD &&
+          leftSidebarSizeType === sidebarSize.COMPACT ? (
           <LeftSidebarCompactView
             pathname={pathname}
             mainPath={mainPath}
             tabDetails={tabDetails}
             leftSidebarColorType={leftSidebarColorType}
-            leftSidbarSizeType={leftSidbarSizeType}
+            leftSidebarSizeType={leftSidebarSizeType}
             handleParentTabToggle={handleParentTabToggle}
             handleFirstChildTabToggle={handleFirstChildTabToggle}
             handleSecondChildTabToggle={handleSecondChildTabToggle}
           />
-        ) : leftSidbarSizeMain === sidebarMainSize.SM &&
-          leftSidbarSizeType === sidebarSize.SMALL_ICON_VIEW ? (
+        ) : leftSidebarSizeMain === sidebarMainSize.SM &&
+          leftSidebarSizeType === sidebarSize.SMALL_ICON_VIEW ? (
           <LeftSidebarSmallIconView
             tabDetails={tabDetails}
             leftSidebarColorType={leftSidebarColorType}
             pathname={pathname}
           />
-        ) : leftSidbarSizeMain === sidebarMainSize.SM &&
-          leftSidbarSizeType === sidebarSize.DEFAULT ? (
+        ) : leftSidebarSizeMain === sidebarMainSize.SM &&
+          leftSidebarSizeType === sidebarSize.DEFAULT ? (
           verticalDefaultLeftSidebarView()
-        ) : leftSidbarSizeMain === sidebarMainSize.SM_HOVER &&
-          leftSidbarSizeType === sidebarSize.SMALL_ICON_VIEW ? (
+        ) : leftSidebarSizeMain === sidebarMainSize.SM_HOVER &&
+          leftSidebarSizeType === sidebarSize.SMALL_ICON_VIEW ? (
           <LeftSidebarSmallIconView
             tabDetails={tabDetails}
             leftSidebarColorType={leftSidebarColorType}
             pathname={pathname}
           />
-        ) : leftSidbarSizeMain === sidebarMainSize.SM_HOVER &&
-          leftSidbarSizeType === sidebarSize.DEFAULT ? (
+        ) : leftSidebarSizeMain === sidebarMainSize.SM_HOVER &&
+          leftSidebarSizeType === sidebarSize.DEFAULT ? (
           verticalDefaultLeftSidebarView()
-        ) : leftSidbarSizeMain === sidebarMainSize.SM_HOVER &&
-          leftSidbarSizeType === sidebarSize.SMALL_HOVER_VIEW ? (
+        ) : leftSidebarSizeMain === sidebarMainSize.SM_HOVER &&
+          leftSidebarSizeType === sidebarSize.SMALL_HOVER_VIEW ? (
           verticalSmallIconHoverView()
         ) : null}
       </div>

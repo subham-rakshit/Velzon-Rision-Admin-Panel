@@ -8,8 +8,10 @@ import { NavSearchBoxRecentSearches } from "../..";
 
 import { sidebarSize } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
 import { globalStyleObj } from "@/app/assets/styles";
+import { useAppSelector } from "@/lib/store/hooks";
 
-const NavSearchBox = ({ leftSidbarSizeType }) => {
+const NavSearchBox = () => {
+  const { leftSidebarSizeType } = useAppSelector((state) => state.layout);
   const [searchInput, setSearchInput] = useState("");
   const [isRecentSearchOpen, setIsRecentSearchOpen] = useState(true);
 
@@ -23,7 +25,7 @@ const NavSearchBox = ({ leftSidbarSizeType }) => {
         value={searchInput}
         onChange={(e) => setSearchInput(e.target.value)}
         onClick={() => setIsRecentSearchOpen(true)}
-        className={`${globalStyleObj.text13Light550Dark550} border-none bg-transparent tracking-wide focus:ring-0 ${leftSidbarSizeType === sidebarSize.DEFAULT ? "md:w-[100px] lg:w-[180px]" : "w-[180px]"}`}
+        className={`${globalStyleObj.text13Light550Dark550} border-none bg-transparent tracking-wide focus:ring-0 ${leftSidebarSizeType === sidebarSize.DEFAULT ? "md:w-[100px] lg:w-[180px]" : "w-[180px]"}`}
         placeholder="Search..."
       />
       {searchInput && (

@@ -13,15 +13,16 @@ import {
   changeToggleButtonStatus,
   changeToggleSmallButtonStatus,
 } from "@/lib/store/features/layoutCustomizer/layoutCustomizerSlice";
-import { useAppDispatch } from "@/lib/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 
-const ToggleButton = ({
-  layoutType,
-  leftSidbarSizeType,
-  toggleButtonStatus,
-  leftSidbarSizeMain,
-  toggleSmallButtonStatus,
-}) => {
+const ToggleButton = () => {
+  const {
+    layoutType,
+    leftSidebarSizeType,
+    toggleButtonStatus,
+    leftSidebarSizeMain,
+    toggleSmallButtonStatus,
+  } = useAppSelector((state) => state.layout);
   const dispatch = useAppDispatch();
 
   const handleSidebarToggel = () => {
@@ -39,13 +40,13 @@ const ToggleButton = ({
     <button
       onClick={handleSidebarToggel}
       type="button"
-      className={`h-full cursor-pointer ${leftSidbarSizeMain === sidebarMainSize.SM_HOVER || layoutType === layout.HORIZONTAL ? "lg:hidden" : ""}`}
+      className={`h-full cursor-pointer ${leftSidebarSizeMain === sidebarMainSize.SM_HOVER || layoutType === layout.HORIZONTAL ? "lg:hidden" : ""}`}
     >
       {["bar_1", "bar_2", "bar_3"].map((bar) => {
         let dynamicClasses;
 
         if (
-          leftSidbarSizeType === sidebarSize.SMALL_ICON_VIEW ||
+          leftSidebarSizeType === sidebarSize.SMALL_ICON_VIEW ||
           (layoutType === layout.HORIZONTAL && !toggleButtonStatus) ||
           (layoutType === layout.TWO_COLUMN && toggleButtonStatus) ||
           window.innerWidth < 768

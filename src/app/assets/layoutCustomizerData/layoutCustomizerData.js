@@ -51,6 +51,11 @@ export const sidebarSize = {
   SMALL_HOVER_VIEW: "small-hover-view",
 };
 
+export const sidebarVisibility = {
+  SHOW: "show",
+  HIDDEN: "hidden",
+};
+
 export const sidebarMainSize = {
   LG: "lg",
   MD: "md",
