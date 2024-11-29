@@ -11,6 +11,8 @@ import { ClipLoader } from "react-spinners";
 
 import {
   layout,
+  sidebarMainSize,
+  sidebarSize,
   sidebarVisibility,
 } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
 import {
@@ -39,6 +41,7 @@ import {
   changePreloader,
   changeLeftSidebarSizeMain,
   changeLeftSidebarVisibilityType,
+  changeLeftSideBarSizeType,
 } from "@/lib/store/features/layoutCustomizer/layoutCustomizerSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 
@@ -70,6 +73,19 @@ const RightSidebar = ({ isScrollTop }) => {
   const rotate = useTransform(time, [0, 2000], [0, 360], {
     clamp: rightSideBarIsOpen,
   });
+
+  // NOTE Handle Layout Width
+  const handleLayoutWidth = (id) => {
+    if (id === "fluid") {
+      dispatch(changeLayoutWidthType(id));
+      dispatch(changeLeftSideBarSizeType(sidebarSize.DEFAULT));
+      dispatch(changeLeftSidebarSizeMain(sidebarMainSize.LG));
+    } else if (id === "boxed") {
+      dispatch(changeLayoutWidthType(id));
+      dispatch(changeLeftSideBarSizeType(sidebarSize.SMALL_HOVER_VIEW));
+      dispatch(changeLeftSidebarSizeMain(sidebarMainSize.SM_HOVER));
+    }
+  };
 
   // NOTE Avatar Toggle Btn Functionality
   const toggleAvatarSwitch = () => {
@@ -117,7 +133,7 @@ const RightSidebar = ({ isScrollTop }) => {
           onClick={handleScrollToTop}
           className={`${isScrollTop ? `size-[40px] rounded-sm bg-[#F06548] ${globalStyleObj.flexCenter}` : "hidden"}`}
         >
-          <RiArrowUpLine size={15} />
+          <RiArrowUpLine size={15} color="#fff" />
         </motion.button>
 
         <motion.button
@@ -566,7 +582,7 @@ const RightSidebar = ({ isScrollTop }) => {
                     type="button"
                     key={width.id}
                     className="group flex cursor-pointer flex-col items-center gap-1"
-                    onClick={() => dispatch(changeLayoutWidthType(width.id))}
+                    onClick={() => handleLayoutWidth(width.id)}
                   >
                     <div
                       className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${

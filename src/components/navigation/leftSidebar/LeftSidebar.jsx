@@ -322,7 +322,7 @@ const LeftSidebar = ({ width }) => {
           verticalDefaultLeftSidebarView()
         ) : (
           <ul
-            className={`h-full py-2 text-light-weight-450 dark:bg-dark-dencity-300 ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? "bg-light-weight-500" : "bg-light-dencity-900"}`}
+            className={`min-h-screen py-2 text-light-weight-450 dark:bg-dark-dencity-300 ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? "bg-light-weight-500" : "bg-light-dencity-900"}`}
           >
             {leftSidebarData.map((category) =>
               category.tabNameList.map((parent) => (
@@ -359,13 +359,12 @@ const LeftSidebar = ({ width }) => {
 
       <div
         className={`min-h-full ${
+          (leftSidebarSizeType === sidebarSize.SMALL_HOVER_VIEW &&
+            isFixedBtnCliked) ||
           leftSidebarSizeType === sidebarSize.SMALL_ICON_VIEW
-            ? ""
-            : leftSidebarSizeType === sidebarSize.SMALL_HOVER_VIEW &&
-                isFixedBtnCliked
-              ? "sticky"
-              : "fixed"
-        } ${isContainerHover ? "w-[250px]" : width} sm:transition-300 left-0 top-0 z-[99] `}
+            ? "sticky"
+            : "fixed"
+        } ${isContainerHover ? "w-[250px]" : width} sm:transition-300 z-[99]`}
         onMouseEnter={() =>
           leftSidebarSizeType === sidebarSize.SMALL_HOVER_VIEW &&
           !isFixedBtnCliked

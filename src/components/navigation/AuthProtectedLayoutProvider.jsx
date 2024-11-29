@@ -19,6 +19,7 @@ import {
   sidebarMainSize,
   sidebarSize,
   toggleStatus,
+  widthType,
 } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
 import {
   changeLeftSideBarSizeType,
@@ -29,6 +30,7 @@ import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 const AuthProtectedLayoutProvider = ({ children }) => {
   const {
     layoutType,
+    layoutWidthType,
     leftSidebarSizeMain,
     preloader,
     toggleButtonStatus,
@@ -194,9 +196,9 @@ const AuthProtectedLayoutProvider = ({ children }) => {
         <NextTopLoader showSpinner={false} color="#e61247" />
       )}
       <div
-        className={`min-h-screen w-full ${
+        className={`relative min-h-full w-full ${
           layoutType === layout.HORIZONTAL ? "flex-col" : "flex"
-        }`}
+        } ${layoutWidthType === widthType.BOXED && layoutType === layout.VERTICAL ? "max-w-[1300px]" : "w-full"}`}
       >
         {layoutType === layout.VERTICAL || layoutType === layout.SEMI_BOX ? (
           <LeftSidebar width={leftSidebarWidth} />
