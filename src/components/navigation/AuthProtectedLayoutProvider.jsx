@@ -16,6 +16,7 @@ import {
 import {
   layout,
   loader,
+  position,
   sidebarMainSize,
   sidebarSize,
   toggleStatus,
@@ -31,10 +32,13 @@ const AuthProtectedLayoutProvider = ({ children }) => {
   const {
     layoutType,
     layoutWidthType,
+    leftSidebarSizeType,
     leftSidebarSizeMain,
     preloader,
     toggleButtonStatus,
     toggleSmallButtonStatus,
+    layoutPositionType,
+    topbarColorType,
   } = useAppSelector((state) => state.layout);
 
   const [bodyLeftMargin, setBodyLeftMargin] = useState("");
@@ -144,7 +148,7 @@ const AuthProtectedLayoutProvider = ({ children }) => {
             dispatch(changeToggleButtonStatus(toggleStatus.CLOSE));
             dispatch(changeLeftSideBarSizeType(sidebarSize.DEFAULT));
           } else {
-            setBodyLeftMargin("ml-0");
+            setBodyLeftMargin("ml-[65px]");
             setLeftSiderbarWidth("w-[65px]");
             dispatch(changeLeftSideBarSizeType(sidebarSize.SMALL_HOVER_VIEW));
           }
@@ -207,15 +211,19 @@ const AuthProtectedLayoutProvider = ({ children }) => {
         ) : null}
 
         <div
-          className={`flex min-h-screen flex-1 flex-col ${bodyLeftMargin !== "ml-0" || layoutType === layout.TWO_COLUMN ? "transition-300" : "transition-none"} ${
-            layoutType === layout.VERTICAL ||
-            layoutType === layout.SEMI_BOX ||
-            layoutType === layout.TWO_COLUMN
+          id="pages-main-container"
+          className={`flex min-h-screen flex-1 flex-col ${leftSidebarSizeType !== sidebarSize.SMALL_ICON_VIEW ? "transition-300" : "transition-none"} ${
+            layoutType !== layout.HORIZONTAL &&
+            layoutPositionType !== position.SCROLLABLE
               ? bodyLeftMargin
               : ""
           }`}
         >
-          <Navbar layoutType={layoutType} />
+          <Navbar
+            layoutType={layoutType}
+            layoutPositionType={layoutPositionType}
+            topbarColorType={topbarColorType}
+          />
           {layoutType === layout.HORIZONTAL && (
             <HorizontalSidebar resizeHeight={horizontalNavHeight} />
           )}

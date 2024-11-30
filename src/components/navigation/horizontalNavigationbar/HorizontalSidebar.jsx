@@ -7,11 +7,14 @@ import { BsDash } from "react-icons/bs";
 import { IoIosArrowForward } from "react-icons/io";
 import { RiBriefcase2Line } from "react-icons/ri";
 
+import { position } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
 import leftSidebarData from "@/app/assets/leftSidebarData/leftSidebarData";
 import { globalStyleObj } from "@/app/assets/styles";
 import { TransitionLink } from "@/components";
+import { useAppSelector } from "@/lib/store/hooks";
 
 const HorizontalSidebar = ({ resizeHeight }) => {
+  const { layoutPositionType } = useAppSelector((state) => state.layout);
   const pathname = usePathname();
   const mainPath = pathname.split("/")[1];
 
@@ -338,7 +341,7 @@ const HorizontalSidebar = ({ resizeHeight }) => {
 
   return (
     <ul
-      className={`${resizeHeight} ${globalStyleObj.backgroundLight900Dark300} custom-left-sidebar-scrollbar fixed top-[70px] w-full overflow-y-auto border-t px-5 shadow-light transition-all dark:border-none md:px-10 lg:sticky lg:flex lg:overflow-y-visible lg:pl-[30px] ${resizeHeight !== "h-0" ? "pt-5 lg:pt-0" : "pt-0"}`}
+      className={`${resizeHeight} ${globalStyleObj.backgroundLight900Dark300} ${resizeHeight !== "h-0" ? "pt-5 lg:pt-0" : "pt-0"} ${layoutPositionType === position.FIXED ? "fixed top-[70px] lg:sticky" : ""} custom-left-sidebar-scrollbar w-full overflow-y-auto border-t px-5 shadow-light transition-all dark:border-none md:px-10 lg:flex  lg:overflow-y-visible lg:pl-[30px]`}
     >
       {/* Upto category = Components & index = 0 */}
       {leftSidebarData.map((category) =>

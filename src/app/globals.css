@@ -150,6 +150,9 @@ html .dark::-webkit-scrollbar-thumb {
   .text-dark {
     @apply text-[#545A61] font-poppins-md;
   }
+  .no-focus {
+    @apply focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 !important;
+  }
 }
 
 @layer base {

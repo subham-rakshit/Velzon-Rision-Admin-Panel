@@ -8,6 +8,7 @@ import { MdArrowForward } from "react-icons/md";
 
 import bellSvg from "../../../app/assets/images/svg/bell.svg";
 
+import { topbarColor } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
 import { notificationsData } from "@/app/assets/navData/navData";
 import { globalStyleObj } from "@/app/assets/styles";
 import {
@@ -18,8 +19,10 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useAppSelector } from "@/lib/store/hooks";
 
 const NavbarNotification = () => {
+  const { topbarColorType } = useAppSelector((state) => state.layout);
   const [selectedNotification, setSelectedNotification] = useState(
     notificationsData[0]
   );
@@ -31,11 +34,11 @@ const NavbarNotification = () => {
       <DropdownMenuTrigger asChild={true}>
         <button
           type="button"
-          className={`${globalStyleObj.flexCenter} relative m-0 size-[30px] rounded-full p-0 hover:bg-light-dencity-400 dark:hover:bg-dark-dencity-100 sm:size-[40px]`}
+          className={`${globalStyleObj.flexCenter} ${topbarColorType === topbarColor.LIGHT_COLOR ? `hover:bg-light-dencity-400 dark:hover:bg-dark-dencity-100` : `hover:bg-[#4A5A8F]`} relative m-0 size-[30px] rounded-full p-0 sm:size-[40px]`}
         >
           <FaRegBell
             size={20}
-            className={`${globalStyleObj.iconLight450Dark350}`}
+            className={`${topbarColorType === topbarColor.LIGHT_COLOR ? `${globalStyleObj.iconLight450Dark350}` : `${globalStyleObj.topbarDarkIconColor}`}`}
           />
           <span
             className={`${globalStyleObj.flexCenter} absolute left-1/2 top-[-8px] rounded-full bg-[#F06548] px-[5px] font-poppins-md text-[10px] font-semibold text-white sm:top-[-5px]`}

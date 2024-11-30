@@ -5,26 +5,29 @@ import React from "react";
 import { IoIosArrowForward } from "react-icons/io";
 
 import {
+  position,
   sidebarColor,
   sidebarSize,
 } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
 import leftSidebarData from "@/app/assets/leftSidebarData/leftSidebarData";
 import { globalStyleObj } from "@/app/assets/styles";
 import { TransitionLink } from "@/components";
+import { useAppSelector } from "@/lib/store/hooks";
 
 const LeftSidebarCompactView = ({
   pathname,
   mainPath,
   tabDetails,
-  leftSidebarColorType,
-  leftSidebarSizeType,
   handleParentTabToggle,
   handleFirstChildTabToggle,
   handleSecondChildTabToggle,
 }) => {
+  const { leftSidebarColorType, leftSidebarSizeType, layoutPositionType } =
+    useAppSelector((state) => state.layout);
+
   return (
     <ul
-      className={`custom-left-sidebar-scrollbar h-[calc(100vh-70px)] overflow-y-auto dark:bg-dark-dencity-300 ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? "bg-light-weight-500" : "bg-light-dencity-900"}`}
+      className={`custom-left-sidebar-scrollbar overflow-y-auto dark:bg-dark-dencity-300 ${layoutPositionType === position.SCROLLABLE ? "min-h-full" : "h-[calc(100vh-70px)]"} ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? "bg-light-weight-500" : "bg-light-dencity-900"}`}
     >
       {leftSidebarData.map((category) => (
         // Main Category Container

@@ -6,6 +6,7 @@ import { MdClose } from "react-icons/md";
 import { PiShoppingCartSimpleBold } from "react-icons/pi";
 import { RiShoppingBagLine } from "react-icons/ri";
 
+import { topbarColor } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
 import { myCartData } from "@/app/assets/navData/navData";
 import { globalStyleObj } from "@/app/assets/styles";
 import {
@@ -17,8 +18,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useAppSelector } from "@/lib/store/hooks";
 
 const NavbarMyCart = () => {
+  const { topbarColorType } = useAppSelector((state) => state.layout);
   const [cartData, setCartData] = useState(myCartData);
   const totalPrice = cartData.reduce((acc, curr) => {
     return acc + curr.productQuantity * curr.productPrice;
@@ -36,11 +39,11 @@ const NavbarMyCart = () => {
       <DropdownMenuTrigger asChild>
         <button
           type="button"
-          className={`${globalStyleObj.flexCenter} relative m-0 size-[30px] rounded-full p-0 hover:bg-light-dencity-400 dark:hover:bg-dark-dencity-100 sm:size-[40px]`}
+          className={`${globalStyleObj.flexCenter} ${topbarColorType === topbarColor.LIGHT_COLOR ? `hover:bg-light-dencity-400 dark:hover:bg-dark-dencity-100` : `hover:bg-[#4A5A8F]`} relative m-0 size-[30px] rounded-full p-0 sm:size-[40px]`}
         >
           <RiShoppingBagLine
             size={20}
-            className={`${globalStyleObj.iconLight450Dark350}`}
+            className={`${topbarColorType === topbarColor.LIGHT_COLOR ? `${globalStyleObj.iconLight450Dark350}` : `${globalStyleObj.topbarDarkIconColor}`}`}
           />
           <span
             className={`${globalStyleObj.flexCenter} absolute left-1/2 top-[-8px] rounded-full bg-[#299CDB] px-[5px] font-poppins-md text-[10px] font-semibold text-white sm:top-[-5px]`}

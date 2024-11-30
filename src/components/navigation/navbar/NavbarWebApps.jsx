@@ -5,6 +5,7 @@ import React from "react";
 import { BiCategoryAlt } from "react-icons/bi";
 import { IoIosArrowForward } from "react-icons/io";
 
+import { topbarColor } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
 import { webAppsData } from "@/app/assets/navData/navData";
 import { globalStyleObj } from "@/app/assets/styles";
 import {
@@ -16,14 +17,19 @@ import {
   DropdownMenuTrigger,
   DropdownMenuGroup,
 } from "@/components/ui/dropdown-menu";
+import { useAppSelector } from "@/lib/store/hooks";
 
 const NavbarWebApps = () => {
+  const { topbarColorType } = useAppSelector((state) => state.layout);
+
   return (
     <DropdownMenu modal={false}>
-      <DropdownMenuTrigger className="rounded-full p-[5px] hover:bg-light-dencity-400 dark:hover:bg-dark-dencity-100 sm:p-[10px]">
+      <DropdownMenuTrigger
+        className={`${topbarColorType === topbarColor.LIGHT_COLOR ? `hover:bg-light-dencity-400 dark:hover:bg-dark-dencity-100` : `hover:bg-[#4A5A8F]`} rounded-full p-[5px] sm:p-[10px]`}
+      >
         <BiCategoryAlt
           size={20}
-          className={`${globalStyleObj.iconLight450Dark350}`}
+          className={`${topbarColorType === topbarColor.LIGHT_COLOR ? `${globalStyleObj.iconLight450Dark350}` : `${globalStyleObj.topbarDarkIconColor}`}`}
         />
       </DropdownMenuTrigger>
       <DropdownMenuContent

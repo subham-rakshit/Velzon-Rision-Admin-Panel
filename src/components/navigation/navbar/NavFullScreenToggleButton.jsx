@@ -3,9 +3,12 @@
 import React, { useState } from "react";
 import { MdFullscreen, MdFullscreenExit } from "react-icons/md";
 
+import { topbarColor } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
 import { globalStyleObj } from "@/app/assets/styles";
+import { useAppSelector } from "@/lib/store/hooks";
 
 const NavFullScreenToggleButton = () => {
+  const { topbarColorType } = useAppSelector((state) => state.layout);
   const [isFullScreen, setIsFullScreen] = useState(false);
 
   // NOTE: Handle fullscreen
@@ -30,18 +33,18 @@ const NavFullScreenToggleButton = () => {
     <button
       type="button"
       onClick={handleFullScreen}
-      className={`${globalStyleObj.flexCenter} rounded-full p-[5px] hover:bg-light-dencity-400 dark:hover:bg-dark-dencity-100 sm:p-[10px]`}
+      className={`${globalStyleObj.flexCenter} ${globalStyleObj.flexCenter} ${topbarColorType === topbarColor.LIGHT_COLOR ? `hover:bg-light-dencity-400 dark:hover:bg-dark-dencity-100` : `hover:bg-[#4A5A8F]`} rounded-full p-[5px] sm:p-[10px]`}
     >
       <span>
         {isFullScreen ? (
           <MdFullscreenExit
             size={22}
-            className={`${globalStyleObj.iconLight450Dark350}`}
+            className={`${topbarColorType === topbarColor.LIGHT_COLOR ? `${globalStyleObj.iconLight450Dark350}` : `${globalStyleObj.topbarDarkIconColor}`}`}
           />
         ) : (
           <MdFullscreen
             size={22}
-            className={`${globalStyleObj.iconLight450Dark350}`}
+            className={`${topbarColorType === topbarColor.LIGHT_COLOR ? `${globalStyleObj.iconLight450Dark350}` : `${globalStyleObj.topbarDarkIconColor}`}`}
           />
         )}
       </span>

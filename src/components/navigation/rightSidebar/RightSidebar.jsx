@@ -39,9 +39,10 @@ import {
   changeLeftSidebarImageType,
   changeLayoutThemePrimaryColorType,
   changePreloader,
+  changeLeftSideBarSizeType,
   changeLeftSidebarSizeMain,
   changeLeftSidebarVisibilityType,
-  changeLeftSideBarSizeType,
+  changeToggleButtonStatus,
 } from "@/lib/store/features/layoutCustomizer/layoutCustomizerSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 
@@ -811,7 +812,10 @@ const RightSidebar = ({ isScrollTop }) => {
                 <button
                   type="button"
                   className="group flex cursor-pointer flex-col items-center gap-1"
-                  onClick={() => dispatch(changeLeftSidebarSizeMain("lg"))}
+                  onClick={() => {
+                    dispatch(changeLeftSidebarSizeMain(sidebarMainSize.LG));
+                    dispatch(changeToggleButtonStatus(false));
+                  }}
                 >
                   <div
                     className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] group-hover:shadow-light ${
@@ -842,7 +846,10 @@ const RightSidebar = ({ isScrollTop }) => {
                 <button
                   type="button"
                   className="group flex cursor-pointer flex-col items-center gap-1"
-                  onClick={() => dispatch(changeLeftSidebarSizeMain("md"))}
+                  onClick={() => {
+                    dispatch(changeLeftSidebarSizeMain(sidebarMainSize.MD));
+                    dispatch(changeToggleButtonStatus(false));
+                  }}
                 >
                   <div
                     className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
@@ -896,7 +903,10 @@ const RightSidebar = ({ isScrollTop }) => {
                 <button
                   type="button"
                   className="group flex cursor-pointer flex-col items-center gap-1"
-                  onClick={() => dispatch(changeLeftSidebarSizeMain("sm"))}
+                  onClick={() => {
+                    dispatch(changeLeftSidebarSizeMain(sidebarMainSize.SM));
+                    dispatch(changeToggleButtonStatus(false));
+                  }}
                 >
                   <div
                     className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
@@ -951,9 +961,12 @@ const RightSidebar = ({ isScrollTop }) => {
                 <button
                   type="button"
                   className="group flex cursor-pointer flex-col items-center gap-1"
-                  onClick={() =>
-                    dispatch(changeLeftSidebarSizeMain("sm-hover"))
-                  }
+                  onClick={() => {
+                    dispatch(
+                      changeLeftSidebarSizeMain(sidebarMainSize.SM_HOVER)
+                    );
+                    dispatch(changeToggleButtonStatus(false));
+                  }}
                 >
                   <div
                     className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${

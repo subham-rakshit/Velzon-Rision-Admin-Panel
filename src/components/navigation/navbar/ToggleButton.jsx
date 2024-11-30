@@ -7,6 +7,7 @@ import {
   sidebarMainSize,
   sidebarSize,
   toggleStatus,
+  topbarColor,
 } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
 import { globalStyleObj } from "@/app/assets/styles";
 import {
@@ -22,6 +23,7 @@ const ToggleButton = () => {
     toggleButtonStatus,
     leftSidebarSizeMain,
     toggleSmallButtonStatus,
+    topbarColorType,
   } = useAppSelector((state) => state.layout);
   const dispatch = useAppDispatch();
 
@@ -81,7 +83,7 @@ const ToggleButton = () => {
         return (
           <span
             key={bar}
-            className={`${globalStyleObj.backgroundLight200Dark350} transition-300 my-[4px] block h-[2px] rounded-sm ${dynamicClasses}`}
+            className={`${topbarColorType === topbarColor.LIGHT_COLOR ? `${globalStyleObj.backgroundLight200Dark350}` : `${globalStyleObj.topbarDarkToggleBarColor}`} transition-300 my-[4px] block h-[2px] rounded-sm ${dynamicClasses}`}
           ></span>
         );
       })}

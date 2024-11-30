@@ -4,20 +4,26 @@ import React from "react";
 import { IoSearch } from "react-icons/io5";
 import { MdSearch } from "react-icons/md";
 
+import { topbarColor } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
 import { globalStyleObj } from "@/app/assets/styles";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useAppSelector } from "@/lib/store/hooks";
 
 const NavbarSearchSmallDevice = () => {
+  const { topbarColorType } = useAppSelector((state) => state.layout);
+
   return (
     <Popover>
-      <PopoverTrigger className="rounded-full p-[5px] hover:bg-light-dencity-400 dark:hover:bg-dark-dencity-100 sm:p-[10px] md:hidden">
+      <PopoverTrigger
+        className={`${topbarColorType === topbarColor.LIGHT_COLOR ? `hover:bg-light-dencity-400 dark:hover:bg-dark-dencity-100` : `hover:bg-[#4A5A8F]`} rounded-full p-[5px] sm:p-[10px] md:hidden`}
+      >
         <IoSearch
           size={20}
-          className={`${globalStyleObj.iconLight450Dark350}`}
+          className={`${topbarColorType === topbarColor.LIGHT_COLOR ? `${globalStyleObj.iconLight450Dark350}` : `${globalStyleObj.topbarDarkIconColor}`}`}
         />
       </PopoverTrigger>
       <PopoverContent

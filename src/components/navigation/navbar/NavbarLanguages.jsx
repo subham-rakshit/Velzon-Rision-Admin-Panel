@@ -4,6 +4,7 @@ import React, { useState } from "react";
 
 import { languagesDetails } from "../../../app/assets/navData/navData";
 
+import { topbarColor } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
 import { globalStyleObj } from "@/app/assets/styles";
 import {
   DropdownMenu,
@@ -11,8 +12,10 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useAppSelector } from "@/lib/store/hooks";
 
 const NavbarLanguages = () => {
+  const { topbarColorType } = useAppSelector((state) => state.layout);
   const [selectedLanguage, setSelectedLanguage] = useState(
     Object.values(languagesDetails)[0]
   );
@@ -21,7 +24,7 @@ const NavbarLanguages = () => {
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger
-        className={`rounded-full p-[5px] hover:bg-light-dencity-400 dark:hover:bg-dark-dencity-100 sm:p-[10px]`}
+        className={`${topbarColorType === topbarColor.LIGHT_COLOR ? `hover:bg-light-dencity-400 dark:hover:bg-dark-dencity-100` : `hover:bg-[#4A5A8F]`} rounded-full p-[5px] sm:p-[10px]`}
       >
         <Image
           src={selectedLanguage.flag}

@@ -11,7 +11,10 @@ import { toast } from "react-toastify";
 
 import avatarImg from "../../../app/assets/images/users/avatar-1.jpg";
 
-import { avatarStatus } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
+import {
+  avatarStatus,
+  topbarColor,
+} from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
 import {
   profileDataGroup1,
   profileDataGroup2,
@@ -32,7 +35,7 @@ import { useAppSelector } from "@/lib/store/hooks";
 const NavProfile = () => {
   const [isFetching, setIsFetching] = useState(false);
   const [profileName, setProfileName] = useState("");
-  const { sidebarUserProfileAvtarType } = useAppSelector(
+  const { sidebarUserProfileAvtarType, topbarColorType } = useAppSelector(
     (state) => state.layout
   );
 
@@ -147,7 +150,7 @@ const NavProfile = () => {
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger
           asChild
-          className="h-full cursor-pointer px-4 sm:ml-2 md:bg-light-dencity-800 md:dark:bg-dark-dencity-100"
+          className={`${topbarColorType === topbarColor.LIGHT_COLOR ? `bg-[#f3f3f3]/90 dark:bg-[#f3f3f3]/5` : `bg-[#fff]/10`} h-full cursor-pointer px-4 sm:ml-2`}
         >
           <span className={`${globalStyleObj.flexStart} gap-[10px]`}>
             <Image
@@ -162,7 +165,9 @@ const NavProfile = () => {
                 <BeatLoader size={5} color="#b9b1b1" />
               ) : (
                 <>
-                  <span className={`${globalStyleObj.text13Light550Dark550}`}>
+                  <span
+                    className={`${topbarColorType === topbarColor.LIGHT_COLOR ? `${globalStyleObj.text13Light550Dark550}` : `font-poppins-rg text-[13px] text-light-weight-850`}`}
+                  >
                     {session && session.data
                       ? session.data.user.username
                       : profileName}

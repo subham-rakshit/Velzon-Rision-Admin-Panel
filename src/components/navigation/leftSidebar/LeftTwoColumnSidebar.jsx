@@ -13,7 +13,10 @@ import logoLight from "../../../app/assets/images/logo-light.png";
 import logoSmall from "../../../app/assets/images/logo-sm.png";
 import leftSidebarData from "../../../app/assets/leftSidebarData/leftSidebarData";
 
-import { sidebarColor } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
+import {
+  position,
+  sidebarColor,
+} from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
 import { globalStyleObj } from "@/app/assets/styles";
 import ROUTES from "@/constants/routes";
 import {
@@ -23,9 +26,8 @@ import {
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 
 const LeftTwoColumnSidebar = ({ width }) => {
-  const { leftSidebarColorType, toggleSmallButtonStatus } = useAppSelector(
-    (state) => state.layout
-  );
+  const { leftSidebarColorType, toggleSmallButtonStatus, layoutPositionType } =
+    useAppSelector((state) => state.layout);
   const pathname = usePathname();
   const { theme } = useTheme();
   const dispatch = useAppDispatch();
@@ -121,7 +123,7 @@ const LeftTwoColumnSidebar = ({ width }) => {
       ></div>
 
       <div
-        className={`transition-300 fixed z-[999] flex h-screen overflow-hidden ${width}`}
+        className={`transition-300 z-[999] flex overflow-hidden ${width} ${layoutPositionType === position.SCROLLABLE ? "sticky min-h-full" : "fixed h-screen"}`}
       >
         {/* Icon View */}
         <div

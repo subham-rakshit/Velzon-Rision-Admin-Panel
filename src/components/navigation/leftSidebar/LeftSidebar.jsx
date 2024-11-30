@@ -18,14 +18,11 @@ import {
   sidebarColor,
   sidebarSize,
   sidebarMainSize,
-  toggleStatus,
+  position,
 } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
 import { globalStyleObj } from "@/app/assets/styles";
 import { LeftSidebarCompactView, LeftSidebarSmallIconView } from "@/components";
-import {
-  changeToggleButtonStatus,
-  changeToggleSmallButtonStatus,
-} from "@/lib/store/features/layoutCustomizer/layoutCustomizerSlice";
+import { changeToggleSmallButtonStatus } from "@/lib/store/features/layoutCustomizer/layoutCustomizerSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 
 const LeftSidebar = ({ width }) => {
@@ -33,8 +30,8 @@ const LeftSidebar = ({ width }) => {
     leftSidebarSizeType,
     leftSidebarSizeMain,
     leftSidebarColorType,
-    toggleButtonStatus,
     toggleSmallButtonStatus,
+    layoutPositionType,
   } = useAppSelector((state) => state.layout);
   const pathname = usePathname();
   const mainPath = pathname.split("/")[1];
@@ -50,6 +47,49 @@ const LeftSidebar = ({ width }) => {
 
   const [isContainerHover, setIsContainerHover] = useState(false);
   const [isFixedBtnCliked, setIsFixedBtnClicked] = useState(false);
+
+  // NOTE Small Hover View
+  useEffect(() => {
+    const pageContainerElem = document.getElementById("pages-main-container");
+    const elem = document.getElementById("left-sidebar-container");
+
+    if (layoutPositionType !== position.SCROLLABLE) {
+      if (
+        isFixedBtnCliked &&
+        leftSidebarSizeMain === sidebarMainSize.SM_HOVER
+      ) {
+        pageContainerElem.classList.remove("ml-[65px]");
+        pageContainerElem.classList.add("ml-[250px]");
+      } else {
+        setIsFixedBtnClicked(false);
+        setIsContainerHover(false);
+        if (leftSidebarSizeMain === sidebarMainSize.SM_HOVER) {
+          pageContainerElem.classList.remove("ml-[250px]");
+          pageContainerElem.classList.add("ml-[65px]");
+        } else if (leftSidebarSizeMain !== sidebarMainSize.LG) {
+          pageContainerElem.classList.remove("ml-[250px]");
+        }
+      }
+    } else {
+      if (
+        isFixedBtnCliked &&
+        leftSidebarSizeMain === sidebarMainSize.SM_HOVER
+      ) {
+        elem.classList.add("w-[250px]");
+      } else {
+        setIsFixedBtnClicked(false);
+        setIsContainerHover(false);
+        if (leftSidebarSizeMain === sidebarMainSize.MD) {
+          elem.classList.add("w-[180px]");
+        } else if (leftSidebarSizeMain === sidebarMainSize.SM) {
+          elem.classList.add("w-[65px]");
+        }
+      }
+    }
+
+    console.log(pageContainerElem);
+    console.log(elem);
+  }, [layoutPositionType, isFixedBtnCliked, leftSidebarSizeMain]);
 
   useEffect(() => {
     const elem = document.getElementById(mainPath);
@@ -124,17 +164,11 @@ const LeftSidebar = ({ width }) => {
     }));
   };
 
-  const handleSmallHoverIconFixedButton = () => {
-    const status = toggleButtonStatus === toggleStatus.CLOSE;
-    setIsFixedBtnClicked(!isFixedBtnCliked);
-    dispatch(changeToggleButtonStatus(status));
-  };
-
   // NOTE Default Sidebar Size
   const verticalDefaultLeftSidebarView = () => {
     return (
       <ul
-        className={`custom-left-sidebar-scrollbar h-[calc(100vh-70px)] overflow-y-auto px-4 dark:bg-dark-dencity-300 ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? "bg-light-weight-500" : "bg-light-dencity-900"}`}
+        className={`custom-left-sidebar-scrollbar overflow-y-auto px-4 dark:bg-dark-dencity-300 ${layoutPositionType === position.SCROLLABLE ? "min-h-full" : "h-[calc(100vh-70px)]"} ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? "bg-light-weight-500" : "bg-light-dencity-900"}`}
       >
         {leftSidebarData.map((category) => (
           // Main Category Container
@@ -322,7 +356,7 @@ const LeftSidebar = ({ width }) => {
           verticalDefaultLeftSidebarView()
         ) : (
           <ul
-            className={`min-h-screen py-2 text-light-weight-450 dark:bg-dark-dencity-300 ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? "bg-light-weight-500" : "bg-light-dencity-900"}`}
+            className={`py-2 text-light-weight-450 dark:bg-dark-dencity-300 ${layoutPositionType === position.SCROLLABLE ? "min-h-full" : "min-h-screen"} ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? "bg-light-weight-500" : "bg-light-dencity-900"}`}
           >
             {leftSidebarData.map((category) =>
               category.tabNameList.map((parent) => (
@@ -358,13 +392,13 @@ const LeftSidebar = ({ width }) => {
       ></div>
 
       <div
+        id="left-sidebar-container"
         className={`min-h-full ${
-          (leftSidebarSizeType === sidebarSize.SMALL_HOVER_VIEW &&
-            isFixedBtnCliked) ||
-          leftSidebarSizeType === sidebarSize.SMALL_ICON_VIEW
-            ? "sticky"
-            : "fixed"
-        } ${isContainerHover ? "w-[250px]" : width} sm:transition-300 z-[99]`}
+          leftSidebarSizeType === sidebarSize.SMALL_ICON_VIEW ||
+          layoutPositionType === position.SCROLLABLE
+            ? "transition-300"
+            : "transition-300 fixed"
+        } ${isContainerHover ? "w-[250px]" : width} z-[99]`}
         onMouseEnter={() =>
           leftSidebarSizeType === sidebarSize.SMALL_HOVER_VIEW &&
           !isFixedBtnCliked
@@ -380,7 +414,7 @@ const LeftSidebar = ({ width }) => {
       >
         {/* NOTE Sidebar Top Logo Section */}
         <div
-          className={`transition-300 sticky left-0 top-0 z-[100] h-[70px] w-full px-[20px] dark:bg-dark-dencity-300 ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? "bg-light-weight-500" : "bg-light-dencity-900"}`}
+          className={`transition-300 z-[100] h-[70px] w-full px-[20px] dark:bg-dark-dencity-300 ${layoutPositionType === position.SCROLLABLE ? "" : "sticky left-0 top-0"} ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? "bg-light-weight-500" : "bg-light-dencity-900"}`}
         >
           <Link
             href="/dashboard"
@@ -451,7 +485,7 @@ const LeftSidebar = ({ width }) => {
             <button
               type="button"
               className={`${isContainerHover ? "visible" : "hidden"}`}
-              onClick={handleSmallHoverIconFixedButton}
+              onClick={() => setIsFixedBtnClicked(!isFixedBtnCliked)}
             >
               <span
                 className={`${globalStyleObj.flexCenter} size-[16px] rounded-full border-2 border-light-weight-400 dark:border-light-weight-450`}
@@ -491,8 +525,6 @@ const LeftSidebar = ({ width }) => {
             pathname={pathname}
             mainPath={mainPath}
             tabDetails={tabDetails}
-            leftSidebarColorType={leftSidebarColorType}
-            leftSidebarSizeType={leftSidebarSizeType}
             handleParentTabToggle={handleParentTabToggle}
             handleFirstChildTabToggle={handleFirstChildTabToggle}
             handleSecondChildTabToggle={handleSecondChildTabToggle}

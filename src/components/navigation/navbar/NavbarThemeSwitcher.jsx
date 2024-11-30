@@ -4,9 +4,12 @@ import { useTheme } from "next-themes";
 import React from "react";
 import { IoMoonOutline, IoSunnyOutline } from "react-icons/io5";
 
+import { topbarColor } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
 import { globalStyleObj } from "@/app/assets/styles";
+import { useAppSelector } from "@/lib/store/hooks";
 
 const NavbarThemeSwitcher = () => {
+  const { topbarColorType } = useAppSelector((state) => state.layout);
   const { theme, setTheme } = useTheme();
 
   const handleToggleTheme = () => {
@@ -17,17 +20,17 @@ const NavbarThemeSwitcher = () => {
     <button
       type="button"
       onClick={handleToggleTheme}
-      className={`hidden rounded-full p-[5px] hover:bg-light-dencity-400 dark:hover:bg-dark-dencity-100 sm:flex sm:items-center sm:justify-center sm:p-[10px]`}
+      className={`${globalStyleObj.flexCenter} ${topbarColorType === topbarColor.LIGHT_COLOR ? `hover:bg-light-dencity-400 dark:hover:bg-dark-dencity-100` : `hover:bg-[#4A5A8F]`} hidden rounded-full p-[5px] sm:flex sm:items-center sm:justify-center sm:p-[10px]`}
     >
       {theme === "light" ? (
         <IoMoonOutline
           size={20}
-          className={`${globalStyleObj.iconLight450Dark350}`}
+          className={`${topbarColorType === topbarColor.LIGHT_COLOR ? `${globalStyleObj.iconLight450Dark350}` : `${globalStyleObj.topbarDarkIconColor}`}`}
         />
       ) : (
         <IoSunnyOutline
           size={20}
-          className={`${globalStyleObj.iconLight450Dark350}`}
+          className={`${topbarColorType === topbarColor.LIGHT_COLOR ? `${globalStyleObj.iconLight450Dark350}` : `${globalStyleObj.topbarDarkIconColor}`}`}
         />
       )}
     </button>

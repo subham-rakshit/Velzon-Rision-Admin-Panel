@@ -14,13 +14,17 @@ import {
   ToggleButton,
 } from "../..";
 
-import { layout } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
+import {
+  layout,
+  position,
+  topbarColor,
+} from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
 import { globalStyleObj } from "@/app/assets/styles";
 
-const Navbar = ({ layoutType }) => {
+const Navbar = ({ layoutType, layoutPositionType, topbarColorType }) => {
   return (
     <nav
-      className={`${globalStyleObj.backgroundLight900Dark200} ${globalStyleObj.flexBetween} sticky top-0 h-[70px] shadow-light ${layoutType === layout.HORIZONTAL ? "px-5 md:px-10 lg:px-[50px]" : "px-5"}`}
+      className={`${topbarColorType === topbarColor.LIGHT_COLOR ? `${globalStyleObj.backgroundLight900Dark200}` : `${globalStyleObj.bgColorYankeesBlue}`} ${globalStyleObj.flexBetween} ${layoutType === layout.HORIZONTAL ? "px-5 md:px-10 lg:px-[50px]" : "px-5"} ${layoutPositionType !== position.SCROLLABLE ? "sticky" : ""} top-0 h-[70px] shadow-light`}
     >
       <div className={`${globalStyleObj.flexStart} h-full gap-2 md:gap-5`}>
         {layoutType === layout.HORIZONTAL && <NavLogo />}

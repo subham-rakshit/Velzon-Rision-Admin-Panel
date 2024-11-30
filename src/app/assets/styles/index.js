@@ -55,6 +55,10 @@ export const globalStyleObj = {
 
   // Icons
   iconLight450Dark350: "text-light-weight-450 dark:text-dark-weight-350",
+  topbarDarkIconColor: "text-[#B0B5BC]",
+  topbarDarkBoxColor: "bg-[#4A5A8F]",
+  topbarDarkToggleBarColor: "bg-[#B0B5BC]",
+  topbarDarkProfileBgColor: "bg-[#536395]",
 
   // Text
   textSoft: "text-[#8A8D9C] font-poppins-rg",
