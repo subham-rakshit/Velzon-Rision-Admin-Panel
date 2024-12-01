@@ -86,9 +86,6 @@ const LeftSidebar = ({ width }) => {
         }
       }
     }
-
-    console.log(pageContainerElem);
-    console.log(elem);
   }, [layoutPositionType, isFixedBtnCliked, leftSidebarSizeMain]);
 
   useEffect(() => {

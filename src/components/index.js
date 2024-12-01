@@ -30,7 +30,6 @@ import NavProfile from "./navigation/navbar/NavProfile";
 import NavSearchBox from "./navigation/navbar/NavSearchBox";
 import NavSearchBoxRecentSearches from "./navigation/navbar/NavSearchBoxRecentSearches";
 import ToggleButton from "./navigation/navbar/ToggleButton";
-import CommonRightSidebarLayout from "./navigation/rightSidebar/CommonRightSidebarLayout";
 import RightSidebar from "./navigation/rightSidebar/RightSidebar";
 import TransitionLink from "./navigation/TransitionLink";
 
@@ -65,7 +64,6 @@ export {
   LeftSidebarCompactView,
   TransitionLink,
   RightSidebar,
-  CommonRightSidebarLayout,
   ErrorImage,
   AuthProtectedLayoutProvider,
   Footer,

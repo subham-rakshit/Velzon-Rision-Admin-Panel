@@ -22,7 +22,7 @@ const NavSearchBox = () => {
 
   return (
     <form
-      className={`${topbarColorType === topbarColor.LIGHT_COLOR ? `${globalStyleObj.backgroundLight800Dark300} text-soft` : `${globalStyleObj.topbarDarkBoxColor}`} relative hidden rounded-[3px] px-4 md:flex md:items-center md:justify-center`}
+      className={`${topbarColorType === topbarColor.LIGHT_COLOR ? `${globalStyleObj.backgroundLight800Dark300} text-soft` : `bg-[#fff]/10`} relative hidden rounded-[3px] px-4 md:flex md:items-center md:justify-center`}
     >
       <MdSearch
         size={18}

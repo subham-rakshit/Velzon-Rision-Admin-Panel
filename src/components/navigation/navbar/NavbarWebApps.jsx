@@ -25,7 +25,7 @@ const NavbarWebApps = () => {
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger
-        className={`${topbarColorType === topbarColor.LIGHT_COLOR ? `hover:bg-light-dencity-400 dark:hover:bg-dark-dencity-100` : `hover:bg-[#4A5A8F]`} rounded-full p-[5px] sm:p-[10px]`}
+        className={`${topbarColorType === topbarColor.LIGHT_COLOR ? `hover:bg-light-dencity-400 dark:hover:bg-dark-dencity-100` : `hover:bg-[#fff]/5`} rounded-full p-[5px] sm:p-[10px]`}
       >
         <BiCategoryAlt
           size={20}

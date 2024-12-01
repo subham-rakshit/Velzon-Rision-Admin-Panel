@@ -11,6 +11,7 @@ import { ClipLoader } from "react-spinners";
 
 import {
   layout,
+  layoutThemePrimaryColor,
   sidebarMainSize,
   sidebarSize,
   sidebarVisibility,
@@ -20,12 +21,10 @@ import {
   rightSidbarLayoutWidthData,
   rightSidbarLayoutPositionData,
   rightSidbarTopbarColorData,
-  rightSidbarColorData,
   rightSidebarImagesData,
   rightSidebarPrimaryColorData,
 } from "@/app/assets/rightSidebarData/rightSidebarData";
 import { globalStyleObj } from "@/app/assets/styles";
-import { CommonRightSidebarLayout } from "@/components";
 import {
   changeLayoutType,
   changeSidebarUserProfileAvtarType,
@@ -75,6 +74,91 @@ const RightSidebar = ({ isScrollTop }) => {
     clamp: rightSideBarIsOpen,
   });
 
+  let borderColor;
+  let colorHex;
+  let bgColor;
+  let bgGradientColor;
+  let bgGradientFourthChildColor;
+
+  switch (layoutThemePrimaryColorType) {
+    case layoutThemePrimaryColor.DEFAULT:
+      borderColor = "border border-[#405189]";
+      colorHex = "#405189";
+      bgColor = rightSidebarPrimaryColorData[0].bgColor;
+      bgGradientColor = "bg-gradient-to-r from-[#405189] to-[#10a99a]";
+      bgGradientFourthChildColor =
+        "bg-gradient-to-r from-[#1d2129] to-[#405189]";
+      break;
+    case layoutThemePrimaryColor.TEAL_GREEN:
+      borderColor = "border border-[#066b5e]";
+      colorHex = "#066b5e";
+      bgColor = rightSidebarPrimaryColorData[1].bgColor;
+      bgGradientColor = "bg-gradient-to-r from-[#066b5e] to-[#10a99a]";
+      bgGradientFourthChildColor =
+        "bg-gradient-to-r from-[#1d2129] to-[#066b5e]";
+      break;
+    case layoutThemePrimaryColor.ROYAL_PURPLE:
+      borderColor = "border border-[#5147A3]";
+      colorHex = "#5147A3";
+      bgColor = rightSidebarPrimaryColorData[2].bgColor;
+      bgGradientColor = "bg-gradient-to-r from-[#5147A3] to-[#10a99a]";
+      bgGradientFourthChildColor =
+        "bg-gradient-to-r from-[#1d2129] to-[#5147A3]";
+      break;
+    case layoutThemePrimaryColor.COBALT_BLUE:
+      borderColor = "border border-[#2a5fc1]";
+      colorHex = "#2a5fc1";
+      bgColor = rightSidebarPrimaryColorData[3].bgColor;
+      bgGradientColor = "bg-gradient-to-r from-[#2a5fc1] to-[#10a99a]";
+      bgGradientFourthChildColor =
+        "bg-gradient-to-r from-[#1d2129] to-[#2a5fc1]";
+      break;
+  }
+
+  // NOTE Sidebar Color data
+  const rightSidbarColorData = [
+    {
+      id: "light-bg-color",
+      label: "Light",
+      leftColor: "bg-[#fff]",
+      leftInnerColor: "bg-gray-500/20",
+    },
+    {
+      id: "dark-bg-color",
+      label: "Dark",
+      leftColor: bgColor,
+      leftInnerColor: "bg-[#fff]/20",
+    },
+    {
+      id: "gradient-bg-color",
+      label: "Gradient",
+      leftColor: bgGradientColor,
+      leftInnerColor: "bg-[#fff]/20",
+      childrenElem: [
+        {
+          id: "child-1",
+          label: "gradient-bg-color",
+          leftColor: bgGradientColor,
+        },
+        {
+          id: "child-2",
+          label: "sec-child-gradient-bg-color",
+          leftColor: "bg-gradient-to-r from-[#2a99dd] to-[#347cef]",
+        },
+        {
+          id: "child-3",
+          label: "third-child-gradient-bg-color",
+          leftColor: "bg-gradient-to-r from-[#2a99dd] to-[#0fb0a6]",
+        },
+        {
+          id: "child-4",
+          label: "fourth-child-gradient-bg-color",
+          leftColor: bgGradientFourthChildColor,
+        },
+      ],
+    },
+  ];
+
   // NOTE Handle Layout Width
   const handleLayoutWidth = (id) => {
     if (id === "fluid") {
@@ -112,6 +196,39 @@ const RightSidebar = ({ isScrollTop }) => {
       });
     }
   }, [rightSideBarIsOpen]);
+
+  const commonRightSidebarLayout = (extraClass) => {
+    return (
+      <>
+        <div
+          className={`flex h-full w-[25px] flex-col p-[4px] ${globalStyleObj.layoutBoxBackgroundLightDark}`}
+        >
+          <span
+            className={`h-[8px] w-full rounded-lg`}
+            style={{ backgroundColor: `${colorHex}40` }}
+          ></span>
+          <div className="flex h-full flex-col justify-center gap-1">
+            {["box-1", "box-2", "box-3"].map((box) => (
+              <span
+                key={box}
+                className={`h-[4px] w-full`}
+                style={{ backgroundColor: `${colorHex}40` }}
+              ></span>
+            ))}
+          </div>
+        </div>
+
+        <div className="flex size-full flex-col justify-between">
+          <span
+            className={`h-[8px] w-full ${extraClass || `${globalStyleObj.layoutBoxBackgroundLightDark}`}`}
+          ></span>
+          <span
+            className={`h-[8px] w-full ${globalStyleObj.layoutBoxBackgroundLightDark}`}
+          ></span>
+        </div>
+      </>
+    );
+  };
 
   return (
     <>
@@ -162,7 +279,7 @@ const RightSidebar = ({ isScrollTop }) => {
         >
           {/* NOTE Header */}
           <div
-            className={`${globalStyleObj.flexBetween} h-[60px] w-full bg-[#505f93] px-[16px]`}
+            className={`${globalStyleObj.flexBetween} ${bgColor} h-[60px] w-full px-[16px]`}
           >
             <h1 className="font-poppins-md text-[16px] text-white">
               Theme Customizer
@@ -203,16 +320,16 @@ const RightSidebar = ({ isScrollTop }) => {
                   <div
                     className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] group-hover:shadow-light ${
                       layoutType === "vertical"
-                        ? "border border-[#405189]"
+                        ? `${borderColor}`
                         : "border dark:border-dark-weight-550"
                     }`}
                   >
                     <div className="flex size-full gap-2">
-                      <CommonRightSidebarLayout />
+                      {commonRightSidebarLayout()}
                     </div>
                     {layoutType === "vertical" && (
                       <FaCheckCircle
-                        color="#405189"
+                        color={colorHex}
                         size={13}
                         className="absolute right-[7px] top-[7px]"
                       />
@@ -234,7 +351,7 @@ const RightSidebar = ({ isScrollTop }) => {
                   <div
                     className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] group-hover:shadow-light ${
                       layoutType === "horizontal"
-                        ? "border border-[#405189]"
+                        ? `${borderColor}`
                         : "border dark:border-dark-weight-550"
                     }`}
                   >
@@ -244,16 +361,18 @@ const RightSidebar = ({ isScrollTop }) => {
                           className={`flex h-[17px] w-full items-center justify-between ${globalStyleObj.layoutBoxBackgroundLightDark} px-[5px]`}
                         >
                           <span
-                            className={`size-[8px] rounded-full ${globalStyleObj.layoutInnerBoxBackgroundLightDark}`}
+                            className={`size-[8px] rounded-full`}
+                            style={{ backgroundColor: `${colorHex}40` }}
                           ></span>
 
                           <div className="flex items-center gap-2">
-                            <span
-                              className={`h-[4px] w-[16px] ${globalStyleObj.layoutInnerBoxBackgroundLightDark}`}
-                            ></span>
-                            <span
-                              className={`h-[4px] w-[16px] ${globalStyleObj.layoutInnerBoxBackgroundLightDark}`}
-                            ></span>
+                            {["box-1", "box-2"].map((box) => (
+                              <span
+                                key={box}
+                                className={`h-[4px] w-[16px]`}
+                                style={{ backgroundColor: `${colorHex}40` }}
+                              ></span>
+                            ))}
                           </div>
                         </div>
 
@@ -269,7 +388,7 @@ const RightSidebar = ({ isScrollTop }) => {
 
                     {layoutType === "horizontal" && (
                       <FaCheckCircle
-                        color="#405189"
+                        color={colorHex}
                         size={13}
                         className="absolute right-[7px] top-[7px]"
                       />
@@ -291,7 +410,7 @@ const RightSidebar = ({ isScrollTop }) => {
                   <div
                     className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] group-hover:shadow-light ${
                       layoutType === "two-column"
-                        ? "border border-[#405189]"
+                        ? `${borderColor}`
                         : "border dark:border-dark-weight-550"
                     }`}
                   >
@@ -300,51 +419,45 @@ const RightSidebar = ({ isScrollTop }) => {
                         className={`flex h-full w-[10px] flex-col ${globalStyleObj.layoutBoxBackgroundLightDark}`}
                       >
                         <span
-                          className={`h-[8px] w-full ${globalStyleObj.layoutInnerBoxBackgroundLightDark}`}
+                          className={`h-[8px] w-full`}
+                          style={{ backgroundColor: `${colorHex}40` }}
                         ></span>
                         <div className="flex h-full flex-col justify-center gap-1">
-                          <span
-                            className={`h-[4px] w-full ${globalStyleObj.layoutInnerBoxBackgroundLightDark}`}
-                          ></span>
-                          <span
-                            className={`h-[4px] w-full ${globalStyleObj.layoutInnerBoxBackgroundLightDark}`}
-                          ></span>
-                          <span
-                            className={`h-[4px] w-full ${globalStyleObj.layoutInnerBoxBackgroundLightDark}`}
-                          ></span>
+                          {["box-1", "box-2", "box-3"].map((box) => (
+                            <span
+                              key={box}
+                              className={`h-[4px] w-full`}
+                              style={{ backgroundColor: `${colorHex}40` }}
+                            ></span>
+                          ))}
                         </div>
                       </div>
 
                       <div
                         className={`flex h-full w-[25px] flex-col gap-1 ${globalStyleObj.layoutBoxBackgroundLightDark} p-[4px]`}
                       >
-                        <span
-                          className={`h-[4px] w-full ${globalStyleObj.layoutInnerBoxBackgroundLightDark}`}
-                        ></span>
-                        <span
-                          className={`h-[4px] w-full ${globalStyleObj.layoutInnerBoxBackgroundLightDark}`}
-                        ></span>
-                        <span
-                          className={`h-[4px] w-full ${globalStyleObj.layoutInnerBoxBackgroundLightDark}`}
-                        ></span>
-                        <span
-                          className={`h-[4px] w-full ${globalStyleObj.layoutInnerBoxBackgroundLightDark}`}
-                        ></span>
+                        {["box-1", "box-2", "box-3", "box-4"].map((box) => (
+                          <span
+                            key={box}
+                            className={`h-[4px] w-full`}
+                            style={{ backgroundColor: `${colorHex}40` }}
+                          ></span>
+                        ))}
                       </div>
 
                       <div className="flex size-full flex-col justify-between">
-                        <div
-                          className={`h-[8px] w-full ${globalStyleObj.layoutBoxBackgroundLightDark}`}
-                        ></div>
-                        <div
-                          className={`h-[8px] w-full ${globalStyleObj.layoutBoxBackgroundLightDark}`}
-                        ></div>
+                        {["box-1", "box-2"].map((box) => (
+                          <div
+                            key={box}
+                            className={`h-[8px] w-full ${globalStyleObj.layoutBoxBackgroundLightDark}`}
+                          ></div>
+                        ))}
                       </div>
                     </div>
 
                     {layoutType === "two-column" && (
                       <FaCheckCircle
-                        color="#405189"
+                        color={colorHex}
                         size={13}
                         className="absolute right-[7px] top-[7px]"
                       />
@@ -366,17 +479,17 @@ const RightSidebar = ({ isScrollTop }) => {
                   <div
                     className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] group-hover:shadow-light ${
                       layoutType === "semi-box"
-                        ? "border border-[#405189]"
+                        ? `${borderColor}`
                         : "border dark:border-dark-weight-550"
                     }`}
                   >
                     <div className="flex size-full gap-2 p-1">
-                      <CommonRightSidebarLayout />
+                      {commonRightSidebarLayout()}
                     </div>
 
                     {layoutType === "semi-box" && (
                       <FaCheckCircle
-                        color="#405189"
+                        color={colorHex}
                         size={13}
                         className="absolute right-[7px] top-[7px]"
                       />
@@ -397,10 +510,10 @@ const RightSidebar = ({ isScrollTop }) => {
             >
               <button
                 type="button"
-                className={`flex w-[40px] cursor-pointer overflow-hidden rounded-full border border-[#bdbfc7] px-[3px] py-[2px] dark:border-dark-weight-550 ${
+                className={`flex w-[40px] cursor-pointer overflow-hidden rounded-full px-[3px] py-[2px] dark:border-dark-weight-550 ${
                   sidebarUserProfileAvtarType === "hide"
-                    ? "justify-end border-[#4f5e92] bg-[#4f5e92]"
-                    : "justify-start border-[#bdbfc7] bg-transparent"
+                    ? `justify-end border border-[#4f5e92] ${bgColor}`
+                    : `justify-start border border-[#bdbfc7] bg-transparent`
                 }`}
                 onClick={toggleAvatarSwitch}
               >
@@ -442,7 +555,7 @@ const RightSidebar = ({ isScrollTop }) => {
                     <div
                       className={`relative overflow-hidden rounded-[5px] group-hover:shadow-light ${
                         layoutThemeType === "default"
-                          ? "border border-[#405189]"
+                          ? `${borderColor}`
                           : "border dark:border-dark-weight-550"
                       }`}
                     >
@@ -454,7 +567,7 @@ const RightSidebar = ({ isScrollTop }) => {
                       />
                       {layoutThemeType === "default" && (
                         <FaCheckCircle
-                          color="#405189"
+                          color={colorHex}
                           size={13}
                           className="absolute right-[7px] top-[7px]"
                         />
@@ -489,16 +602,16 @@ const RightSidebar = ({ isScrollTop }) => {
                   <div
                     className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] group-hover:shadow-light ${
                       theme === "light"
-                        ? "border border-[#405189]"
+                        ? `${borderColor}`
                         : "border dark:border-dark-weight-550"
                     }`}
                   >
                     <div className="flex size-full gap-2">
-                      <CommonRightSidebarLayout />
+                      {commonRightSidebarLayout()}
                     </div>
                     {theme === "light" && (
                       <FaCheckCircle
-                        color="#405189"
+                        color={colorHex}
                         size={13}
                         className="absolute right-[7px] top-[7px]"
                       />
@@ -519,7 +632,7 @@ const RightSidebar = ({ isScrollTop }) => {
                   <div
                     className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] group-hover:shadow-light ${
                       theme === "dark"
-                        ? "border border-[#405189]"
+                        ? `${borderColor}`
                         : "border dark:border-dark-weight-550"
                     }`}
                   >
@@ -588,7 +701,7 @@ const RightSidebar = ({ isScrollTop }) => {
                     <div
                       className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
                         layoutWidthType === width.id
-                          ? "border border-[#405189]"
+                          ? `${borderColor}`
                           : "border dark:border-dark-weight-550"
                       } ${width.id === "boxed" ? "px-2" : "px-0"}`}
                     >
@@ -599,11 +712,11 @@ const RightSidebar = ({ isScrollTop }) => {
                             : ""
                         }`}
                       >
-                        <CommonRightSidebarLayout />
+                        {commonRightSidebarLayout()}
                       </div>
                       {layoutWidthType === width.id && (
                         <FaCheckCircle
-                          color="#405189"
+                          color={colorHex}
                           size={13}
                           className="absolute right-[7px] top-[7px]"
                         />
@@ -645,16 +758,16 @@ const RightSidebar = ({ isScrollTop }) => {
                   <div
                     className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] group-hover:shadow-light ${
                       leftSidebarVisibilityType === sidebarVisibility.SHOW
-                        ? "border border-[#405189]"
+                        ? `${borderColor}`
                         : "border dark:border-dark-weight-550"
                     }`}
                   >
                     <div className="flex size-full gap-2 p-1">
-                      <CommonRightSidebarLayout />
+                      {commonRightSidebarLayout()}
                     </div>
                     {leftSidebarVisibilityType === sidebarVisibility.SHOW && (
                       <FaCheckCircle
-                        color="#405189"
+                        color={colorHex}
                         size={13}
                         className="absolute right-[7px] top-[7px]"
                       />
@@ -679,7 +792,7 @@ const RightSidebar = ({ isScrollTop }) => {
                   <div
                     className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] group-hover:shadow-light ${
                       leftSidebarVisibilityType === sidebarVisibility.HIDDEN
-                        ? "border border-[#405189]"
+                        ? `${borderColor}`
                         : "border dark:border-dark-weight-550"
                     }`}
                   >
@@ -696,7 +809,7 @@ const RightSidebar = ({ isScrollTop }) => {
 
                     {leftSidebarVisibilityType === sidebarVisibility.HIDDEN && (
                       <FaCheckCircle
-                        color="#405189"
+                        color={colorHex}
                         size={13}
                         className="absolute right-[7px] top-[7px]"
                       />
@@ -766,20 +879,18 @@ const RightSidebar = ({ isScrollTop }) => {
                     <div
                       className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
                         topbarColorType === topbarColor.id
-                          ? "border border-[#405189]"
+                          ? `${borderColor}`
                           : "border dark:border-dark-weight-550"
                       }`}
                     >
                       <div className={`flex size-full gap-2`}>
-                        {topbarColor.id === "dark-color" ? (
-                          <CommonRightSidebarLayout extraClass="bg-[#405189]" />
-                        ) : (
-                          <CommonRightSidebarLayout />
-                        )}
+                        {topbarColor.id === "dark-color"
+                          ? commonRightSidebarLayout(bgColor)
+                          : commonRightSidebarLayout()}
                       </div>
                       {topbarColorType === topbarColor.id && (
                         <FaCheckCircle
-                          color="#405189"
+                          color={colorHex}
                           size={13}
                           className="absolute right-[7px] top-[7px]"
                         />
@@ -820,16 +931,16 @@ const RightSidebar = ({ isScrollTop }) => {
                   <div
                     className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] group-hover:shadow-light ${
                       leftSidebarSizeMain === "lg"
-                        ? "border border-[#405189]"
+                        ? `${borderColor}`
                         : "border dark:border-dark-weight-550"
                     }`}
                   >
                     <div className="flex size-full gap-2">
-                      <CommonRightSidebarLayout />
+                      {commonRightSidebarLayout()}
                     </div>
                     {leftSidebarSizeMain === "lg" && (
                       <FaCheckCircle
-                        color="#405189"
+                        color={colorHex}
                         size={13}
                         className="absolute right-[7px] top-[7px]"
                       />
@@ -854,7 +965,7 @@ const RightSidebar = ({ isScrollTop }) => {
                   <div
                     className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
                       leftSidebarSizeMain === "md"
-                        ? "border border-[#405189]"
+                        ? `${borderColor}`
                         : "border dark:border-dark-weight-550"
                     }`}
                   >
@@ -863,13 +974,15 @@ const RightSidebar = ({ isScrollTop }) => {
                         className={`flex h-full w-[17px] flex-col ${globalStyleObj.layoutBoxBackgroundLightDark} p-[4px]`}
                       >
                         <span
-                          className={`h-[8px] w-full rounded-full ${globalStyleObj.layoutInnerBoxBackgroundLightDark}`}
+                          className={`h-[8px] w-full rounded-full`}
+                          style={{ backgroundColor: `${colorHex}40` }}
                         ></span>
                         <div className="flex h-full flex-col justify-center gap-1">
                           {["box-1", "box-2", "box-3"].map((box) => (
                             <span
                               key={box}
                               className={`h-[4px] w-full ${globalStyleObj.layoutInnerBoxBackgroundLightDark}`}
+                              style={{ backgroundColor: `${colorHex}40` }}
                             ></span>
                           ))}
                         </div>
@@ -886,7 +999,7 @@ const RightSidebar = ({ isScrollTop }) => {
 
                     {leftSidebarSizeMain === "md" && (
                       <FaCheckCircle
-                        color="#405189"
+                        color={colorHex}
                         size={13}
                         className="absolute right-[7px] top-[7px]"
                       />
@@ -911,7 +1024,7 @@ const RightSidebar = ({ isScrollTop }) => {
                   <div
                     className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
                       leftSidebarSizeMain === "sm"
-                        ? "border border-[#405189]"
+                        ? `${borderColor}`
                         : "border dark:border-dark-weight-550"
                     }`}
                   >
@@ -920,13 +1033,15 @@ const RightSidebar = ({ isScrollTop }) => {
                         className={`flex h-full w-[10px] flex-col ${globalStyleObj.layoutBoxBackgroundLightDark}`}
                       >
                         <span
-                          className={`h-[8px] w-full ${globalStyleObj.layoutInnerBoxBackgroundLightDark}`}
+                          className={`h-[8px] w-full`}
+                          style={{ backgroundColor: `${colorHex}40` }}
                         ></span>
                         <div className="flex h-full flex-col justify-center gap-1">
                           {["box-1", "box-2", "box-3"].map((box) => (
                             <span
                               key={box}
-                              className={`h-[4px] w-full ${globalStyleObj.layoutInnerBoxBackgroundLightDark}`}
+                              className={`h-[4px] w-full`}
+                              style={{ backgroundColor: `${colorHex}40` }}
                             ></span>
                           ))}
                         </div>
@@ -944,7 +1059,7 @@ const RightSidebar = ({ isScrollTop }) => {
 
                     {leftSidebarSizeMain === "sm" && (
                       <FaCheckCircle
-                        color="#405189"
+                        color={colorHex}
                         size={13}
                         className="absolute right-[7px] top-[7px]"
                       />
@@ -971,7 +1086,7 @@ const RightSidebar = ({ isScrollTop }) => {
                   <div
                     className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
                       leftSidebarSizeMain === "sm-hover"
-                        ? "border border-[#405189]"
+                        ? `${borderColor}`
                         : "border dark:border-dark-weight-550"
                     }`}
                   >
@@ -980,13 +1095,15 @@ const RightSidebar = ({ isScrollTop }) => {
                         className={`flex h-full w-[10px] flex-col ${globalStyleObj.layoutBoxBackgroundLightDark}`}
                       >
                         <span
-                          className={`h-[8px] w-full ${globalStyleObj.layoutInnerBoxBackgroundLightDark}`}
+                          className={`h-[8px] w-full`}
+                          style={{ backgroundColor: `${colorHex}40` }}
                         ></span>
                         <div className="flex h-full flex-col justify-center gap-1">
                           {["box-1", "box-2", "box-3"].map((box) => (
                             <span
                               key={box}
-                              className={`h-[4px] w-full ${globalStyleObj.layoutInnerBoxBackgroundLightDark}`}
+                              className={`h-[4px] w-full`}
+                              style={{ backgroundColor: `${colorHex}40` }}
                             ></span>
                           ))}
                         </div>
@@ -1004,7 +1121,7 @@ const RightSidebar = ({ isScrollTop }) => {
 
                     {leftSidebarSizeMain === "sm-hover" && (
                       <FaCheckCircle
-                        color="#405189"
+                        color={colorHex}
                         size={13}
                         className="absolute right-[7px] top-[7px]"
                       />
@@ -1042,16 +1159,16 @@ const RightSidebar = ({ isScrollTop }) => {
                   <div
                     className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
                       leftSidebarViewType === "default"
-                        ? "border border-[#405189]"
+                        ? `${borderColor}`
                         : "border dark:border-dark-weight-550"
                     }`}
                   >
                     <div className="flex size-full gap-2">
-                      <CommonRightSidebarLayout />
+                      {commonRightSidebarLayout()}
                     </div>
                     {leftSidebarViewType === "default" && (
                       <FaCheckCircle
-                        color="#405189"
+                        color={colorHex}
                         size={13}
                         className="absolute right-[7px] top-[7px]"
                       />
@@ -1075,7 +1192,7 @@ const RightSidebar = ({ isScrollTop }) => {
                   <div
                     className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
                       leftSidebarViewType === "detached"
-                        ? "border border-[#405189]"
+                        ? `${borderColor}`
                         : "border dark:border-dark-weight-550"
                     }`}
                   >
@@ -1084,15 +1201,17 @@ const RightSidebar = ({ isScrollTop }) => {
                         className={`flex min-h-[15px] w-full items-center justify-between ${globalStyleObj.layoutBoxBackgroundLightDark} px-[5px]`}
                       >
                         <span
-                          className={`size-[8px] rounded-full ${globalStyleObj.layoutInnerBoxBackgroundLightDark}`}
+                          className={`size-[8px] rounded-full`}
+                          style={{ backgroundColor: `${colorHex}40` }}
                         ></span>
                         <div className="flex items-center gap-2">
-                          <span
-                            className={`h-[4px] w-[16px] ${globalStyleObj.layoutInnerBoxBackgroundLightDark}`}
-                          ></span>
-                          <span
-                            className={`h-[4px] w-[16px] ${globalStyleObj.layoutInnerBoxBackgroundLightDark}`}
-                          ></span>
+                          {["box-1", "box-2"].map((box) => (
+                            <span
+                              key={box}
+                              className={`h-[4px] w-[16px]`}
+                              style={{ backgroundColor: `${colorHex}40` }}
+                            ></span>
+                          ))}
                         </div>
                       </div>
 
@@ -1102,7 +1221,8 @@ const RightSidebar = ({ isScrollTop }) => {
                         {["box-1", "box-2", "box-3"].map((box) => (
                           <span
                             key={box}
-                            className={`h-[4px] w-full ${globalStyleObj.layoutInnerBoxBackgroundLightDark}`}
+                            className={`h-[4px] w-full`}
+                            style={{ backgroundColor: `${colorHex}40` }}
                           ></span>
                         ))}
                       </div>
@@ -1114,7 +1234,7 @@ const RightSidebar = ({ isScrollTop }) => {
 
                     {leftSidebarViewType === "detached" && (
                       <FaCheckCircle
-                        color="#405189"
+                        color={colorHex}
                         size={13}
                         className="absolute right-[7px] top-[7px]"
                       />
@@ -1155,7 +1275,7 @@ const RightSidebar = ({ isScrollTop }) => {
                     <div
                       className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
                         leftSidebarColorType === eachColor.id
-                          ? "border border-[#405189]"
+                          ? `${borderColor}`
                           : "border dark:border-dark-weight-550"
                       }`}
                     >
@@ -1191,7 +1311,7 @@ const RightSidebar = ({ isScrollTop }) => {
                       </div>
                       {leftSidebarColorType === eachColor.id && (
                         <FaCheckCircle
-                          color="#405189"
+                          color={colorHex}
                           size={13}
                           className="absolute right-[7px] top-[7px]"
                         />
@@ -1252,7 +1372,7 @@ const RightSidebar = ({ isScrollTop }) => {
                       index === 0 ? `${imgBtn.bgColor}` : `${imgBtn.bgImage}`
                     } ${
                       leftSidebarImageType === imgBtn.id
-                        ? "border border-[#405189]"
+                        ? `${borderColor}`
                         : "border dark:border-dark-weight-550"
                     }`}
                     onClick={() =>
@@ -1266,7 +1386,10 @@ const RightSidebar = ({ isScrollTop }) => {
                           color="#fff"
                           className="z-[99] rounded-full border border-[#405189]"
                         />
-                        <div className="absolute inset-0 size-full bg-[#405582]/30 dark:bg-[#405582]/90"></div>
+                        <div
+                          className="absolute inset-0 size-full"
+                          style={{ backgroundColor: `${colorHex}80` }}
+                        ></div>
                       </>
                     ) : index === 0 ? (
                       <MdClose size={16} />
@@ -1328,7 +1451,7 @@ const RightSidebar = ({ isScrollTop }) => {
                   <div
                     className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
                       preloader === "top-loader"
-                        ? "border border-[#405189]"
+                        ? `${borderColor}`
                         : "border dark:border-dark-weight-550"
                     }`}
                   >
@@ -1342,14 +1465,14 @@ const RightSidebar = ({ isScrollTop }) => {
                           repeat: Infinity,
                           repeatDelay: 1,
                         }}
-                        className="absolute left-0 top-0 h-[3px] bg-[#e61247]"
+                        className={`absolute left-0 top-0 h-[3px] ${bgColor}`}
                       ></motion.div>
 
-                      <CommonRightSidebarLayout />
+                      {commonRightSidebarLayout()}
                     </div>
                     {preloader === "top-loader" && (
                       <FaCheckCircle
-                        color="#405189"
+                        color={colorHex}
                         size={13}
                         className="absolute right-[7px] top-[7px]"
                       />
@@ -1369,7 +1492,7 @@ const RightSidebar = ({ isScrollTop }) => {
                   <div
                     className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
                       preloader === "spinner"
-                        ? "border border-[#405189]"
+                        ? `${borderColor}`
                         : "border dark:border-dark-weight-550"
                     }`}
                   >
@@ -1377,17 +1500,17 @@ const RightSidebar = ({ isScrollTop }) => {
                       <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
                         <ClipLoader
                           size={25}
-                          color="#405189"
+                          color={colorHex}
                           speedMultiplier={0.8}
                           cssOverride={{ borderWidth: "3px" }}
                         />
                       </span>
 
-                      <CommonRightSidebarLayout />
+                      {commonRightSidebarLayout()}
                     </div>
                     {preloader === "spinner" && (
                       <FaCheckCircle
-                        color="#405189"
+                        color={colorHex}
                         size={13}
                         className="absolute right-[7px] top-[7px]"
                       />
@@ -1407,16 +1530,16 @@ const RightSidebar = ({ isScrollTop }) => {
                   <div
                     className={`relative h-[70px] w-[100px] overflow-hidden rounded-[5px] border group-hover:shadow-light ${
                       preloader === "disable"
-                        ? "border border-[#405189]"
+                        ? `${borderColor}`
                         : "border dark:border-dark-weight-550"
                     }`}
                   >
                     <div className="flex size-full gap-2">
-                      <CommonRightSidebarLayout />
+                      {commonRightSidebarLayout()}
                     </div>
                     {preloader === "disable" && (
                       <FaCheckCircle
-                        color="#405189"
+                        color={colorHex}
                         size={13}
                         className="absolute right-[7px] top-[7px]"
                       />

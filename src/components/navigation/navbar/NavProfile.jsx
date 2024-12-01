@@ -150,7 +150,7 @@ const NavProfile = () => {
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger
           asChild
-          className={`${topbarColorType === topbarColor.LIGHT_COLOR ? `bg-[#f3f3f3]/90 dark:bg-[#f3f3f3]/5` : `bg-[#fff]/10`} h-full cursor-pointer px-4 sm:ml-2`}
+          className={`${topbarColorType === topbarColor.LIGHT_COLOR ? `bg-[#f3f3f3]/90 dark:bg-[#f3f3f3]/5` : `bg-[#fff]/5`} h-full cursor-pointer px-4 sm:ml-2`}
         >
           <span className={`${globalStyleObj.flexStart} gap-[10px]`}>
             <Image

@@ -39,7 +39,7 @@ const NavbarMyCart = () => {
       <DropdownMenuTrigger asChild>
         <button
           type="button"
-          className={`${globalStyleObj.flexCenter} ${topbarColorType === topbarColor.LIGHT_COLOR ? `hover:bg-light-dencity-400 dark:hover:bg-dark-dencity-100` : `hover:bg-[#4A5A8F]`} relative m-0 size-[30px] rounded-full p-0 sm:size-[40px]`}
+          className={`${globalStyleObj.flexCenter} ${topbarColorType === topbarColor.LIGHT_COLOR ? `hover:bg-light-dencity-400 dark:hover:bg-dark-dencity-100` : `hover:bg-[#fff]/5`} relative m-0 size-[30px] rounded-full p-0 sm:size-[40px]`}
         >
           <RiShoppingBagLine
             size={20}
