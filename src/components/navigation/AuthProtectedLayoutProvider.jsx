@@ -39,7 +39,7 @@ const AuthProtectedLayoutProvider = ({ children }) => {
     toggleSmallButtonStatus,
     layoutPositionType,
     topbarColorType,
-    layoutThemePrimaryColorType
+    layoutThemePrimaryColorType,
   } = useAppSelector((state) => state.layout);
 
   const [bodyLeftMargin, setBodyLeftMargin] = useState("");
@@ -224,7 +224,8 @@ const AuthProtectedLayoutProvider = ({ children }) => {
             layoutType={layoutType}
             layoutPositionType={layoutPositionType}
             topbarColorType={topbarColorType}
-            layoutThemePrimaryColorType = {layoutThemePrimaryColorType}
+            layoutThemePrimaryColorType={layoutThemePrimaryColorType}
+            layoutWidthType={layoutWidthType}
           />
           {layoutType === layout.HORIZONTAL && (
             <HorizontalSidebar resizeHeight={horizontalNavHeight} />

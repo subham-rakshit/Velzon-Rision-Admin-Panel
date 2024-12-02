@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useTheme } from "next-themes";
 import React, { useEffect, useState } from "react";
 import { BsDash } from "react-icons/bs";
 import { IoIosArrowForward } from "react-icons/io";
@@ -19,9 +18,12 @@ import {
   sidebarSize,
   sidebarMainSize,
   position,
+  layoutThemePrimaryColor,
+  sidebarGradientColor,
+  sidebarImage,
 } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
 import { globalStyleObj } from "@/app/assets/styles";
-import { LeftSidebarCompactView, LeftSidebarSmallIconView } from "@/components";
+import { LeftSidebarSmallIconView } from "@/components";
 import { changeToggleSmallButtonStatus } from "@/lib/store/features/layoutCustomizer/layoutCustomizerSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 
@@ -30,12 +32,14 @@ const LeftSidebar = ({ width }) => {
     leftSidebarSizeType,
     leftSidebarSizeMain,
     leftSidebarColorType,
+    leftSidebarGradientColorType,
     toggleSmallButtonStatus,
     layoutPositionType,
+    layoutThemePrimaryColorType,
+    leftSidebarImageType,
   } = useAppSelector((state) => state.layout);
   const pathname = usePathname();
   const mainPath = pathname.split("/")[1];
-  const { theme } = useTheme();
   const dispatch = useAppDispatch();
 
   const [tabDetails, setTabDetails] = useState({
@@ -47,6 +51,157 @@ const LeftSidebar = ({ width }) => {
 
   const [isContainerHover, setIsContainerHover] = useState(false);
   const [isFixedBtnCliked, setIsFixedBtnClicked] = useState(false);
+
+  let bgColor;
+  let bgImageUrl;
+  let gradientBgColor;
+  let textColor;
+  let hoverTextColor;
+  let groupHoverBgColor;
+  let borderColor;
+
+  switch (layoutThemePrimaryColorType) {
+    case layoutThemePrimaryColor.TEAL_GREEN:
+      bgColor = "bg-[#066b5e]";
+      textColor = "text-[#066b5e]";
+      hoverTextColor = "hover:text-[#066b5e]";
+      groupHoverBgColor = "group-hover:bg-[#066b5e]";
+      borderColor = "border border-[#066b5e]";
+      switch (leftSidebarGradientColorType) {
+        case sidebarGradientColor.SEC_CHILD_GRADIENT_BG_COLOR:
+          gradientBgColor = "bg-gradient-to-r from-[#2a99dd] to-[#347cef]";
+          break;
+        case sidebarGradientColor.THIRD_CHILD_GRADIENT_BG_COLOR:
+          gradientBgColor = "bg-gradient-to-r from-[#2a99dd] to-[#0fb0a6]";
+          break;
+        case sidebarGradientColor.FOURTH_CHILD_GRADIENT_BG_COLOR:
+          gradientBgColor = "bg-gradient-to-r from-[#1d2129] to-[#066b5e]";
+          break;
+        default:
+          gradientBgColor = "bg-gradient-to-r from-[#066b5e] to-[#10a99a]";
+          break;
+      }
+      break;
+
+    case layoutThemePrimaryColor.ROYAL_PURPLE:
+      bgColor = "bg-[#5147A3]";
+      textColor = "text-[#5147A3]";
+      hoverTextColor = "hover:text-[#5147A3]";
+      groupHoverBgColor = "group-hover:bg-[#5147A3]";
+      borderColor = "border border-[#5147A3]";
+      switch (leftSidebarGradientColorType) {
+        case sidebarGradientColor.SEC_CHILD_GRADIENT_BG_COLOR:
+          gradientBgColor = "bg-gradient-to-r from-[#2a99dd] to-[#347cef]";
+          break;
+        case sidebarGradientColor.THIRD_CHILD_GRADIENT_BG_COLOR:
+          gradientBgColor = "bg-gradient-to-r from-[#2a99dd] to-[#0fb0a6]";
+          break;
+        case sidebarGradientColor.FOURTH_CHILD_GRADIENT_BG_COLOR:
+          gradientBgColor = "bg-gradient-to-r from-[#1d2129] to-[#5147A3]";
+          break;
+        default:
+          gradientBgColor = "bg-gradient-to-r from-[#5147A3] to-[#10a99a]";
+          break;
+      }
+      break;
+
+    case layoutThemePrimaryColor.COBALT_BLUE:
+      bgColor = "bg-[#2a5fc1]";
+      textColor = "text-[#2a5fc1]";
+      hoverTextColor = "hover:text-[#2a5fc1]";
+      groupHoverBgColor = "group-hover:bg-[#2a5fc1]";
+      borderColor = "border border-[#2a5fc1]";
+      switch (leftSidebarGradientColorType) {
+        case sidebarGradientColor.SEC_CHILD_GRADIENT_BG_COLOR:
+          gradientBgColor = "bg-gradient-to-r from-[#2a99dd] to-[#347cef]";
+          break;
+        case sidebarGradientColor.THIRD_CHILD_GRADIENT_BG_COLOR:
+          gradientBgColor = "bg-gradient-to-r from-[#2a99dd] to-[#0fb0a6]";
+          break;
+        case sidebarGradientColor.FOURTH_CHILD_GRADIENT_BG_COLOR:
+          gradientBgColor = "bg-gradient-to-r from-[#1d2129] to-[#2a5fc1]";
+          break;
+        default:
+          gradientBgColor = "bg-gradient-to-r from-[#2a5fc1] to-[#10a99a]";
+          break;
+      }
+      break;
+
+    default:
+      bgColor = "bg-[#405189]";
+      textColor = "text-[#405189]";
+      hoverTextColor = "hover:text-[#405189]";
+      groupHoverBgColor = "group-hover:bg-[#405189]";
+      borderColor = "border border-[#405189]";
+      switch (leftSidebarGradientColorType) {
+        case sidebarGradientColor.SEC_CHILD_GRADIENT_BG_COLOR:
+          gradientBgColor = "bg-gradient-to-r from-[#2a99dd] to-[#347cef]";
+          break;
+        case sidebarGradientColor.THIRD_CHILD_GRADIENT_BG_COLOR:
+          gradientBgColor = "bg-gradient-to-r from-[#2a99dd] to-[#0fb0a6]";
+          break;
+        case sidebarGradientColor.FOURTH_CHILD_GRADIENT_BG_COLOR:
+          gradientBgColor = "bg-gradient-to-r from-[#1d2129] to-[#405189]";
+          break;
+        default:
+          gradientBgColor = "bg-gradient-to-r from-[#405189] to-[#10a99a]";
+          break;
+      }
+      break;
+  }
+
+  switch (leftSidebarImageType) {
+    case sidebarImage.SNOW:
+      bgImageUrl = "bg-sidebar-snow";
+      break;
+    case sidebarImage.OFFICE:
+      bgImageUrl = "bg-sidebar-office";
+      break;
+    case sidebarImage.PATTERN:
+      bgImageUrl = "bg-sidebar-pattern";
+      break;
+    case sidebarImage.BUBBLE:
+      bgImageUrl = "bg-sidebar-bubble";
+      break;
+    default:
+      bgImageUrl = "";
+      break;
+  }
+
+  useEffect(() => {
+    const elem = document.getElementById(mainPath);
+    if (elem) {
+      const newTabDetails = {
+        parent: { id: "", isOpen: false },
+        firstChild: { id: "", isOpen: false },
+        secondChild: { id: "", isOpen: false },
+        thirdChild: { id: "", isOpen: false },
+      };
+
+      if (elem.attributes.parenttabid) {
+        newTabDetails.parent = {
+          id: elem.attributes.parenttabid.value,
+          isOpen: true,
+        };
+      }
+
+      if (elem.attributes.firstchildid) {
+        newTabDetails.firstChild = {
+          id: elem.attributes.firstchildid.value,
+          isOpen: true,
+        };
+      }
+
+      if (elem.attributes.secondchildid) {
+        newTabDetails.secondChild = {
+          id: elem.attributes.secondchildid.value,
+          isOpen: true,
+        };
+      }
+
+      setTabDetails(newTabDetails);
+    }
+  }, [mainPath]);
 
   // NOTE Small Hover View
   useEffect(() => {
@@ -88,41 +243,6 @@ const LeftSidebar = ({ width }) => {
     }
   }, [layoutPositionType, isFixedBtnCliked, leftSidebarSizeMain]);
 
-  useEffect(() => {
-    const elem = document.getElementById(mainPath);
-    if (elem) {
-      const newTabDetails = {
-        parent: { id: "", isOpen: false },
-        firstChild: { id: "", isOpen: false },
-        secondChild: { id: "", isOpen: false },
-        thirdChild: { id: "", isOpen: false },
-      };
-
-      if (elem.attributes.parenttabid) {
-        newTabDetails.parent = {
-          id: elem.attributes.parenttabid.value,
-          isOpen: true,
-        };
-      }
-
-      if (elem.attributes.firstchildid) {
-        newTabDetails.firstChild = {
-          id: elem.attributes.firstchildid.value,
-          isOpen: true,
-        };
-      }
-
-      if (elem.attributes.secondchildid) {
-        newTabDetails.secondChild = {
-          id: elem.attributes.secondchildid.value,
-          isOpen: true,
-        };
-      }
-
-      setTabDetails(newTabDetails);
-    }
-  }, [mainPath]);
-
   // NOTE Handle Toggle Tabs Functionality
   const handleParentTabToggle = (parentId) => {
     setTabDetails((prev) => ({
@@ -161,31 +281,34 @@ const LeftSidebar = ({ width }) => {
     }));
   };
 
-  // NOTE Default Sidebar Size
+  // NOTE Default AND Compact Sidebar Size
   const verticalDefaultLeftSidebarView = () => {
     return (
       <ul
-        className={`custom-left-sidebar-scrollbar overflow-y-auto px-4 dark:bg-dark-dencity-300 ${layoutPositionType === position.SCROLLABLE ? "min-h-full" : "h-[calc(100vh-70px)]"} ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? "bg-light-weight-500" : "bg-light-dencity-900"}`}
+        className={`custom-left-sidebar-scrollbar relative z-[999] overflow-y-auto ${leftSidebarSizeType === sidebarSize.COMPACT ? "px-0" : "px-4"} ${layoutPositionType === position.SCROLLABLE ? "min-h-full" : "h-[calc(100vh-70px)]"}`}
       >
         {leftSidebarData.map((category) => (
           // Main Category Container
           <li
             key={category.tabCategory}
-            className={`${leftSidebarSizeType === sidebarSize.SMALL_ICON_VIEW ? "py-0" : "py-[10px]"}`}
+            className={`${leftSidebarSizeType === sidebarSize.SMALL_ICON_VIEW ? "py-0" : "py-[10px]"} ${leftSidebarSizeType === sidebarSize.COMPACT ? `${globalStyleObj.flexColCenter}` : ""}`}
           >
             <span
-              className={`${leftSidebarSizeType === sidebarSize.SMALL_ICON_VIEW ? "hidden" : "inline"} ${globalStyleObj.text11Light400Semibold} uppercase tracking-widest`}
+              className={`${leftSidebarSizeType === sidebarSize.SMALL_ICON_VIEW ? "hidden" : "inline"} ${globalStyleObj.text11Light400Semibold} ${leftSidebarSizeType === sidebarSize.COMPACT ? "underline" : ""} uppercase tracking-widest`}
             >
               {category.tabCategory}
             </span>
 
-            <ul>
+            <ul className="w-full">
               {category.tabNameList.map((parent) =>
                 parent.tabDropdownList.length > 0 ? (
-                  <li key={parent.id} className={`pl-1 pt-5`}>
+                  <li
+                    key={parent.id}
+                    className={`${leftSidebarSizeType === sidebarSize.COMPACT ? "pl-0" : "pl-1"} pt-5`}
+                  >
                     {/* Parent Tab */}
                     <div
-                      className={`${globalStyleObj.flexStart} cursor-pointer gap-2 ${pathname.includes(parent.id.toLowerCase()) ? "text-light-weight-800" : "text-light-weight-450"} hover:text-light-weight-800`}
+                      className={`cursor-pointer ${leftSidebarSizeType === sidebarSize.COMPACT ? `${globalStyleObj.flexColCenter} gap-1` : `${globalStyleObj.flexStart} gap-2`} ${pathname.includes(parent.id.toLowerCase()) ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "text-light-weight-800" : textColor}` : "text-light-weight-450"} ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "hover:text-light-weight-800" : hoverTextColor}`}
                       onClick={() => handleParentTabToggle(parent.id)}
                     >
                       <span className="text-[18px]">{parent.tabIcon}</span>
@@ -193,7 +316,7 @@ const LeftSidebar = ({ width }) => {
                         {parent.tabName}
                       </span>
                       <IoIosArrowForward
-                        className={`ml-auto ${pathname.includes(parent.id.toLowerCase()) ? "rotate-90" : ""}`}
+                        className={`${leftSidebarSizeType === sidebarSize.COMPACT ? "hidden" : "ml-auto"} ${pathname.includes(parent.id.toLowerCase()) ? "rotate-90" : ""}`}
                       />
                     </div>
 
@@ -205,16 +328,18 @@ const LeftSidebar = ({ width }) => {
                           // First Child
                           <li key={firstChild.id}>
                             <div
-                              className={`${pathname.includes(firstChild.id.toLowerCase()) ? "text-light-weight-800" : "text-light-weight-450"} ${globalStyleObj.flexStart} cursor-pointer gap-2 pl-2 pt-4 font-poppins-rg text-[14px] hover:text-light-weight-800`}
+                              className={`${pathname.includes(firstChild.id.toLowerCase()) ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "text-light-weight-800" : textColor}` : "text-light-weight-450"} ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "hover:text-light-weight-800" : hoverTextColor} ${leftSidebarSizeType === sidebarSize.COMPACT ? `${globalStyleObj.flexCenter}` : `${globalStyleObj.flexStart} gap-2 pl-2`} cursor-pointer pt-4 font-poppins-rg text-[14px]`}
                               onClick={() =>
                                 handleFirstChildTabToggle(firstChild.id)
                               }
                             >
-                              <BsDash />
+                              <BsDash
+                                className={`${leftSidebarSizeType === sidebarSize.COMPACT ? "hidden" : "inline"}`}
+                              />
                               {firstChild.tabName}
                               <IoIosArrowForward
                                 size={15}
-                                className={`ml-auto ${pathname.includes(firstChild.id.toLowerCase()) ? "rotate-90" : ""}`}
+                                className={`${leftSidebarSizeType === sidebarSize.COMPACT ? "" : "ml-auto"} ${pathname.includes(firstChild.id.toLowerCase()) ? "rotate-90" : ""}`}
                               />
                             </div>
 
@@ -226,7 +351,7 @@ const LeftSidebar = ({ width }) => {
                                   // Second Child
                                   <li key={secondChild.id}>
                                     <div
-                                      className={`${globalStyleObj.flexStart} cursor-pointer gap-3 pl-7 pt-4 font-poppins-rg text-[13px] ${pathname.includes(secondChild.id) ? "text-light-weight-800" : "text-light-weight-450"} group hover:text-light-weight-800`}
+                                      className={`group cursor-pointer pt-4 font-poppins-rg text-[13px] ${leftSidebarSizeType === sidebarSize.COMPACT ? `${globalStyleObj.flexCenter}` : `${globalStyleObj.flexStart} gap-3 pl-7`} ${pathname.includes(secondChild.id) ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "text-light-weight-800" : textColor}` : "text-light-weight-450"} ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "hover:text-light-weight-800" : hoverTextColor}`}
                                       onClick={() =>
                                         handleSecondChildTabToggle(
                                           secondChild.id
@@ -234,12 +359,12 @@ const LeftSidebar = ({ width }) => {
                                       }
                                     >
                                       <span
-                                        className={`size-[5px] rounded-full border border-light-weight-450 group-hover:bg-white ${pathname.includes(secondChild.id.toLowerCase()) ? "bg-white" : ""}`}
+                                        className={`${leftSidebarSizeType === sidebarSize.COMPACT ? "hidden" : "inline"} ${pathname.includes(secondChild.id.toLowerCase()) ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "border border-white" : borderColor}` : "border border-light-weight-450"} ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "group-hover:bg-white" : groupHoverBgColor} size-[5px] rounded-full border`}
                                       ></span>
                                       {secondChild.tabName}
                                       <IoIosArrowForward
                                         size={15}
-                                        className={`ml-auto ${pathname.includes(secondChild.id.toLowerCase()) ? "rotate-90" : ""}`}
+                                        className={`${leftSidebarSizeType === sidebarSize.COMPACT ? "" : "ml-auto"} ${pathname.includes(secondChild.id.toLowerCase()) ? "rotate-90" : ""}`}
                                       />
                                     </div>
 
@@ -266,10 +391,10 @@ const LeftSidebar = ({ width }) => {
                                                 secondchildid={
                                                   thirdChild.secondChildId
                                                 }
-                                                className={`${mainPath === thirdChild.id ? "text-light-weight-800" : "text-light-weight-450"}  ${globalStyleObj.flexStart} group gap-3 pl-10 pt-4 font-poppins-rg text-[12px] hover:text-light-weight-800`}
+                                                className={`${mainPath === thirdChild.id ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "text-light-weight-800" : textColor}` : "text-light-weight-450"} ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "hover:text-light-weight-800" : hoverTextColor} ${leftSidebarSizeType === sidebarSize.COMPACT ? `${globalStyleObj.flexCenter}` : `${globalStyleObj.flexStart} gap-3 pl-10`} group pt-4 font-poppins-rg text-[13px]`}
                                               >
                                                 <span
-                                                  className={`size-[5px] rounded-full border border-light-weight-450 group-hover:bg-white ${mainPath === thirdChild.id ? "bg-white" : ""}`}
+                                                  className={`${leftSidebarSizeType === sidebarSize.COMPACT ? "hidden" : "inline"} ${mainPath === thirdChild.id ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "border border-white" : borderColor}` : "border border-light-weight-450"} ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "group-hover:bg-white" : groupHoverBgColor} size-[5px] rounded-full`}
                                                 ></span>
                                                 {thirdChild.tabName}
                                               </li>
@@ -288,10 +413,10 @@ const LeftSidebar = ({ width }) => {
                                       id={secondChild.id}
                                       parenttabid={secondChild.parentTabId}
                                       firstchildid={secondChild.firstChildId}
-                                      className={`${mainPath === secondChild.id ? "text-light-weight-800" : "text-light-weight-450"}  ${globalStyleObj.flexStart} group gap-3 pl-7 pt-4 font-poppins-rg text-[13px] hover:text-light-weight-800`}
+                                      className={`${mainPath === secondChild.id ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "text-light-weight-800" : textColor}` : "text-light-weight-450"} ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "hover:text-light-weight-800" : hoverTextColor} ${leftSidebarSizeType === sidebarSize.COMPACT ? `${globalStyleObj.flexCenter}` : `${globalStyleObj.flexStart} gap-3 pl-7`} group pt-4 font-poppins-rg text-[13px]`}
                                     >
                                       <span
-                                        className={`size-[5px] rounded-full border border-light-weight-450 group-hover:bg-white ${mainPath === secondChild.id ? "bg-white" : ""}`}
+                                        className={`${leftSidebarSizeType === sidebarSize.COMPACT ? "hidden" : "inline"} ${mainPath === secondChild.id ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "border border-white" : borderColor}` : "border border-light-weight-450"} ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "group-hover:bg-white" : groupHoverBgColor} size-[5px] rounded-full`}
                                       ></span>
                                       {secondChild.tabName}
                                     </li>
@@ -309,9 +434,11 @@ const LeftSidebar = ({ width }) => {
                             <li
                               id={firstChild.id}
                               parenttabid={firstChild.parentTabId}
-                              className={`${mainPath === firstChild.id ? "text-light-weight-800" : "text-light-weight-450"} ${globalStyleObj.flexStart} gap-2 pl-2 pt-4 font-poppins-rg text-[14px] hover:text-light-weight-800`}
+                              className={`${mainPath === firstChild.id ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "text-light-weight-800" : textColor}` : "text-light-weight-450"} ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "hover:text-light-weight-800" : hoverTextColor} ${leftSidebarSizeType === sidebarSize.COMPACT ? "text-center" : `${globalStyleObj.flexStart} gap-2 pl-2`} pt-4 font-poppins-rg text-[14px]`}
                             >
-                              <BsDash />
+                              <BsDash
+                                className={`${leftSidebarSizeType === sidebarSize.COMPACT ? "hidden" : "inline"}`}
+                              />
                               {firstChild.tabName}
                             </li>
                           </TransitionLink>
@@ -324,10 +451,10 @@ const LeftSidebar = ({ width }) => {
                   <Link key={parent.id} href={parent.pathName}>
                     <li
                       id={parent.id}
-                      className={`pl-1 pt-5 ${pathname.includes(parent.id.toLowerCase()) ? "text-light-weight-800" : "text-light-weight-450"} hover:text-light-weight-800`}
+                      className={`pt-5 ${leftSidebarSizeType === sidebarSize.COMPACT ? "pl-0" : "pl-1"} ${pathname.includes(parent.id.toLowerCase()) ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "text-light-weight-800" : textColor}` : "text-light-weight-450"} ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "hover:text-light-weight-800" : hoverTextColor}`}
                     >
                       <div
-                        className={`${globalStyleObj.flexStart} cursor-pointer gap-2`}
+                        className={`${leftSidebarSizeType === sidebarSize.COMPACT ? `${globalStyleObj.flexColCenter} gap-1` : `${globalStyleObj.flexStart} gap-2`} cursor-pointer`}
                       >
                         <span className="text-[18px]">{parent.tabIcon}</span>
                         <span className="font-poppins-rg text-[15px]">
@@ -353,7 +480,7 @@ const LeftSidebar = ({ width }) => {
           verticalDefaultLeftSidebarView()
         ) : (
           <ul
-            className={`py-2 text-light-weight-450 dark:bg-dark-dencity-300 ${layoutPositionType === position.SCROLLABLE ? "min-h-full" : "min-h-screen"} ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? "bg-light-weight-500" : "bg-light-dencity-900"}`}
+            className={`relative z-[999] py-2 ${layoutPositionType === position.SCROLLABLE ? "min-h-full" : "min-h-screen"}`}
           >
             {leftSidebarData.map((category) =>
               category.tabNameList.map((parent) => (
@@ -366,8 +493,8 @@ const LeftSidebar = ({ width }) => {
                   <span
                     className={`text-[22px] ${
                       pathname.includes(parent.id.toLowerCase())
-                        ? "text-white"
-                        : ""
+                        ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "text-light-weight-800" : textColor}`
+                        : "text-light-weight-450"
                     }`}
                   >
                     {parent.tabIcon}
@@ -390,12 +517,12 @@ const LeftSidebar = ({ width }) => {
 
       <div
         id="left-sidebar-container"
-        className={`min-h-full ${
+        className={`z-[99] min-h-full bg-cover bg-center ${bgImageUrl} ${
           leftSidebarSizeType === sidebarSize.SMALL_ICON_VIEW ||
           layoutPositionType === position.SCROLLABLE
-            ? "transition-300"
+            ? "transition-300 relative"
             : "transition-300 fixed"
-        } ${isContainerHover ? "w-[250px]" : width} z-[99]`}
+        } ${isContainerHover ? "w-[250px]" : width} ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? `${bgColor} dark:bg-dark-dencity-300` : `${leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? `${gradientBgColor}` : "bg-light-dencity-900"}`}`}
         onMouseEnter={() =>
           leftSidebarSizeType === sidebarSize.SMALL_HOVER_VIEW &&
           !isFixedBtnCliked
@@ -409,9 +536,14 @@ const LeftSidebar = ({ width }) => {
             : null
         }
       >
+        {/* NOTE Overlay */}
+        <div
+          className={`pointer-events-none absolute inset-0 z-[99] ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? `${bgColor} dark:bg-dark-dencity-300` : `${leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? `${gradientBgColor}` : "bg-light-dencity-900"}`} opacity-90`}
+        ></div>
+
         {/* NOTE Sidebar Top Logo Section */}
         <div
-          className={`transition-300 z-[100] h-[70px] w-full px-[20px] dark:bg-dark-dencity-300 ${layoutPositionType === position.SCROLLABLE ? "" : "sticky left-0 top-0"} ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? "bg-light-weight-500" : "bg-light-dencity-900"}`}
+          className={`transition-300 z-[9999] h-[70px] w-full px-[20px] ${leftSidebarSizeType === sidebarSize.SMALL_ICON_VIEW && layoutPositionType === position.FIXED ? `${bgColor} dark:bg-dark-dencity-300` : "bg-transparent"} ${layoutPositionType === position.SCROLLABLE ? "relative" : "sticky left-0 top-0"}`}
         >
           <Link
             href="/dashboard"
@@ -425,7 +557,8 @@ const LeftSidebar = ({ width }) => {
                 height={25}
                 style={{ width: "auto", height: "auto" }}
               />
-            ) : leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? (
+            ) : leftSidebarColorType === sidebarColor.DARK_BG_COLOR ||
+              leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? (
               <Image
                 src={logoLight}
                 alt="logo light"
@@ -435,7 +568,7 @@ const LeftSidebar = ({ width }) => {
               />
             ) : (
               <Image
-                src={theme === "light" ? logoDark : logoLight}
+                src={logoDark}
                 alt="logo light"
                 width={100}
                 height={22}
@@ -460,7 +593,8 @@ const LeftSidebar = ({ width }) => {
                   height={25}
                   style={{ width: "auto", height: "auto" }}
                 />
-              ) : leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? (
+              ) : leftSidebarColorType === sidebarColor.DARK_BG_COLOR ||
+                leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? (
                 <Image
                   src={logoLight}
                   alt="logo light"
@@ -470,7 +604,7 @@ const LeftSidebar = ({ width }) => {
                 />
               ) : (
                 <Image
-                  src={theme === "light" ? logoDark : logoLight}
+                  src={logoDark}
                   alt="logo light"
                   width={100}
                   height={22}
@@ -485,10 +619,10 @@ const LeftSidebar = ({ width }) => {
               onClick={() => setIsFixedBtnClicked(!isFixedBtnCliked)}
             >
               <span
-                className={`${globalStyleObj.flexCenter} size-[16px] rounded-full border-2 border-light-weight-400 dark:border-light-weight-450`}
+                className={`${globalStyleObj.flexCenter} size-[16px] rounded-full ${leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "border-2 border-gray-200" : "border-2 border-light-weight-400 dark:border-light-weight-450"}`}
               >
                 <span
-                  className={`${isFixedBtnCliked ? "opacity-100" : "opacity-0"} size-[8px] rounded-full bg-light-weight-400 dark:bg-light-weight-450`}
+                  className={`${isFixedBtnCliked ? "opacity-100" : "opacity-0"} ${leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "bg-gray-200" : "bg-light-weight-400 dark:bg-light-weight-450"} size-[8px] rounded-full`}
                 ></span>
               </span>
             </button>
@@ -505,6 +639,10 @@ const LeftSidebar = ({ width }) => {
             tabDetails={tabDetails}
             leftSidebarColorType={leftSidebarColorType}
             pathname={pathname}
+            bgColor={bgColor}
+            textColor={textColor}
+            hoverTextColor={hoverTextColor}
+            gradientBgColor={gradientBgColor}
           />
         ) : leftSidebarSizeMain === sidebarMainSize.MD &&
           leftSidebarSizeType === sidebarSize.DEFAULT ? (
@@ -515,23 +653,24 @@ const LeftSidebar = ({ width }) => {
             tabDetails={tabDetails}
             leftSidebarColorType={leftSidebarColorType}
             pathname={pathname}
+            bgColor={bgColor}
+            textColor={textColor}
+            hoverTextColor={hoverTextColor}
+            gradientBgColor={gradientBgColor}
           />
         ) : leftSidebarSizeMain === sidebarMainSize.MD &&
           leftSidebarSizeType === sidebarSize.COMPACT ? (
-          <LeftSidebarCompactView
-            pathname={pathname}
-            mainPath={mainPath}
-            tabDetails={tabDetails}
-            handleParentTabToggle={handleParentTabToggle}
-            handleFirstChildTabToggle={handleFirstChildTabToggle}
-            handleSecondChildTabToggle={handleSecondChildTabToggle}
-          />
+          verticalDefaultLeftSidebarView()
         ) : leftSidebarSizeMain === sidebarMainSize.SM &&
           leftSidebarSizeType === sidebarSize.SMALL_ICON_VIEW ? (
           <LeftSidebarSmallIconView
             tabDetails={tabDetails}
             leftSidebarColorType={leftSidebarColorType}
             pathname={pathname}
+            bgColor={bgColor}
+            textColor={textColor}
+            hoverTextColor={hoverTextColor}
+            gradientBgColor={gradientBgColor}
           />
         ) : leftSidebarSizeMain === sidebarMainSize.SM &&
           leftSidebarSizeType === sidebarSize.DEFAULT ? (
@@ -542,6 +681,10 @@ const LeftSidebar = ({ width }) => {
             tabDetails={tabDetails}
             leftSidebarColorType={leftSidebarColorType}
             pathname={pathname}
+            bgColor={bgColor}
+            textColor={textColor}
+            hoverTextColor={hoverTextColor}
+            gradientBgColor={gradientBgColor}
           />
         ) : leftSidebarSizeMain === sidebarMainSize.SM_HOVER &&
           leftSidebarSizeType === sidebarSize.DEFAULT ? (

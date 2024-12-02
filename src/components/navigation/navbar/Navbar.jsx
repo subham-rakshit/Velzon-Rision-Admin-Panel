@@ -19,6 +19,7 @@ import {
   layoutThemePrimaryColor,
   position,
   topbarColor,
+  widthType,
 } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
 import { globalStyleObj } from "@/app/assets/styles";
 
@@ -27,6 +28,7 @@ const Navbar = ({
   layoutPositionType,
   topbarColorType,
   layoutThemePrimaryColorType,
+  layoutWidthType,
 }) => {
   let bgColor;
 
@@ -49,31 +51,37 @@ const Navbar = ({
     <nav
       className={`${topbarColorType === topbarColor.LIGHT_COLOR ? `${globalStyleObj.backgroundLight900Dark200}` : `${bgColor}`} ${globalStyleObj.flexBetween} ${layoutType === layout.HORIZONTAL ? "px-5 md:px-10 lg:px-[50px]" : "px-5"} ${layoutPositionType !== position.SCROLLABLE ? "sticky" : ""} top-0 h-[70px] shadow-light`}
     >
-      <div className={`${globalStyleObj.flexStart} h-full gap-2 md:gap-5`}>
-        {layoutType === layout.HORIZONTAL && <NavLogo />}
-
-        <ToggleButton />
-        <NavSearchBox />
-      </div>
-
       <div
-        className={`${globalStyleObj.flexStart} h-full gap-2 sm:gap-0 lg:gap-2`}
+        className={`${globalStyleObj.flexBetween} ${layoutWidthType === widthType.BOXED ? `mx-auto w-full max-w-[1300px]` : `w-full`} h-full`}
       >
-        <NavbarSearchSmallDevice />
+        <div className={`${globalStyleObj.flexStart} h-full gap-2 md:gap-5`}>
+          {layoutType === layout.HORIZONTAL && (
+            <NavLogo topbarColorType={topbarColorType} />
+          )}
 
-        <NavbarLanguages />
+          <ToggleButton />
+          <NavSearchBox />
+        </div>
 
-        <NavbarWebApps />
+        <div
+          className={`${globalStyleObj.flexStart} h-full gap-2 sm:gap-0 lg:gap-2`}
+        >
+          <NavbarSearchSmallDevice />
 
-        <NavbarMyCart />
+          <NavbarLanguages />
 
-        <NavFullScreenToggleButton />
+          <NavbarWebApps />
 
-        <NavbarThemeSwitcher />
+          <NavbarMyCart />
 
-        <NavbarNotification />
+          <NavFullScreenToggleButton />
 
-        <NavProfile />
+          <NavbarThemeSwitcher />
+
+          <NavbarNotification />
+
+          <NavProfile />
+        </div>
       </div>
     </nav>
   );

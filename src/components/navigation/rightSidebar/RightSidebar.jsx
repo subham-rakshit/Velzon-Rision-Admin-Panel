@@ -504,7 +504,7 @@ const RightSidebar = ({ isScrollTop }) => {
               </div>
             </div>
 
-            {/* NOTE User Profile Avatar Button */}
+            {/* NOTE User Profile Avatar Button [Vertical & Semibox] */}
             <div
               className={`${layoutType === layout.VERTICAL || layoutType === layout.SEMI_BOX ? "mt-5 flex items-center gap-2" : "hidden"}`}
             >
@@ -732,7 +732,7 @@ const RightSidebar = ({ isScrollTop }) => {
               </div>
             </div>
 
-            {/* Sidebar Visibility */}
+            {/* NOTE Sidebar Visibility */}
             <div
               className={`${layoutType === layout.SEMI_BOX ? "mt-5" : "hidden"}`}
             >
@@ -908,7 +908,7 @@ const RightSidebar = ({ isScrollTop }) => {
 
             {/* NOTE Sidebar Size */}
             <div
-              className={`${layoutType === layout.VERTICAL ? "mt-5" : "hidden"}`}
+              className={`${layoutType === layout.VERTICAL || layoutType === layout.SEMI_BOX ? "mt-5" : "hidden"}`}
             >
               <h3
                 className={`${globalStyleObj.text13Light550Dark550Sb} uppercase`}
@@ -1251,7 +1251,7 @@ const RightSidebar = ({ isScrollTop }) => {
 
             {/* NOTE Sidebar Color */}
             <div
-              className={`${layoutType === layout.HORIZONTAL || layoutType === layout.SEMI_BOX ? "hidden" : "mt-5"}`}
+              className={`${layoutType === layout.HORIZONTAL ? "hidden" : "mt-5"}`}
             >
               <h3
                 className={`${globalStyleObj.text13Light550Dark550Sb} uppercase`}
@@ -1352,7 +1352,7 @@ const RightSidebar = ({ isScrollTop }) => {
 
             {/* NOTE Sidebar Images */}
             <div
-              className={`${layoutType === layout.HORIZONTAL || layoutType === layout.SEMI_BOX ? "hidden" : "mt-5"}`}
+              className={`${layoutType === layout.HORIZONTAL ? "hidden" : "mt-5"}`}
             >
               <h3
                 className={`${globalStyleObj.text13Light550Dark550Sb} uppercase`}
@@ -1465,7 +1465,7 @@ const RightSidebar = ({ isScrollTop }) => {
                           repeat: Infinity,
                           repeatDelay: 1,
                         }}
-                        className={`absolute left-0 top-0 h-[3px] ${bgColor}`}
+                        className={`absolute left-0 top-0 h-[3px] bg-[#e61247]`}
                       ></motion.div>
 
                       {commonRightSidebarLayout()}

@@ -40,7 +40,9 @@ const UserAuthenticationLayout = ({ children, ...props }) => {
       </div>
 
       <div className="relative min-h-[50vh] w-full">
-        <div className="flex-col-center relative top-[-80px] z-[99] w-full gap-4 px-3 sm:px-5">
+        <div
+          className={`${globalStyleObj.flexColCenter} relative top-[-80px] z-[99] w-full gap-4 px-3 sm:px-5`}
+        >
           {children}
         </div>
         <p

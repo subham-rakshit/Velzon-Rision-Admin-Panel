@@ -12,6 +12,10 @@ const LeftSidebarSmallIconView = ({
   tabDetails,
   leftSidebarColorType,
   pathname,
+  bgColor,
+  textColor,
+  hoverTextColor,
+  gradientBgColor,
 }) => {
   const [hoverState, setHoverState] = useState({
     parent: { id: "", isOpen: false },
@@ -58,51 +62,41 @@ const LeftSidebarSmallIconView = ({
   };
 
   return (
-    <ul
-      className={`relative h-full py-2 text-light-weight-450 dark:bg-dark-dencity-300 ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? "bg-light-weight-500" : "bg-light-dencity-900"}`}
-    >
+    <ul className={`relative z-[999] min-h-full py-2`}>
       {leftSidebarData.map((category) =>
         category.tabNameList.map((parent) =>
           parent.tabDropdownList.length > 0 ? (
             // Tab Icon Main Container
             <li
               key={parent.id}
-              className={`relative ${globalStyleObj.flexCenter} py-[13px] hover:cursor-pointer`}
+              className={`relative hover:cursor-pointer`}
               onMouseEnter={() => handleParentHoverState(parent.id)}
               onMouseLeave={() => handleParentHoverState(parent.id)}
             >
               {/* NOTE Parent Icon */}
-              <span
-                className={`text-[22px] ${
-                  pathname.includes(parent.id.toLowerCase()) ? "text-white" : ""
-                }`}
+              <div
+                className={`py-[13px] text-[22px] ${globalStyleObj.flexCenter} ${pathname.includes(parent.id.toLowerCase()) ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "text-light-weight-800" : textColor}` : "text-light-weight-450"} ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "hover:text-light-weight-800" : hoverTextColor}`}
               >
                 {parent.tabIcon}
-              </span>
+              </div>
 
               {/* NOTE Parent Dropdown Box */}
               <ul
-                className={`absolute left-full top-0 z-[9999] w-[200px] rounded-r-[5px] px-2 py-3 font-poppins-rg dark:bg-dark-dencity-300 ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? "bg-light-weight-500" : "bg-light-dencity-900"} ${
+                className={`absolute left-full top-0 z-[9999] w-[200px] rounded-r-[5px] py-3 font-poppins-rg ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? `${bgColor} dark:bg-dark-dencity-300` : `${leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? `${gradientBgColor}` : "bg-light-dencity-900"}`} ${
                   hoverState.parent.isOpen && hoverState.parent.id === parent.id
                     ? "visible opacity-100"
                     : "hidden opacity-0"
                 }`}
               >
                 {/* Parent Tab Name  */}
-                <span
-                  className={`${globalStyleObj.flexBetween} w-full text-[15px] group-hover:text-white ${
-                    tabDetails.parent.id === parent.id ? "text-white" : ""
-                  } ${parent.tabDropdownList.length > 0 ? "mb-3" : "mb-0"}`}
+                <div
+                  className={`${globalStyleObj.flexBetween} mb-3 w-full px-2 text-[15px] ${pathname.includes(parent.id.toLowerCase()) ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "text-light-weight-800" : textColor}` : "text-light-weight-450"} ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "hover:text-light-weight-800" : hoverTextColor}`}
                 >
                   <span>{parent.tabName}</span>
                   {parent.tabDropdownList.length > 0 && (
-                    <IoIosArrowForward
-                      className={`${
-                        hoverState.parent.id === parent.id ? "rotate-90" : ""
-                      }`}
-                    />
+                    <IoIosArrowForward className="rotate-90" />
                   )}
-                </span>
+                </div>
 
                 {/* First Childrens */}
                 {parent.tabDropdownList.length > 0 &&
@@ -115,7 +109,7 @@ const LeftSidebarSmallIconView = ({
                         {firstChild.tabDropdownList.length > 0 ? (
                           // FirstChild Tab having dropdown
                           <ul
-                            className={`relative ${globalStyleObj.flexStart} gap-2 p-2 text-[13px]`}
+                            className={`relative ${globalStyleObj.flexStart} gap-2 text-[13px]`}
                             onMouseEnter={() =>
                               handleFirstChildHoverState(firstChild.id)
                             }
@@ -123,20 +117,16 @@ const LeftSidebarSmallIconView = ({
                               handleFirstChildHoverState(firstChild.id)
                             }
                           >
-                            <span
-                              className={`${globalStyleObj.flexBetween} w-full text-[13px] hover:text-white ${
-                                tabDetails.firstChild.id === firstChild.id
-                                  ? "text-white"
-                                  : ""
-                              }`}
+                            <div
+                              className={`w-full px-4 py-2 text-[13px] ${globalStyleObj.flexBetween} ${pathname.includes(firstChild.id.toLowerCase()) ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "text-light-weight-800" : textColor}` : "text-light-weight-450"} ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "hover:text-light-weight-800" : hoverTextColor}`}
                             >
                               <span>{firstChild.tabName}</span>
                               <IoIosArrowForward />
-                            </span>
+                            </div>
 
                             {/* Second Children */}
                             <li
-                              className={`absolute left-full top-0 z-[9999] w-[200px] rounded-r-[5px] p-3 font-poppins-rg dark:bg-dark-dencity-300 ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? "bg-light-weight-500" : "bg-light-dencity-900"} ${
+                              className={`absolute left-full top-0 z-[9999] w-[200px] rounded-[5px] py-2 font-poppins-rg ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? `${bgColor} dark:bg-dark-dencity-300` : `${leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? `${gradientBgColor}` : "bg-light-dencity-900"}`} ${
                                 hoverState.firstChild.isOpen &&
                                 hoverState.firstChild.id === firstChild.id
                                   ? "visible opacity-100"
@@ -148,7 +138,7 @@ const LeftSidebarSmallIconView = ({
                                 secondChild.tabDropdownList.length > 0 ? (
                                   <ul
                                     key={secondChild.id}
-                                    className={`relative ${globalStyleObj.flexStart} gap-2 p-2 text-[13px]`}
+                                    className={`relative ${globalStyleObj.flexStart} gap-2 text-[13px]`}
                                     onMouseEnter={() =>
                                       handleSecondChildHoverState(
                                         secondChild.id
@@ -160,21 +150,21 @@ const LeftSidebarSmallIconView = ({
                                       )
                                     }
                                   >
-                                    <span
-                                      className={`${globalStyleObj.flexBetween} w-full text-[13px] hover:text-white ${
+                                    <div
+                                      className={`${globalStyleObj.flexBetween} w-full px-4 py-2 text-[13px] ${
                                         tabDetails.secondChild.id ===
                                         secondChild.id
-                                          ? "text-white"
-                                          : ""
-                                      }`}
+                                          ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "text-light-weight-800" : textColor}`
+                                          : "text-light-weight-450"
+                                      } ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "hover:text-light-weight-800" : hoverTextColor}`}
                                     >
                                       <span>{secondChild.tabName}</span>
                                       <IoIosArrowForward />
-                                    </span>
+                                    </div>
 
                                     {/* Third Child */}
                                     <li
-                                      className={`absolute left-full top-0 z-[9999] w-[200px] rounded-[5px] p-3 font-poppins-rg dark:bg-dark-dencity-300 ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? "bg-light-weight-500" : "bg-light-dencity-900"} ${
+                                      className={`absolute left-full top-0 z-[9999] w-[200px] rounded-[5px] py-2 font-poppins-rg ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? `${bgColor} dark:bg-dark-dencity-300` : `${leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? `${gradientBgColor}` : "bg-light-dencity-900"}`} ${
                                         hoverState.secondChild.isOpen &&
                                         hoverState.secondChild.id ===
                                           secondChild.id
@@ -190,7 +180,7 @@ const LeftSidebarSmallIconView = ({
                                               href={thirdChild.pathName}
                                               key={thirdChild.id}
                                             >
-                                              <span
+                                              <div
                                                 id={thirdChild.id}
                                                 parenttabid={
                                                   thirdChild.parentTabId
@@ -201,15 +191,15 @@ const LeftSidebarSmallIconView = ({
                                                 secondchildid={
                                                   thirdChild.secondChildId
                                                 }
-                                                className={`${globalStyleObj.flexStart} gap-2 p-2 text-[13px] hover:text-white ${
+                                                className={`${globalStyleObj.flexStart} px-4 py-2 text-[13px] ${
                                                   pathname.split("/")[1] ===
                                                   thirdChild.id
-                                                    ? "text-white"
-                                                    : ""
-                                                }`}
+                                                    ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "text-light-weight-800" : textColor}`
+                                                    : "text-light-weight-450"
+                                                } ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "hover:text-light-weight-800" : hoverTextColor}`}
                                               >
                                                 {thirdChild.tabName}
-                                              </span>
+                                              </div>
                                             </Link>
                                           )
                                       )}
@@ -221,19 +211,19 @@ const LeftSidebarSmallIconView = ({
                                     href={secondChild.pathName}
                                     key={secondChild.id}
                                   >
-                                    <span
+                                    <div
                                       id={secondChild.id}
                                       parenttabid={secondChild.parentTabId}
                                       firstchildid={secondChild.firstChildId}
-                                      className={`${globalStyleObj.flexStart} gap-2 p-2 text-[13px] hover:text-white ${
+                                      className={`${globalStyleObj.flexStart} gap-2 px-4 py-2 text-[13px] ${
                                         pathname.split("/")[1] ===
                                         secondChild.id
-                                          ? "text-white"
-                                          : ""
-                                      }`}
+                                          ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "text-light-weight-800" : textColor}`
+                                          : "text-light-weight-450"
+                                      } ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "hover:text-light-weight-800" : hoverTextColor}`}
                                     >
                                       {secondChild.tabName}
-                                    </span>
+                                    </div>
                                   </Link>
                                 )
                               )}
@@ -242,13 +232,13 @@ const LeftSidebarSmallIconView = ({
                         ) : (
                           // FirstChild Tab having no dropdown
                           <Link href={firstChild.pathName} key={firstChild.id}>
-                            <span
+                            <div
                               id={firstChild.id}
                               parenttabid={firstChild.parentTabId}
-                              className={`${globalStyleObj.flexStart} gap-2 p-2 text-[13px] hover:text-white ${pathname.split("/")[1] === firstChild.id ? "text-white" : ""}`}
+                              className={`${globalStyleObj.flexStart} gap-2 px-4 py-2 text-[13px] ${pathname.split("/")[1] === firstChild.id ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "text-light-weight-800" : textColor}` : "text-light-weight-450"} ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "hover:text-light-weight-800" : hoverTextColor}`}
                             >
                               {firstChild.tabName}
-                            </span>
+                            </div>
                           </Link>
                         )}
                       </li>
@@ -260,34 +250,24 @@ const LeftSidebarSmallIconView = ({
             <Link href={parent.pathName} key={parent.id}>
               <li
                 id={parent.id}
-                className={`relative ${globalStyleObj.flexCenter} py-[13px] hover:cursor-pointer`}
+                className={`relative ${globalStyleObj.flexCenter} ${pathname.includes(parent.id.toLowerCase()) ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "text-light-weight-800" : textColor}` : "text-light-weight-450"} py-[13px] hover:cursor-pointer`}
                 onMouseEnter={() => handleParentHoverState(parent.id)}
                 onMouseLeave={() => handleParentHoverState(parent.id)}
               >
                 <span
-                  className={`text-[22px] ${
-                    pathname.includes(parent.id.toLowerCase())
-                      ? "text-white"
-                      : ""
-                  }`}
+                  className={`text-[22px] ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "hover:text-light-weight-800" : hoverTextColor}`}
                 >
                   {parent.tabIcon}
                 </span>
                 <div
-                  className={`absolute left-full top-0 z-[9999] w-[200px] rounded-r-[5px] px-2 py-3 font-poppins-rg dark:bg-dark-dencity-300 ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? "bg-light-weight-500" : "bg-light-dencity-900"} ${
+                  className={`absolute left-full top-0 z-[9999] w-[200px] rounded-r-[5px] px-2 py-3 font-poppins-rg text-[15px] ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? `${bgColor} hover:text-light-weight-800 dark:bg-dark-dencity-300` : `${leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? `${gradientBgColor} hover:text-light-weight-800 dark:bg-dark-dencity-300` : `bg-light-dencity-900 ${hoverTextColor}`}`} ${
                     hoverState.parent.isOpen &&
                     hoverState.parent.id === parent.id
                       ? "visible opacity-100"
                       : "hidden opacity-0"
                   }`}
                 >
-                  <span
-                    className={`${globalStyleObj.flexBetween} w-full text-[15px] group-hover:text-white ${
-                      tabDetails.parent.id === parent.id ? "text-white" : ""
-                    }`}
-                  >
-                    {parent.tabName}
-                  </span>
+                  {parent.tabName}
                 </div>
               </li>
             </Link>
