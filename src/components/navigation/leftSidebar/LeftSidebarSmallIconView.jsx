@@ -1,12 +1,12 @@
 "use client";
 
-import Link from "next/link";
 import React, { useState } from "react";
 import { IoIosArrowForward } from "react-icons/io";
 
 import { sidebarColor } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
 import leftSidebarData from "@/app/assets/leftSidebarData/leftSidebarData";
 import { globalStyleObj } from "@/app/assets/styles";
+import { TransitionLink } from "@/components";
 
 const LeftSidebarSmallIconView = ({
   tabDetails,
@@ -176,7 +176,7 @@ const LeftSidebarSmallIconView = ({
                                         (thirdChild) =>
                                           thirdChild.tabDropdownList >
                                           0 ? null : (
-                                            <Link
+                                            <TransitionLink
                                               href={thirdChild.pathName}
                                               key={thirdChild.id}
                                             >
@@ -200,14 +200,14 @@ const LeftSidebarSmallIconView = ({
                                               >
                                                 {thirdChild.tabName}
                                               </div>
-                                            </Link>
+                                            </TransitionLink>
                                           )
                                       )}
                                     </li>
                                   </ul>
                                 ) : (
                                   // Second Child Having No Dropdown
-                                  <Link
+                                  <TransitionLink
                                     href={secondChild.pathName}
                                     key={secondChild.id}
                                   >
@@ -224,14 +224,17 @@ const LeftSidebarSmallIconView = ({
                                     >
                                       {secondChild.tabName}
                                     </div>
-                                  </Link>
+                                  </TransitionLink>
                                 )
                               )}
                             </li>
                           </ul>
                         ) : (
                           // FirstChild Tab having no dropdown
-                          <Link href={firstChild.pathName} key={firstChild.id}>
+                          <TransitionLink
+                            href={firstChild.pathName}
+                            key={firstChild.id}
+                          >
                             <div
                               id={firstChild.id}
                               parenttabid={firstChild.parentTabId}
@@ -239,7 +242,7 @@ const LeftSidebarSmallIconView = ({
                             >
                               {firstChild.tabName}
                             </div>
-                          </Link>
+                          </TransitionLink>
                         )}
                       </li>
                     );
@@ -247,7 +250,7 @@ const LeftSidebarSmallIconView = ({
               </ul>
             </li>
           ) : (
-            <Link href={parent.pathName} key={parent.id}>
+            <TransitionLink href={parent.pathName} key={parent.id}>
               <li
                 id={parent.id}
                 className={`relative ${globalStyleObj.flexCenter} ${pathname.includes(parent.id.toLowerCase()) ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "text-light-weight-800" : textColor}` : "text-light-weight-450"} py-[13px] hover:cursor-pointer`}
@@ -270,7 +273,7 @@ const LeftSidebarSmallIconView = ({
                   {parent.tabName}
                 </div>
               </li>
-            </Link>
+            </TransitionLink>
           )
         )
       )}

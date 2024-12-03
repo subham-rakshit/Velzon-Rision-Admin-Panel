@@ -115,7 +115,7 @@ html .dark::-webkit-scrollbar-thumb {
   transition-property: display, justify-conten, align-items, background-color,
     z-index, inset, position;
   transition-timing-function: ease-in-out;
-  transition-duration: 1000 ms;
+  transition-duration: 500 ms;
 }
 .page-transition-off {
   display: none;

@@ -9,8 +9,8 @@ import {
   Navbar,
   RightSidebar,
   Footer,
-  LoadingUI,
   HorizontalSidebar,
+  LoadingUI,
 } from "..";
 
 import {
@@ -260,7 +260,12 @@ const AuthProtectedLayoutProvider = ({ children }) => {
               layoutType === layout.VERTICAL &&
               leftSidebarViewType === sidebarView.DETACHED
                 ? "lg:mt-[70px]"
-                : ""
+                : layoutWidthType === widthType.BOXED &&
+                    layoutType === layout.HORIZONTAL
+                  ? "mx-auto w-full max-w-[1300px]"
+                  : layoutType === layout.HORIZONTAL
+                    ? "md:px-10 lg:px-[50px]"
+                    : ""
             }`}
           >
             {children}

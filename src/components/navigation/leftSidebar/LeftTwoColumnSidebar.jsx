@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { BsDash } from "react-icons/bs";
@@ -271,9 +270,9 @@ const LeftTwoColumnSidebar = ({ width }) => {
           className={`custom-left-sidebar-scrollbar ${globalStyleObj.flexColStart} h-full w-[70px] overflow-y-auto border-r-2 ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? `${bgColor} border-[#000]/5 dark:bg-dark-dencity-200` : `${leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? `${bgColor} border-[#000]/5` : `bg-light-dencity-800`}`}`}
         >
           <div className={`${globalStyleObj.flexCenter} min-h-[70px]`}>
-            <Link href={ROUTES.DASHBOARD_ECOMMERCE}>
+            <TransitionLink href={ROUTES.DASHBOARD_ECOMMERCE}>
               <Image src={logoSmall} alt="small logo" width={22} height={22} />
-            </Link>
+            </TransitionLink>
           </div>
 
           <ul className={`my-[10px] ${globalStyleObj.flexColStart} gap-2`}>
@@ -288,7 +287,7 @@ const LeftTwoColumnSidebar = ({ width }) => {
                     <span>{tab.tabIcon}</span>
                   </li>
                 ) : (
-                  <Link
+                  <TransitionLink
                     key={tab.id}
                     href={tab.pathName}
                     onClick={() => {
@@ -306,7 +305,7 @@ const LeftTwoColumnSidebar = ({ width }) => {
                     >
                       <span>{tab.tabIcon}</span>
                     </li>
-                  </Link>
+                  </TransitionLink>
                 )
               )
             )}
@@ -324,7 +323,7 @@ const LeftTwoColumnSidebar = ({ width }) => {
           <div
             className={`${globalStyleObj.flexCenter} relative z-[999] min-h-[70px]`}
           >
-            <Link href={ROUTES.DASHBOARD_ECOMMERCE}>
+            <TransitionLink href={ROUTES.DASHBOARD_ECOMMERCE}>
               <Image
                 src={
                   leftSidebarColorType === sidebarColor.DARK_BG_COLOR ||
@@ -337,7 +336,7 @@ const LeftTwoColumnSidebar = ({ width }) => {
                 height={22}
                 style={{ width: "auto", height: "auto" }}
               />
-            </Link>
+            </TransitionLink>
           </div>
 
           <div className="custom-left-sidebar-scrollbar relative z-[999] h-[calc(100vh-70px)] overflow-y-auto p-[10px]">
@@ -399,7 +398,7 @@ const LeftTwoColumnSidebar = ({ width }) => {
                                         thirdChild.tabDropdownList.length >
                                         0 ? null : (
                                           // Third Child
-                                          <Link
+                                          <TransitionLink
                                             key={thirdChild.id}
                                             href={thirdChild.pathName}
                                           >
@@ -421,14 +420,14 @@ const LeftTwoColumnSidebar = ({ width }) => {
                                               ></span>
                                               {thirdChild.tabName}
                                             </li>
-                                          </Link>
+                                          </TransitionLink>
                                         )
                                     )}
                                   </ul>
                                 </li>
                               ) : (
                                 // Second Child
-                                <Link
+                                <TransitionLink
                                   key={secondChild.id}
                                   href={secondChild.pathName}
                                 >
@@ -443,7 +442,7 @@ const LeftTwoColumnSidebar = ({ width }) => {
                                     ></span>
                                     {secondChild.tabName}
                                   </li>
-                                </Link>
+                                </TransitionLink>
                               )
                             )}
                           </ul>

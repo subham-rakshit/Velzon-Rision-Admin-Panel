@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useMemo, useState } from "react";
 import { BsDash } from "react-icons/bs";
@@ -307,7 +306,7 @@ const HorizontalSidebar = ({ resizeHeight }) => {
                           {secondChild.tabDropdownList.map((thirdChild) =>
                             thirdChild.tabDropdownList.length > 0 ? null : (
                               // Third Child
-                              <Link
+                              <TransitionLink
                                 key={thirdChild.id}
                                 href={thirdChild.pathName}
                               >
@@ -323,14 +322,17 @@ const HorizontalSidebar = ({ resizeHeight }) => {
                                   ></span>
                                   {thirdChild.tabName}
                                 </li>
-                              </Link>
+                              </TransitionLink>
                             )
                           )}
                         </ul>
                       </li>
                     ) : (
                       // Second Child
-                      <Link key={secondChild.id} href={secondChild.pathName}>
+                      <TransitionLink
+                        key={secondChild.id}
+                        href={secondChild.pathName}
+                      >
                         <li
                           id={secondChild.id}
                           parenttabid={secondChild.parentTabId}
@@ -342,7 +344,7 @@ const HorizontalSidebar = ({ resizeHeight }) => {
                           ></span>
                           {secondChild.tabName}
                         </li>
-                      </Link>
+                      </TransitionLink>
                     )
                   )}
                 </ul>
@@ -365,7 +367,7 @@ const HorizontalSidebar = ({ resizeHeight }) => {
       </li>
     ) : (
       // Parent Tab
-      <Link key={parent.id} href={parent.pathName}>
+      <TransitionLink key={parent.id} href={parent.pathName}>
         <li
           id={parent.id}
           className={`pb-5 ${pathname.includes(parent.id.toLowerCase()) ? `${textColor} dark:text-light-weight-800` : "text-light-weight-400 dark:text-light-weight-450"} ${hoverTextColor} dark:hover:text-light-weight-800`}
@@ -377,7 +379,7 @@ const HorizontalSidebar = ({ resizeHeight }) => {
             </span>
           </div>
         </li>
-      </Link>
+      </TransitionLink>
     );
   };
 
@@ -544,7 +546,7 @@ const HorizontalSidebar = ({ resizeHeight }) => {
                                                   thirdChild.tabDropdownList
                                                     .length > 0 ? null : (
                                                     // Third Child
-                                                    <Link
+                                                    <TransitionLink
                                                       key={thirdChild.id}
                                                       href={thirdChild.pathName}
                                                     >
@@ -568,14 +570,14 @@ const HorizontalSidebar = ({ resizeHeight }) => {
                                                           {thirdChild.tabName}
                                                         </span>
                                                       </li>
-                                                    </Link>
+                                                    </TransitionLink>
                                                   )
                                               )}
                                             </ul>
                                           </li>
                                         ) : (
                                           // Second Child
-                                          <Link
+                                          <TransitionLink
                                             key={secondChild.id}
                                             href={secondChild.pathName}
                                           >
@@ -596,7 +598,7 @@ const HorizontalSidebar = ({ resizeHeight }) => {
                                                 {secondChild.tabName}
                                               </span>
                                             </li>
-                                          </Link>
+                                          </TransitionLink>
                                         )
                                     )}
                                   </ul>
@@ -626,7 +628,7 @@ const HorizontalSidebar = ({ resizeHeight }) => {
                         </li>
                       ) : (
                         // Parent Tab
-                        <Link key={parent.id} href={parent.pathName}>
+                        <TransitionLink key={parent.id} href={parent.pathName}>
                           <li
                             id={parent.id}
                             className={`pt-5 ${pathname.includes(parent.id.toLowerCase()) ? `${textColor} dark:text-light-weight-800` : "text-light-weight-400 dark:text-light-weight-450"} ${hoverTextColor} lg:pl-2 lg:pr-3`}
@@ -641,7 +643,7 @@ const HorizontalSidebar = ({ resizeHeight }) => {
                               </span>
                             </div>
                           </li>
-                        </Link>
+                        </TransitionLink>
                       )
                     ) : null
                   )

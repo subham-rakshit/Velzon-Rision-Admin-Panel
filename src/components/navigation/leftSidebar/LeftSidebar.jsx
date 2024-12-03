@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { BsDash } from "react-icons/bs";
@@ -11,7 +10,6 @@ import logoDark from "../../../app/assets/images/logo-dark.png";
 import logoLight from "../../../app/assets/images/logo-light.png";
 import logoSmall from "../../../app/assets/images/logo-sm.png";
 import leftSidebarData from "../../../app/assets/leftSidebarData/leftSidebarData";
-import TransitionLink from "../TransitionLink";
 
 import {
   sidebarColor,
@@ -26,7 +24,7 @@ import {
   sidebarView,
 } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
 import { globalStyleObj } from "@/app/assets/styles";
-import { LeftSidebarSmallIconView } from "@/components";
+import { LeftSidebarSmallIconView, TransitionLink } from "@/components";
 import { changeToggleSmallButtonStatus } from "@/lib/store/features/layoutCustomizer/layoutCustomizerSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 
@@ -491,7 +489,7 @@ const LeftSidebar = ({ width }) => {
                                           thirdChild.tabDropdownList.length >
                                           0 ? null : (
                                             // Third Child
-                                            <Link
+                                            <TransitionLink
                                               key={thirdChild.id}
                                               href={thirdChild.pathName}
                                             >
@@ -563,14 +561,14 @@ const LeftSidebar = ({ width }) => {
                                                 ></span>
                                                 {thirdChild.tabName}
                                               </li>
-                                            </Link>
+                                            </TransitionLink>
                                           )
                                       )}
                                     </ul>
                                   </li>
                                 ) : (
                                   // Second Child
-                                  <Link
+                                  <TransitionLink
                                     key={secondChild.id}
                                     href={secondChild.pathName}
                                   >
@@ -635,7 +633,7 @@ const LeftSidebar = ({ width }) => {
                                       ></span>
                                       {secondChild.tabName}
                                     </li>
-                                  </Link>
+                                  </TransitionLink>
                                 )
                               )}
                             </ul>
@@ -687,7 +685,7 @@ const LeftSidebar = ({ width }) => {
                   </li>
                 ) : (
                   // Parent Tab
-                  <Link key={parent.id} href={parent.pathName}>
+                  <TransitionLink key={parent.id} href={parent.pathName}>
                     <li
                       id={parent.id}
                       className={`pt-5 ${
@@ -725,7 +723,7 @@ const LeftSidebar = ({ width }) => {
                         </span>
                       </div>
                     </li>
-                  </Link>
+                  </TransitionLink>
                 )
               )}
             </ul>
@@ -839,7 +837,7 @@ const LeftSidebar = ({ width }) => {
         <div
           className={`${layoutType === layout.VERTICAL && leftSidebarViewType === sidebarView.DETACHED ? "transition-300 z-[9999] h-[70px] w-full px-[20px] lg:hidden" : "transition-300 z-[9999] h-[70px] w-full px-[20px]"} ${leftSidebarSizeType === sidebarSize.SMALL_ICON_VIEW && layoutPositionType === position.FIXED ? (leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? `${bgColor} dark:bg-dark-dencity-300` : leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? `${gradientBgColor}` : "bg-light-dencity-900") : "bg-transparent"} ${layoutPositionType === position.SCROLLABLE ? "relative" : "sticky left-0 top-0"}`}
         >
-          <Link
+          <TransitionLink
             href="/dashboard"
             className={`${leftSidebarSizeType === sidebarSize.SMALL_HOVER_VIEW ? "hidden" : `${globalStyleObj.flexCenter}`} size-full `}
           >
@@ -869,12 +867,12 @@ const LeftSidebar = ({ width }) => {
                 style={{ width: "auto", height: "auto" }}
               />
             )}
-          </Link>
+          </TransitionLink>
 
           <div
             className={`${leftSidebarSizeType === sidebarSize.SMALL_HOVER_VIEW ? `${globalStyleObj.flexBetween} transition-300` : "hidden"} h-full`}
           >
-            <Link
+            <TransitionLink
               href="/dashboard"
               className={`${globalStyleObj.flexStart} transition-300 h-full w-fit`}
             >
@@ -905,7 +903,7 @@ const LeftSidebar = ({ width }) => {
                   style={{ width: "auto", height: "auto" }}
                 />
               )}
-            </Link>
+            </TransitionLink>
 
             <button
               type="button"
