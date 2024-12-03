@@ -1,7 +1,7 @@
 export const globalStyleObj = {
   // Pages
   authSectionContainer: "w-full min-h-[100vh] bg-[#F3F3F9]",
-  initialPageStyle: "bg-gray-600 min-h-[500vh]",
+  initialPageStyle: "min-h-[300vh] bg-transparent",
   // Auth
   authFormContainer: "w-full px-2",
   authBannerText: "text-[#ffffff80] font-poppins-md text-[15px] text-center",

@@ -23,6 +23,7 @@ import {
   sidebarImage,
   layout,
   sidebarVisibility,
+  sidebarView,
 } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
 import { globalStyleObj } from "@/app/assets/styles";
 import { LeftSidebarSmallIconView } from "@/components";
@@ -41,6 +42,7 @@ const LeftSidebar = ({ width }) => {
     leftSidebarImageType,
     layoutType,
     leftSidebarVisibilityType,
+    leftSidebarViewType,
   } = useAppSelector((state) => state.layout);
   const pathname = usePathname();
   const mainPath = pathname.split("/")[1];
@@ -289,7 +291,16 @@ const LeftSidebar = ({ width }) => {
   const verticalDefaultLeftSidebarView = () => {
     return (
       <ul
-        className={`custom-left-sidebar-scrollbar relative z-[999] overflow-y-auto ${leftSidebarSizeType === sidebarSize.COMPACT ? "px-0" : "px-4"} ${layoutPositionType === position.SCROLLABLE ? "min-h-full" : layoutType === layout.SEMI_BOX ? "h-[calc(100vh-70px)] 2xl:h-[calc(100vh-110px)]" : "h-[calc(100vh-70px)]"}`}
+        className={`custom-left-sidebar-scrollbar relative z-[999] overflow-y-auto ${leftSidebarSizeType === sidebarSize.COMPACT ? "px-0" : "px-4"} ${
+          layoutPositionType === position.SCROLLABLE
+            ? "min-h-full"
+            : layoutType === layout.SEMI_BOX
+              ? "h-[calc(100vh-70px)] 2xl:h-[calc(100vh-110px)]"
+              : layoutType === layout.VERTICAL &&
+                  leftSidebarViewType === sidebarView.DETACHED
+                ? "h-[calc(100vh-70px)] lg:h-[calc(100vh-110px)]"
+                : "h-[calc(100vh-70px)]"
+        }`}
       >
         {leftSidebarData.map((category) => (
           // Main Category Container
@@ -312,7 +323,30 @@ const LeftSidebar = ({ width }) => {
                   >
                     {/* Parent Tab */}
                     <div
-                      className={`cursor-pointer ${leftSidebarSizeType === sidebarSize.COMPACT ? `${globalStyleObj.flexColCenter} gap-1` : `${globalStyleObj.flexStart} gap-2`} ${pathname.includes(parent.id.toLowerCase()) ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "text-light-weight-800" : textColor}` : "text-light-weight-450"} ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "hover:text-light-weight-800" : hoverTextColor}`}
+                      className={`cursor-pointer ${
+                        leftSidebarSizeType === sidebarSize.COMPACT
+                          ? `${globalStyleObj.flexColCenter} gap-1`
+                          : `${globalStyleObj.flexStart} gap-2`
+                      } 
+                        ${
+                          pathname.includes(parent.id.toLowerCase())
+                            ? `${
+                                leftSidebarColorType ===
+                                  sidebarColor.DARK_BG_COLOR ||
+                                leftSidebarColorType ===
+                                  sidebarColor.GRADIENT_BG_COLOR
+                                  ? "text-light-weight-800"
+                                  : textColor
+                              }`
+                            : "text-light-weight-450"
+                        } 
+                        ${
+                          leftSidebarColorType === sidebarColor.DARK_BG_COLOR ||
+                          leftSidebarColorType ===
+                            sidebarColor.GRADIENT_BG_COLOR
+                            ? "hover:text-light-weight-800"
+                            : hoverTextColor
+                        }`}
                       onClick={() => handleParentTabToggle(parent.id)}
                     >
                       <span className="text-[18px]">{parent.tabIcon}</span>
@@ -332,7 +366,31 @@ const LeftSidebar = ({ width }) => {
                           // First Child
                           <li key={firstChild.id}>
                             <div
-                              className={`${pathname.includes(firstChild.id.toLowerCase()) ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "text-light-weight-800" : textColor}` : "text-light-weight-450"} ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "hover:text-light-weight-800" : hoverTextColor} ${leftSidebarSizeType === sidebarSize.COMPACT ? `${globalStyleObj.flexCenter}` : `${globalStyleObj.flexStart} gap-2 pl-2`} cursor-pointer pt-4 font-poppins-rg text-[14px]`}
+                              className={`${
+                                pathname.includes(firstChild.id.toLowerCase())
+                                  ? `${
+                                      leftSidebarColorType ===
+                                        sidebarColor.DARK_BG_COLOR ||
+                                      leftSidebarColorType ===
+                                        sidebarColor.GRADIENT_BG_COLOR
+                                        ? "text-light-weight-800"
+                                        : textColor
+                                    }`
+                                  : "text-light-weight-450"
+                              } 
+                              ${
+                                leftSidebarColorType ===
+                                  sidebarColor.DARK_BG_COLOR ||
+                                leftSidebarColorType ===
+                                  sidebarColor.GRADIENT_BG_COLOR
+                                  ? "hover:text-light-weight-800"
+                                  : hoverTextColor
+                              } 
+                              ${
+                                leftSidebarSizeType === sidebarSize.COMPACT
+                                  ? `${globalStyleObj.flexCenter}`
+                                  : `${globalStyleObj.flexStart} gap-2 pl-2`
+                              } cursor-pointer pt-4 font-poppins-rg text-[14px]`}
                               onClick={() =>
                                 handleFirstChildTabToggle(firstChild.id)
                               }
@@ -355,7 +413,33 @@ const LeftSidebar = ({ width }) => {
                                   // Second Child
                                   <li key={secondChild.id}>
                                     <div
-                                      className={`group cursor-pointer pt-4 font-poppins-rg text-[13px] ${leftSidebarSizeType === sidebarSize.COMPACT ? `${globalStyleObj.flexCenter}` : `${globalStyleObj.flexStart} gap-3 pl-7`} ${pathname.includes(secondChild.id) ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "text-light-weight-800" : textColor}` : "text-light-weight-450"} ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "hover:text-light-weight-800" : hoverTextColor}`}
+                                      className={`group cursor-pointer pt-4 font-poppins-rg text-[13px] 
+                                        ${
+                                          leftSidebarSizeType ===
+                                          sidebarSize.COMPACT
+                                            ? `${globalStyleObj.flexCenter}`
+                                            : `${globalStyleObj.flexStart} gap-3 pl-7`
+                                        }
+                                           ${
+                                             pathname.includes(secondChild.id)
+                                               ? `${
+                                                   leftSidebarColorType ===
+                                                     sidebarColor.DARK_BG_COLOR ||
+                                                   leftSidebarColorType ===
+                                                     sidebarColor.GRADIENT_BG_COLOR
+                                                     ? "text-light-weight-800"
+                                                     : textColor
+                                                 }`
+                                               : "text-light-weight-450"
+                                           } 
+                                            ${
+                                              leftSidebarColorType ===
+                                                sidebarColor.DARK_BG_COLOR ||
+                                              leftSidebarColorType ===
+                                                sidebarColor.GRADIENT_BG_COLOR
+                                                ? "hover:text-light-weight-800"
+                                                : hoverTextColor
+                                            }`}
                                       onClick={() =>
                                         handleSecondChildTabToggle(
                                           secondChild.id
@@ -363,7 +447,34 @@ const LeftSidebar = ({ width }) => {
                                       }
                                     >
                                       <span
-                                        className={`${leftSidebarSizeType === sidebarSize.COMPACT ? "hidden" : "inline"} ${pathname.includes(secondChild.id.toLowerCase()) ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "border border-white" : borderColor}` : "border border-light-weight-450"} ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "group-hover:bg-white" : groupHoverBgColor} size-[5px] rounded-full border`}
+                                        className={`${
+                                          leftSidebarSizeType ===
+                                          sidebarSize.COMPACT
+                                            ? "hidden"
+                                            : "inline"
+                                        } 
+                                            ${
+                                              pathname.includes(
+                                                secondChild.id.toLowerCase()
+                                              )
+                                                ? `${
+                                                    leftSidebarColorType ===
+                                                      sidebarColor.DARK_BG_COLOR ||
+                                                    leftSidebarColorType ===
+                                                      sidebarColor.GRADIENT_BG_COLOR
+                                                      ? "border border-white"
+                                                      : borderColor
+                                                  }`
+                                                : "border border-light-weight-450"
+                                            } 
+                                              ${
+                                                leftSidebarColorType ===
+                                                  sidebarColor.DARK_BG_COLOR ||
+                                                leftSidebarColorType ===
+                                                  sidebarColor.GRADIENT_BG_COLOR
+                                                  ? "group-hover:bg-white"
+                                                  : groupHoverBgColor
+                                              } size-[5px] rounded-full border`}
                                       ></span>
                                       {secondChild.tabName}
                                       <IoIosArrowForward
@@ -395,10 +506,60 @@ const LeftSidebar = ({ width }) => {
                                                 secondchildid={
                                                   thirdChild.secondChildId
                                                 }
-                                                className={`${mainPath === thirdChild.id ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "text-light-weight-800" : textColor}` : "text-light-weight-450"} ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "hover:text-light-weight-800" : hoverTextColor} ${leftSidebarSizeType === sidebarSize.COMPACT ? `${globalStyleObj.flexCenter}` : `${globalStyleObj.flexStart} gap-3 pl-10`} group pt-4 font-poppins-rg text-[13px]`}
+                                                className={`${
+                                                  mainPath === thirdChild.id
+                                                    ? `${
+                                                        leftSidebarColorType ===
+                                                          sidebarColor.DARK_BG_COLOR ||
+                                                        leftSidebarColorType ===
+                                                          sidebarColor.GRADIENT_BG_COLOR
+                                                          ? "text-light-weight-800"
+                                                          : textColor
+                                                      }`
+                                                    : "text-light-weight-450"
+                                                } 
+                                                    ${
+                                                      leftSidebarColorType ===
+                                                        sidebarColor.DARK_BG_COLOR ||
+                                                      leftSidebarColorType ===
+                                                        sidebarColor.GRADIENT_BG_COLOR
+                                                        ? "hover:text-light-weight-800"
+                                                        : hoverTextColor
+                                                    } 
+                                                      ${
+                                                        leftSidebarSizeType ===
+                                                        sidebarSize.COMPACT
+                                                          ? `${globalStyleObj.flexCenter}`
+                                                          : `${globalStyleObj.flexStart} gap-3 pl-10`
+                                                      } group pt-4 font-poppins-rg text-[13px]`}
                                               >
                                                 <span
-                                                  className={`${leftSidebarSizeType === sidebarSize.COMPACT ? "hidden" : "inline"} ${mainPath === thirdChild.id ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "border border-white" : borderColor}` : "border border-light-weight-450"} ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "group-hover:bg-white" : groupHoverBgColor} size-[5px] rounded-full`}
+                                                  className={`${
+                                                    leftSidebarSizeType ===
+                                                    sidebarSize.COMPACT
+                                                      ? "hidden"
+                                                      : "inline"
+                                                  } 
+                                                    ${
+                                                      mainPath === thirdChild.id
+                                                        ? `${
+                                                            leftSidebarColorType ===
+                                                              sidebarColor.DARK_BG_COLOR ||
+                                                            leftSidebarColorType ===
+                                                              sidebarColor.GRADIENT_BG_COLOR
+                                                              ? "border border-white"
+                                                              : borderColor
+                                                          }`
+                                                        : "border border-light-weight-450"
+                                                    } 
+                                                      ${
+                                                        leftSidebarColorType ===
+                                                          sidebarColor.DARK_BG_COLOR ||
+                                                        leftSidebarColorType ===
+                                                          sidebarColor.GRADIENT_BG_COLOR
+                                                          ? "group-hover:bg-white"
+                                                          : groupHoverBgColor
+                                                      } size-[5px] rounded-full`}
                                                 ></span>
                                                 {thirdChild.tabName}
                                               </li>
@@ -417,10 +578,60 @@ const LeftSidebar = ({ width }) => {
                                       id={secondChild.id}
                                       parenttabid={secondChild.parentTabId}
                                       firstchildid={secondChild.firstChildId}
-                                      className={`${mainPath === secondChild.id ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "text-light-weight-800" : textColor}` : "text-light-weight-450"} ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "hover:text-light-weight-800" : hoverTextColor} ${leftSidebarSizeType === sidebarSize.COMPACT ? `${globalStyleObj.flexCenter}` : `${globalStyleObj.flexStart} gap-3 pl-7`} group pt-4 font-poppins-rg text-[13px]`}
+                                      className={`${
+                                        mainPath === secondChild.id
+                                          ? `${
+                                              leftSidebarColorType ===
+                                                sidebarColor.DARK_BG_COLOR ||
+                                              leftSidebarColorType ===
+                                                sidebarColor.GRADIENT_BG_COLOR
+                                                ? "text-light-weight-800"
+                                                : textColor
+                                            }`
+                                          : "text-light-weight-450"
+                                      } 
+                                        ${
+                                          leftSidebarColorType ===
+                                            sidebarColor.DARK_BG_COLOR ||
+                                          leftSidebarColorType ===
+                                            sidebarColor.GRADIENT_BG_COLOR
+                                            ? "hover:text-light-weight-800"
+                                            : hoverTextColor
+                                        } 
+                                          ${
+                                            leftSidebarSizeType ===
+                                            sidebarSize.COMPACT
+                                              ? `${globalStyleObj.flexCenter}`
+                                              : `${globalStyleObj.flexStart} gap-3 pl-7`
+                                          } group pt-4 font-poppins-rg text-[13px]`}
                                     >
                                       <span
-                                        className={`${leftSidebarSizeType === sidebarSize.COMPACT ? "hidden" : "inline"} ${mainPath === secondChild.id ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "border border-white" : borderColor}` : "border border-light-weight-450"} ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "group-hover:bg-white" : groupHoverBgColor} size-[5px] rounded-full`}
+                                        className={`${
+                                          leftSidebarSizeType ===
+                                          sidebarSize.COMPACT
+                                            ? "hidden"
+                                            : "inline"
+                                        } 
+                                          ${
+                                            mainPath === secondChild.id
+                                              ? `${
+                                                  leftSidebarColorType ===
+                                                    sidebarColor.DARK_BG_COLOR ||
+                                                  leftSidebarColorType ===
+                                                    sidebarColor.GRADIENT_BG_COLOR
+                                                    ? "border border-white"
+                                                    : borderColor
+                                                }`
+                                              : "border border-light-weight-450"
+                                          } 
+                                            ${
+                                              leftSidebarColorType ===
+                                                sidebarColor.DARK_BG_COLOR ||
+                                              leftSidebarColorType ===
+                                                sidebarColor.GRADIENT_BG_COLOR
+                                                ? "group-hover:bg-white"
+                                                : groupHoverBgColor
+                                            } size-[5px] rounded-full`}
                                       ></span>
                                       {secondChild.tabName}
                                     </li>
@@ -438,7 +649,31 @@ const LeftSidebar = ({ width }) => {
                             <li
                               id={firstChild.id}
                               parenttabid={firstChild.parentTabId}
-                              className={`${mainPath === firstChild.id ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "text-light-weight-800" : textColor}` : "text-light-weight-450"} ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "hover:text-light-weight-800" : hoverTextColor} ${leftSidebarSizeType === sidebarSize.COMPACT ? "text-center" : `${globalStyleObj.flexStart} gap-2 pl-2`} pt-4 font-poppins-rg text-[14px]`}
+                              className={`${
+                                mainPath === firstChild.id
+                                  ? `${
+                                      leftSidebarColorType ===
+                                        sidebarColor.DARK_BG_COLOR ||
+                                      leftSidebarColorType ===
+                                        sidebarColor.GRADIENT_BG_COLOR
+                                        ? "text-light-weight-800"
+                                        : textColor
+                                    }`
+                                  : "text-light-weight-450"
+                              } 
+                                ${
+                                  leftSidebarColorType ===
+                                    sidebarColor.DARK_BG_COLOR ||
+                                  leftSidebarColorType ===
+                                    sidebarColor.GRADIENT_BG_COLOR
+                                    ? "hover:text-light-weight-800"
+                                    : hoverTextColor
+                                } 
+                                  ${
+                                    leftSidebarSizeType === sidebarSize.COMPACT
+                                      ? "text-center"
+                                      : `${globalStyleObj.flexStart} gap-2 pl-2`
+                                  } pt-4 font-poppins-rg text-[14px]`}
                             >
                               <BsDash
                                 className={`${leftSidebarSizeType === sidebarSize.COMPACT ? "hidden" : "inline"}`}
@@ -455,7 +690,31 @@ const LeftSidebar = ({ width }) => {
                   <Link key={parent.id} href={parent.pathName}>
                     <li
                       id={parent.id}
-                      className={`pt-5 ${leftSidebarSizeType === sidebarSize.COMPACT ? "pl-0" : "pl-1"} ${pathname.includes(parent.id.toLowerCase()) ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "text-light-weight-800" : textColor}` : "text-light-weight-450"} ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "hover:text-light-weight-800" : hoverTextColor}`}
+                      className={`pt-5 ${
+                        leftSidebarSizeType === sidebarSize.COMPACT
+                          ? "pl-0"
+                          : "pl-1"
+                      } 
+                        ${
+                          pathname.includes(parent.id.toLowerCase())
+                            ? `${
+                                leftSidebarColorType ===
+                                  sidebarColor.DARK_BG_COLOR ||
+                                leftSidebarColorType ===
+                                  sidebarColor.GRADIENT_BG_COLOR
+                                  ? "text-light-weight-800"
+                                  : textColor
+                              }`
+                            : "text-light-weight-450"
+                        } 
+                          ${
+                            leftSidebarColorType ===
+                              sidebarColor.DARK_BG_COLOR ||
+                            leftSidebarColorType ===
+                              sidebarColor.GRADIENT_BG_COLOR
+                              ? "hover:text-light-weight-800"
+                              : hoverTextColor
+                          }`}
                     >
                       <div
                         className={`${leftSidebarSizeType === sidebarSize.COMPACT ? `${globalStyleObj.flexColCenter} gap-1` : `${globalStyleObj.flexStart} gap-2`} cursor-pointer`}
@@ -521,12 +780,43 @@ const LeftSidebar = ({ width }) => {
 
       <div
         id="left-sidebar-container"
-        className={`z-[99] bg-cover bg-center ${bgImageUrl} ${
+        className={`z-[99] bg-cover bg-center ${bgImageUrl} 
+        ${
           leftSidebarSizeType === sidebarSize.SMALL_ICON_VIEW ||
           layoutPositionType === position.SCROLLABLE
-            ? `transition-300 fixed md:relative ${layoutType === layout.SEMI_BOX && leftSidebarVisibilityType === sidebarVisibility.HIDDEN ? "hidden" : `${isContainerHover ? "w-[250px]" : width}`}`
-            : `transition-300 fixed overflow-hidden ${layoutType === layout.SEMI_BOX && leftSidebarVisibilityType === sidebarVisibility.SHOW ? `h-screen 2xl:h-[calc(100vh-40px)] 2xl:rounded-sm ${isContainerHover ? "w-[250px]" : width}` : layoutType === layout.SEMI_BOX && leftSidebarVisibilityType === sidebarVisibility.HIDDEN ? "hidden" : `h-screen ${isContainerHover ? "w-[250px]" : width}`}`
-        } ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? `${bgColor} dark:bg-dark-dencity-300` : `${leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? `${gradientBgColor}` : "bg-light-dencity-900"}`}`}
+            ? `transition-300 fixed md:relative ${
+                layoutType === layout.SEMI_BOX &&
+                leftSidebarVisibilityType === sidebarVisibility.HIDDEN
+                  ? "hidden"
+                  : layoutType === layout.VERTICAL &&
+                      leftSidebarViewType === sidebarView.DETACHED
+                    ? `${isContainerHover ? "w-[250px]" : width} lg:mt-[90px]`
+                    : `${isContainerHover ? "w-[250px]" : width}`
+              }`
+            : `transition-300 fixed overflow-hidden ${
+                layoutType === layout.SEMI_BOX &&
+                leftSidebarVisibilityType === sidebarVisibility.SHOW
+                  ? `h-screen 2xl:h-[calc(100vh-40px)] 2xl:rounded-sm ${isContainerHover ? "w-[250px]" : width}`
+                  : layoutType === layout.SEMI_BOX &&
+                      leftSidebarVisibilityType === sidebarVisibility.HIDDEN
+                    ? "hidden"
+                    : layoutType === layout.VERTICAL &&
+                        leftSidebarViewType === sidebarView.DETACHED
+                      ? `lg:mt-[90px] lg:h-[calc(100vh-110px)] lg:rounded-sm ${isContainerHover ? "w-[250px]" : width}`
+                      : `h-screen ${isContainerHover ? "w-[250px]" : width}`
+              }`
+        } 
+        
+        ${
+          leftSidebarColorType === sidebarColor.DARK_BG_COLOR
+            ? `${bgColor} dark:bg-dark-dencity-300`
+            : `${
+                leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR
+                  ? `${gradientBgColor}`
+                  : "bg-light-dencity-900"
+              }`
+        }
+          `}
         onMouseEnter={() =>
           leftSidebarSizeType === sidebarSize.SMALL_HOVER_VIEW &&
           !isFixedBtnCliked
@@ -542,12 +832,12 @@ const LeftSidebar = ({ width }) => {
       >
         {/* NOTE Overlay */}
         <div
-          className={`pointer-events-none absolute inset-0 z-[99] ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? `${bgColor} dark:bg-dark-dencity-300` : `${leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? `${gradientBgColor}` : "bg-light-dencity-900"}`} opacity-90`}
+          className={`pointer-events-none absolute inset-0 z-[99] ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? `${bgColor} dark:bg-dark-dencity-300` : leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? `${gradientBgColor}` : "bg-light-dencity-900"} opacity-90`}
         ></div>
 
         {/* NOTE Sidebar Top Logo Section */}
         <div
-          className={`${leftSidebarSizeType === sidebarSize.SMALL_ICON_VIEW && layoutPositionType === position.FIXED ? `${bgColor} dark:bg-dark-dencity-300` : "bg-transparent"} ${layoutPositionType === position.SCROLLABLE ? "relative" : "sticky left-0 top-0"} transition-300 z-[9999] h-[70px] w-full px-[20px] `}
+          className={`${layoutType === layout.VERTICAL && leftSidebarViewType === sidebarView.DETACHED ? "transition-300 z-[9999] h-[70px] w-full px-[20px] lg:hidden" : "transition-300 z-[9999] h-[70px] w-full px-[20px]"} ${leftSidebarSizeType === sidebarSize.SMALL_ICON_VIEW && layoutPositionType === position.FIXED ? (leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? `${bgColor} dark:bg-dark-dencity-300` : leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? `${gradientBgColor}` : "bg-light-dencity-900") : "bg-transparent"} ${layoutPositionType === position.SCROLLABLE ? "relative" : "sticky left-0 top-0"}`}
         >
           <Link
             href="/dashboard"

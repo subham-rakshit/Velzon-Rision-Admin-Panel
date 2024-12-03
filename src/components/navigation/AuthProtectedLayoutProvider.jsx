@@ -22,6 +22,7 @@ import {
   sidebarVisibility,
   toggleStatus,
   widthType,
+  sidebarView,
 } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
 import {
   changeLeftSideBarSizeType,
@@ -43,6 +44,7 @@ const AuthProtectedLayoutProvider = ({ children }) => {
     topbarColorType,
     layoutThemePrimaryColorType,
     leftSidebarVisibilityType,
+    leftSidebarViewType,
   } = useAppSelector((state) => state.layout);
 
   const [bodyLeftMargin, setBodyLeftMargin] = useState("");
@@ -205,9 +207,20 @@ const AuthProtectedLayoutProvider = ({ children }) => {
         <NextTopLoader showSpinner={false} color="#e61247" />
       )}
       <div
-        className={`relative min-h-full border ${
+        className={`min-h-full ${
           layoutType === layout.HORIZONTAL ? "flex-col" : "flex"
-        } ${layoutType === layout.SEMI_BOX ? "2xl:py-5 2xl:pl-5" : ""} ${layoutWidthType === widthType.BOXED && layoutType === layout.VERTICAL ? "w-full max-w-[1300px]" : "w-full"}`}
+        } ${
+          layoutType === layout.SEMI_BOX
+            ? "2xl:py-5 2xl:pl-5"
+            : layoutType === layout.VERTICAL &&
+                leftSidebarViewType === sidebarView.DETACHED
+              ? "lg:mx-10"
+              : ""
+        } ${
+          layoutWidthType === widthType.BOXED && layoutType === layout.VERTICAL
+            ? "w-full max-w-[1300px]"
+            : "w-full"
+        }`}
       >
         {layoutType === layout.VERTICAL || layoutType === layout.SEMI_BOX ? (
           <LeftSidebar width={leftSidebarWidth} />
@@ -237,11 +250,21 @@ const AuthProtectedLayoutProvider = ({ children }) => {
             layoutThemePrimaryColorType={layoutThemePrimaryColorType}
             layoutWidthType={layoutWidthType}
             leftSidebarVisibilityType={leftSidebarVisibilityType}
+            leftSidebarViewType={leftSidebarViewType}
           />
           {layoutType === layout.HORIZONTAL && (
             <HorizontalSidebar resizeHeight={horizontalNavHeight} />
           )}
-          {children}
+          <div
+            className={`p-5 ${
+              layoutType === layout.VERTICAL &&
+              leftSidebarViewType === sidebarView.DETACHED
+                ? "lg:mt-[70px]"
+                : ""
+            }`}
+          >
+            {children}
+          </div>
           <Footer />
         </div>
       </div>

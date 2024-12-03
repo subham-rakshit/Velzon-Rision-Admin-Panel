@@ -267,7 +267,7 @@ const RightSidebar = ({ isScrollTop }) => {
       <>
         {/* Overlay */}
         <div
-          className={`${rightSideBarIsOpen ? "fixed left-0 top-0 z-[99] h-screen w-full bg-[#000]/30" : "hidden"}`}
+          className={`${rightSideBarIsOpen ? "fixed left-0 top-0 z-[9999] h-screen w-full bg-[#000]/30" : "hidden"}`}
           onClick={() => setRightSidebarIsOpen(false)}
         ></div>
 
@@ -275,7 +275,7 @@ const RightSidebar = ({ isScrollTop }) => {
           initial={{ x: "100%" }}
           animate={rightSideBarIsOpen ? { x: 0 } : { x: "100%" }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
-          className={`fixed right-0 top-0 z-[99] h-screen w-[380px] bg-white`}
+          className={`fixed right-0 top-0 z-[9999] h-screen w-[380px] bg-white`}
         >
           {/* NOTE Header */}
           <div

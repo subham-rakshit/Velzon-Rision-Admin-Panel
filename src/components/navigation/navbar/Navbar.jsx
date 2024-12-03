@@ -21,6 +21,7 @@ import {
   sidebarVisibility,
   topbarColor,
   widthType,
+  sidebarView,
 } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
 import { globalStyleObj } from "@/app/assets/styles";
 
@@ -31,6 +32,7 @@ const Navbar = ({
   layoutThemePrimaryColorType,
   layoutWidthType,
   leftSidebarVisibilityType,
+  leftSidebarViewType,
 }) => {
   let bgColor;
 
@@ -51,7 +53,31 @@ const Navbar = ({
 
   return (
     <nav
-      className={`${topbarColorType === topbarColor.LIGHT_COLOR ? `${globalStyleObj.backgroundLight900Dark200}` : `${bgColor}`} ${globalStyleObj.flexBetween} ${layoutType === layout.HORIZONTAL ? "px-5 md:px-10 lg:px-[50px]" : layoutType === layout.SEMI_BOX ? "rounded-sm px-5" : "px-5"} ${layoutPositionType === position.FIXED ? "sticky" : window.innerWidth < 768 ? "sticky" : ""} top-0 h-[70px] shadow-light`}
+      className={`${
+        topbarColorType === topbarColor.LIGHT_COLOR
+          ? `${globalStyleObj.backgroundLight900Dark200}`
+          : `${bgColor}`
+      } 
+      ${
+        layoutType === layout.HORIZONTAL
+          ? "px-5 md:px-10 lg:px-[50px]"
+          : layoutType === layout.SEMI_BOX
+            ? "px-5 2xl:rounded-sm"
+            : "px-5"
+      } 
+      ${
+        layoutPositionType === position.FIXED
+          ? layoutType === layout.VERTICAL &&
+            leftSidebarViewType === sidebarView.DETACHED
+            ? `sticky w-full lg:fixed lg:left-0 lg:z-[999] lg:px-[50px]`
+            : "sticky"
+          : window.innerWidth < 768
+            ? "sticky"
+            : layoutType === layout.VERTICAL
+              ? "w-full lg:absolute lg:left-0 lg:px-[50px]"
+              : ""
+      } 
+      ${globalStyleObj.flexBetween} top-0 h-[70px] shadow-light`}
     >
       <div
         className={`${globalStyleObj.flexBetween} ${layoutWidthType === widthType.BOXED ? `mx-auto w-full max-w-[1300px]` : `w-full`} h-full`}
@@ -61,6 +87,10 @@ const Navbar = ({
             <NavLogo topbarColorType={topbarColorType} />
           ) : layoutType === layout.SEMI_BOX &&
             leftSidebarVisibilityType === sidebarVisibility.HIDDEN ? (
+            <NavLogo topbarColorType={topbarColorType} />
+          ) : layoutType === layout.VERTICAL &&
+            leftSidebarViewType === sidebarView.DETACHED &&
+            window.innerWidth > 1024 ? (
             <NavLogo topbarColorType={topbarColorType} />
           ) : null}
 

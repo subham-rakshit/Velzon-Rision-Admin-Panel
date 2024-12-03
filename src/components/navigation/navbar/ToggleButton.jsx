@@ -9,6 +9,7 @@ import {
   sidebarVisibility,
   toggleStatus,
   topbarColor,
+  sidebarView,
 } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
 import { globalStyleObj } from "@/app/assets/styles";
 import {
@@ -27,6 +28,7 @@ const ToggleButton = () => {
     toggleSmallButtonStatus,
     topbarColorType,
     leftSidebarVisibilityType,
+    leftSidebarViewType,
   } = useAppSelector((state) => state.layout);
   const dispatch = useAppDispatch();
 
@@ -52,7 +54,14 @@ const ToggleButton = () => {
     <button
       onClick={handleSidebarToggel}
       type="button"
-      className={`h-full cursor-pointer ${leftSidebarSizeMain === sidebarMainSize.SM_HOVER || layoutType === layout.HORIZONTAL ? "lg:hidden" : ""}`}
+      className={`h-full cursor-pointer ${
+        leftSidebarSizeMain === sidebarMainSize.SM_HOVER ||
+        layoutType === layout.HORIZONTAL ||
+        (layoutType === layout.VERTICAL &&
+          leftSidebarViewType === sidebarView.DETACHED)
+          ? "lg:hidden"
+          : ""
+      }`}
     >
       {["bar_1", "bar_2", "bar_3"].map((bar) => {
         let dynamicClasses;
