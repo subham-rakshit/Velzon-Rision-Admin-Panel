@@ -18,6 +18,7 @@ import {
   layout,
   layoutThemePrimaryColor,
   position,
+  sidebarVisibility,
   topbarColor,
   widthType,
 } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
@@ -29,6 +30,7 @@ const Navbar = ({
   topbarColorType,
   layoutThemePrimaryColorType,
   layoutWidthType,
+  leftSidebarVisibilityType,
 }) => {
   let bgColor;
 
@@ -49,15 +51,18 @@ const Navbar = ({
 
   return (
     <nav
-      className={`${topbarColorType === topbarColor.LIGHT_COLOR ? `${globalStyleObj.backgroundLight900Dark200}` : `${bgColor}`} ${globalStyleObj.flexBetween} ${layoutType === layout.HORIZONTAL ? "px-5 md:px-10 lg:px-[50px]" : "px-5"} ${layoutPositionType !== position.SCROLLABLE ? "sticky" : ""} top-0 h-[70px] shadow-light`}
+      className={`${topbarColorType === topbarColor.LIGHT_COLOR ? `${globalStyleObj.backgroundLight900Dark200}` : `${bgColor}`} ${globalStyleObj.flexBetween} ${layoutType === layout.HORIZONTAL ? "px-5 md:px-10 lg:px-[50px]" : layoutType === layout.SEMI_BOX ? "rounded-sm px-5" : "px-5"} ${layoutPositionType === position.FIXED ? "sticky" : window.innerWidth < 768 ? "sticky" : ""} top-0 h-[70px] shadow-light`}
     >
       <div
         className={`${globalStyleObj.flexBetween} ${layoutWidthType === widthType.BOXED ? `mx-auto w-full max-w-[1300px]` : `w-full`} h-full`}
       >
         <div className={`${globalStyleObj.flexStart} h-full gap-2 md:gap-5`}>
-          {layoutType === layout.HORIZONTAL && (
+          {layoutType === layout.HORIZONTAL ? (
             <NavLogo topbarColorType={topbarColorType} />
-          )}
+          ) : layoutType === layout.SEMI_BOX &&
+            leftSidebarVisibilityType === sidebarVisibility.HIDDEN ? (
+            <NavLogo topbarColorType={topbarColorType} />
+          ) : null}
 
           <ToggleButton />
           <NavSearchBox />

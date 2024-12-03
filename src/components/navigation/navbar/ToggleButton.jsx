@@ -6,6 +6,7 @@ import {
   layout,
   sidebarMainSize,
   sidebarSize,
+  sidebarVisibility,
   toggleStatus,
   topbarColor,
 } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
@@ -13,6 +14,7 @@ import { globalStyleObj } from "@/app/assets/styles";
 import {
   changeToggleButtonStatus,
   changeToggleSmallButtonStatus,
+  changeLeftSidebarVisibilityType,
 } from "@/lib/store/features/layoutCustomizer/layoutCustomizerSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 
@@ -24,6 +26,7 @@ const ToggleButton = () => {
     leftSidebarSizeMain,
     toggleSmallButtonStatus,
     topbarColorType,
+    leftSidebarVisibilityType,
   } = useAppSelector((state) => state.layout);
   const dispatch = useAppDispatch();
 
@@ -34,7 +37,14 @@ const ToggleButton = () => {
     if (window.innerWidth < 768 && layoutType !== layout.HORIZONTAL) {
       dispatch(changeToggleSmallButtonStatus(statusSmDevice));
     } else {
-      dispatch(changeToggleButtonStatus(status));
+      if (
+        layoutType === layout.SEMI_BOX &&
+        leftSidebarVisibilityType === sidebarVisibility.HIDDEN
+      ) {
+        dispatch(changeLeftSidebarVisibilityType(sidebarVisibility.SHOW));
+      } else {
+        dispatch(changeToggleButtonStatus(status));
+      }
     }
   };
 
@@ -51,6 +61,8 @@ const ToggleButton = () => {
           leftSidebarSizeType === sidebarSize.SMALL_ICON_VIEW ||
           (layoutType === layout.HORIZONTAL && !toggleButtonStatus) ||
           (layoutType === layout.TWO_COLUMN && toggleButtonStatus) ||
+          (layoutType === layout.SEMI_BOX &&
+            leftSidebarVisibilityType === sidebarVisibility.HIDDEN) ||
           window.innerWidth < 768
         ) {
           switch (bar) {

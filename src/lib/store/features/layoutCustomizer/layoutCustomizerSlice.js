@@ -35,7 +35,7 @@ const initialState = {
   leftSidebarSizeType: sidebarSize.DEFAULT, // COMPACT, SMALL_ICON_VIEW, SMALL_HOVER_VIEW
   leftSidebarSizeMain: sidebarMainSize.LG, // MD, SM, SM_HOVER
   leftSidebarVisibilityType: sidebarVisibility.SHOW, // HIDDEN
-  leftSidebarViewType: sidebarView.DEFAULT, // detached
+  leftSidebarViewType: sidebarView.DEFAULT, // DETACHED
   leftSidebarColorType: sidebarColor.DARK_BG_COLOR, // LIGHT_BG_COLOR,  GRADIENT_BG_COLOR
   leftSidebarGradientColorType: sidebarGradientColor.GRADIENT_BG_COLOR, // SEC_CHILD_GRADIENT_BG_COLOR, THIRD_CHILD_GRADIENT_BG_COLOR, FOURTH_CHILD_GRADIENT_BG_COLOR
   leftSidebarImageType: sidebarImage.NONE, // SNOW, OFFICE, PATTERN, BUBBLE

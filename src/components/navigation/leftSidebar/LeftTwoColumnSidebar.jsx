@@ -264,7 +264,7 @@ const LeftTwoColumnSidebar = ({ width }) => {
       ></div>
 
       <div
-        className={`transition-300 z-[999] flex overflow-hidden ${width} ${layoutPositionType === position.SCROLLABLE ? "sticky min-h-full" : "fixed h-screen"}`}
+        className={`transition-300 z-[999] flex overflow-hidden ${width} ${layoutPositionType === position.SCROLLABLE ? (window.innerWidth < 768 ? "fixed h-screen" : "sticky min-h-full") : "fixed h-screen"}`}
       >
         {/* Icon View */}
         <div

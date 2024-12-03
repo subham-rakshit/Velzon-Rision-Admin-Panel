@@ -383,7 +383,7 @@ const HorizontalSidebar = ({ resizeHeight }) => {
 
   return (
     <div
-      className={`${resizeHeight} ${globalStyleObj.backgroundLight900Dark300} ${layoutPositionType === position.FIXED ? "fixed top-[70px] lg:sticky" : ""} custom-left-sidebar-scrollbar w-full overflow-y-auto border-t px-5 shadow-light transition-all dark:border-none md:px-10 lg:flex lg:overflow-y-visible  lg:px-[50px]`}
+      className={`${resizeHeight} ${globalStyleObj.backgroundLight900Dark300} ${layoutPositionType === position.FIXED ? "fixed top-[70px] lg:sticky" : window.innerWidth < 768 ? "sticky top-[70px]" : ""} custom-left-sidebar-scrollbar w-full overflow-y-auto border-t px-5 shadow-light transition-all dark:border-none md:px-10 lg:flex lg:overflow-y-visible  lg:px-[50px]`}
     >
       <div
         className={`lg:flex ${layoutWidthType === widthType.BOXED && layoutType === layout.HORIZONTAL ? `mx-auto w-full max-w-[1300px]` : `w-full`}`}

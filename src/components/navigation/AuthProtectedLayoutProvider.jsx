@@ -19,12 +19,14 @@ import {
   position,
   sidebarMainSize,
   sidebarSize,
+  sidebarVisibility,
   toggleStatus,
   widthType,
 } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
 import {
   changeLeftSideBarSizeType,
   changeToggleButtonStatus,
+  changeLeftSidebarVisibilityType,
 } from "@/lib/store/features/layoutCustomizer/layoutCustomizerSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 
@@ -40,6 +42,7 @@ const AuthProtectedLayoutProvider = ({ children }) => {
     layoutPositionType,
     topbarColorType,
     layoutThemePrimaryColorType,
+    leftSidebarVisibilityType,
   } = useAppSelector((state) => state.layout);
 
   const [bodyLeftMargin, setBodyLeftMargin] = useState("");
@@ -63,11 +66,12 @@ const AuthProtectedLayoutProvider = ({ children }) => {
         }
       } else {
         if (toggleSmallButtonStatus) {
-          setLeftSiderbarWidth("w-[250px]");
+          setLeftSiderbarWidth("w-[250px] fixed");
           dispatch(changeLeftSideBarSizeType(sidebarSize.DEFAULT));
         } else {
           setBodyLeftMargin("ml-0");
           setLeftSiderbarWidth("hidden");
+          dispatch(changeLeftSidebarVisibilityType(sidebarVisibility.SHOW));
         }
       }
     } else if (width >= 768 && width < 1025) {
@@ -201,9 +205,9 @@ const AuthProtectedLayoutProvider = ({ children }) => {
         <NextTopLoader showSpinner={false} color="#e61247" />
       )}
       <div
-        className={`relative min-h-full w-full ${
+        className={`relative min-h-full border ${
           layoutType === layout.HORIZONTAL ? "flex-col" : "flex"
-        } ${layoutWidthType === widthType.BOXED && layoutType === layout.VERTICAL ? "max-w-[1300px]" : "w-full"}`}
+        } ${layoutType === layout.SEMI_BOX ? "2xl:py-5 2xl:pl-5" : ""} ${layoutWidthType === widthType.BOXED && layoutType === layout.VERTICAL ? "w-full max-w-[1300px]" : "w-full"}`}
       >
         {layoutType === layout.VERTICAL || layoutType === layout.SEMI_BOX ? (
           <LeftSidebar width={leftSidebarWidth} />
@@ -213,12 +217,18 @@ const AuthProtectedLayoutProvider = ({ children }) => {
 
         <div
           id="pages-main-container"
-          className={`flex min-h-screen flex-1 flex-col ${leftSidebarSizeType !== sidebarSize.SMALL_ICON_VIEW ? "transition-300" : "transition-none"} ${
-            layoutType !== layout.HORIZONTAL &&
-            layoutPositionType !== position.SCROLLABLE
-              ? bodyLeftMargin
-              : ""
-          }`}
+          className={`flex min-h-screen flex-1 flex-col ${layoutType === layout.SEMI_BOX ? "2xl:px-36" : ""} ${leftSidebarSizeType !== sidebarSize.SMALL_ICON_VIEW ? "transition-300" : "transition-none"}
+            ${
+              leftSidebarVisibilityType === sidebarVisibility.SHOW &&
+              layoutPositionType !== position.SCROLLABLE &&
+              layoutType !== layout.HORIZONTAL
+                ? bodyLeftMargin
+                : layoutType !== layout.HORIZONTAL &&
+                    layoutType !== layout.SEMI_BOX &&
+                    layoutPositionType !== position.SCROLLABLE
+                  ? bodyLeftMargin
+                  : ""
+            }`}
         >
           <Navbar
             layoutType={layoutType}
@@ -226,6 +236,7 @@ const AuthProtectedLayoutProvider = ({ children }) => {
             topbarColorType={topbarColorType}
             layoutThemePrimaryColorType={layoutThemePrimaryColorType}
             layoutWidthType={layoutWidthType}
+            leftSidebarVisibilityType={leftSidebarVisibilityType}
           />
           {layoutType === layout.HORIZONTAL && (
             <HorizontalSidebar resizeHeight={horizontalNavHeight} />

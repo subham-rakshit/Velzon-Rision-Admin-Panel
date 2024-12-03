@@ -21,6 +21,8 @@ import {
   layoutThemePrimaryColor,
   sidebarGradientColor,
   sidebarImage,
+  layout,
+  sidebarVisibility,
 } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
 import { globalStyleObj } from "@/app/assets/styles";
 import { LeftSidebarSmallIconView } from "@/components";
@@ -37,6 +39,8 @@ const LeftSidebar = ({ width }) => {
     layoutPositionType,
     layoutThemePrimaryColorType,
     leftSidebarImageType,
+    layoutType,
+    leftSidebarVisibilityType,
   } = useAppSelector((state) => state.layout);
   const pathname = usePathname();
   const mainPath = pathname.split("/")[1];
@@ -285,7 +289,7 @@ const LeftSidebar = ({ width }) => {
   const verticalDefaultLeftSidebarView = () => {
     return (
       <ul
-        className={`custom-left-sidebar-scrollbar relative z-[999] overflow-y-auto ${leftSidebarSizeType === sidebarSize.COMPACT ? "px-0" : "px-4"} ${layoutPositionType === position.SCROLLABLE ? "min-h-full" : "h-[calc(100vh-70px)]"}`}
+        className={`custom-left-sidebar-scrollbar relative z-[999] overflow-y-auto ${leftSidebarSizeType === sidebarSize.COMPACT ? "px-0" : "px-4"} ${layoutPositionType === position.SCROLLABLE ? "min-h-full" : layoutType === layout.SEMI_BOX ? "h-[calc(100vh-70px)] 2xl:h-[calc(100vh-110px)]" : "h-[calc(100vh-70px)]"}`}
       >
         {leftSidebarData.map((category) => (
           // Main Category Container
@@ -517,12 +521,12 @@ const LeftSidebar = ({ width }) => {
 
       <div
         id="left-sidebar-container"
-        className={`z-[99] min-h-full bg-cover bg-center ${bgImageUrl} ${
+        className={`z-[99] bg-cover bg-center ${bgImageUrl} ${
           leftSidebarSizeType === sidebarSize.SMALL_ICON_VIEW ||
           layoutPositionType === position.SCROLLABLE
-            ? "transition-300 relative"
-            : "transition-300 fixed"
-        } ${isContainerHover ? "w-[250px]" : width} ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? `${bgColor} dark:bg-dark-dencity-300` : `${leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? `${gradientBgColor}` : "bg-light-dencity-900"}`}`}
+            ? `transition-300 fixed md:relative ${layoutType === layout.SEMI_BOX && leftSidebarVisibilityType === sidebarVisibility.HIDDEN ? "hidden" : `${isContainerHover ? "w-[250px]" : width}`}`
+            : `transition-300 fixed overflow-hidden ${layoutType === layout.SEMI_BOX && leftSidebarVisibilityType === sidebarVisibility.SHOW ? `h-screen 2xl:h-[calc(100vh-40px)] 2xl:rounded-sm ${isContainerHover ? "w-[250px]" : width}` : layoutType === layout.SEMI_BOX && leftSidebarVisibilityType === sidebarVisibility.HIDDEN ? "hidden" : `h-screen ${isContainerHover ? "w-[250px]" : width}`}`
+        } ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? `${bgColor} dark:bg-dark-dencity-300` : `${leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? `${gradientBgColor}` : "bg-light-dencity-900"}`}`}
         onMouseEnter={() =>
           leftSidebarSizeType === sidebarSize.SMALL_HOVER_VIEW &&
           !isFixedBtnCliked
@@ -543,7 +547,7 @@ const LeftSidebar = ({ width }) => {
 
         {/* NOTE Sidebar Top Logo Section */}
         <div
-          className={`transition-300 z-[9999] h-[70px] w-full px-[20px] ${leftSidebarSizeType === sidebarSize.SMALL_ICON_VIEW && layoutPositionType === position.FIXED ? `${bgColor} dark:bg-dark-dencity-300` : "bg-transparent"} ${layoutPositionType === position.SCROLLABLE ? "relative" : "sticky left-0 top-0"}`}
+          className={`${leftSidebarSizeType === sidebarSize.SMALL_ICON_VIEW && layoutPositionType === position.FIXED ? `${bgColor} dark:bg-dark-dencity-300` : "bg-transparent"} ${layoutPositionType === position.SCROLLABLE ? "relative" : "sticky left-0 top-0"} transition-300 z-[9999] h-[70px] w-full px-[20px] `}
         >
           <Link
             href="/dashboard"
