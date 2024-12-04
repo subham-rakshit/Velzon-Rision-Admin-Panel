@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 import React, { useEffect, useMemo, useState } from "react";
 import { BsDash } from "react-icons/bs";
 import { IoIosArrowForward } from "react-icons/io";
@@ -26,6 +27,7 @@ const HorizontalSidebar = ({ resizeHeight }) => {
   } = useAppSelector((state) => state.layout);
   const pathname = usePathname();
   const mainPath = pathname.split("/")[1];
+  const t = useTranslations();
 
   const [tabDetails, setTabDetails] = useState({
     parent: { id: "", isOpen: false },
@@ -238,14 +240,31 @@ const HorizontalSidebar = ({ resizeHeight }) => {
           onClick={() => handleParentTabToggle(parent.id)}
         >
           <span className="text-[18px]">{parent.tabIcon}</span>
-          <span className="font-poppins-rg text-[15px]">{parent.tabName}</span>
+          <span className="font-poppins-rg text-[15px]">
+            {t(parent.tabName)}
+          </span>
           <IoIosArrowForward
             className={`ml-auto ${pathname.includes(parent.id.toLowerCase()) ? "rotate-90" : "lg:rotate-90"}`}
           />
         </div>
 
         <ul
-          className={`overflow-y-hidden transition-all duration-500 lg:overflow-y-visible lg:shadow-light ${tabDetails.parent.id === parent.id && tabDetails.parent.isOpen ? "h-fit opacity-100" : "max-h-0 opacity-0 lg:max-h-fit lg:opacity-100"} ${hoverState.parent.id === parent.id && hoverState.parent.isOpen && parent.id !== "base-ui" ? "lg:absolute lg:top-full lg:min-w-[180px] lg:rounded-b-[5px] lg:bg-light-dencity-900 lg:pb-5 lg:dark:bg-dark-dencity-300" : hoverState.parent.id === parent.id && hoverState.parent.isOpen && parent.id === "base-ui" ? "lg:absolute lg:top-full lg:flex lg:min-w-[600px] lg:flex-wrap lg:justify-between lg:rounded-b-[5px] lg:bg-light-dencity-900 lg:pb-5 lg:dark:bg-dark-dencity-300" : "lg:hidden"}`}
+          className={`overflow-y-hidden transition-all duration-500 lg:overflow-y-visible lg:shadow-light ${
+            tabDetails.parent.id === parent.id && tabDetails.parent.isOpen
+              ? "h-fit opacity-100"
+              : "max-h-0 opacity-0 lg:max-h-fit lg:opacity-100"
+          } 
+            ${
+              hoverState.parent.id === parent.id &&
+              hoverState.parent.isOpen &&
+              parent.id !== "base-ui"
+                ? "lg:absolute lg:top-full lg:min-w-[180px] lg:rounded-b-[5px] lg:bg-light-dencity-900 lg:pb-5 lg:dark:bg-dark-dencity-300"
+                : hoverState.parent.id === parent.id &&
+                    hoverState.parent.isOpen &&
+                    parent.id === "base-ui"
+                  ? "lg:absolute lg:top-full lg:flex lg:min-w-[600px] lg:flex-wrap lg:justify-between lg:rounded-b-[5px] lg:bg-light-dencity-900 lg:pb-5 lg:dark:bg-dark-dencity-300"
+                  : "lg:hidden"
+            }`}
         >
           {parent.tabDropdownList.map((firstChild) =>
             firstChild.tabDropdownList.length > 0 ? (
@@ -261,7 +280,7 @@ const HorizontalSidebar = ({ resizeHeight }) => {
                   onClick={() => handleFirstChildTabToggle(firstChild.id)}
                 >
                   <BsDash className="lg:hidden" />
-                  {firstChild.tabName}
+                  {t(firstChild.tabName)}
                   <IoIosArrowForward
                     size={15}
                     className={`ml-auto ${pathname.includes(firstChild.id.toLowerCase()) ? "rotate-90 lg:rotate-0" : "lg:rotate-0"}`}
@@ -293,7 +312,7 @@ const HorizontalSidebar = ({ resizeHeight }) => {
                           <span
                             className={`size-[5px] rounded-full lg:hidden ${pathname.includes(secondChild.id) ? `${borderColor}` : "border border-light-weight-450"} ${groupHoverBgColor} dark:border-light-weight-800 dark:group-hover:bg-light-weight-800`}
                           ></span>
-                          {secondChild.tabName}
+                          {t(secondChild.tabName)}
                           <IoIosArrowForward
                             size={15}
                             className={`ml-auto ${pathname.includes(secondChild.id.toLowerCase()) ? "rotate-90 lg:rotate-0" : "lg:rotate-0"}`}
@@ -320,7 +339,7 @@ const HorizontalSidebar = ({ resizeHeight }) => {
                                   <span
                                     className={`size-[5px] rounded-full lg:hidden ${mainPath === thirdChild.id ? `${borderColor}` : "border border-light-weight-450"} ${groupHoverBgColor} dark:border-light-weight-800 dark:group-hover:bg-light-weight-800`}
                                   ></span>
-                                  {thirdChild.tabName}
+                                  {t(thirdChild.tabName)}
                                 </li>
                               </TransitionLink>
                             )
@@ -342,7 +361,7 @@ const HorizontalSidebar = ({ resizeHeight }) => {
                           <span
                             className={`size-[5px] rounded-full lg:hidden ${mainPath === secondChild.id ? `${borderColor}` : "border border-light-weight-450"} ${groupHoverBgColor} dark:border-light-weight-800 dark:group-hover:bg-light-weight-800`}
                           ></span>
-                          {secondChild.tabName}
+                          {t(secondChild.tabName)}
                         </li>
                       </TransitionLink>
                     )
@@ -358,7 +377,7 @@ const HorizontalSidebar = ({ resizeHeight }) => {
                   className={`${mainPath === firstChild.id ? `${textColor} dark:text-light-weight-800` : "text-light-weight-400 dark:text-light-weight-450"} ${globalStyleObj.flexStart} gap-2 pt-4 font-poppins-rg text-[13px] ${hoverTextColor} dark:hover:text-light-weight-800 lg:pl-3 lg:pr-2 ${parent.id === "base-ui" ? "w-[180px]" : ""}`}
                 >
                   <BsDash className="lg:hidden" />
-                  {firstChild.tabName}
+                  {t(firstChild.tabName)}
                 </li>
               </TransitionLink>
             )
@@ -375,7 +394,7 @@ const HorizontalSidebar = ({ resizeHeight }) => {
           <div className={`${globalStyleObj.flexStart} cursor-pointer gap-2`}>
             <span className="text-[18px]">{parent.tabIcon}</span>
             <span className="font-poppins-light text-[15px]">
-              {parent.tabName}
+              {t(parent.tabName)}
             </span>
           </div>
         </li>
@@ -416,7 +435,7 @@ const HorizontalSidebar = ({ resizeHeight }) => {
             onClick={handleMoreTabsToggle}
           >
             <RiBriefcase2Line size={18} />
-            <span className="font-poppins-rg text-[15px]">More</span>
+            <span className="font-poppins-rg text-[15px]">{t("More")}</span>
             <IoIosArrowForward
               className={`ml-auto ${moreTabs.some((tab) => tab.toLowerCase() === mainPath.split("-")[0]) ? "rotate-90" : "lg:rotate-90"}`}
             />
@@ -447,7 +466,7 @@ const HorizontalSidebar = ({ resizeHeight }) => {
                             />
 
                             <span className="font-poppins-rg text-[13px]">
-                              {parent.tabName}
+                              {t(parent.tabName)}
                             </span>
                             <IoIosArrowForward
                               className={`ml-auto lg:hidden ${pathname.includes(parent.id.toLowerCase()) ? "rotate-90" : ""}`}
@@ -484,7 +503,9 @@ const HorizontalSidebar = ({ resizeHeight }) => {
                                       className={`mr-auto hidden lg:inline ${pathname.includes(firstChild.id.toLowerCase()) ? "rotate-180" : "rotate-180"}`}
                                     />
                                     <span className="lg:ml-auto">
-                                      {firstChild.tabName}
+                                      {firstChild.tabName === "Level 1.2"
+                                        ? t(`Level 1.2`)
+                                        : t(firstChild.tabName)}
                                     </span>
                                     <IoIosArrowForward
                                       size={15}
@@ -530,7 +551,10 @@ const HorizontalSidebar = ({ resizeHeight }) => {
                                                 className={`mr-auto hidden lg:inline ${pathname.includes(secondChild.id.toLowerCase()) ? "rotate-180" : "rotate-180"}`}
                                               />
                                               <span className="lg:ml-auto">
-                                                {secondChild.tabName}
+                                                {secondChild.tabName ===
+                                                "Level 2.2"
+                                                  ? t(`Level 2.2`)
+                                                  : t(secondChild.tabName)}
                                               </span>
                                               <IoIosArrowForward
                                                 size={15}
@@ -567,7 +591,15 @@ const HorizontalSidebar = ({ resizeHeight }) => {
                                                           className={`size-[5px] rounded-full lg:hidden ${mainPath === thirdChild.id ? `${borderColor}` : "border border-light-weight-450"} ${groupHoverBgColor} dark:border-light-weight-800 dark:group-hover:bg-light-weight-800`}
                                                         ></span>
                                                         <span className="lg:ml-auto">
-                                                          {thirdChild.tabName}
+                                                          {thirdChild.tabName ===
+                                                          "Level 3.1"
+                                                            ? t("Level 3.1")
+                                                            : thirdChild.tabName ===
+                                                                "Level 3.2"
+                                                              ? t("Level 3.2")
+                                                              : t(
+                                                                  thirdChild.tabName
+                                                                )}
                                                         </span>
                                                       </li>
                                                     </TransitionLink>
@@ -595,7 +627,10 @@ const HorizontalSidebar = ({ resizeHeight }) => {
                                                 className={`size-[5px] rounded-full lg:hidden ${mainPath === secondChild.id ? `${borderColor}` : "border border-light-weight-450"} ${groupHoverBgColor} dark:border-light-weight-800 dark:group-hover:bg-light-weight-800`}
                                               ></span>
                                               <span className="lg:ml-auto">
-                                                {secondChild.tabName}
+                                                {secondChild.tabName ===
+                                                "Level 2.1"
+                                                  ? t(`Level 2.1`)
+                                                  : t(secondChild.tabName)}
                                               </span>
                                             </li>
                                           </TransitionLink>
@@ -618,7 +653,9 @@ const HorizontalSidebar = ({ resizeHeight }) => {
                                       className={`size-[5px] rounded-full lg:hidden ${mainPath === firstChild.id ? `${borderColor}` : "border border-light-weight-450"} ${groupHoverBgColor} dark:border-light-weight-800 dark:group-hover:bg-light-weight-800`}
                                     ></span>
                                     <span className="lg:ml-auto">
-                                      {firstChild.tabName}
+                                      {firstChild.tabName === "Level 1.1"
+                                        ? t(`Level 1.1`)
+                                        : t(firstChild.tabName)}
                                     </span>
                                   </li>
                                 </TransitionLink>
@@ -639,7 +676,7 @@ const HorizontalSidebar = ({ resizeHeight }) => {
                               <BsDash className="lg:hidden" />
 
                               <span className="font-poppins-rg text-[13px] lg:ml-auto">
-                                {parent.tabName}
+                                {t(parent.tabName)}
                               </span>
                             </div>
                           </li>

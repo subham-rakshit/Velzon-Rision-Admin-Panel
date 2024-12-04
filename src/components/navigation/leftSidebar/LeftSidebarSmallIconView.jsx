@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import React, { useState } from "react";
 import { IoIosArrowForward } from "react-icons/io";
 
@@ -17,6 +18,8 @@ const LeftSidebarSmallIconView = ({
   hoverTextColor,
   gradientBgColor,
 }) => {
+  const t = useTranslations();
+
   const [hoverState, setHoverState] = useState({
     parent: { id: "", isOpen: false },
     firstChild: { id: "", isOpen: false },
@@ -75,24 +78,68 @@ const LeftSidebarSmallIconView = ({
             >
               {/* NOTE Parent Icon */}
               <div
-                className={`py-[13px] text-[22px] ${globalStyleObj.flexCenter} ${pathname.includes(parent.id.toLowerCase()) ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "text-light-weight-800" : textColor}` : "text-light-weight-450"} ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "hover:text-light-weight-800" : hoverTextColor}`}
+                className={`py-[13px] text-[22px] 
+                  ${globalStyleObj.flexCenter} 
+                  ${
+                    pathname.includes(parent.id.toLowerCase())
+                      ? `${
+                          leftSidebarColorType === sidebarColor.DARK_BG_COLOR ||
+                          leftSidebarColorType ===
+                            sidebarColor.GRADIENT_BG_COLOR
+                            ? "text-light-weight-800"
+                            : textColor
+                        }`
+                      : "text-light-weight-450"
+                  } 
+                    ${
+                      leftSidebarColorType === sidebarColor.DARK_BG_COLOR ||
+                      leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR
+                        ? "hover:text-light-weight-800"
+                        : hoverTextColor
+                    }`}
               >
                 {parent.tabIcon}
               </div>
 
               {/* NOTE Parent Dropdown Box */}
               <ul
-                className={`absolute left-full top-0 z-[9999] w-[200px] rounded-r-[5px] py-3 font-poppins-rg ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? `${bgColor} dark:bg-dark-dencity-300` : `${leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? `${gradientBgColor}` : "bg-light-dencity-900"}`} ${
-                  hoverState.parent.isOpen && hoverState.parent.id === parent.id
-                    ? "visible opacity-100"
-                    : "hidden opacity-0"
-                }`}
+                className={`absolute left-full top-0 z-[9999] w-[200px] rounded-r-[5px] py-3 font-poppins-rg ${
+                  leftSidebarColorType === sidebarColor.DARK_BG_COLOR
+                    ? `${bgColor} dark:bg-dark-dencity-300`
+                    : `${
+                        leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR
+                          ? `${gradientBgColor}`
+                          : "bg-light-dencity-900"
+                      }`
+                } 
+                  ${
+                    hoverState.parent.isOpen &&
+                    hoverState.parent.id === parent.id
+                      ? "visible opacity-100"
+                      : "hidden opacity-0"
+                  }`}
               >
                 {/* Parent Tab Name  */}
                 <div
-                  className={`${globalStyleObj.flexBetween} mb-3 w-full px-2 text-[15px] ${pathname.includes(parent.id.toLowerCase()) ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "text-light-weight-800" : textColor}` : "text-light-weight-450"} ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "hover:text-light-weight-800" : hoverTextColor}`}
+                  className={`${globalStyleObj.flexBetween} mb-3 w-full px-2 text-[15px] ${
+                    pathname.includes(parent.id.toLowerCase())
+                      ? `${
+                          leftSidebarColorType === sidebarColor.DARK_BG_COLOR ||
+                          leftSidebarColorType ===
+                            sidebarColor.GRADIENT_BG_COLOR
+                            ? "text-light-weight-800"
+                            : textColor
+                        }`
+                      : "text-light-weight-450"
+                  } 
+                    ${
+                      leftSidebarColorType === sidebarColor.DARK_BG_COLOR ||
+                      leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR
+                        ? "hover:text-light-weight-800"
+                        : hoverTextColor
+                    }`}
                 >
-                  <span>{parent.tabName}</span>
+                  <span>{t(parent.tabName)}</span>
                   {parent.tabDropdownList.length > 0 && (
                     <IoIosArrowForward className="rotate-90" />
                   )}
@@ -118,20 +165,53 @@ const LeftSidebarSmallIconView = ({
                             }
                           >
                             <div
-                              className={`w-full px-4 py-2 text-[13px] ${globalStyleObj.flexBetween} ${pathname.includes(firstChild.id.toLowerCase()) ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "text-light-weight-800" : textColor}` : "text-light-weight-450"} ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "hover:text-light-weight-800" : hoverTextColor}`}
+                              className={`w-full px-4 py-2 text-[13px] ${globalStyleObj.flexBetween} ${
+                                pathname.includes(firstChild.id.toLowerCase())
+                                  ? `${
+                                      leftSidebarColorType ===
+                                        sidebarColor.DARK_BG_COLOR ||
+                                      leftSidebarColorType ===
+                                        sidebarColor.GRADIENT_BG_COLOR
+                                        ? "text-light-weight-800"
+                                        : textColor
+                                    }`
+                                  : "text-light-weight-450"
+                              } ${
+                                leftSidebarColorType ===
+                                  sidebarColor.DARK_BG_COLOR ||
+                                leftSidebarColorType ===
+                                  sidebarColor.GRADIENT_BG_COLOR
+                                  ? "hover:text-light-weight-800"
+                                  : hoverTextColor
+                              }`}
                             >
-                              <span>{firstChild.tabName}</span>
+                              <span>
+                                {firstChild.tabName === "Level 1.2"
+                                  ? t(`Level 1.2`)
+                                  : t(firstChild.tabName)}
+                              </span>
                               <IoIosArrowForward />
                             </div>
 
                             {/* Second Children */}
                             <li
-                              className={`absolute left-full top-0 z-[9999] w-[200px] rounded-[5px] py-2 font-poppins-rg ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? `${bgColor} dark:bg-dark-dencity-300` : `${leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? `${gradientBgColor}` : "bg-light-dencity-900"}`} ${
-                                hoverState.firstChild.isOpen &&
-                                hoverState.firstChild.id === firstChild.id
-                                  ? "visible opacity-100"
-                                  : "hidden opacity-0"
-                              }`}
+                              className={`absolute left-full top-0 z-[9999] w-[200px] rounded-[5px] py-2 font-poppins-rg ${
+                                leftSidebarColorType ===
+                                sidebarColor.DARK_BG_COLOR
+                                  ? `${bgColor} dark:bg-dark-dencity-300`
+                                  : `${
+                                      leftSidebarColorType ===
+                                      sidebarColor.GRADIENT_BG_COLOR
+                                        ? `${gradientBgColor}`
+                                        : "bg-light-dencity-900"
+                                    }`
+                              } 
+                                ${
+                                  hoverState.firstChild.isOpen &&
+                                  hoverState.firstChild.id === firstChild.id
+                                    ? "visible opacity-100"
+                                    : "hidden opacity-0"
+                                }`}
                             >
                               {firstChild.tabDropdownList.map((secondChild) =>
                                 // Second Child Having Dropdown
@@ -154,23 +234,52 @@ const LeftSidebarSmallIconView = ({
                                       className={`${globalStyleObj.flexBetween} w-full px-4 py-2 text-[13px] ${
                                         tabDetails.secondChild.id ===
                                         secondChild.id
-                                          ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "text-light-weight-800" : textColor}`
+                                          ? `${
+                                              leftSidebarColorType ===
+                                                sidebarColor.DARK_BG_COLOR ||
+                                              leftSidebarColorType ===
+                                                sidebarColor.GRADIENT_BG_COLOR
+                                                ? "text-light-weight-800"
+                                                : textColor
+                                            }`
                                           : "text-light-weight-450"
-                                      } ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "hover:text-light-weight-800" : hoverTextColor}`}
+                                      } ${
+                                        leftSidebarColorType ===
+                                          sidebarColor.DARK_BG_COLOR ||
+                                        leftSidebarColorType ===
+                                          sidebarColor.GRADIENT_BG_COLOR
+                                          ? "hover:text-light-weight-800"
+                                          : hoverTextColor
+                                      }`}
                                     >
-                                      <span>{secondChild.tabName}</span>
+                                      <span>
+                                        {secondChild.tabName === "Level 2.2"
+                                          ? t(`Level 2.2`)
+                                          : t(secondChild.tabName)}
+                                      </span>
                                       <IoIosArrowForward />
                                     </div>
 
                                     {/* Third Child */}
                                     <li
-                                      className={`absolute left-full top-0 z-[9999] w-[200px] rounded-[5px] py-2 font-poppins-rg ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? `${bgColor} dark:bg-dark-dencity-300` : `${leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? `${gradientBgColor}` : "bg-light-dencity-900"}`} ${
-                                        hoverState.secondChild.isOpen &&
-                                        hoverState.secondChild.id ===
-                                          secondChild.id
-                                          ? "visible opacity-100"
-                                          : "hidden opacity-0"
-                                      }`}
+                                      className={`absolute left-full top-0 z-[9999] w-[200px] rounded-[5px] py-2 font-poppins-rg ${
+                                        leftSidebarColorType ===
+                                        sidebarColor.DARK_BG_COLOR
+                                          ? `${bgColor} dark:bg-dark-dencity-300`
+                                          : `${
+                                              leftSidebarColorType ===
+                                              sidebarColor.GRADIENT_BG_COLOR
+                                                ? `${gradientBgColor}`
+                                                : "bg-light-dencity-900"
+                                            }`
+                                      } 
+                                        ${
+                                          hoverState.secondChild.isOpen &&
+                                          hoverState.secondChild.id ===
+                                            secondChild.id
+                                            ? "visible opacity-100"
+                                            : "hidden opacity-0"
+                                        }`}
                                     >
                                       {secondChild.tabDropdownList.map(
                                         (thirdChild) =>
@@ -194,11 +303,31 @@ const LeftSidebarSmallIconView = ({
                                                 className={`${globalStyleObj.flexStart} px-4 py-2 text-[13px] ${
                                                   pathname.split("/")[1] ===
                                                   thirdChild.id
-                                                    ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "text-light-weight-800" : textColor}`
+                                                    ? `${
+                                                        leftSidebarColorType ===
+                                                          sidebarColor.DARK_BG_COLOR ||
+                                                        leftSidebarColorType ===
+                                                          sidebarColor.GRADIENT_BG_COLOR
+                                                          ? "text-light-weight-800"
+                                                          : textColor
+                                                      }`
                                                     : "text-light-weight-450"
-                                                } ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "hover:text-light-weight-800" : hoverTextColor}`}
+                                                } ${
+                                                  leftSidebarColorType ===
+                                                    sidebarColor.DARK_BG_COLOR ||
+                                                  leftSidebarColorType ===
+                                                    sidebarColor.GRADIENT_BG_COLOR
+                                                    ? "hover:text-light-weight-800"
+                                                    : hoverTextColor
+                                                }`}
                                               >
-                                                {thirdChild.tabName}
+                                                {thirdChild.tabName ===
+                                                "Level 3.1"
+                                                  ? t("Level 3.1")
+                                                  : thirdChild.tabName ===
+                                                      "Level 3.2"
+                                                    ? t("Level 3.2")
+                                                    : t(thirdChild.tabName)}
                                               </div>
                                             </TransitionLink>
                                           )
@@ -218,11 +347,27 @@ const LeftSidebarSmallIconView = ({
                                       className={`${globalStyleObj.flexStart} gap-2 px-4 py-2 text-[13px] ${
                                         pathname.split("/")[1] ===
                                         secondChild.id
-                                          ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "text-light-weight-800" : textColor}`
+                                          ? `${
+                                              leftSidebarColorType ===
+                                                sidebarColor.DARK_BG_COLOR ||
+                                              leftSidebarColorType ===
+                                                sidebarColor.GRADIENT_BG_COLOR
+                                                ? "text-light-weight-800"
+                                                : textColor
+                                            }`
                                           : "text-light-weight-450"
-                                      } ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "hover:text-light-weight-800" : hoverTextColor}`}
+                                      } ${
+                                        leftSidebarColorType ===
+                                          sidebarColor.DARK_BG_COLOR ||
+                                        leftSidebarColorType ===
+                                          sidebarColor.GRADIENT_BG_COLOR
+                                          ? "hover:text-light-weight-800"
+                                          : hoverTextColor
+                                      }`}
                                     >
-                                      {secondChild.tabName}
+                                      {secondChild.tabName === "Level 2.1"
+                                        ? t(`Level 2.1`)
+                                        : t(secondChild.tabName)}
                                     </div>
                                   </TransitionLink>
                                 )
@@ -238,9 +383,30 @@ const LeftSidebarSmallIconView = ({
                             <div
                               id={firstChild.id}
                               parenttabid={firstChild.parentTabId}
-                              className={`${globalStyleObj.flexStart} gap-2 px-4 py-2 text-[13px] ${pathname.split("/")[1] === firstChild.id ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "text-light-weight-800" : textColor}` : "text-light-weight-450"} ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "hover:text-light-weight-800" : hoverTextColor}`}
+                              className={`${globalStyleObj.flexStart} gap-2 px-4 py-2 text-[13px] ${
+                                pathname.split("/")[1] === firstChild.id
+                                  ? `${
+                                      leftSidebarColorType ===
+                                        sidebarColor.DARK_BG_COLOR ||
+                                      leftSidebarColorType ===
+                                        sidebarColor.GRADIENT_BG_COLOR
+                                        ? "text-light-weight-800"
+                                        : textColor
+                                    }`
+                                  : "text-light-weight-450"
+                              } 
+                              ${
+                                leftSidebarColorType ===
+                                  sidebarColor.DARK_BG_COLOR ||
+                                leftSidebarColorType ===
+                                  sidebarColor.GRADIENT_BG_COLOR
+                                  ? "hover:text-light-weight-800"
+                                  : hoverTextColor
+                              }`}
                             >
-                              {firstChild.tabName}
+                              {firstChild.tabName === "Level 1.1"
+                                ? t(`Level 1.1`)
+                                : t(firstChild.tabName)}
                             </div>
                           </TransitionLink>
                         )}
@@ -253,7 +419,16 @@ const LeftSidebarSmallIconView = ({
             <TransitionLink href={parent.pathName} key={parent.id}>
               <li
                 id={parent.id}
-                className={`relative ${globalStyleObj.flexCenter} ${pathname.includes(parent.id.toLowerCase()) ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "text-light-weight-800" : textColor}` : "text-light-weight-450"} py-[13px] hover:cursor-pointer`}
+                className={`relative ${globalStyleObj.flexCenter} ${
+                  pathname.includes(parent.id.toLowerCase())
+                    ? `${
+                        leftSidebarColorType === sidebarColor.DARK_BG_COLOR ||
+                        leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR
+                          ? "text-light-weight-800"
+                          : textColor
+                      }`
+                    : "text-light-weight-450"
+                } py-[13px] hover:cursor-pointer`}
                 onMouseEnter={() => handleParentHoverState(parent.id)}
                 onMouseLeave={() => handleParentHoverState(parent.id)}
               >
@@ -263,14 +438,24 @@ const LeftSidebarSmallIconView = ({
                   {parent.tabIcon}
                 </span>
                 <div
-                  className={`absolute left-full top-0 z-[9999] w-[200px] rounded-r-[5px] px-2 py-3 font-poppins-rg text-[15px] ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? `${bgColor} hover:text-light-weight-800 dark:bg-dark-dencity-300` : `${leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? `${gradientBgColor} hover:text-light-weight-800 dark:bg-dark-dencity-300` : `bg-light-dencity-900 ${hoverTextColor}`}`} ${
-                    hoverState.parent.isOpen &&
-                    hoverState.parent.id === parent.id
-                      ? "visible opacity-100"
-                      : "hidden opacity-0"
-                  }`}
+                  className={`absolute left-full top-0 z-[9999] w-[200px] rounded-r-[5px] px-2 py-3 font-poppins-rg text-[15px] ${
+                    leftSidebarColorType === sidebarColor.DARK_BG_COLOR
+                      ? `${bgColor} hover:text-light-weight-800 dark:bg-dark-dencity-300`
+                      : `${
+                          leftSidebarColorType ===
+                          sidebarColor.GRADIENT_BG_COLOR
+                            ? `${gradientBgColor} hover:text-light-weight-800 dark:bg-dark-dencity-300`
+                            : `bg-light-dencity-900 ${hoverTextColor}`
+                        }`
+                  } 
+                    ${
+                      hoverState.parent.isOpen &&
+                      hoverState.parent.id === parent.id
+                        ? "visible opacity-100"
+                        : "hidden opacity-0"
+                    }`}
                 >
-                  {parent.tabName}
+                  {t(parent.tabName)}
                 </div>
               </li>
             </TransitionLink>

@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 import React, { useEffect, useState } from "react";
 import { BsDash } from "react-icons/bs";
 import { IoIosArrowForward } from "react-icons/io";
@@ -45,6 +46,7 @@ const LeftSidebar = ({ width }) => {
   const pathname = usePathname();
   const mainPath = pathname.split("/")[1];
   const dispatch = useAppDispatch();
+  const t = useTranslations();
 
   const [tabDetails, setTabDetails] = useState({
     parent: { id: "", isOpen: false },
@@ -309,7 +311,7 @@ const LeftSidebar = ({ width }) => {
             <span
               className={`${leftSidebarSizeType === sidebarSize.SMALL_ICON_VIEW ? "hidden" : "inline"} ${globalStyleObj.text11Light400Semibold} ${leftSidebarSizeType === sidebarSize.COMPACT ? "underline" : ""} uppercase tracking-widest`}
             >
-              {category.tabCategory}
+              {t(category.tabCategory)}
             </span>
 
             <ul className="w-full">
@@ -349,7 +351,7 @@ const LeftSidebar = ({ width }) => {
                     >
                       <span className="text-[18px]">{parent.tabIcon}</span>
                       <span className="font-poppins-rg text-[15px]">
-                        {parent.tabName}
+                        {t(parent.tabName)}
                       </span>
                       <IoIosArrowForward
                         className={`${leftSidebarSizeType === sidebarSize.COMPACT ? "hidden" : "ml-auto"} ${pathname.includes(parent.id.toLowerCase()) ? "rotate-90" : ""}`}
@@ -396,7 +398,9 @@ const LeftSidebar = ({ width }) => {
                               <BsDash
                                 className={`${leftSidebarSizeType === sidebarSize.COMPACT ? "hidden" : "inline"}`}
                               />
-                              {firstChild.tabName}
+                              {firstChild.tabName === "Level 1.2"
+                                ? t(`Level 1.2`)
+                                : t(firstChild.tabName)}
                               <IoIosArrowForward
                                 size={15}
                                 className={`${leftSidebarSizeType === sidebarSize.COMPACT ? "" : "ml-auto"} ${pathname.includes(firstChild.id.toLowerCase()) ? "rotate-90" : ""}`}
@@ -474,7 +478,9 @@ const LeftSidebar = ({ width }) => {
                                                   : groupHoverBgColor
                                               } size-[5px] rounded-full border`}
                                       ></span>
-                                      {secondChild.tabName}
+                                      {secondChild.tabName === "Level 2.2"
+                                        ? t(`Level 2.2`)
+                                        : t(secondChild.tabName)}
                                       <IoIosArrowForward
                                         size={15}
                                         className={`${leftSidebarSizeType === sidebarSize.COMPACT ? "" : "ml-auto"} ${pathname.includes(secondChild.id.toLowerCase()) ? "rotate-90" : ""}`}
@@ -559,7 +565,13 @@ const LeftSidebar = ({ width }) => {
                                                           : groupHoverBgColor
                                                       } size-[5px] rounded-full`}
                                                 ></span>
-                                                {thirdChild.tabName}
+                                                {thirdChild.tabName ===
+                                                "Level 3.1"
+                                                  ? t("Level 3.1")
+                                                  : thirdChild.tabName ===
+                                                      "Level 3.2"
+                                                    ? t("Level 3.2")
+                                                    : t(thirdChild.tabName)}
                                               </li>
                                             </TransitionLink>
                                           )
@@ -631,7 +643,9 @@ const LeftSidebar = ({ width }) => {
                                                 : groupHoverBgColor
                                             } size-[5px] rounded-full`}
                                       ></span>
-                                      {secondChild.tabName}
+                                      {secondChild.tabName === "Level 2.1"
+                                        ? t(`Level 2.1`)
+                                        : t(secondChild.tabName)}
                                     </li>
                                   </TransitionLink>
                                 )
@@ -676,7 +690,9 @@ const LeftSidebar = ({ width }) => {
                               <BsDash
                                 className={`${leftSidebarSizeType === sidebarSize.COMPACT ? "hidden" : "inline"}`}
                               />
-                              {firstChild.tabName}
+                              {firstChild.tabName === "Level 1.1"
+                                ? t(`Level 1.1`)
+                                : t(firstChild.tabName)}
                             </li>
                           </TransitionLink>
                         )
@@ -719,7 +735,7 @@ const LeftSidebar = ({ width }) => {
                       >
                         <span className="text-[18px]">{parent.tabIcon}</span>
                         <span className="font-poppins-rg text-[15px]">
-                          {parent.tabName}
+                          {t(parent.tabName)}
                         </span>
                       </div>
                     </li>

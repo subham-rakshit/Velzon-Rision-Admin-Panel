@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 import React, { useEffect, useState } from "react";
 import { BsDash } from "react-icons/bs";
 import { IoIosArrowForward } from "react-icons/io";
@@ -40,6 +41,7 @@ const LeftTwoColumnSidebar = ({ width }) => {
   } = useAppSelector((state) => state.layout);
   const pathname = usePathname();
   const dispatch = useAppDispatch();
+  const t = useTranslations();
 
   const mainPath = pathname.split("/")[1];
 
@@ -352,7 +354,31 @@ const LeftTwoColumnSidebar = ({ width }) => {
                         // First Child
                         <li key={firstChild.id}>
                           <div
-                            className={`${pathname.includes(firstChild.id.toLowerCase()) ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "text-light-weight-800" : textColor}` : "text-light-weight-450"} ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "hover:text-light-weight-800" : hoverTextColor} ${leftSidebarSizeType === sidebarSize.COMPACT ? `${globalStyleObj.flexCenter}` : `${globalStyleObj.flexStart} gap-2 pl-2`} cursor-pointer pt-4 font-poppins-rg text-[14px]`}
+                            className={`${
+                              pathname.includes(firstChild.id.toLowerCase())
+                                ? `${
+                                    leftSidebarColorType ===
+                                      sidebarColor.DARK_BG_COLOR ||
+                                    leftSidebarColorType ===
+                                      sidebarColor.GRADIENT_BG_COLOR
+                                      ? "text-light-weight-800"
+                                      : textColor
+                                  }`
+                                : "text-light-weight-450"
+                            } 
+                              ${
+                                leftSidebarColorType ===
+                                  sidebarColor.DARK_BG_COLOR ||
+                                leftSidebarColorType ===
+                                  sidebarColor.GRADIENT_BG_COLOR
+                                  ? "hover:text-light-weight-800"
+                                  : hoverTextColor
+                              } 
+                                ${
+                                  leftSidebarSizeType === sidebarSize.COMPACT
+                                    ? `${globalStyleObj.flexCenter}`
+                                    : `${globalStyleObj.flexStart} gap-2 pl-2`
+                                } cursor-pointer pt-4 font-poppins-rg text-[14px]`}
                             onClick={() =>
                               handleFirstChildTabToggle(firstChild.id)
                             }
@@ -360,7 +386,9 @@ const LeftTwoColumnSidebar = ({ width }) => {
                             <BsDash
                               className={`${leftSidebarSizeType === sidebarSize.COMPACT ? "hidden" : "inline"}`}
                             />
-                            {firstChild.tabName}
+                            {firstChild.tabName === "Level 1.2"
+                              ? t(`Level 1.2`)
+                              : t(firstChild.tabName)}
                             <IoIosArrowForward
                               size={15}
                               className={`${leftSidebarSizeType === sidebarSize.COMPACT ? "" : "ml-auto"} ${pathname.includes(firstChild.id.toLowerCase()) ? "rotate-90" : ""}`}
@@ -375,15 +403,69 @@ const LeftTwoColumnSidebar = ({ width }) => {
                                 // Second Child
                                 <li key={secondChild.id}>
                                   <div
-                                    className={`group cursor-pointer pt-4 font-poppins-rg text-[13px] ${leftSidebarSizeType === sidebarSize.COMPACT ? `${globalStyleObj.flexCenter}` : `${globalStyleObj.flexStart} gap-3 pl-7`} ${pathname.includes(secondChild.id) ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "text-light-weight-800" : textColor}` : "text-light-weight-450"} ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "hover:text-light-weight-800" : hoverTextColor}`}
+                                    className={`group cursor-pointer pt-4 font-poppins-rg text-[13px] ${
+                                      leftSidebarSizeType ===
+                                      sidebarSize.COMPACT
+                                        ? `${globalStyleObj.flexCenter}`
+                                        : `${globalStyleObj.flexStart} gap-3 pl-7`
+                                    } 
+                                      ${
+                                        pathname.includes(secondChild.id)
+                                          ? `${
+                                              leftSidebarColorType ===
+                                                sidebarColor.DARK_BG_COLOR ||
+                                              leftSidebarColorType ===
+                                                sidebarColor.GRADIENT_BG_COLOR
+                                                ? "text-light-weight-800"
+                                                : textColor
+                                            }`
+                                          : "text-light-weight-450"
+                                      } 
+                                        ${
+                                          leftSidebarColorType ===
+                                            sidebarColor.DARK_BG_COLOR ||
+                                          leftSidebarColorType ===
+                                            sidebarColor.GRADIENT_BG_COLOR
+                                            ? "hover:text-light-weight-800"
+                                            : hoverTextColor
+                                        }`}
                                     onClick={() =>
                                       handleSecondChildTabToggle(secondChild.id)
                                     }
                                   >
                                     <span
-                                      className={`${leftSidebarSizeType === sidebarSize.COMPACT ? "hidden" : "inline"} ${pathname.includes(secondChild.id.toLowerCase()) ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "border border-white" : borderColor}` : "border border-light-weight-450"} ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "group-hover:bg-white" : groupHoverBgColor} size-[5px] rounded-full border`}
+                                      className={`${
+                                        leftSidebarSizeType ===
+                                        sidebarSize.COMPACT
+                                          ? "hidden"
+                                          : "inline"
+                                      } 
+                                        ${
+                                          pathname.includes(
+                                            secondChild.id.toLowerCase()
+                                          )
+                                            ? `${
+                                                leftSidebarColorType ===
+                                                  sidebarColor.DARK_BG_COLOR ||
+                                                leftSidebarColorType ===
+                                                  sidebarColor.GRADIENT_BG_COLOR
+                                                  ? "border border-white"
+                                                  : borderColor
+                                              }`
+                                            : "border border-light-weight-450"
+                                        } 
+                                          ${
+                                            leftSidebarColorType ===
+                                              sidebarColor.DARK_BG_COLOR ||
+                                            leftSidebarColorType ===
+                                              sidebarColor.GRADIENT_BG_COLOR
+                                              ? "group-hover:bg-white"
+                                              : groupHoverBgColor
+                                          } size-[5px] rounded-full border`}
                                     ></span>
-                                    {secondChild.tabName}
+                                    {secondChild.tabName === "Level 2.2"
+                                      ? t(`Level 2.2`)
+                                      : t(secondChild.tabName)}
                                     <IoIosArrowForward
                                       size={15}
                                       className={`${leftSidebarSizeType === sidebarSize.COMPACT ? "" : "ml-auto"} ${pathname.includes(secondChild.id.toLowerCase()) ? "rotate-90" : ""}`}
@@ -413,12 +495,68 @@ const LeftTwoColumnSidebar = ({ width }) => {
                                               secondchildid={
                                                 thirdChild.secondChildId
                                               }
-                                              className={`${mainPath === thirdChild.id ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "text-light-weight-800" : textColor}` : "text-light-weight-450"} ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "hover:text-light-weight-800" : hoverTextColor} ${leftSidebarSizeType === sidebarSize.COMPACT ? `${globalStyleObj.flexCenter}` : `${globalStyleObj.flexStart} gap-3 pl-10`} group pt-4 font-poppins-rg text-[13px]`}
+                                              className={`${
+                                                mainPath === thirdChild.id
+                                                  ? `${
+                                                      leftSidebarColorType ===
+                                                        sidebarColor.DARK_BG_COLOR ||
+                                                      leftSidebarColorType ===
+                                                        sidebarColor.GRADIENT_BG_COLOR
+                                                        ? "text-light-weight-800"
+                                                        : textColor
+                                                    }`
+                                                  : "text-light-weight-450"
+                                              } 
+                                                ${
+                                                  leftSidebarColorType ===
+                                                    sidebarColor.DARK_BG_COLOR ||
+                                                  leftSidebarColorType ===
+                                                    sidebarColor.GRADIENT_BG_COLOR
+                                                    ? "hover:text-light-weight-800"
+                                                    : hoverTextColor
+                                                } 
+                                                  ${
+                                                    leftSidebarSizeType ===
+                                                    sidebarSize.COMPACT
+                                                      ? `${globalStyleObj.flexCenter}`
+                                                      : `${globalStyleObj.flexStart} gap-3 pl-10`
+                                                  } group pt-4 font-poppins-rg text-[13px]`}
                                             >
                                               <span
-                                                className={`${leftSidebarSizeType === sidebarSize.COMPACT ? "hidden" : "inline"} ${mainPath === thirdChild.id ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "border border-white" : borderColor}` : "border border-light-weight-450"} ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "group-hover:bg-white" : groupHoverBgColor} size-[5px] rounded-full`}
+                                                className={`${
+                                                  leftSidebarSizeType ===
+                                                  sidebarSize.COMPACT
+                                                    ? "hidden"
+                                                    : "inline"
+                                                } 
+                                                  ${
+                                                    mainPath === thirdChild.id
+                                                      ? `${
+                                                          leftSidebarColorType ===
+                                                            sidebarColor.DARK_BG_COLOR ||
+                                                          leftSidebarColorType ===
+                                                            sidebarColor.GRADIENT_BG_COLOR
+                                                            ? "border border-white"
+                                                            : borderColor
+                                                        }`
+                                                      : "border border-light-weight-450"
+                                                  } 
+                                                    ${
+                                                      leftSidebarColorType ===
+                                                        sidebarColor.DARK_BG_COLOR ||
+                                                      leftSidebarColorType ===
+                                                        sidebarColor.GRADIENT_BG_COLOR
+                                                        ? "group-hover:bg-white"
+                                                        : groupHoverBgColor
+                                                    } size-[5px] rounded-full`}
                                               ></span>
-                                              {thirdChild.tabName}
+                                              {thirdChild.tabName ===
+                                              "Level 3.1"
+                                                ? t("Level 3.1")
+                                                : thirdChild.tabName ===
+                                                    "Level 3.2"
+                                                  ? t("Level 3.2")
+                                                  : t(thirdChild.tabName)}
                                             </li>
                                           </TransitionLink>
                                         )
@@ -435,12 +573,64 @@ const LeftTwoColumnSidebar = ({ width }) => {
                                     id={secondChild.id}
                                     parenttabid={secondChild.parentTabId}
                                     firstchildid={secondChild.firstChildId}
-                                    className={`${mainPath === secondChild.id ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "text-light-weight-800" : textColor}` : "text-light-weight-450"} ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "hover:text-light-weight-800" : hoverTextColor} ${leftSidebarSizeType === sidebarSize.COMPACT ? `${globalStyleObj.flexCenter}` : `${globalStyleObj.flexStart} gap-3 pl-7`} group pt-4 font-poppins-rg text-[13px]`}
+                                    className={`${
+                                      mainPath === secondChild.id
+                                        ? `${
+                                            leftSidebarColorType ===
+                                              sidebarColor.DARK_BG_COLOR ||
+                                            leftSidebarColorType ===
+                                              sidebarColor.GRADIENT_BG_COLOR
+                                              ? "text-light-weight-800"
+                                              : textColor
+                                          }`
+                                        : "text-light-weight-450"
+                                    } 
+                                      ${
+                                        leftSidebarColorType ===
+                                          sidebarColor.DARK_BG_COLOR ||
+                                        leftSidebarColorType ===
+                                          sidebarColor.GRADIENT_BG_COLOR
+                                          ? "hover:text-light-weight-800"
+                                          : hoverTextColor
+                                      } 
+                                        ${
+                                          leftSidebarSizeType ===
+                                          sidebarSize.COMPACT
+                                            ? `${globalStyleObj.flexCenter}`
+                                            : `${globalStyleObj.flexStart} gap-3 pl-7`
+                                        } group pt-4 font-poppins-rg text-[13px]`}
                                   >
                                     <span
-                                      className={`${leftSidebarSizeType === sidebarSize.COMPACT ? "hidden" : "inline"} ${mainPath === secondChild.id ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "border border-white" : borderColor}` : "border border-light-weight-450"} ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "group-hover:bg-white" : groupHoverBgColor} size-[5px] rounded-full`}
+                                      className={`${
+                                        leftSidebarSizeType ===
+                                        sidebarSize.COMPACT
+                                          ? "hidden"
+                                          : "inline"
+                                      } 
+                                        ${
+                                          mainPath === secondChild.id
+                                            ? `${
+                                                leftSidebarColorType ===
+                                                  sidebarColor.DARK_BG_COLOR ||
+                                                leftSidebarColorType ===
+                                                  sidebarColor.GRADIENT_BG_COLOR
+                                                  ? "border border-white"
+                                                  : borderColor
+                                              }`
+                                            : "border border-light-weight-450"
+                                        } 
+                                          ${
+                                            leftSidebarColorType ===
+                                              sidebarColor.DARK_BG_COLOR ||
+                                            leftSidebarColorType ===
+                                              sidebarColor.GRADIENT_BG_COLOR
+                                              ? "group-hover:bg-white"
+                                              : groupHoverBgColor
+                                          } size-[5px] rounded-full`}
                                     ></span>
-                                    {secondChild.tabName}
+                                    {secondChild.tabName === "Level 2.1"
+                                      ? t(`Level 2.1`)
+                                      : t(secondChild.tabName)}
                                   </li>
                                 </TransitionLink>
                               )
@@ -456,12 +646,38 @@ const LeftTwoColumnSidebar = ({ width }) => {
                           <li
                             id={firstChild.id}
                             parenttabid={firstChild.parentTabId}
-                            className={`${mainPath === firstChild.id ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "text-light-weight-800" : textColor}` : "text-light-weight-450"} ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "hover:text-light-weight-800" : hoverTextColor} ${leftSidebarSizeType === sidebarSize.COMPACT ? "text-center" : `${globalStyleObj.flexStart} gap-2 pl-2`} pt-4 font-poppins-rg text-[14px]`}
+                            className={`${
+                              mainPath === firstChild.id
+                                ? `${
+                                    leftSidebarColorType ===
+                                      sidebarColor.DARK_BG_COLOR ||
+                                    leftSidebarColorType ===
+                                      sidebarColor.GRADIENT_BG_COLOR
+                                      ? "text-light-weight-800"
+                                      : textColor
+                                  }`
+                                : "text-light-weight-450"
+                            } 
+                              ${
+                                leftSidebarColorType ===
+                                  sidebarColor.DARK_BG_COLOR ||
+                                leftSidebarColorType ===
+                                  sidebarColor.GRADIENT_BG_COLOR
+                                  ? "hover:text-light-weight-800"
+                                  : hoverTextColor
+                              } 
+                                ${
+                                  leftSidebarSizeType === sidebarSize.COMPACT
+                                    ? "text-center"
+                                    : `${globalStyleObj.flexStart} gap-2 pl-2`
+                                } pt-4 font-poppins-rg text-[14px]`}
                           >
                             <BsDash
                               className={`${leftSidebarSizeType === sidebarSize.COMPACT ? "hidden" : "inline"}`}
                             />
-                            {firstChild.tabName}
+                            {firstChild.tabName === "Level 1.1"
+                              ? t(`Level 1.1`)
+                              : t(firstChild.tabName)}
                           </li>
                         </TransitionLink>
                       )

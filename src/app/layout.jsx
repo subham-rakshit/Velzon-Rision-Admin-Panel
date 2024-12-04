@@ -1,4 +1,6 @@
 import localFont from "next/font/local";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages } from "next-intl/server";
 
 import { ToastContainer } from "./clientToastContainer.js";
 
@@ -53,14 +55,21 @@ const poppinsBl = localFont({
   weight: "900",
 });
 
-const RootLayout = ({ children }) => {
+const RootLayout = async ({ children }) => {
+  const locale = await getLocale();
+
+  // Providing all messages to the client side is the easiest way to get started
+  const messages = await getMessages();
+
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body
         className={`${poppinsRg.variable} ${poppinsMd.variable} ${poppinsBl.variable} ${poppinsBo.variable} ${poppinsLi.variable} ${poppinsELi.variable} ${poppinsSb.variable} antialiased`}
       >
         <AuthProvider>
-          <main>{children}</main>
+          <NextIntlClientProvider messages={messages}>
+            <main>{children}</main>
+          </NextIntlClientProvider>
 
           <ToastContainer
             position="top-right"

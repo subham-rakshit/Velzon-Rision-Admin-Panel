@@ -1,13 +1,9 @@
 // NOTE Language Images ---
 
-import { BiBadgeCheck,BiTask, BiMessageSquareDots } from "react-icons/bi";
+import { BiBadgeCheck, BiTask, BiMessageSquareDots } from "react-icons/bi";
 import { IoMdWallet } from "react-icons/io";
 import { IoSettingsOutline } from "react-icons/io5";
-import {
-  MdAccountCircle,
-  MdOutlineMessage,
-  MdLock,
-} from "react-icons/md";
+import { MdAccountCircle, MdOutlineMessage, MdLock } from "react-icons/md";
 import { RiLifebuoyLine } from "react-icons/ri";
 
 import bitbucket from "../images/brands/bitbucket.png";
@@ -16,7 +12,7 @@ import dropbox from "../images/brands/dropbox.png";
 import github from "../images/brands/github.png";
 import mailChimp from "../images/brands/mail_chimp.png";
 import slack from "../images/brands/slack.png";
-import flagArabic from "../images/flags/ar.svg";
+import flagArabic from "../images/flags/ae.svg";
 import flagChina from "../images/flags/china.svg";
 import flagFrench from "../images/flags/french.svg";
 import flagGermany from "../images/flags/germany.svg";
@@ -36,38 +32,45 @@ import avatar2 from "../images/users/avatar-8.jpg";
 
 import ROUTES from "@/constants/routes";
 
-
 // NOTE Languages Data ****
 export const languagesDetails = {
   spain: {
+    id: "sp",
     label: "Española",
     flag: flagSpain,
   },
   germany: {
+    id: "gr",
     label: "Deutsche",
     flag: flagGermany,
   },
   italy: {
+    id: "it",
     label: "Italiana",
     flag: flagItaly,
   },
   russia: {
+    id: "ru",
     label: "русский",
     flag: flagRussia,
   },
   english: {
+    id: "en",
     label: "English",
     flag: flagUs,
   },
   china: {
+    id: "ch",
     label: "中国人",
     flag: flagChina,
   },
   french: {
+    id: "fr",
     label: "français",
     flag: flagFrench,
   },
   arabic: {
+    id: "ar",
     label: "Arabic",
     flag: flagArabic,
   },
@@ -260,8 +263,7 @@ export const profileDataGroup1 = [
     icon: <RiLifebuoyLine size={16} color="#878a99" />,
     linkAddress: ROUTES.PAGES_FAQS,
   },
-  
-]
+];
 
 // NOTE Nav profile data group 2 ****
 export const profileDataGroup2 = [
@@ -285,5 +287,4 @@ export const profileDataGroup2 = [
     icon: <MdLock size={16} color="#878a99" />,
     linkAddress: ROUTES.AUTH_LOCKSCREEN_BASIC,
   },
-  
-]
+];

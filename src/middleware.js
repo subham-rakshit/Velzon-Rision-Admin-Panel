@@ -1,5 +1,8 @@
+import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
+
+import setLanguageAction from "./actions/setLanguageAction";
 
 // NOTE: Deifine Routes -->
 const authRoutes = [
@@ -73,6 +76,12 @@ export async function middleware(request) {
     req: request,
     secret: process.env.NEXTAUTH_SECRET,
   });
+
+  const cookie = await cookies();
+  const language = cookie.get("language");
+  if (!language) {
+    setLanguageAction("en");
+  }
 
   // JWT Token
   const accessTokenCookie = request.cookies.get("access-token");

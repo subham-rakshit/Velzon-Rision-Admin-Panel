@@ -1,9 +1,12 @@
 "use client";
+
+import Cookies from "js-cookie";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { languagesDetails } from "../../../app/assets/navData/navData";
 
+import setLanguageAction from "@/actions/setLanguageAction";
 import { topbarColor } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
 import { globalStyleObj } from "@/app/assets/styles";
 import {
@@ -16,10 +19,20 @@ import { useAppSelector } from "@/lib/store/hooks";
 
 const NavbarLanguages = () => {
   const { topbarColorType } = useAppSelector((state) => state.layout);
-  const [selectedLanguage, setSelectedLanguage] = useState(
-    Object.values(languagesDetails)[0]
-  );
   const languageArr = Object.values(languagesDetails);
+  const [selectedLanguage, setSelectedLanguage] = useState(
+    Object.values(languagesDetails)[4]
+  );
+
+  useEffect(() => {
+    const selectedLanguageId = Cookies.get("language");
+    if (selectedLanguageId) {
+      const selectedLanguage = languageArr.find(
+        (language) => language.id === selectedLanguageId
+      );
+      setSelectedLanguage(selectedLanguage);
+    }
+  }, [languageArr]);
 
   return (
     <DropdownMenu modal={false}>
@@ -41,9 +54,12 @@ const NavbarLanguages = () => {
         {languageArr.map((language) => {
           return (
             <DropdownMenuItem
-              key={language.label}
+              key={language.id}
               className={`${globalStyleObj.flexStart} cursor-pointer gap-4`}
-              onSelect={() => setSelectedLanguage(language)}
+              onSelect={() => {
+                setSelectedLanguage(language);
+                setLanguageAction(language.id);
+              }}
             >
               <Image
                 src={language.flag}
