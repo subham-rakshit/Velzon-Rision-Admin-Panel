@@ -28,7 +28,7 @@ export const verificationEmailTemplate = ({ otp, username }) => {
   `;
 };
 
-//NOTE: Reset password email template
+// NOTE: Reset password email template
 export const resetPasswordTokenEmailTemplate = ({ token, username }) => {
   return `
     <!DOCTYPE html>

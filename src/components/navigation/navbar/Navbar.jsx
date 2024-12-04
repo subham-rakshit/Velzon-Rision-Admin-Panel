@@ -73,8 +73,9 @@ const Navbar = ({
             : "sticky"
           : window.innerWidth < 768
             ? "sticky"
-            : layoutType === layout.VERTICAL
-              ? "w-full lg:absolute lg:left-0 lg:px-[50px]"
+            : layoutType === layout.VERTICAL &&
+                leftSidebarViewType === sidebarView.DETACHED
+              ? `w-full lg:absolute lg:left-0 lg:z-[999] lg:px-[50px]`
               : ""
       } 
       ${globalStyleObj.flexBetween} top-0 h-[70px] shadow-light`}

@@ -2,16 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { Provider } from "react-redux";
-import { PersistGate } from "redux-persist/integration/react";
 
 import { makeStore } from "@/lib/store/store";
 
-// NOTE: When StoreProvide render in client side only then makeStore() will call. (Safe for SSR)
+// StoreProvider renders on the client side and initializes the store (Safe for SSR)
 export default function StoreProvider({ children }) {
   const [storeReadyStatus, setStoreReadyStatus] = useState(false);
   const [storeData, setStoreData] = useState(null);
 
-  // Make store in every request
   useEffect(() => {
     const store = makeStore();
 
@@ -27,11 +25,5 @@ export default function StoreProvider({ children }) {
   }
 
   // Ready state
-  return (
-    <Provider store={storeData.store}>
-      <PersistGate loading={null} persistor={storeData.persistor}>
-        {children}
-      </PersistGate>
-    </Provider>
-  );
+  return <Provider store={storeData.store}>{children}</Provider>;
 }

@@ -772,7 +772,7 @@ const LeftSidebar = ({ width }) => {
   return (
     <>
       <div
-        className={`${window.innerWidth < 768 && toggleSmallButtonStatus ? "fixed left-0 top-0 z-[99] h-screen w-full bg-[#000]/30" : "hidden"}`}
+        className={`${toggleSmallButtonStatus ? "fixed left-0 top-0 z-[99] h-screen w-full bg-[#000]/30" : "hidden"}`}
         onClick={() => dispatch(changeToggleSmallButtonStatus(false))}
       ></div>
 
