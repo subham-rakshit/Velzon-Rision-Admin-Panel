@@ -291,7 +291,7 @@ const LeftSidebar = ({ width }) => {
       <ul
         className={`custom-left-sidebar-scrollbar relative z-[999] overflow-y-auto ${leftSidebarSizeType === sidebarSize.COMPACT ? "px-0" : "px-4"} ${
           layoutPositionType === position.SCROLLABLE
-            ? "min-h-full"
+            ? "h-[calc(100vh-70px)] md:min-h-full"
             : layoutType === layout.SEMI_BOX
               ? "h-[calc(100vh-70px)] 2xl:h-[calc(100vh-110px)]"
               : layoutType === layout.VERTICAL &&
@@ -772,7 +772,7 @@ const LeftSidebar = ({ width }) => {
   return (
     <>
       <div
-        className={`${toggleSmallButtonStatus ? "fixed left-0 top-0 z-[99] h-screen w-full bg-[#000]/30" : "hidden"}`}
+        className={`${window.innerWidth < 768 && toggleSmallButtonStatus ? "fixed left-0 top-0 z-[99] h-screen w-full bg-[#000]/30" : "hidden"}`}
         onClick={() => dispatch(changeToggleSmallButtonStatus(false))}
       ></div>
 
@@ -782,7 +782,7 @@ const LeftSidebar = ({ width }) => {
         ${
           leftSidebarSizeType === sidebarSize.SMALL_ICON_VIEW ||
           layoutPositionType === position.SCROLLABLE
-            ? `transition-300 fixed md:relative ${
+            ? `transition-300 fixed h-screen overflow-hidden md:relative md:h-full md:overflow-visible ${
                 layoutType === layout.SEMI_BOX &&
                 leftSidebarVisibilityType === sidebarVisibility.HIDDEN
                   ? "hidden"
