@@ -3,6 +3,7 @@ import React from "react";
 import { MdCopyright, MdHome } from "react-icons/md";
 
 import { ErrorImage } from "../components";
+import { globalStyleObj } from "./assets/styles";
 import { titlesObject } from "./assets/titlesData/titles";
 
 export const metadata = {
@@ -42,7 +43,7 @@ const NotFoundPage = () => {
             The page you are looking for not available!
           </p>
           <Link href="/dashboard">
-            <span className="auth-button gap-2">
+            <span className={`${globalStyleObj.authButton} gap-2`}>
               <MdHome />
               <span>Back to home</span>
             </span>

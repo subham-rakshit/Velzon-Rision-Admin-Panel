@@ -1,7 +1,8 @@
+import { z } from "zod";
+
 import dbConnect from "@/lib/db/dbConnect";
 import UserModel from "@/model/User";
 import { usernameValidation } from "@/schemas/authSchemas/registrationSchema";
-import { z } from "zod";
 
 const UsernameQuerySchema = z.object({
   username: usernameValidation,
@@ -10,7 +11,7 @@ const UsernameQuerySchema = z.object({
 export async function GET(request) {
   await dbConnect();
 
-  //NOTE: http://{{DOMAIN}}/api/user/check-username-unique?username=subham12
+  // NOTE: http://{{DOMAIN}}/api/user/check-username-unique?username=subham12
   try {
     const { searchParams } = new URL(request.url);
 

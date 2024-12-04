@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-//NOTE: only accept for user12, user12345
+// NOTE: only accept for user12, user12345
 export const usernameValidation = z
   .string()
   .min(3, "Username must be at least 2 characters long")

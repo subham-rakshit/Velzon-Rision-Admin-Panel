@@ -4,4 +4,4 @@ const UIModals = () => {
   return <div>UIModals</div>;
 };
 
-export default UIAccordions;
+export default UIModals;

@@ -1,9 +1,10 @@
-import dbConnect from "@/lib/db/dbConnect";
-import handleResponse from "@/lib/middleware/responseMiddleware";
 import { NextResponse } from "next/server";
 
+import dbConnect from "@/lib/db/dbConnect";
+import handleResponse from "@/lib/middleware/responseMiddleware";
+
 export async function GET(request) {
-  await dbConnect(); //INFO: Database connection
+  await dbConnect(); // INFO: Database connection
 
   try {
     const response = NextResponse.json(
@@ -14,7 +15,7 @@ export async function GET(request) {
       { status: 200 }
     );
 
-    //NOTE Handle diffrent type of cookies
+    // NOTE Handle diffrent type of cookies
     const nextAuthCookie = "next-auth.session-token"; // Handle NextAuth token
     const apiAuthCookie = "access-token"; // Handle Api Access Token
 

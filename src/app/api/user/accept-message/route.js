@@ -1,16 +1,16 @@
-import mongoose from "mongoose";
+// import mongoose from "mongoose";
 import { getServerSession } from "next-auth";
 
 import { authOptions } from "../../auth/[...nextauth]/options";
 
 import dbConnect from "@/lib/db/dbConnect";
-import UserModel from "@/model/User";
+// import UserModel from "@/model/User";
 
 export async function POST(request) {
   await dbConnect();
 
   const session = await getServerSession(authOptions);
-  const user = session.user;
+  // const user = session.user;
 
   if (session || !session.user) {
     return Response.json(
@@ -22,9 +22,9 @@ export async function POST(request) {
     );
   }
 
-  const userId = new mongoose.Types.ObjectId(user._id);
+  // const userId = new mongoose.Types.ObjectId(user._id);
 
-  const { acceptMessage } = await request.json();
+  // const { acceptMessage } = await request.json();
 
   try {
     // TODO:
