@@ -31,6 +31,10 @@ import NavSearchBoxRecentSearches from "./navigation/navbar/NavSearchBoxRecentSe
 import ToggleButton from "./navigation/navbar/ToggleButton";
 import RightSidebar from "./navigation/rightSidebar/RightSidebar";
 import TransitionLink from "./navigation/TransitionLink";
+// Dashboard Analytics
+import Breadcrumb from "./pagesComponent/Breadcrumb";
+import CountupText from "./pagesComponent/dashboardAnalytics/CountupText";
+import Widget from "./pagesComponent/dashboardAnalytics/Widget";
 
 export {
   SocialAuthForm,
@@ -66,4 +70,7 @@ export {
   AuthProtectedLayoutProvider,
   Footer,
   LoadingUI,
+  Breadcrumb,
+  Widget,
+  CountupText,
 };

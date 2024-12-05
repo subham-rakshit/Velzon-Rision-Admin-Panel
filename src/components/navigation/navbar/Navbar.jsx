@@ -70,7 +70,7 @@ const Navbar = ({
           ? layoutType === layout.VERTICAL &&
             leftSidebarViewType === sidebarView.DETACHED
             ? `sticky w-full lg:fixed lg:left-0 lg:z-[999] lg:px-[50px]`
-            : "sticky"
+            : "sticky z-[9]"
           : window.innerWidth < 768
             ? "sticky"
             : layoutType === layout.VERTICAL &&
@@ -78,7 +78,7 @@ const Navbar = ({
               ? `w-full lg:absolute lg:left-0 lg:z-[999] lg:px-[50px]`
               : ""
       } 
-      ${globalStyleObj.flexBetween} top-0 h-[70px] shadow-light`}
+      ${globalStyleObj.flexBetween} top-0 min-h-[70px] shadow-light`}
     >
       <div
         className={`${globalStyleObj.flexBetween} ${layoutWidthType === widthType.BOXED ? `mx-auto w-full max-w-[1300px]` : `w-full`} h-full`}

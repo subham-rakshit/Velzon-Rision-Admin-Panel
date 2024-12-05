@@ -291,7 +291,9 @@ const LeftSidebar = ({ width }) => {
   const verticalDefaultLeftSidebarView = () => {
     return (
       <ul
-        className={`custom-left-sidebar-scrollbar relative z-[999] overflow-y-auto ${leftSidebarSizeType === sidebarSize.COMPACT ? "px-0" : "px-4"} ${
+        className={`custom-left-sidebar-scrollbar relative z-[999] overflow-y-auto ${
+          leftSidebarSizeType === sidebarSize.COMPACT ? "px-0" : "px-4"
+        } ${
           layoutPositionType === position.SCROLLABLE
             ? "h-[calc(100vh-70px)] md:min-h-full"
             : layoutType === layout.SEMI_BOX
@@ -798,7 +800,7 @@ const LeftSidebar = ({ width }) => {
         ${
           leftSidebarSizeType === sidebarSize.SMALL_ICON_VIEW ||
           layoutPositionType === position.SCROLLABLE
-            ? `transition-300 fixed h-screen overflow-hidden md:relative md:h-full md:overflow-visible ${
+            ? `transition-300 fixed h-screen md:relative md:min-h-full ${
                 layoutType === layout.SEMI_BOX &&
                 leftSidebarVisibilityType === sidebarVisibility.HIDDEN
                   ? "hidden"
@@ -846,12 +848,38 @@ const LeftSidebar = ({ width }) => {
       >
         {/* NOTE Overlay */}
         <div
-          className={`pointer-events-none absolute inset-0 z-[99] ${leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? `${bgColor} dark:bg-dark-dencity-300` : leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? `${gradientBgColor}` : "bg-light-dencity-900"} opacity-90`}
+          className={`pointer-events-none absolute inset-0 z-[99] ${
+            leftSidebarColorType === sidebarColor.DARK_BG_COLOR
+              ? `${bgColor} dark:bg-dark-dencity-300`
+              : leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR
+                ? `${gradientBgColor}`
+                : "bg-light-dencity-900"
+          } opacity-90`}
         ></div>
 
         {/* NOTE Sidebar Top Logo Section */}
         <div
-          className={`${layoutType === layout.VERTICAL && leftSidebarViewType === sidebarView.DETACHED ? "transition-300 z-[9999] h-[70px] w-full px-[20px] lg:hidden" : "transition-300 z-[9999] h-[70px] w-full px-[20px]"} ${leftSidebarSizeType === sidebarSize.SMALL_ICON_VIEW && layoutPositionType === position.FIXED ? (leftSidebarColorType === sidebarColor.DARK_BG_COLOR ? `${bgColor} dark:bg-dark-dencity-300` : leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? `${gradientBgColor}` : "bg-light-dencity-900") : "bg-transparent"} ${layoutPositionType === position.SCROLLABLE ? "relative" : "sticky left-0 top-0"}`}
+          className={`${
+            layoutType === layout.VERTICAL &&
+            leftSidebarViewType === sidebarView.DETACHED
+              ? "transition-300 z-[9999] h-[70px] w-full px-[20px] lg:hidden"
+              : "transition-300 z-[9999] h-[70px] w-full px-[20px]"
+          } 
+            ${
+              leftSidebarSizeType === sidebarSize.SMALL_ICON_VIEW &&
+              layoutPositionType === position.FIXED
+                ? leftSidebarColorType === sidebarColor.DARK_BG_COLOR
+                  ? `${bgColor} dark:bg-dark-dencity-300`
+                  : leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR
+                    ? `${gradientBgColor}`
+                    : "bg-light-dencity-900"
+                : "bg-transparent"
+            } 
+                ${
+                  layoutPositionType === position.SCROLLABLE
+                    ? "relative"
+                    : "sticky left-0 top-0"
+                }`}
         >
           <TransitionLink
             href="/dashboard"

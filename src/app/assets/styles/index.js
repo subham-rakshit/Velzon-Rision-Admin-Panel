@@ -1,7 +1,7 @@
 export const globalStyleObj = {
   // Pages
   authSectionContainer: "w-full min-h-[100vh] bg-[#F3F3F9]",
-  initialPageStyle: "min-h-[300vh] bg-transparent",
+  initialPageStyle: "min-h-[calc(100vh-110px)] bg-transparent",
   // Auth
   authFormContainer: "w-full px-2",
   authBannerText: "text-[#ffffff80] font-poppins-md text-[15px] text-center",
@@ -66,9 +66,11 @@ export const globalStyleObj = {
   text22BoldLight550Dark550:
     "text-dark-weight-550 dark:text-light-weight-550 font-poppins-md text-[22px]",
   text16BoldLight550Dark550:
-    "text-dark-weight-550 dark:text-light-weight-550 font-poppins-md text-[16px]",
+    "text-dark-weight-550 dark:text-light-weight-550 font-poppins-bold text-[16px]",
   text16Light550Dark550:
     "text-dark-weight-550 dark:text-light-weight-550 font-poppins-sb text-[16px]",
+  text16RgLight600Dark550:
+    "text-dark-weight-550 dark:text-light-weight-600 font-poppins-rg text-[16px]",
   text13Light550Dark550:
     "text-dark-weight-550 dark:text-light-weight-550 font-poppins-rg text-[13px]",
   text13Light550Dark550Md:

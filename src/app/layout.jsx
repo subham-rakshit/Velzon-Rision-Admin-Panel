@@ -3,9 +3,10 @@ import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 
 import { ToastContainer } from "./clientToastContainer.js";
-
 import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
+import StoreProvider from "./StoreProvider.jsx";
+
 import AuthProvider from "@/context/AuthProvider.jsx";
 
 export const metadata = {
@@ -67,9 +68,11 @@ const RootLayout = async ({ children }) => {
         className={`${poppinsRg.variable} ${poppinsMd.variable} ${poppinsBl.variable} ${poppinsBo.variable} ${poppinsLi.variable} ${poppinsELi.variable} ${poppinsSb.variable} antialiased`}
       >
         <AuthProvider>
-          <NextIntlClientProvider messages={messages}>
-            <main>{children}</main>
-          </NextIntlClientProvider>
+          <StoreProvider>
+            <NextIntlClientProvider messages={messages}>
+              {children}
+            </NextIntlClientProvider>
+          </StoreProvider>
 
           <ToastContainer
             position="top-right"

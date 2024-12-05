@@ -65,7 +65,7 @@ const LeftSidebarSmallIconView = ({
   };
 
   return (
-    <ul className={`relative z-[999] min-h-full py-2`}>
+    <ul className={`relative z-[999] min-h-fit py-2`}>
       {leftSidebarData.map((category) =>
         category.tabNameList.map((parent) =>
           parent.tabDropdownList.length > 0 ? (

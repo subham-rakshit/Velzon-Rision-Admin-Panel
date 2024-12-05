@@ -207,14 +207,16 @@ const AuthProtectedLayoutProvider = ({ children }) => {
         <NextTopLoader showSpinner={false} color="#e61247" />
       )}
       <div
-        className={`min-h-full ${
-          layoutType === layout.HORIZONTAL ? "flex-col" : "flex"
-        } ${
+        className={`min-h-full ${layoutType === layout.HORIZONTAL ? "flex-col" : "flex"} ${
           layoutType === layout.SEMI_BOX
             ? "2xl:py-5 2xl:pl-5"
             : layoutType === layout.VERTICAL &&
                 leftSidebarViewType === sidebarView.DETACHED
-              ? "lg:mx-10"
+              ? layoutPositionType === position.SCROLLABLE
+                ? "overflow-hidden lg:mx-10"
+                : leftSidebarSizeType === sidebarSize.SMALL_ICON_VIEW
+                  ? "overflow-hidden lg:mx-10"
+                  : "lg:mx-10"
               : ""
         } ${
           layoutWidthType === widthType.BOXED && layoutType === layout.VERTICAL
@@ -256,7 +258,7 @@ const AuthProtectedLayoutProvider = ({ children }) => {
             <HorizontalSidebar resizeHeight={horizontalNavHeight} />
           )}
           <div
-            className={`p-5 ${
+            className={`relative min-h-screen p-5 ${
               layoutType === layout.VERTICAL &&
               leftSidebarViewType === sidebarView.DETACHED
                 ? "lg:mt-[70px]"
