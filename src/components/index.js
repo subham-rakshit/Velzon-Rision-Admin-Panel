@@ -33,7 +33,11 @@ import RightSidebar from "./navigation/rightSidebar/RightSidebar";
 import TransitionLink from "./navigation/TransitionLink";
 // Dashboard Analytics
 import Breadcrumb from "./pagesComponent/Breadcrumb";
+import AudiencesMetrics from "./pagesComponent/dashboardAnalytics/AudiencesMetrics";
+import AudiencesSessionsByCountry from "./pagesComponent/dashboardAnalytics/AudiencesSessionsByCountry";
 import CountupText from "./pagesComponent/dashboardAnalytics/CountupText";
+import CustomExportButton from "./pagesComponent/dashboardAnalytics/CustomExportButton";
+import SessionsByCountries from "./pagesComponent/dashboardAnalytics/SessionsByCountries";
 import Widget from "./pagesComponent/dashboardAnalytics/Widget";
 
 export {
@@ -73,4 +77,8 @@ export {
   Breadcrumb,
   Widget,
   CountupText,
+  CustomExportButton,
+  SessionsByCountries,
+  AudiencesMetrics,
+  AudiencesSessionsByCountry,
 };

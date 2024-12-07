@@ -69,7 +69,7 @@ export const globalStyleObj = {
     "text-dark-weight-550 dark:text-light-weight-550 font-poppins-bold text-[16px]",
   text16Light550Dark550:
     "text-dark-weight-550 dark:text-light-weight-550 font-poppins-sb text-[16px]",
-  text16RgLight600Dark550:
+  text16RgLight600Dark600:
     "text-dark-weight-550 dark:text-light-weight-600 font-poppins-rg text-[16px]",
   text13Light550Dark550:
     "text-dark-weight-550 dark:text-light-weight-550 font-poppins-rg text-[13px]",
