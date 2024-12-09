@@ -11,6 +11,12 @@ module.exports = {
     "./node_modules/@shadcn/ui/**/*.{js,ts,jsx,tsx}", // shadcn/ui components
     flowbite.content(),
   ],
+  safelist: [
+    "hover:bg-[#066b5e]",
+    "hover:bg-[#5147A3]",
+    "hover:bg-[#2a5fc1]",
+    "hover:bg-[#405189]",
+  ],
   theme: {
     extend: {
       backgroundImage: {

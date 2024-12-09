@@ -507,8 +507,141 @@ const audienceSessionsByCountryData = [
   },
 ];
 
+const userByDeviceData = [
+  {
+    id: "Today",
+    data: [
+      {
+        name: "Desktop",
+        value: 78.56,
+        percentage: 2.08,
+      },
+      {
+        name: "Mobile",
+        value: 105.02,
+        percentage: -10.52,
+      },
+      {
+        name: "Tablet",
+        value: 42.89,
+        percentage: -7.36,
+      },
+    ],
+  },
+
+  {
+    id: "LastWeek",
+    data: [
+      {
+        name: "Desktop",
+        value: 81.56,
+        percentage: 2.08,
+      },
+      {
+        name: "Mobile",
+        value: 50.02,
+        percentage: -10.52,
+      },
+      {
+        name: "Tablet",
+        value: 24.89,
+        percentage: -7.36,
+      },
+    ],
+  },
+
+  {
+    id: "LastMonth",
+    data: [
+      {
+        name: "Desktop",
+        value: 28.56,
+        percentage: 2.08,
+      },
+      {
+        name: "Mobile",
+        value: 75.02,
+        percentage: -10.52,
+      },
+      {
+        name: "Tablet",
+        value: 55.89,
+        percentage: -7.36,
+      },
+    ],
+  },
+
+  {
+    id: "CurrentYear",
+    data: [
+      {
+        name: "Desktop",
+        value: 20.56,
+        percentage: 2.08,
+      },
+      {
+        name: "Mobile",
+        value: 89.02,
+        percentage: -10.52,
+      },
+      {
+        name: "Tablet",
+        value: 35.89,
+        percentage: -7.36,
+      },
+    ],
+  },
+];
+
+const topPages = [
+  {
+    id: 1,
+    page: "/themesbrand/skote-25867",
+    active: "99",
+    user: "25.3%",
+  },
+  {
+    id: 2,
+    page: "/dashonic/chat-24518",
+    active: "86",
+    user: "22.7%",
+  },
+  {
+    id: 3,
+    page: "/skote/timeline-27391",
+    active: "64",
+    user: "18.7%",
+  },
+  {
+    id: 4,
+    page: "/themesbrand/minia-26441",
+    active: "53",
+    user: "14.2%",
+  },
+  {
+    id: 5,
+    page: "/dashon/dashboard-29873",
+    active: "33",
+    user: "12.6%",
+  },
+  {
+    id: 6,
+    page: "/doot/chats-29964",
+    active: "20",
+    user: "10.9%",
+  },
+  {
+    id: 7,
+    page: "/steex/pages-29739",
+    active: "10",
+    user: "07.3%",
+  },
+];
+
 export {
   sessionByCountriesData,
   audienceMatricsData,
   audienceSessionsByCountryData,
+  userByDeviceData,
+  topPages,
 };

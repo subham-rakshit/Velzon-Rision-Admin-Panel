@@ -24,12 +24,8 @@ const SessionsByCountries = () => {
   const [selectedData, setSelectedData] = useState(
     sessionByCountriesData[2].chartData
   );
-  const [colors, setColors] = useState({});
-
-  useEffect(() => {
-    const customColor = getCustomColor({ layoutThemePrimaryColorType });
-    setColors(customColor);
-  }, [layoutThemePrimaryColorType]);
+  const customColor = getCustomColor({ layoutThemePrimaryColorType });
+  const { active, bgColor, hoverBgColor, textColor } = customColor;
 
   useEffect(() => {
     const data = sessionByCountriesData.find((data) => data.id === selectedId);
@@ -52,11 +48,9 @@ const SessionsByCountries = () => {
             <button
               key={data.id}
               type="button"
-              className={`${colors.textColor} ${
-                selectedId === data.id
-                  ? `${colors.active} text-white`
-                  : colors.bgColor
-              } ${colors.hoverBgColor} transition-300 rounded-[3px] px-3 py-1 font-poppins-rg text-[13px] hover:text-white`}
+              className={`${textColor} ${
+                selectedId === data.id ? `${active} text-white` : bgColor
+              } ${hoverBgColor} transition-300 rounded-[3px] px-3 py-1 font-poppins-rg text-[13px] hover:text-white`}
               onClick={() => setSelectedId(data.id)}
             >
               {data.name}

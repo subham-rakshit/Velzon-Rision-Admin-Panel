@@ -29,12 +29,8 @@ const AudiencesMetrics = () => {
     last: true,
     current: true,
   });
-  const [colors, setColors] = useState({});
-
-  useEffect(() => {
-    const customColor = getCustomColor({ layoutThemePrimaryColorType });
-    setColors(customColor);
-  }, [layoutThemePrimaryColorType]);
+  const customColor = getCustomColor({ layoutThemePrimaryColorType });
+  const { active, bgColor, hoverBgColor, textColor, hexCode } = customColor;
 
   useEffect(() => {
     const data = audienceMatricsData.find((data) => data.id === selectedId);
@@ -64,11 +60,9 @@ const AudiencesMetrics = () => {
             <button
               key={data.id}
               type="button"
-              className={`${colors.textColor} ${
-                selectedId === data.id
-                  ? `${colors.active} text-white`
-                  : colors.bgColor
-              } ${colors.hoverBgColor} transition-300 rounded-[3px] px-3 py-1 font-poppins-rg text-[13px] hover:text-white`}
+              className={`${textColor} ${
+                selectedId === data.id ? `${active} text-white` : bgColor
+              } ${hoverBgColor} transition-300 rounded-[3px] px-3 py-1 font-poppins-rg text-[13px] hover:text-white`}
               onClick={() => setSelectedId(data.id)}
             >
               {data.name}
@@ -174,7 +168,7 @@ const AudiencesMetrics = () => {
                               display: "inline-block",
                               width: "10px",
                               height: "10px",
-                              backgroundColor: colors.hexCode,
+                              backgroundColor: hexCode,
                               opacity: data.name === "lastYear" ? 1 : 0.3,
                               marginRight: "15px",
                               borderRadius: "50%",
@@ -201,7 +195,7 @@ const AudiencesMetrics = () => {
                       className={`flex cursor-pointer items-center ${legendVisibility.last ? "opacity-100" : "opacity-30"}`}
                       onClick={() => handleLegendClick("last")}
                     >
-                      <div className={`mr-2 size-3 ${colors.active}`}></div>
+                      <div className={`mr-2 size-3 ${active}`}></div>
                       <span className={`${globalStyleObj.text13Light400}`}>
                         Last Year
                       </span>
@@ -212,9 +206,7 @@ const AudiencesMetrics = () => {
                       className={`flex cursor-pointer items-center ${legendVisibility.current ? "opacity-100" : "opacity-30"}`}
                       onClick={() => handleLegendClick("current")}
                     >
-                      <div
-                        className={`mr-2 size-3 ${colors.active} opacity-30`}
-                      ></div>
+                      <div className={`mr-2 size-3 ${active} opacity-30`}></div>
                       <span className={`${globalStyleObj.text13Light400}`}>
                         Current Year
                       </span>
@@ -228,7 +220,7 @@ const AudiencesMetrics = () => {
                 dataKey="lastYear"
                 stackId="a"
                 barSize={5}
-                fill={colors.hexCode}
+                fill={hexCode}
                 radius={[0, 0, 4, 4]}
               />
             )}
@@ -239,7 +231,7 @@ const AudiencesMetrics = () => {
                 barSize={5}
                 radius={[4, 4, 0, 0]}
                 style={{
-                  fill: colors.hexCode,
+                  fill: hexCode,
                   opacity: 0.3,
                 }}
               />

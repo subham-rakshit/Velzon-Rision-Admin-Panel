@@ -38,6 +38,9 @@ import AudiencesSessionsByCountry from "./pagesComponent/dashboardAnalytics/Audi
 import CountupText from "./pagesComponent/dashboardAnalytics/CountupText";
 import CustomExportButton from "./pagesComponent/dashboardAnalytics/CustomExportButton";
 import SessionsByCountries from "./pagesComponent/dashboardAnalytics/SessionsByCountries";
+import TopPages from "./pagesComponent/dashboardAnalytics/TopPages";
+import TopReferralsPages from "./pagesComponent/dashboardAnalytics/TopReferralsPages";
+import UserByDevice from "./pagesComponent/dashboardAnalytics/UserByDevice";
 import Widget from "./pagesComponent/dashboardAnalytics/Widget";
 
 export {
@@ -81,4 +84,7 @@ export {
   SessionsByCountries,
   AudiencesMetrics,
   AudiencesSessionsByCountry,
+  UserByDevice,
+  TopReferralsPages,
+  TopPages,
 };

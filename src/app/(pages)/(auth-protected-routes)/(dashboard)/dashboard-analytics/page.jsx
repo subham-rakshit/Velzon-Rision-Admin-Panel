@@ -1,11 +1,12 @@
 import { VectorMap } from "@south-paw/react-vector-maps";
 import Image from "next/image";
 import React from "react";
-import { FaRegClock } from "react-icons/fa";
+import { FaArrowUp, FaRegClock } from "react-icons/fa";
 import { FiAlertTriangle, FiActivity, FiExternalLink } from "react-icons/fi";
 import { LuUsers } from "react-icons/lu";
 import { RiArrowRightLine } from "react-icons/ri";
 
+import illustrator from "../../../../assets/images/illustrator-1.png";
 import illustaratorImg from "../../../../assets/images/user-illustarator-2.png";
 import world from "../../../../assets/jsonData/world.svg.json";
 
@@ -17,7 +18,10 @@ import {
   Breadcrumb,
   CustomExportButton,
   SessionsByCountries,
+  TopPages,
+  TopReferralsPages,
   TransitionLink,
+  UserByDevice,
   Widget,
 } from "@/components";
 import ROUTES from "@/constants/routes";
@@ -233,7 +237,70 @@ const DashboardAnalytics = () => {
           <AudiencesSessionsByCountry />
         </div>
       </div>
-      {/* Container 3 */}
+
+      {/* Container 3 (User by device and Top Referrals Pages and Top Pages container) */}
+      <div className="mt-5 flex w-full flex-col gap-5 xl:flex-row xl:justify-between">
+        {/* Container 3.1 (User by device container) */}
+        <div
+          className={`${globalStyleObj.backgroundLight900Dark300} w-full rounded-sm shadow-light xl:w-[33%]`}
+        >
+          <UserByDevice />
+        </div>
+
+        {/* Container 3.2 (Top Referrals Pages and Top Pages container) */}
+        <div className={`flex w-full flex-col gap-5 md:flex-row xl:w-[66%]`}>
+          {/* Container 3.2.1 (Top Referrals Pages container) */}
+          <div
+            className={`${globalStyleObj.backgroundLight900Dark300} w-full rounded-sm shadow-light`}
+          >
+            <div
+              className={`${globalStyleObj.flexBetween} border-b p-3 dark:border-b-zinc-700`}
+            >
+              <h4
+                className={`${globalStyleObj.text16Light550Dark550} tracking-normal`}
+              >
+                Top Referrals Pages
+              </h4>
+              <CustomExportButton />
+            </div>
+
+            <div className="mt-2 flex justify-between gap-2 p-3 font-poppins-rg text-[13px] text-light-weight-400">
+              <div>
+                <h6 className="mb-1 uppercase">
+                  <strong>Total Referrals Page</strong>
+                </h6>
+                <h4 className="mb-1 font-poppins-md text-[20px] text-dark-weight-550 dark:text-light-weight-550">
+                  725,800
+                </h4>
+                <p className="flex flex-wrap items-center">
+                  <span
+                    className={`flex items-center gap-1 rounded-sm bg-[#F3F6F9] p-px px-[4px] font-poppins-md text-[11px] text-[#0AB39C] dark:bg-[#fff]/5`}
+                  >
+                    <FaArrowUp />
+                    15.72%
+                  </span>
+                  vs. previous month
+                </p>
+              </div>
+
+              <div className="w-[120px] text-center">
+                <Image
+                  src={illustrator}
+                  style={{ width: "auto", height: "auto" }}
+                  alt="illustrator image"
+                />
+              </div>
+            </div>
+            <TopReferralsPages />
+          </div>
+          {/* Container 3.2.1 (Top Pages container) */}
+          <div
+            className={`${globalStyleObj.backgroundLight900Dark300} w-full rounded-sm shadow-light`}
+          >
+            <TopPages />
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
