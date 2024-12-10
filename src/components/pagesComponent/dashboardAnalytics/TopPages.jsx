@@ -58,9 +58,9 @@ const TopPages = () => {
         <table className="size-full">
           <thead className="border border-dashed border-[#000]/10 bg-[#000]/5 font-poppins-rg text-[13px] text-dark-weight-300 dark:border-[#f3f3f3]/5 dark:bg-[#f3f3f3]/5">
             <tr>
-              <th className="border p-3 text-start">Active Page</th>
-              <th className="border p-3 text-start">Active</th>
-              <th className="border p-3 text-start">Users</th>
+              <th className="p-3 text-start">Active Page</th>
+              <th className="p-3 text-start">Active</th>
+              <th className="p-3 text-start">Users</th>
             </tr>
           </thead>
           <tbody>
@@ -69,7 +69,7 @@ const TopPages = () => {
                 key={index}
                 className="font-poppins-rg text-[13px] text-dark-weight-550 dark:text-light-weight-450"
               >
-                <td className="px-3 text-blue-900">
+                <td className="px-3 text-blue-900 dark:text-light-weight-550">
                   <Link href="#">{item.page}</Link>
                 </td>
                 <td className="px-3">{item.active}</td>

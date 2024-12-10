@@ -76,7 +76,7 @@ const AudiencesMetrics = () => {
           <p
             className={`flex items-center gap-1 font-poppins-sb text-[16px] text-dark-weight-550 dark:text-light-weight-450`}
           >
-            <CountupText number={854} singleValue={true} />
+            <CountupText number={854} decimals={0} suffix="" prefix="" />
             <span className={`text-[11px] text-green-500`}>
               <strong className="flex items-center gap-1">
                 49%
@@ -93,7 +93,7 @@ const AudiencesMetrics = () => {
           <p
             className={`flex items-center gap-1 font-poppins-sb text-[16px] text-dark-weight-550 dark:text-light-weight-450`}
           >
-            <CountupText number={1278} singleValue={true} />
+            <CountupText number={1278} decimals={0} suffix="" prefix="" />
             <span className={`text-[11px] text-green-500`}>
               <strong className="flex items-center gap-1">
                 60%
@@ -113,7 +113,8 @@ const AudiencesMetrics = () => {
             <CountupText
               number={3}
               secondNumber={40}
-              prefix={"m"}
+              suffix={"m"}
+              prefix=""
               secondPrefix={"sec"}
             />
             <span className={`text-[11px] text-green-500`}>

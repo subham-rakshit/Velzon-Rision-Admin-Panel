@@ -11,6 +11,8 @@ const Widget = ({
   percentage,
   icon,
   prefix,
+  suffix,
+  decimals,
   secondNumber,
   secondPrefix,
 }) => {
@@ -23,6 +25,8 @@ const Widget = ({
             number={number}
             secondNumber={secondNumber}
             prefix={prefix}
+            suffix={suffix}
+            decimals={decimals}
             secondPrefix={secondPrefix}
           />
         </h1>

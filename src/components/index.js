@@ -42,6 +42,10 @@ import TopPages from "./pagesComponent/dashboardAnalytics/TopPages";
 import TopReferralsPages from "./pagesComponent/dashboardAnalytics/TopReferralsPages";
 import UserByDevice from "./pagesComponent/dashboardAnalytics/UserByDevice";
 import Widget from "./pagesComponent/dashboardAnalytics/Widget";
+// Dashboard CRM
+import BalanceOverview from "./pagesComponent/dashboardCRM/BalanceOverview";
+import DealType from "./pagesComponent/dashboardCRM/DealType";
+import SalesForecast from "./pagesComponent/dashboardCRM/SalesForecast";
 
 export {
   SocialAuthForm,
@@ -87,4 +91,7 @@ export {
   UserByDevice,
   TopReferralsPages,
   TopPages,
+  SalesForecast,
+  DealType,
+  BalanceOverview,
 };

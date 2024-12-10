@@ -113,30 +113,20 @@ const AudiencesSessionsByCountry = () => {
             align="end"
             className={`w-[150px] bg-light-dencity-900 p-0 py-2 dark:bg-dark-dencity-200`}
           >
-            <DropdownMenuItem
-              value="Today"
-              onSelect={() => setTimeLine("Today")}
-            >
-              Today
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              value="LastWeek"
-              onSelect={() => setTimeLine("LastWeek")}
-            >
-              Last Week
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              value="LastMonth"
-              onSelect={() => setTimeLine("LastMonth")}
-            >
-              Last Month
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              value="CurrentYear"
-              onSelect={() => setTimeLine("CurrentYear")}
-            >
-              Current Year
-            </DropdownMenuItem>
+            {["Today", "LastWeek", "LastMonth", "CurrentYear"].map((item) => (
+              <DropdownMenuItem
+                key={item}
+                value={item}
+                onSelect={() => setTimeLine(item)}
+                className={`font-poppins-rg text-[13px] tracking-wide text-dark-weight-550 dark:text-light-weight-450 ${
+                  timeLine === item
+                    ? "bg-[#f3f3f3]/90 dark:bg-[#f3f3f3]/10"
+                    : ""
+                }`}
+              >
+                {item}
+              </DropdownMenuItem>
+            ))}
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

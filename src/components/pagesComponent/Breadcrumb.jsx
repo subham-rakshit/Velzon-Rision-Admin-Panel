@@ -1,12 +1,18 @@
+"use client";
+
 import React from "react";
 import { IoIosArrowForward } from "react-icons/io";
 
+import { sidebarView } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
 import { globalStyleObj } from "@/app/assets/styles";
+import { useAppSelector } from "@/lib/store/hooks";
 
 const Breadcrumb = ({ title, pageTilte }) => {
+  const { leftSidebarViewType } = useAppSelector((state) => state.layout);
+
   return (
     <div
-      className={`${globalStyleObj.flexBetween} ${globalStyleObj.backgroundLight900Dark300} absolute left-0 top-0 w-full px-5 py-3 shadow-light`}
+      className={`${globalStyleObj.flexBetween} ${leftSidebarViewType === sidebarView.DETACHED ? "bg-transparent" : `${globalStyleObj.backgroundLight900Dark300} shadow-light`} absolute left-0 top-0 w-full px-5 py-3`}
     >
       <h4 className={`${globalStyleObj.text16BoldLight550Dark550} uppercase`}>
         {title}

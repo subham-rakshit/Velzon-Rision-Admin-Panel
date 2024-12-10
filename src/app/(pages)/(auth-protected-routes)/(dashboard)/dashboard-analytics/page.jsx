@@ -33,12 +33,9 @@ export const metadata = {
 const DashboardAnalytics = () => {
   return (
     <div className={`min-h-full`}>
-      <Breadcrumb title="Analytics" pageTilte="Dashboard" />
-      {/* Container 1 (Upgrade Plan and Widgets && Live user and Sessions Country container) */}
+      <Breadcrumb title="Analytics" pageTilte="Dashboards" />
       <div className={`mt-[40px] flex flex-col gap-5 2xl:flex-row`}>
-        {/* Container 1.1 (Upgrade Plan and Widgets container) */}
         <div className="flex flex-col gap-5 2xl:w-2/5">
-          {/* Container 1.1.1 (Upgrade Plan Container) */}
           <div
             className={`${globalStyleObj.backgroundLight900Dark300} overflow-hidden rounded-sm shadow-light`}
           >
@@ -95,7 +92,7 @@ const DashboardAnalytics = () => {
               />
             </div>
           </div>
-          {/* Container 1.1.2 (Widget - Users and Sessions Container) */}
+
           <div className="flex flex-col gap-5 md:flex-row md:justify-between">
             <div
               className={`${globalStyleObj.backgroundLight900Dark300} transition-300 flex w-full justify-between rounded-sm px-3 py-4 shadow-light hover:translate-y-[-4px] hover:shadow-lg md:w-[49%]`}
@@ -105,7 +102,9 @@ const DashboardAnalytics = () => {
                 number="28.10"
                 status="up"
                 percentage="16.24"
-                prefix="k"
+                suffix="k"
+                prefix=""
+                decimals={2}
                 icon={<LuUsers color={"#2998D5"} size={22} />}
               />
             </div>
@@ -118,12 +117,14 @@ const DashboardAnalytics = () => {
                 number="97.66"
                 status="down"
                 percentage="3.96"
-                prefix="k"
+                suffix="k"
+                prefix=""
+                decimals={2}
                 icon={<FiActivity color={"#2998D5"} size={22} />}
               />
             </div>
           </div>
-          {/* Container 1.1.3 (Widget - Avg. Visit and Bounce Rate Container) */}
+
           <div className="flex flex-col gap-5 md:flex-row md:justify-between">
             <div
               className={`${globalStyleObj.backgroundLight900Dark300} transition-300 flex w-full justify-between rounded-sm px-3 py-4 shadow-light hover:translate-y-[-4px] hover:shadow-lg md:w-[49%]`}
@@ -134,7 +135,9 @@ const DashboardAnalytics = () => {
                 secondNumber="40"
                 status="down"
                 percentage="0.24"
-                prefix="m"
+                suffix="m"
+                prefix=""
+                decimals={0}
                 secondPrefix="sec"
                 icon={<FaRegClock color={"#2998D5"} size={22} />}
               />
@@ -148,15 +151,16 @@ const DashboardAnalytics = () => {
                 number="33.48"
                 status="up"
                 percentage="7.05"
-                prefix="%"
+                suffix="%"
+                prefix=""
+                decimals={2}
                 icon={<FiExternalLink color={"#2998D5"} size={22} />}
               />
             </div>
           </div>
         </div>
-        {/* Container 1.2 (Live user and Sessions Country container) */}
+
         <div className="flex w-full flex-col gap-5 xl:flex-row 2xl:w-3/5">
-          {/* Container 1.2.1 (Live user container) */}
           <div
             className={`${globalStyleObj.backgroundLight900Dark300} flex w-full flex-col justify-between rounded-sm shadow-light xl:w-[49%]`}
           >
@@ -213,7 +217,6 @@ const DashboardAnalytics = () => {
             </div>
           </div>
 
-          {/* Container 1.2.2 (Sessions Country container) */}
           <div
             className={`${globalStyleObj.backgroundLight900Dark300} flex w-full flex-col justify-between rounded-sm shadow-light xl:w-[49%]`}
           >
@@ -221,16 +224,14 @@ const DashboardAnalytics = () => {
           </div>
         </div>
       </div>
-      {/* Container 2 (Audiences Metrics and Audience Sessions by Country container) */}
+
       <div className="mt-5 flex w-full flex-col gap-5 xl:flex-row xl:justify-between">
-        {/* Container 2.1 (Audiences Metrics container) */}
         <div
           className={`${globalStyleObj.backgroundLight900Dark300} rounded-sm shadow-light xl:w-[49%]`}
         >
           <AudiencesMetrics />
         </div>
 
-        {/* Container 2.2 (Audience Sessions by Country container) */}
         <div
           className={`${globalStyleObj.backgroundLight900Dark300} flex flex-col justify-between rounded-sm shadow-light xl:w-[49%]`}
         >
@@ -238,18 +239,14 @@ const DashboardAnalytics = () => {
         </div>
       </div>
 
-      {/* Container 3 (User by device and Top Referrals Pages and Top Pages container) */}
       <div className="mt-5 flex w-full flex-col gap-5 xl:flex-row xl:justify-between">
-        {/* Container 3.1 (User by device container) */}
         <div
           className={`${globalStyleObj.backgroundLight900Dark300} w-full rounded-sm shadow-light xl:w-[33%]`}
         >
           <UserByDevice />
         </div>
 
-        {/* Container 3.2 (Top Referrals Pages and Top Pages container) */}
         <div className={`flex w-full flex-col gap-5 md:flex-row xl:w-[66%]`}>
-          {/* Container 3.2.1 (Top Referrals Pages container) */}
           <div
             className={`${globalStyleObj.backgroundLight900Dark300} w-full rounded-sm shadow-light`}
           >
@@ -293,7 +290,7 @@ const DashboardAnalytics = () => {
             </div>
             <TopReferralsPages />
           </div>
-          {/* Container 3.2.1 (Top Pages container) */}
+
           <div
             className={`${globalStyleObj.backgroundLight900Dark300} w-full rounded-sm shadow-light`}
           >

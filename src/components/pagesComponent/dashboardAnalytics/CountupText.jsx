@@ -7,37 +7,36 @@ const CountupText = ({
   number,
   secondNumber,
   prefix,
+  suffix,
   secondPrefix,
-  singleValue,
+  decimals,
 }) => {
   if (secondNumber && secondPrefix) {
     return (
       <span className="flex items-center gap-1">
         <span>
-          <CountUp start={0} end={number} decimals={0} duration={4} />
-          {prefix}
+          <CountUp start={0} end={number} decimals={decimals} duration={4} />
+          {suffix}
         </span>
         <span>
-          <CountUp start={0} end={secondNumber} decimals={0} duration={4} />
+          <CountUp
+            start={0}
+            end={secondNumber}
+            decimals={decimals}
+            duration={4}
+          />
           {secondPrefix}
         </span>
       </span>
     );
-  } else if (singleValue) {
-    return (
-      <>
-        <CountUp start={0} end={number} decimals={0} duration={4} />
-        {prefix}
-      </>
-    );
-  } else {
-    return (
-      <>
-        <CountUp start={0} end={number} decimals={2} duration={4} />
-        {prefix}
-      </>
-    );
   }
+  return (
+    <>
+      {prefix}
+      <CountUp start={0} end={number} decimals={decimals} duration={4} />
+      {suffix}
+    </>
+  );
 };
 
 export default CountupText;
