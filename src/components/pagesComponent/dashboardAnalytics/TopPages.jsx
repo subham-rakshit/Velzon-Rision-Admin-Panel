@@ -56,21 +56,24 @@ const TopPages = () => {
 
       <div className="h-[380px]">
         <table className="size-full">
-          <thead>
+          <thead className="border border-dashed border-[#000]/10 bg-[#000]/5 font-poppins-rg text-[13px] text-dark-weight-300 dark:border-[#f3f3f3]/5 dark:bg-[#f3f3f3]/5">
             <tr>
-              <th>Active Page</th>
-              <th>Active</th>
-              <th>Users</th>
+              <th className="border p-3 text-start">Active Page</th>
+              <th className="border p-3 text-start">Active</th>
+              <th className="border p-3 text-start">Users</th>
             </tr>
           </thead>
           <tbody>
             {(topPages || []).map((item, index) => (
-              <tr key={index}>
-                <td>
+              <tr
+                key={index}
+                className="font-poppins-rg text-[13px] text-dark-weight-550 dark:text-light-weight-450"
+              >
+                <td className="px-3 text-blue-900">
                   <Link href="#">{item.page}</Link>
                 </td>
-                <td>{item.active}</td>
-                <td>{item.user}</td>
+                <td className="px-3">{item.active}</td>
+                <td className="px-3">{item.user}</td>
               </tr>
             ))}
           </tbody>
