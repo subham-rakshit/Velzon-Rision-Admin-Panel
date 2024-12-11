@@ -50,6 +50,10 @@ import DealType from "./pagesComponent/dashboardCRM/DealType";
 import MyTasks from "./pagesComponent/dashboardCRM/MyTasks";
 import SalesForecast from "./pagesComponent/dashboardCRM/SalesForecast";
 import UpcomingActivites from "./pagesComponent/dashboardCRM/UpcomingActivites";
+// Dashboard Ecommerce
+import AddPrdocutsAndSheet from "./pagesComponent/dashboardEcommerce/AddPrdocutsAndSheet";
+import DateRangePicker from "./pagesComponent/dashboardEcommerce/DateRangePicker";
+import EcommerceWidgets from "./pagesComponent/dashboardEcommerce/EcommerceWidgets";
 
 export {
   SocialAuthForm,
@@ -102,4 +106,7 @@ export {
   MyTasks,
   UpcomingActivites,
   ClosingDeals,
+  DateRangePicker,
+  AddPrdocutsAndSheet,
+  EcommerceWidgets,
 };

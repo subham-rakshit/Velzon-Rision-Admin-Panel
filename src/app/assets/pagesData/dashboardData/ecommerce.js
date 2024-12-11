@@ -1,0 +1,71 @@
+import { BiUserCircle } from "react-icons/bi";
+import { FiArrowUpRight, FiArrowDownRight } from "react-icons/fi";
+import {
+  RiMoneyDollarCircleLine,
+  RiShoppingBagLine,
+  RiWalletLine,
+} from "react-icons/ri";
+
+const ecomWidgets = [
+  {
+    id: 1,
+    label: "Total Earnings",
+    badge: <FiArrowUpRight />,
+    badgeClass: "text-[#0AB39C]",
+    percentage: "+16.24",
+    counter: "559.25",
+    link: "View net earnings",
+    bgcolor: "bg-[#0AB39C]/10 text-[#0AB39C]",
+    icon: <RiMoneyDollarCircleLine />,
+    decimals: 2,
+    prefix: "$",
+    suffix: "k",
+  },
+  {
+    id: 2,
+    cardColor: "secondary",
+    label: "Orders",
+    badge: <FiArrowDownRight />,
+    badgeClass: "text-[#F06548]",
+    percentage: "-3.57",
+    counter: "36894",
+    link: "View all orders",
+    bgcolor: "bg-[#299CDB]/10 text-[#299CDB]",
+    icon: <RiShoppingBagLine />,
+    decimals: 0,
+    prefix: "",
+    separator: ",",
+    suffix: "",
+  },
+  {
+    id: 3,
+    cardColor: "success",
+    label: "Customers",
+    badge: <FiArrowUpRight />,
+    badgeClass: "text-[#0AB39C]",
+    percentage: "+29.08",
+    counter: "183.35",
+    link: "See details",
+    bgcolor: "bg-[#F7B850]/10 text-[#F7B850]",
+    icon: <BiUserCircle />,
+    decimals: 2,
+    prefix: "",
+    suffix: "M",
+  },
+  {
+    id: 4,
+    cardColor: "info",
+    label: "My Balance",
+    badgeClass: "muted",
+    percentage: "+0.00",
+    counter: "165.89",
+    link: "Withdraw money",
+    bgcolor: "bg-[#5147A3]/10 text-[#5147A3]",
+    icon: <RiWalletLine />,
+    decimals: 2,
+    prefix: "$",
+    suffix: "k",
+  },
+];
+
+export { ecomWidgets };
