@@ -33,7 +33,7 @@ html .dark::-webkit-scrollbar-thumb {
   border-radius: 4px;
 }
 .dark .scrollbar-custom::-webkit-scrollbar-thumb {
-  background-color: #262a2f;
+  background-color: #292E32;
   border-radius: 4px;
 }
 .scrollbar-custom::-webkit-scrollbar-hover {

@@ -162,7 +162,7 @@ const BalanceOverview = () => {
                         {name}
                       </p>
                       <div className="px-2 pb-2">
-                        <div className="flex items-center gap-2">
+                        <div className="mb-2 flex items-center gap-2">
                           <span
                             className={`size-[10px] rounded-full`}
                             style={{

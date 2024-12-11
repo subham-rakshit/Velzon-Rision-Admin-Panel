@@ -44,8 +44,12 @@ import UserByDevice from "./pagesComponent/dashboardAnalytics/UserByDevice";
 import Widget from "./pagesComponent/dashboardAnalytics/Widget";
 // Dashboard CRM
 import BalanceOverview from "./pagesComponent/dashboardCRM/BalanceOverview";
+import ClosingDeals from "./pagesComponent/dashboardCRM/ClosingDeals";
+import DealsStatus from "./pagesComponent/dashboardCRM/DealsStatus";
 import DealType from "./pagesComponent/dashboardCRM/DealType";
+import MyTasks from "./pagesComponent/dashboardCRM/MyTasks";
 import SalesForecast from "./pagesComponent/dashboardCRM/SalesForecast";
+import UpcomingActivites from "./pagesComponent/dashboardCRM/UpcomingActivites";
 
 export {
   SocialAuthForm,
@@ -94,4 +98,8 @@ export {
   SalesForecast,
   DealType,
   BalanceOverview,
+  DealsStatus,
+  MyTasks,
+  UpcomingActivites,
+  ClosingDeals,
 };

@@ -13,9 +13,13 @@ module.exports = {
   ],
   safelist: [
     "hover:bg-[#066b5e]",
+    "checked:bg-[#066b5e]",
     "hover:bg-[#5147A3]",
+    "checked:bg-[#5147A3]",
     "hover:bg-[#2a5fc1]",
+    "checked:bg-[#2a5fc1]",
     "hover:bg-[#405189]",
+    "checked:bg-[#405189]",
   ],
   theme: {
     extend: {
@@ -118,5 +122,9 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate"), flowbite.plugin()],
+  plugins: [
+    require("tailwindcss-animate"),
+    require("tailwind-scrollbar"),
+    flowbite.plugin(),
+  ],
 };

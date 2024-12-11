@@ -6,9 +6,13 @@ import { titlesObject } from "@/app/assets/titlesData/titles";
 import {
   BalanceOverview,
   Breadcrumb,
+  ClosingDeals,
   CountupText,
+  DealsStatus,
   DealType,
+  MyTasks,
   SalesForecast,
+  UpcomingActivites,
 } from "@/components";
 
 export const metadata = {
@@ -59,25 +63,51 @@ const DashboardCrm = () => {
 
       <div className="mt-5 flex flex-col gap-5 2xl:flex-row">
         <div className="flex w-full flex-col gap-5 md:flex-row">
-          {/* Sales Forecast */}
           <div
             className={`${globalStyleObj.backgroundLight900Dark300} w-full rounded-sm shadow-light`}
           >
             <SalesForecast />
           </div>
 
-          {/* Deal Type */}
           <div
             className={`${globalStyleObj.backgroundLight900Dark300} w-full rounded-sm shadow-light`}
           >
             <DealType />
           </div>
         </div>
-        {/* Balance Overview */}
+
         <div
           className={`${globalStyleObj.backgroundLight900Dark300} w-full rounded-sm shadow-light`}
         >
           <BalanceOverview />
+        </div>
+      </div>
+
+      <div className="mt-5 flex flex-col gap-5 xl:flex-row">
+        <div
+          className={`${globalStyleObj.backgroundLight900Dark300} w-full rounded-sm shadow-light xl:min-w-[60%]`}
+        >
+          <DealsStatus />
+        </div>
+
+        <div
+          className={`${globalStyleObj.backgroundLight900Dark300} w-full rounded-sm shadow-light`}
+        >
+          <MyTasks />
+        </div>
+      </div>
+
+      <div className="mt-5 flex flex-col gap-5 2xl:flex-row">
+        <div
+          className={`${globalStyleObj.backgroundLight900Dark300} w-full rounded-sm shadow-light`}
+        >
+          <UpcomingActivites />
+        </div>
+
+        <div
+          className={`${globalStyleObj.backgroundLight900Dark300} w-full rounded-sm shadow-light`}
+        >
+          <ClosingDeals />
         </div>
       </div>
     </div>

@@ -6,6 +6,7 @@ const getCustomColor = ({ layoutThemePrimaryColorType }) => {
   let hoverBgColor;
   let textColor;
   let hexCode;
+  let checkedColor;
 
   switch (layoutThemePrimaryColorType) {
     case layoutThemePrimaryColor.TEAL_GREEN:
@@ -14,6 +15,7 @@ const getCustomColor = ({ layoutThemePrimaryColorType }) => {
       hoverBgColor = "hover:bg-[#066b5e]";
       textColor = "text-[#066b5e]";
       hexCode = "#066b5e";
+      checkedColor = "checked:bg-[#066b5e]";
       break;
     case layoutThemePrimaryColor.ROYAL_PURPLE:
       active = "bg-[#5147A3]";
@@ -21,6 +23,7 @@ const getCustomColor = ({ layoutThemePrimaryColorType }) => {
       hoverBgColor = "hover:bg-[#5147A3]";
       textColor = "text-[#5147A3]";
       hexCode = "#5147A3";
+      checkedColor = "checked:bg-[#5147A3]";
       break;
     case layoutThemePrimaryColor.COBALT_BLUE:
       active = "bg-[#2a5fc1]";
@@ -28,6 +31,7 @@ const getCustomColor = ({ layoutThemePrimaryColorType }) => {
       hoverBgColor = "hover:bg-[#2a5fc1]";
       textColor = "text-[#2a5fc1]";
       hexCode = "#2a5fc1";
+      checkedColor = "checked:bg-[#2a5fc1]";
       break;
     default:
       active = "bg-[#405189]";
@@ -35,10 +39,11 @@ const getCustomColor = ({ layoutThemePrimaryColorType }) => {
       hoverBgColor = "hover:bg-[#405189]";
       textColor = "text-[#405189]";
       hexCode = "#405189";
+      checkedColor = "checked:bg-[#405189]";
       break;
   }
 
-  return { active, bgColor, hoverBgColor, textColor, hexCode };
+  return { active, bgColor, hoverBgColor, textColor, hexCode, checkedColor };
 };
 
 export { getCustomColor };
