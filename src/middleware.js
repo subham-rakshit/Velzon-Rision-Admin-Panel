@@ -17,6 +17,7 @@ const authRoutes = [
 const protectedRoutes = [
   "/profile",
   "/dashboard",
+  "/blog",
   "/apps",
   "/pages",
   "/base-ui",
@@ -143,12 +144,15 @@ export const config = {
     // Dashboard --
     "/dashboard",
     "/dashboard-analytics",
-    "/dashboard-blog",
+    // "/dashboard-blog",
     "/dashboard-crm",
-    "/dashboard-crypto",
-    "/dashboard-job",
-    "/dashboard-nft",
-    "/dashboard-projects",
+    // "/dashboard-crypto",
+    // "/dashboard-job",
+    // "/dashboard-nft",
+    // "/dashboard-projects",
+    // Blog System --
+    "/blog-all-posts",
+    "/blog-categories",
     // Apps --
     "/apps-calendar-month-grid",
     "/apps-main-calendar",

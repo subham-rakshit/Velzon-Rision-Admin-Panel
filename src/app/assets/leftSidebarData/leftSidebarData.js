@@ -1,6 +1,6 @@
 import { BsStack } from "react-icons/bs";
 import { FiMapPin } from "react-icons/fi";
-import { MdOutlineAccountCircle } from "react-icons/md";
+import { MdOutlineAccountCircle, MdOutlineArticle } from "react-icons/md";
 import {
   RiDashboard2Fill,
   RiApps2Line,
@@ -45,40 +45,62 @@ const leftSidebarData = [
             pathName: "/dashboard",
             tabDropdownList: [],
           },
+          // {
+          //   id: "dashboard-crypto",
+          //   parentTabId: "Dashboard",
+          //   tabName: "Crypto",
+          //   pathName: "/dashboard-crypto",
+          //   tabDropdownList: [],
+          // },
+          // {
+          //   id: "dashboard-projects",
+          //   parentTabId: "Dashboard",
+          //   tabName: "Projects",
+          //   pathName: "/dashboard-projects",
+          //   tabDropdownList: [],
+          // },
+          // {
+          //   id: "dashboard-nft",
+          //   parentTabId: "Dashboard",
+          //   tabName: "NFT",
+          //   pathName: "/dashboard-nft",
+          //   tabDropdownList: [],
+          // },
+          // {
+          //   id: "dashboard-job",
+          //   parentTabId: "Dashboard",
+          //   tabName: "Job",
+          //   pathName: "/dashboard-job",
+          //   tabDropdownList: [],
+          // },
+          // {
+          //   id: "dashboard-blog",
+          //   parentTabId: "Dashboard",
+          //   tabName: "Blog",
+          //   pathName: "/dashboard-blog",
+          //   isNew: true,
+          //   tabDropdownList: [],
+          // },
+        ],
+      },
+
+      {
+        id: "Blog",
+        tabName: "Blog System",
+        tabIcon: <MdOutlineArticle />,
+        tabDropdownList: [
           {
-            id: "dashboard-crypto",
-            parentTabId: "Dashboard",
-            tabName: "Crypto",
-            pathName: "/dashboard-crypto",
+            id: "blog-all-posts",
+            parentTabId: "Blog",
+            tabName: "All Posts",
+            pathName: "/blog-all-posts",
             tabDropdownList: [],
           },
           {
-            id: "dashboard-projects",
-            parentTabId: "Dashboard",
-            tabName: "Projects",
-            pathName: "/dashboard-projects",
-            tabDropdownList: [],
-          },
-          {
-            id: "dashboard-nft",
-            parentTabId: "Dashboard",
-            tabName: "NFT",
-            pathName: "/dashboard-nft",
-            tabDropdownList: [],
-          },
-          {
-            id: "dashboard-job",
-            parentTabId: "Dashboard",
-            tabName: "Job",
-            pathName: "/dashboard-job",
-            tabDropdownList: [],
-          },
-          {
-            id: "dashboard-blog",
-            parentTabId: "Dashboard",
-            tabName: "Blog",
-            pathName: "/dashboard-blog",
-            isNew: true,
+            id: "blog-categories",
+            parentTabId: "Blog",
+            tabName: "Categories",
+            pathName: "/blog-categories",
             tabDropdownList: [],
           },
         ],
