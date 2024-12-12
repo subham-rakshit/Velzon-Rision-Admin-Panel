@@ -81,6 +81,8 @@ const UserByDevice = () => {
               innerRadius={75}
               outerRadius={100}
               paddingAngle={0}
+              startAngle={90}
+              endAngle={-270}
               dataKey="value"
               className="border-0"
             >

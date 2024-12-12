@@ -110,7 +110,7 @@ const DealType = () => {
                 name="Pending"
                 dataKey="pending"
                 stroke="#F7B84B"
-                strokeWidth={3}
+                strokeWidth={2}
                 fill="#F7B84B"
                 fillOpacity={0.3}
               />

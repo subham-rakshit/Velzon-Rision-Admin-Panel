@@ -26,7 +26,7 @@ const EcommerceWidgets = ({ widget }) => {
           </h1>
           <Link
             href="#"
-            className="font-poppins-rg text-[13px] text-blue-800 underline"
+            className="font-poppins-rg text-[13px] text-blue-800 underline dark:text-light-weight-550"
           >
             {widget.link}
           </Link>

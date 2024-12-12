@@ -52,8 +52,16 @@ import SalesForecast from "./pagesComponent/dashboardCRM/SalesForecast";
 import UpcomingActivites from "./pagesComponent/dashboardCRM/UpcomingActivites";
 // Dashboard Ecommerce
 import AddPrdocutsAndSheet from "./pagesComponent/dashboardEcommerce/AddPrdocutsAndSheet";
+import BestSellingProducts from "./pagesComponent/dashboardEcommerce/BestSellingProducts";
 import DateRangePicker from "./pagesComponent/dashboardEcommerce/DateRangePicker";
 import EcommerceWidgets from "./pagesComponent/dashboardEcommerce/EcommerceWidgets";
+import ProgressBar from "./pagesComponent/dashboardEcommerce/ProgressBar";
+import RecentOrders from "./pagesComponent/dashboardEcommerce/RecentOrders";
+import RecentOrdersOrderId from "./pagesComponent/dashboardEcommerce/RecentOrdersOrderId";
+import Revenue from "./pagesComponent/dashboardEcommerce/Revenue";
+import SalesByLocations from "./pagesComponent/dashboardEcommerce/SalesByLocations";
+import StoreVisits from "./pagesComponent/dashboardEcommerce/StoreVisits";
+import TopSellers from "./pagesComponent/dashboardEcommerce/TopSellers";
 
 export {
   SocialAuthForm,
@@ -109,4 +117,12 @@ export {
   DateRangePicker,
   AddPrdocutsAndSheet,
   EcommerceWidgets,
+  Revenue,
+  SalesByLocations,
+  ProgressBar,
+  BestSellingProducts,
+  TopSellers,
+  StoreVisits,
+  RecentOrders,
+  RecentOrdersOrderId,
 };

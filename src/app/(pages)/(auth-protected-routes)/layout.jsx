@@ -8,7 +8,7 @@ const CommonLayoutForAdminAndUser = ({ children }) => {
   return (
     <div
       id="full-screen-toggle-container"
-      className={`${globalStyleObj.backgroundLight800Dark600} flex justify-center`}
+      className={`${globalStyleObj.backgroundLight800Dark600} flex w-full justify-center`}
     >
       <DarkModeProvider>
         <AuthProtectedLayoutProvider>{children}</AuthProtectedLayoutProvider>

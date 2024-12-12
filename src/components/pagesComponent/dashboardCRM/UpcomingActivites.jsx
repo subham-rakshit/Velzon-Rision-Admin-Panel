@@ -137,11 +137,9 @@ const UpcomingActivites = () => {
           {["←", "1", "2", "3", "→"].map((btn, index) => (
             <li
               key={`btn${index + 1}`}
-              className={`rounded-[4px] border py-[4px] text-center font-poppins-rg text-[13px] dark:border-[#fff]/10 ${btn === "←" || btn === "→" ? "px-[5px]" : "w-[28px]"} ${index === 2 ? `${active} text-white` : "text-light-weight-400 dark:border-[#fff]/10"}`}
+              className={`rounded-[4px] border py-[3px] text-center font-poppins-rg text-[13px] dark:border-[#fff]/10 ${btn === "←" || btn === "→" ? "px-[5px]" : "w-[28px]"} ${index === 2 ? `${active} text-white` : "text-light-weight-400 dark:border-[#fff]/10"}`}
             >
-              <Link href="#" className="">
-                {btn}
-              </Link>
+              <Link href="#">{btn}</Link>
             </li>
           ))}
         </ul>

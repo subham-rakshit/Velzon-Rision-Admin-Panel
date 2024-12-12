@@ -5,8 +5,14 @@ import { globalStyleObj } from "@/app/assets/styles";
 import { titlesObject } from "@/app/assets/titlesData/titles";
 import {
   AddPrdocutsAndSheet,
+  BestSellingProducts,
   DateRangePicker,
   EcommerceWidgets,
+  RecentOrders,
+  Revenue,
+  SalesByLocations,
+  StoreVisits,
+  TopSellers,
 } from "@/components";
 
 export const metadata = {
@@ -43,6 +49,49 @@ const DashboardEcommerce = () => {
             <EcommerceWidgets widget={widget} />
           </div>
         ))}
+      </div>
+
+      <div className="mt-5 flex w-full flex-col gap-5 xl:flex-row">
+        <div
+          className={`${globalStyleObj.backgroundLight900Dark300} w-full rounded-sm shadow-light xl:min-w-[65%]`}
+        >
+          <Revenue />
+        </div>
+
+        <div
+          className={`${globalStyleObj.backgroundLight900Dark300} flex w-full flex-col justify-between rounded-sm shadow-light`}
+        >
+          <SalesByLocations />
+        </div>
+      </div>
+
+      <div className="mt-5 flex flex-col gap-5 xl:flex-row">
+        <div
+          id="best-selling-products"
+          className={`${globalStyleObj.backgroundLight900Dark300} w-full rounded-sm shadow-light xl:w-[45%]`}
+        >
+          <BestSellingProducts />
+        </div>
+
+        <div
+          className={`${globalStyleObj.backgroundLight900Dark300} w-full rounded-sm shadow-light xl:w-[55%]`}
+        >
+          <TopSellers />
+        </div>
+      </div>
+
+      <div className="mt-5 flex flex-col gap-5 xl:flex-row">
+        <div
+          className={`${globalStyleObj.backgroundLight900Dark300} w-full rounded-sm shadow-light xl:w-[35%]`}
+        >
+          <StoreVisits />
+        </div>
+
+        <div
+          className={`${globalStyleObj.backgroundLight900Dark300} w-full rounded-sm shadow-light xl:w-[65%]`}
+        >
+          <RecentOrders />
+        </div>
       </div>
     </div>
   );
