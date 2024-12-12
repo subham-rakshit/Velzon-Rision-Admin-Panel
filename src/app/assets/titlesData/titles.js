@@ -65,4 +65,12 @@ export const titlesObject = {
   blog: {
     title: "Blog | Velzon - NEXT.js Admin & Dashboard Template",
   },
+
+  // Bog System
+  allPosts: {
+    title: "All Posts | Velzon - NEXT.js Admin & Dashboard Template",
+  },
+  categories: {
+    title: "Categories | Velzon - NEXT.js Admin & Dashboard Template",
+  },
 };

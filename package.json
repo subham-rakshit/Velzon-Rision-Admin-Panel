@@ -20,6 +20,7 @@
     "@radix-ui/react-slot": "^1.1.0",
     "@reduxjs/toolkit": "^2.3.0",
     "@south-paw/react-vector-maps": "^3.2.0",
+    "@tinymce/tinymce-react": "^5.1.1",
     "apexcharts": "^4.1.0",
     "axios": "^1.7.7",
     "bcryptjs": "^2.4.3",

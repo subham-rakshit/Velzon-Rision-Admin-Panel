@@ -14,7 +14,9 @@ const Breadcrumb = ({ title, pageTilte }) => {
     <div
       className={`${globalStyleObj.flexBetween} ${leftSidebarViewType === sidebarView.DETACHED ? "bg-transparent" : `${globalStyleObj.backgroundLight900Dark300} shadow-light`} absolute left-0 top-0 w-full px-5 py-3`}
     >
-      <h4 className={`${globalStyleObj.text16BoldLight550Dark550} uppercase`}>
+      <h4
+        className={`font-poppins-sb text-[16px] uppercase text-dark-weight-550 dark:text-light-weight-550`}
+      >
         {title}
       </h4>
       <div className={`${globalStyleObj.flexCenter} gap-2`}>
