@@ -32,7 +32,7 @@ import ToggleButton from "./navigation/navbar/ToggleButton";
 import RightSidebar from "./navigation/rightSidebar/RightSidebar";
 import TransitionLink from "./navigation/TransitionLink";
 // Blog System
-import AllBlogsDescriptionTinyEditor from "./pagesComponent/blogSystem/AllBlogsDescriptionTinyEditor";
+import AllPostsForm from "./pagesComponent/blogSystem/AllPostsForm";
 import LabelText from "./pagesComponent/blogSystem/LabelText";
 // Dashboard Analytics
 import Breadcrumb from "./pagesComponent/Breadcrumb";
@@ -130,5 +130,5 @@ export {
   RecentOrders,
   RecentOrdersOrderId,
   LabelText,
-  AllBlogsDescriptionTinyEditor,
+  AllPostsForm,
 };

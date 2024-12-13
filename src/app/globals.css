@@ -130,6 +130,10 @@ html .dark::-webkit-scrollbar-thumb {
 }
 /* NOTE Preloader Spinner */
 
+.jodit-container:not(.jodit_inline) {
+  border: none !important;
+}
+
 @layer utilities {
   .transition-style {
     @apply transition-all duration-500 ease-linear;
@@ -151,6 +155,9 @@ html .dark::-webkit-scrollbar-thumb {
   }
   .no-focus {
     @apply focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 !important;
+  }
+  .rte-styles {
+    @apply bg-red-500 !important;
   }
 }
 

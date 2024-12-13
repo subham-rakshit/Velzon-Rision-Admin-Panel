@@ -3,34 +3,42 @@ import { cookies } from "next/headers";
 
 import handleResponse from "./responseMiddleware";
 
-export const validateUserFromToken = async (request) => {
+export const validateUserFromToken = async () => {
   // INFO: Extract token from request cookies
-  try { 
-    const cookieStore = await cookies()
-    
-    const token = cookieStore.get("access-token")
+  try {
+    const cookieStore = await cookies();
+    const normalToken = cookieStore.get("access-token");
+    const nextAuthToken = cookieStore.get("next-auth.session-token");
 
-    if (!token) {
+    // console.log("Normal Token: ", normalToken);
+    // console.log("NextAuth Token: ", nextAuthToken);
+
+    if (!normalToken && !nextAuthToken) {
       return handleResponse({
         res: Response,
         status: 401,
         success: false,
         message: "User unauthorized!",
-      })
-    } else {
-      jwt.verify(token.value, process.env.TOKEN_SECRET, (err, tokenData) => {
+      });
+    }
+
+    const tokenToVerify = normalToken ? normalToken.value : nextAuthToken.value;
+
+    return new Promise((resolve, reject) => {
+      jwt.verify(tokenToVerify, process.env.TOKEN_SECRET, (err, tokenData) => {
         if (err) {
-          return handleResponse({
+          const response = handleResponse({
             res: Response,
             status: 401,
             success: false,
-            message: "User unauthorized!"
-          })
+            message: "User unauthorized!",
+          });
+          reject(response);
         } else {
-          return tokenData
+          resolve(tokenData);
         }
-      })
-    }
+      });
+    });
   } catch (error) {
     console.log(`Data extracting error from token: ${error.message}`);
     return handleResponse({

@@ -13,8 +13,6 @@ export async function POST(request) {
   try {
     const { email, password, rememberMe } = await request.json(); // return Promise
 
-    console.log("API Login data ---", rememberMe);
-
     // NOTE: Validate the registration schema
     const validatedFields = SignInSchema.safeParse({
       email,
