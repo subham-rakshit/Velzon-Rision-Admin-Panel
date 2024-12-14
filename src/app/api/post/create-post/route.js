@@ -1,23 +1,26 @@
 import { NextResponse } from "next/server";
 
 import dbConnect from "@/lib/db/dbConnect";
-import handleResponse from "@/lib/middleware/responseMiddleware";
 import { validateUserFromToken } from "@/lib/middleware/validateUser";
 import AllBlogPostsModel from "@/model/BlogAllPosts";
+import { AllPostsSchema } from "@/schemas/pagesSchema/blogSystem/allPostsSchema";
 
 export async function POST(request) {
   await dbConnect();
 
   try {
-    const requestedUser = await validateUserFromToken();
+    // Get the user details from the token
+    const user = await validateUserFromToken({ request });
 
-    if (requestedUser && !requestedUser.isAdmin) {
-      return handleResponse({
-        res: NextResponse,
-        status: 403,
-        success: false,
-        message: "You are not authorized to create this Blog.",
-      });
+    // Check if the user is an admin
+    if (user && !user.isAdmin) {
+      return new NextResponse(
+        JSON.stringify({
+          success: false,
+          message: "You are not authorized to create this Blog.",
+        }),
+        { status: 403 }
+      );
     }
 
     const { blogFieldsObject } = await request.json();
@@ -31,40 +34,53 @@ export async function POST(request) {
       metaTitle,
       metaDescription,
     } = blogFieldsObject || {};
-    console.log(
+
+    // NOTE: Validate the required fileds schema
+    const validatedFields = AllPostsSchema.safeParse({
       title,
       category,
       slug,
       shortDescription,
-      description,
-      metaTitle,
-      metaDescription
-    );
-
-    // Check the required filed is having value or not
-    if (!title || !category || !slug || !shortDescription) {
-      return handleResponse({
-        res: NextResponse,
-        status: 400,
-        success: false,
-        message: "Please fill all the required fields.",
-      });
+    });
+    if (!validatedFields.success) {
+      return new NextResponse(
+        JSON.stringify(
+          {
+            success: false,
+            message: validatedFields.error.flatten().fieldErrors,
+          },
+          { status: 400 }
+        )
+      );
     }
 
     // Check if title is already exists or not
     const existsTitle = await AllBlogPostsModel.findOne({ title });
     if (existsTitle) {
-      return handleResponse({
-        res: NextResponse,
-        status: 400,
-        success: false,
-        message: "Title already exists.",
-      });
+      return new NextResponse(
+        JSON.stringify({
+          success: false,
+          message: "Title is already exists.",
+        }),
+        { status: 400 }
+      );
+    }
+
+    // Check if Slug is already exists or not
+    const existsSlug = await AllBlogPostsModel.findOne({ slug });
+    if (existsSlug) {
+      return new NextResponse(
+        JSON.stringify({
+          success: false,
+          message: "Slug is already exists.",
+        }),
+        { status: 400 }
+      );
     }
 
     // Create a new blog post and save into DB
     const newBlogPost = new AllBlogPostsModel({
-      userId: requestedUser._id,
+      userId: user._id,
       title,
       category,
       slug,
@@ -76,21 +92,22 @@ export async function POST(request) {
 
     await newBlogPost.save();
 
-    // Success Response
-    return handleResponse({
-      res: NextResponse,
-      status: 201,
-      success: true,
-      message: "Blog post created successfully.",
-    });
+    return new NextResponse(
+      JSON.stringify({
+        success: true,
+        message: "Blog post created successfully.",
+        blogData: newBlogPost,
+      }),
+      { status: 201 }
+    );
   } catch (error) {
     console.log("Error in creating the blog post SERVER: ", error);
-
-    return handleResponse({
-      res: NextResponse,
-      status: 500,
-      success: false,
-      message: "Internal Server Error. Please try again later.",
-    });
+    return new NextResponse(
+      JSON.stringify({
+        success: false,
+        message: "Internal Server Error. Please try again later.",
+      }),
+      { status: 500 }
+    );
   }
 }

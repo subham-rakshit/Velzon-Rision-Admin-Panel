@@ -33,6 +33,7 @@ import RightSidebar from "./navigation/rightSidebar/RightSidebar";
 import TransitionLink from "./navigation/TransitionLink";
 // Blog System
 import AllPostsForm from "./pagesComponent/blogSystem/AllPostsForm";
+import BlogPostCategories from "./pagesComponent/blogSystem/BlogPostCategories";
 import LabelText from "./pagesComponent/blogSystem/LabelText";
 // Dashboard Analytics
 import Breadcrumb from "./pagesComponent/Breadcrumb";
@@ -131,4 +132,5 @@ export {
   RecentOrdersOrderId,
   LabelText,
   AllPostsForm,
+  BlogPostCategories,
 };

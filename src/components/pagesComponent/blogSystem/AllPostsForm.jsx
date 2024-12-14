@@ -75,7 +75,6 @@ const AllPostsForm = () => {
         );
 
         const data = await response.json();
-        console.log(data);
 
         if (response.ok && data.success) {
           toast.success(data.message, {
@@ -276,6 +275,7 @@ const AllPostsForm = () => {
               toolbarButtonSize: "middle",
               toolbar: true,
             }}
+            value={blogFieldsObject.description}
             onBlur={(newContent) => {
               setBlogFieldsObject((prevState) => ({
                 ...prevState,
