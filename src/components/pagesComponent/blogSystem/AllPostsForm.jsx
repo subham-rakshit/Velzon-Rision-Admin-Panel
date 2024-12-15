@@ -161,6 +161,7 @@ const AllPostsForm = () => {
           name="title"
           value={blogFieldsObject.title}
           onChange={handleOnChange}
+          required
           placeholder="Blog Title"
           className={commonDefaultInputFieldClass}
         />
@@ -172,6 +173,7 @@ const AllPostsForm = () => {
         <Select
           id="blog-category"
           value={blogFieldsObject.category}
+          required
           onValueChange={(value) => {
             setBlogFieldsObject((prevState) => ({
               ...prevState,
@@ -214,6 +216,7 @@ const AllPostsForm = () => {
           id="blog-slug"
           type="text"
           name="slug"
+          required
           value={blogFieldsObject.slug}
           onChange={handleOnChange}
           placeholder="Slug"
@@ -245,6 +248,7 @@ const AllPostsForm = () => {
         <Textarea
           id="blog-short-description"
           name="shortDescription"
+          required
           value={blogFieldsObject.shortDescription}
           onChange={handleOnChange}
           className={`h-[100px] ${commonDefaultInputFieldClass}`}
@@ -333,11 +337,12 @@ const AllPostsForm = () => {
       <div className="mt-10 flex items-center justify-center">
         <button
           type="submit"
+          disabled={isProcessing}
           className={`mx-auto ${globalStyleObj.flexStart} transition-300 gap-2 rounded-[4px] ${bgColor} ${hoverBgColor} ${textColor} px-5 py-2 font-poppins-rg text-[16px] tracking-wide hover:text-white`}
         >
           {isProcessing ? (
             <>
-              <ClipLoader />
+              <ClipLoader color="#fff" size={16} />
               <span>Processing...</span>
             </>
           ) : (
