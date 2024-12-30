@@ -5,8 +5,6 @@ import handleResponse from "@/lib/middleware/responseMiddleware";
 import UserModel from "@/model/User";
 import { ResetPasswordSchema } from "@/schemas";
 
-
-
 export async function POST(request) {
   await dbConnect();
   try {

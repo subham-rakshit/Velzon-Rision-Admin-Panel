@@ -1,10 +1,18 @@
 {
-  "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "explicit",
     "source.addMissingImports": "explicit"
   },
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "json"
+  ],
   "prettier.tabWidth": 2,
   "prettier.useTabs": false,
   "prettier.semi": true,
@@ -27,5 +35,12 @@
   "[javascriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "editor.codeLens": true, // Enable code lens features for better code insights
+  "editor.rulers": [80, 100], // Add rulers to improve code readability
+  "editor.trimAutoWhitespace": true, // Remove trailing whitespaces automatically
+  "editor.tabSize": 2, // Match Prettier's tab width setting
+  "files.eol": "\n", // Ensure consistency in line endings
+  "files.trimTrailingWhitespace": true, // Remove trailing whitespace on save
+  "files.insertFinalNewline": true // Ensure files end with a newline
 }

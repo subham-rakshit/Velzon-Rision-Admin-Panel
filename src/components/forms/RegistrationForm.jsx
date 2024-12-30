@@ -2,11 +2,11 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import { useState } from "react";
 import { ClipLoader } from "react-spinners";
 import { toast } from "react-toastify";
 
-import { SocialAuthForm, PasswordInputFiled, TextInputFile } from "..";
+import { PasswordInputFiled, SocialAuthForm, TextInputFile } from "..";
 
 import { globalStyleObj } from "@/app/assets/styles";
 import ROUTES from "@/constants/routes";

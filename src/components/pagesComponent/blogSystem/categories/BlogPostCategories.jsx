@@ -1,18 +1,14 @@
-import React from "react";
-import { RiEditBoxLine, RiDeleteBin2Line } from "react-icons/ri";
-
 import { globalStyleObj } from "@/app/assets/styles";
-
+import { AddNewCategoriesForm } from "@/components";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { AddNewCategoriesForm } from "@/components";
+import { RiDeleteBin2Line, RiEditBoxLine } from "react-icons/ri";
 
 const BlogPostCategories = () => {
   return (

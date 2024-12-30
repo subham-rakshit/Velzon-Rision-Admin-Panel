@@ -1,15 +1,14 @@
 "use client";
 
-import React from "react";
-import { useForm } from "react-hook-form";
-import { ClipLoader } from "react-spinners";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { NewCategorySchema } from "@/schemas";
 import {
   showErrorToast,
   showSuccessToast,
 } from "@/lib/helpers/toast-notification";
+import { NewCategorySchema } from "@/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
+import { useForm } from "react-hook-form";
+import { ClipLoader } from "react-spinners";
 
 const AddNewCategoriesForm = () => {
   const {
