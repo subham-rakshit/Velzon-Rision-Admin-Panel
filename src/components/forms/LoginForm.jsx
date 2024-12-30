@@ -1,209 +1,200 @@
 "use client";
 
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
 import { ClipLoader } from "react-spinners";
-import { toast } from "react-toastify";
-
-import {
-  SocialAuthForm,
-  PasswordInputFiled,
-  RememberMe,
-  TextInputFile,
-} from "..";
 
 import { globalStyleObj } from "@/app/assets/styles";
 import ROUTES from "@/constants/routes";
+import {
+  showErrorToast,
+  showSuccessToast,
+} from "@/lib/helpers/toast-notification";
+import { SignInSchema } from "@/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
+import Link from "next/link";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 const LoginForm = () => {
-  const [loginData, setLoginData] = useState({ rememberMe: false });
-  const [isProcessing, setIsProcessing] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+    setError,
+  } = useForm({
+    resolver: zodResolver(SignInSchema),
+    defaultValues: { email: "", password: "", rememberMe: false },
+  });
 
   const router = useRouter();
 
-  const onHandleInputs = (name, value) => {
-    setLoginData({
-      ...loginData,
-      [name]: value,
-    });
-  };
-
-  const handleFromSubmit = async (event) => {
-    event.preventDefault();
-
-    if (Object.keys(loginData).length > 1) {
-      try {
-        setIsProcessing(true);
-        const { email, password, rememberMe } = loginData;
-
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/user/login`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              email,
-              password,
-              rememberMe,
-            }),
-          }
-        );
-
-        const data = await response.json();
-
-        if (data.success) {
-          toast.success(data.message, {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-
-          setLoginData({ rememberMe: false });
-          setIsProcessing(false);
-
-          router.push(ROUTES.DASHBOARD_ECOMMERCE); // Redirect to dashboard page
-        } else {
-          setIsProcessing(false);
-          if (typeof data.message === "string") {
-            toast.error(data.message, {
-              position: "top-right",
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
-          } else if (typeof data.message === "object") {
-            Object.values(data.message).map((err, i) =>
-              toast.error(err[0], {
-                position: "top-right",
-                autoClose: 3000 * (i + 1),
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-              })
-            );
-          }
-        }
-      } catch (error) {
-        console.log("Login Error", error);
-        setIsProcessing(false);
-        toast.error("Login failure.", {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
+  // Error handling function
+  const handleZodValidationErrors = (data) => {
+    if (data.errors) {
+      const errors = data.errors;
+      if (errors.email) {
+        setError("email", {
+          type: "server",
+          message: errors.email.message,
+        });
+      }
+      if (errors.password) {
+        setError("password", {
+          type: "server",
+          message: errors.password.message,
         });
       }
     } else {
-      toast.error("Invalid input field", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      showErrorToast(data.message);
+    }
+  };
+
+  // Handle onSubmit function
+  const onSubmit = async (data) => {
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/user/login`,
+        {
+          ...data,
+        }
+      );
+
+      if (response.data.success && response.status === 200) {
+        showSuccessToast(response.data.message);
+        reset();
+        router.push(ROUTES.DASHBOARD_ECOMMERCE); // Redirect to dashboard page
+      }
+    } catch (error) {
+      console.log(`Error in login CLIENT: ${error}`);
+      if (error.response) {
+        handleZodValidationErrors(error.response.data);
+      } else {
+        showErrorToast("Internal Server Error. Please try again later.");
+      }
     }
   };
 
   return (
     <>
-      <form
-        className={`${globalStyleObj.formInnerContainer}`}
-        onSubmit={handleFromSubmit}
-      >
-        {/* Welcome Text */}
-        <div className="mb-6">
-          <h1 className={`${globalStyleObj.formHeading}`}>Welcome Back !</h1>
-          <p className={`${globalStyleObj.formDescription}`}>
-            Sign in to continue to Velzon
-          </p>
+      {/* Form Element */}
+      <form onSubmit={handleSubmit(onSubmit)}>
+        {/* Email Input */}
+        <div className="mb-5">
+          <label
+            htmlFor="login-email"
+            className="text-dark-weight-500 text-[13px] font-poppins-rg"
+          >
+            Email
+            <span className="text-red-500 ml-1">*</span>
+          </label>
+
+          <input
+            {...register("email")}
+            type="email"
+            id="login-email"
+            name="email"
+            placeholder="Enter email address"
+            className="w-full rounded-md border border-gray-400 px-3 py-2 font-poppins-rg text-[13px] text-dark-weight-400 focus:outline-none focus:ring-0 mt-2"
+          />
+
+          {errors && errors.email && (
+            <p className="text-[12px] font-poppins-rg text-red-500">
+              {errors.email.message}
+            </p>
+          )}
         </div>
 
-        {/* Form Element */}
-        <div className="flex flex-col gap-5">
-          {/* Email Input */}
-          <TextInputFile
-            labelText="Email"
-            inputId="login-email"
-            inputName="email"
-            inputPlaceholder="Enter email"
-            inputValue={loginData.email ? loginData.email : ""}
-            helperText="Please Enter Your Email"
-            onHandleInputs={onHandleInputs}
+        {/* Password Input */}
+        <div className="mb-5">
+          <div className="flex items-center justify-between gap-2">
+            <label
+              htmlFor="login-password"
+              className="text-dark-weight-500 text-[13px] font-poppins-rg"
+            >
+              Password
+              <span className="text-red-500 ml-1">*</span>
+            </label>
+
+            <Link
+              href={ROUTES.FORGOT_PASSWORD}
+              className="text-dark-weight-500 text-[13px] font-poppins-rg"
+            >
+              Forgot Password
+            </Link>
+          </div>
+
+          <div className="flex items-center gap-2 overflow-hidden rounded-md border border-gray-400 pr-3 mt-2">
+            <input
+              id="login-password"
+              type={isPasswordVisible ? "text" : "password"}
+              name="password"
+              {...register("password")}
+              className="w-full border-0 px-3 py-2 font-poppins-rg text-[13px] text-dark-weight-400 focus:outline-none focus:ring-0"
+              placeholder="Enter your password"
+            />
+            <button
+              type="button"
+              onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+              className="text-[16px] text-light-weight-400"
+            >
+              {isPasswordVisible ? <AiOutlineEye /> : <AiOutlineEyeInvisible />}
+            </button>
+          </div>
+          {errors && errors.password ? (
+            <p className="mt-2 font-poppins-rg text-[12px] text-red-500">
+              {errors.password.message}
+            </p>
+          ) : null}
+        </div>
+
+        {/* RememberMe Input */}
+        <div className="mb-5">
+          <input
+            {...register("rememberMe")}
+            type="checkbox"
+            id="login-remember-me"
+            name="rememberMe"
+            placeholder="Enter email address"
+            className="rounded-sm border border-gray-400 mr-2"
           />
-          {/* Password Input */}
-          <PasswordInputFiled
-            labelText="Password"
-            inputId="login-password"
-            inputName="password"
-            inputValue={loginData.password ? loginData.password : ""}
-            helperText="Please Enter Your Password"
-            placeholderText="Enter password"
-            onHandleInputs={onHandleInputs}
-          />
-          {/* RememberMe Input */}
-          <RememberMe
-            boxId="remember-checkbox"
-            boxName="rememberMe"
-            checkedStatus={loginData.rememberMe ? loginData.rememberMe : false}
-            onHandleInputs={onHandleInputs}
-          />
-          {/* Sign in Button */}
-          <button
-            type="submit"
-            disabled={isProcessing}
-            className={`${globalStyleObj.authButton} mt-3 ${
-              isProcessing ? "cursor-not-allowed" : ""
-            }`}
+
+          <label
+            htmlFor="login-remember-me"
+            className="text-dark-weight-500 text-[13px] font-poppins-rg"
           >
-            {isProcessing ? (
-              <span className="flex items-center gap-4 font-poppins-rg">
-                <ClipLoader color="#ffffff" size={16} />
-                <span className="text-light-weight-850">Processing...</span>
-              </span>
-            ) : (
-              "Sign In"
-            )}
-          </button>
+            Remember me
+          </label>
+
+          {errors && errors.rememberMe && (
+            <p className="text-[12px] font-poppins-rg text-red-500">
+              {errors.rememberMe.message}
+            </p>
+          )}
         </div>
-        <div className="my-5 flex items-center gap-2">
-          <hr className="grow border-t border-dotted border-gray-300" />
-          <span className={`${globalStyleObj.authDescriptionText}`}>
-            Sign in with
-          </span>
-          <hr className="grow border-t border-dotted border-gray-300" />
-        </div>
-        {/* Alternate Sign in */}
-        <SocialAuthForm isRememberMe={loginData.rememberMe} />
+
+        {/* Sign in Button */}
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className={`${globalStyleObj.authButton} mt-3 w-full ${
+            isSubmitting ? "cursor-not-allowed" : ""
+          }`}
+        >
+          {isSubmitting ? (
+            <span className="flex items-center gap-4 font-poppins-rg">
+              <ClipLoader color="#ffffff" size={16} />
+              <span className="text-light-weight-850">Processing...</span>
+            </span>
+          ) : (
+            "Sign In"
+          )}
+        </button>
       </form>
-      {/* Sign Up */}
-      <p className={`${globalStyleObj.authDescriptionText}`}>
-        Don&apos;t have an account?{" "}
-        <Link href={ROUTES.REGISTER}>
-          <span className="text-[#405189] underline">Signup</span>
-        </Link>
-      </p>
     </>
   );
 };

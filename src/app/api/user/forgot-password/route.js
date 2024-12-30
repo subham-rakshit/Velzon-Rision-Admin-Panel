@@ -1,41 +1,57 @@
 import dbConnect from "@/lib/db/dbConnect";
-import handleResponse from "@/lib/middleware/responseMiddleware";
 import { sendEmail } from "@/lib/utils/mailer";
 import UserModel from "@/model/User";
 import { EmailSchema } from "@/schemas";
+import { NextResponse } from "next/server";
 
 export async function POST(request) {
   await dbConnect();
 
   try {
-    const { email } = await request.json();
+    const body = await request.json();
+    const { email } = body;
 
-    // NOTE: Validate the email by zod schema
-    const validatedFields = EmailSchema.safeParse({
-      email,
-    });
-    if (!validatedFields.success) {
-      return Response.json(
+    // NOTE: Handle not getting request data
+    if (!email) {
+      return NextResponse.json(
         {
           success: false,
-          message: validatedFields.error.flatten().fieldErrors,
+          message: "Invalid inputs.",
+        },
+        { status: 404 }
+      );
+    }
+
+    // NOTE VALIDATE the registration schema
+    const validatedFields = EmailSchema.safeParse(body);
+    if (!validatedFields.success) {
+      let zodErrors = {};
+      validatedFields.error.issues.forEach((issue) => {
+        zodErrors = {
+          ...zodErrors,
+          [issue.path[0]]: { message: issue.message },
+        };
+      });
+
+      return NextResponse.json(
+        { success: false, errors: zodErrors },
+        { status: 400 }
+      );
+    }
+
+    // NOTE GET the user details by provided forgotPasswordEmail
+    const userDetails = await UserModel.findOne({ email });
+    if (!userDetails) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: `Invalid email address. Please provide your registered email address`,
         },
         { status: 400 }
       );
     }
 
-    // INFO: Fetch the user details
-    const userDetails = await UserModel.findOne({ email });
-    if (!userDetails) {
-      return handleResponse({
-        res: Response,
-        status: 400,
-        success: false,
-        message: `Invalid email address. Please provide your registered email address`,
-      });
-    }
-
-    // INFO: Send verification email
+    // NOTE Send RESET LINK to the user email
     const emailResponse = await sendEmail({
       email: userDetails.email,
       emailType: "RESET",
@@ -43,30 +59,34 @@ export async function POST(request) {
       userId: userDetails._id,
     });
 
-    // INFO: Response send email with error
+    // NOTE RESPONSE send email with error
     if (!emailResponse.success) {
-      return handleResponse({
-        res: Response,
-        status: 400,
-        success: false,
-        message: `Unable to send reset password link`,
-      });
+      return NextResponse.json(
+        {
+          success: false,
+          message: `Unable to send reset password link`,
+        },
+        { status: 400 }
+      );
     }
 
-    // INFO: Response send email with success
-    return handleResponse({
-      res: Response,
-      status: 200,
-      success: true,
-      message: `Reset link has been successfully sent to your email`,
-    });
+    // NOTE RESPONSE send email with success
+    return NextResponse.json(
+      {
+        success: true,
+        message: `Reset link has been successfully send to your email`,
+      },
+      { status: 200 }
+    );
   } catch (error) {
     console.error(`Error forgot password send email error: ${error}`);
-    return handleResponse({
-      res: Response,
-      status: 500,
-      success: false,
-      message: `Error forgot password send email error: ${error.message}`,
-    });
+
+    return NextResponse.json(
+      {
+        success: false,
+        message: `Error forgot password send email error: ${error.message}`,
+      },
+      { status: 500 }
+    );
   }
 }

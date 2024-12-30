@@ -1,191 +1,117 @@
 "use client";
 
-import dynamic from "next/dynamic";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useState, useEffect, useRef } from "react";
 import { ClipLoader } from "react-spinners";
-import { toast } from "react-toastify";
-
-import { TextInputFile } from "..";
-import ICON from "../../app/assets/jsonData/animate-mail-2.json";
 
 import { globalStyleObj } from "@/app/assets/styles";
 import ROUTES from "@/constants/routes";
-
-// Dynamically import the Player component to disable SSR
-const Player = dynamic(
-  () => import("@lordicon/react").then((mod) => mod.Player),
-  { ssr: false }
-);
+import {
+  showErrorToast,
+  showSuccessToast,
+} from "@/lib/helpers/toast-notification";
+import { EmailSchema } from "@/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
+import { useForm } from "react-hook-form";
 
 const ForgotPasswordForm = () => {
-  const playerRef = useRef(null);
-  const [userEmail, setUserEmail] = useState({});
-  const [isProcessing, setIsProcessing] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+    setError,
+  } = useForm({ resolver: zodResolver(EmailSchema) });
+
   const router = useRouter();
 
-  useEffect(() => {
-    playerRef.current?.playFromBeginning();
-  }, []);
-
-  // NOTE: Handle the all input fields
-  const onHandleInputs = (name, value) => {
-    setUserEmail({
-      ...userEmail,
-      [name]: value,
-    });
-  };
-
-  async function handleFromSubmit(event) {
-    event.preventDefault();
-
-    if (Object.keys(userEmail).length > 0) {
-      try {
-        setIsProcessing(true);
-        const { email } = userEmail;
-
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/user/forgot-password`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              email,
-            }),
-          }
-        );
-        const data = await response.json();
-
-        if (response.ok && data.success) {
-          toast.success(data.message, {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-          setUserEmail({});
-          setIsProcessing(false);
-          router.replace(ROUTES.LOGIN);
-        } else {
-          setIsProcessing(false);
-          if (typeof data.message === "string") {
-            toast.error(data.message, {
-              position: "top-right",
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
-          } else if (typeof data.message === "object") {
-            Object.values(data.message).map((err, i) =>
-              toast.error(err[0], {
-                position: "top-right",
-                autoClose: 3000 * (i + 1),
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-              })
-            );
-          }
-        }
-      } catch (error) {
-        console.log(error);
+  // Error handling function
+  const handleZodValidationErrors = (data) => {
+    if (data.errors) {
+      const errors = data.errors;
+      if (errors.email) {
+        setError("email", {
+          type: "server",
+          message: errors.email.message,
+        });
       }
     } else {
-      toast.error("Invalid input field", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      showErrorToast(data.message);
     }
-  }
+  };
+
+  const onSubmit = async (data) => {
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/user/forgot-password`,
+        {
+          ...data,
+        }
+      );
+
+      if (response.data.success && response.status === 200) {
+        showSuccessToast(response.data.message);
+        reset();
+        router.push(ROUTES.AUTH_PASS_CHANGE);
+      }
+    } catch (error) {
+      console.log(`Error in forgot password CLIENT: ${error}`);
+      if (error.response) {
+        handleZodValidationErrors(error.response.data);
+      } else {
+        showErrorToast("Internal Server Error. Please try again later.");
+      }
+    }
+  };
 
   return (
     <>
-      <form
-        className={`${globalStyleObj.formInnerContainer}`}
-        onSubmit={handleFromSubmit}
-      >
-        {/* Welcome Text */}
-        <div className="mb-6 flex flex-col items-center">
-          <h1 className={`${globalStyleObj.formHeading}`}>Forgot Password?</h1>
-          <p className={`${globalStyleObj.formDescription}`}>
-            Reset password with velzon
-          </p>
-
-          <Player
-            ref={playerRef}
-            size={96}
-            icon={ICON}
-            speed={0.4}
-            colors="primary:#0ab39c"
-            className="mx-auto"
-            onComplete={() => playerRef.current?.playFromBeginning()}
-          />
-
-          <div className="mt-4 w-full rounded bg-[#FEF4E4] p-3 shadow-light">
-            <p className="text-center font-poppins-md text-[13px] text-[#d29c40]">
-              Enter your email and instructions will be sent to you!
-            </p>
-          </div>
-        </div>
-
-        {/* Form Element */}
-        <div className="flex flex-col gap-5">
-          {/* Email Input */}
-          <TextInputFile
-            labelText="Email"
-            inputId="forgot-password-email"
-            inputName="email"
-            inputValue={userEmail.email ? userEmail.email : ""}
-            inputPlaceholder="Enter email"
-            helperText="Please Enter Your Email"
-            onHandleInputs={onHandleInputs}
-          />
-          {/* Sign in Button */}
-          <button
-            type="submit"
-            disabled={isProcessing}
-            className={`${globalStyleObj.authButton} ${
-              isProcessing ? "cursor-not-allowed" : ""
-            }`}
+      {/* Form Element */}
+      <form onSubmit={handleSubmit(onSubmit)}>
+        {/* Fogot Password Email Input */}
+        <div className="mb-5">
+          <label
+            htmlFor="forgot-password-email"
+            className="text-dark-weight-500 text-[13px] font-poppins-rg"
           >
-            {isProcessing ? (
-              <span className="flex items-center gap-4">
-                <ClipLoader color="#ffffff" size={16} />
-                <span className="text-light-weight-850">Processing...</span>
-              </span>
-            ) : (
-              "Send Reset Link"
-            )}
-          </button>
-        </div>
-      </form>
+            Registered Email
+            <span className="text-red-500 ml-1">*</span>
+          </label>
 
-      <p className={`${globalStyleObj.authDescriptionText}`}>
-        Wait, I remember my password...{" "}
-        <Link href={ROUTES.LOGIN}>
-          <span className="text-[#405189] underline">Click here</span>
-        </Link>
-      </p>
+          <input
+            {...register("email")}
+            type="email"
+            id="forgot-password-email"
+            name="email"
+            placeholder="Enter your registered email"
+            className="w-full rounded-md border border-gray-400 px-3 py-2 font-poppins-rg text-[13px] text-dark-weight-400 focus:outline-none focus:ring-0 mt-2"
+          />
+
+          {errors && errors.email && (
+            <p className="text-[12px] font-poppins-rg text-red-500">
+              {errors.email.message}
+            </p>
+          )}
+        </div>
+
+        {/* Sign in Button */}
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className={`${globalStyleObj.authButton} w-full ${
+            isSubmitting ? "cursor-not-allowed" : ""
+          }`}
+        >
+          {isSubmitting ? (
+            <span className="flex items-center gap-4">
+              <ClipLoader color="#ffffff" size={16} />
+              <span className="text-light-weight-850">Processing...</span>
+            </span>
+          ) : (
+            "Submit"
+          )}
+        </button>
+      </form>
     </>
   );
 };

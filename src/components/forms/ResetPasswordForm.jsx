@@ -1,190 +1,218 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { ClipLoader } from "react-spinners";
-import { toast } from "react-toastify";
-
-import { PasswordInputFiled } from "..";
 
 import { globalStyleObj } from "@/app/assets/styles";
 import ROUTES from "@/constants/routes";
+import {
+  showErrorToast,
+  showSuccessToast,
+} from "@/lib/helpers/toast-notification";
+import { ResetPasswordSchema } from "@/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
+import { useForm } from "react-hook-form";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 const ResetPasswordForm = () => {
-  const [resetPasswordInput, setResetPasswordInput] = useState({});
-  const [isProcessing, setIsProcessing] = useState(false);
+  const [isCodeVisible, setIsCodeVisible] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] =
+    useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    setError,
+    reset,
+  } = useForm({ resolver: zodResolver(ResetPasswordSchema) });
 
   const router = useRouter();
-  const pathname = usePathname();
-  const resetToken = pathname.split("/").pop();
 
-  // NOTE: Handle the all input fields
-  const onHandleInputs = (name, value) => {
-    setResetPasswordInput({
-      ...resetPasswordInput,
-      [name]: value,
-    });
-  };
-
-  // NOTE: Handle the Login form
-  const handleFromSubmit = async (event) => {
-    event.preventDefault();
-
-    if (Object.keys(resetPasswordInput).length > 0) {
-      try {
-        setIsProcessing(true);
-        const { newPassword, confirmPassword } = resetPasswordInput;
-
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/user/reset-password`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              newPassword,
-              confirmPassword,
-              token: resetToken,
-            }),
-          }
-        );
-        const data = await response.json();
-
-        if (response.ok && data.success) {
-          toast.success(data.message, {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-          setResetPasswordInput({});
-          setIsProcessing(false);
-
-          router.push(ROUTES.LOGIN); // INFO: redirect to Root page
-        } else {
-          setIsProcessing(false);
-          if (typeof data.message === "string") {
-            toast.error(data.message, {
-              position: "top-right",
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
-          } else if (typeof data.message === "object") {
-            Object.values(data.message).map((err, i) =>
-              toast.error(err[0], {
-                position: "top-right",
-                autoClose: 3000 * (i + 1),
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-              })
-            );
-          }
-        }
-      } catch (error) {
-        console.log(error);
+  // Error handling function
+  const handleZodValidationErrors = (data) => {
+    if (data.errors) {
+      const errors = data.errors;
+      if (errors.resetPasswordCode) {
+        setError("resetPasswordCode", {
+          type: "server",
+          message: errors.resetPasswordCode.message,
+        });
+      }
+      if (errors.newPassword) {
+        setError("newPassword", {
+          type: "server",
+          message: errors.newPassword.message,
+        });
+      }
+      if (errors.confirmNewPassword) {
+        setError("confirmNewPassword", {
+          type: "server",
+          message: errors.confirmNewPassword.message,
+        });
       }
     } else {
-      toast.error("Invalid input field", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      showErrorToast(data.message);
+    }
+  };
+
+  const onSubmit = async (data) => {
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/user/reset-password`,
+        {
+          ...data,
+        }
+      );
+
+      if (response.data.success && response.status === 201) {
+        showSuccessToast(response.data.message);
+        reset();
+        router.push(ROUTES.LOGIN); // Redirect to Login page
+      }
+    } catch (error) {
+      console.log(`Error in reset password CLIENT: ${error}`);
+      if (error.response) {
+        handleZodValidationErrors(error.response.data);
+      } else {
+        showErrorToast("Internal Server Error. Please try again later.");
+      }
     }
   };
 
   return (
     <>
-      <form
-        className={`${globalStyleObj.formInnerContainer}`}
-        onSubmit={handleFromSubmit}
-      >
-        {/* Welcome Text */}
-        <div className="mb-6">
-          <h1 className={`${globalStyleObj.formHeading}`}>
-            Create new password
-          </h1>
-          <p className={`${globalStyleObj.formDescription}`}>
-            Your new password must be different from pervious used password.
-          </p>
+      {/* Form Element */}
+      <form onSubmit={handleSubmit(onSubmit)}>
+        {/* Password Reset Code Input */}
+        <div className="mb-5">
+          <label
+            htmlFor="pass-reset-code"
+            className="text-dark-weight-500 text-[13px] font-poppins-rg"
+          >
+            Reset CODE
+            <span className="text-red-500 ml-1">*</span>
+          </label>
+
+          <div className="flex items-center gap-2 overflow-hidden rounded-md border border-gray-400 pr-3 mt-2">
+            <input
+              id="pass-reset-code"
+              type={isCodeVisible ? "text" : "password"}
+              name="resetPasswordCode"
+              {...register("resetPasswordCode")}
+              className="w-full border-0 px-3 py-2 font-poppins-rg text-[13px] text-dark-weight-400 focus:outline-none focus:ring-0"
+              placeholder="Enter your reset code"
+            />
+            <button
+              type="button"
+              onClick={() => setIsCodeVisible(!isCodeVisible)}
+              className="text-[16px] text-light-weight-400"
+            >
+              {isCodeVisible ? <AiOutlineEye /> : <AiOutlineEyeInvisible />}
+            </button>
+          </div>
+          {errors && errors.resetPasswordCode ? (
+            <p className="mt-2 font-poppins-rg text-[12px] text-red-500">
+              {errors.resetPasswordCode.message}
+            </p>
+          ) : null}
         </div>
 
-        {/* Form Element */}
-        <div className="flex flex-col gap-3">
-          {/* Password Input */}
-          <PasswordInputFiled
-            labelText="Password"
-            inputId="reset-password"
-            inputName="newPassword"
-            inputValue={
-              resetPasswordInput.newPassword
-                ? resetPasswordInput.newPassword
-                : ""
-            }
-            helperText="This field is required"
-            placeholderText="Enter password"
-            userInfo="Must be at least 6 characters."
-            onHandleInputs={onHandleInputs}
-          />
-          {/* Confirm Password Input */}
-          <PasswordInputFiled
-            labelText="Confirm Password"
-            inputId="reset-confirm-password"
-            inputName="confirmPassword"
-            inputValue={
-              resetPasswordInput.confirmPassword
-                ? resetPasswordInput.confirmPassword
-                : ""
-            }
-            helperText="Confirm Password Required"
-            placeholderText="Confirm password"
-            onHandleInputs={onHandleInputs}
-          />
-          {/* Sign in Button */}
-          <button
-            type="submit"
-            disabled={isProcessing}
-            className={`${globalStyleObj.authButton} mt-3 ${
-              isProcessing ? "cursor-not-allowed" : ""
-            }`}
+        {/* New Password Input */}
+        <div className="mb-5">
+          <label
+            htmlFor="pass-rest-new-pass"
+            className="text-dark-weight-500 text-[13px] font-poppins-rg"
           >
-            {isProcessing ? (
-              <span className="flex items-center gap-4">
-                <ClipLoader color="#ffffff" size={16} />
-                <span className="text-light-weight-850">Processing...</span>
-              </span>
-            ) : (
-              "Update Password"
-            )}
-          </button>
+            New Password
+            <span className="text-red-500 ml-1">*</span>
+          </label>
+
+          <div className="flex items-center gap-2 overflow-hidden rounded-md border border-gray-400 pr-3 mt-2">
+            <input
+              id="pass-rest-new-pass"
+              type={isPasswordVisible ? "text" : "password"}
+              name="newPassword"
+              {...register("newPassword")}
+              className="w-full border-0 px-3 py-2 font-poppins-rg text-[13px] text-dark-weight-400 focus:outline-none focus:ring-0"
+              placeholder="Enter your new password"
+            />
+            <button
+              type="button"
+              onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+              className="text-[16px] text-light-weight-400"
+            >
+              {isPasswordVisible ? <AiOutlineEye /> : <AiOutlineEyeInvisible />}
+            </button>
+          </div>
+          {errors && errors.newPassword ? (
+            <p className="mt-2 font-poppins-rg text-[12px] text-red-500">
+              {errors.newPassword.message}
+            </p>
+          ) : null}
         </div>
+
+        {/* Confirm New Password Input */}
+        <div className="mb-5">
+          <label
+            htmlFor="pass-reset-confirm-pass"
+            className="text-dark-weight-500 text-[13px] font-poppins-rg"
+          >
+            Confirm New Password
+            <span className="text-red-500 ml-1">*</span>
+          </label>
+
+          <div className="flex items-center gap-2 overflow-hidden rounded-md border border-gray-400 pr-3 mt-2">
+            <input
+              id="pass-reset-confirm-pass"
+              type={isConfirmPasswordVisible ? "text" : "password"}
+              name="confirmNewPassword"
+              {...register("confirmNewPassword")}
+              className="w-full border-0 px-3 py-2 font-poppins-rg text-[13px] text-dark-weight-400 focus:outline-none focus:ring-0"
+              placeholder="Confirm your password"
+            />
+            <button
+              type="button"
+              onClick={() =>
+                setIsConfirmPasswordVisible(!isConfirmPasswordVisible)
+              }
+              className="text-[16px] text-light-weight-400"
+            >
+              {isConfirmPasswordVisible ? (
+                <AiOutlineEye />
+              ) : (
+                <AiOutlineEyeInvisible />
+              )}
+            </button>
+          </div>
+          {errors && errors.confirmNewPassword ? (
+            <p className="mt-2 font-poppins-rg text-[12px] text-red-500">
+              {errors.confirmNewPassword.message}
+            </p>
+          ) : null}
+        </div>
+
+        {/* Sign up Button */}
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className={`${globalStyleObj.authButton} mt-3 w-full ${
+            isSubmitting ? "cursor-not-allowed" : ""
+          }`}
+        >
+          {isSubmitting ? (
+            <span className="flex items-center gap-4">
+              <ClipLoader color="#ffffff" size={16} />
+              <span className="text-light-weight-850">Processing...</span>
+            </span>
+          ) : (
+            "Submit"
+          )}
+        </button>
       </form>
-      {/* Sign In */}
-      <p className={`${globalStyleObj.authDescriptionText}`}>
-        Wait, I remember my password...{" "}
-        <Link href={ROUTES.LOGIN}>
-          <span className="text-[#405189] underline">Click here</span>
-        </Link>
-      </p>
     </>
   );
 };

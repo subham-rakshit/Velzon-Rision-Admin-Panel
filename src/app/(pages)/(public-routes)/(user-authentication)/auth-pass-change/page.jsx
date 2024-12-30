@@ -1,28 +1,28 @@
 import { globalStyleObj } from "@/app/assets/styles";
 import { titlesObject } from "@/app/assets/titlesData/titles";
-import { ForgotPasswordForm, PlayerLordIcon } from "@/components";
+import { ResetPasswordForm } from "@/components";
 import ROUTES from "@/constants/routes";
 import Link from "next/link";
 
 export const metadata = {
-  title: titlesObject.forgotPassword.title,
+  title: titlesObject.authPassChange.title,
 };
 
-const ForgetPasswordPage = () => {
+const ResetPassword = () => {
   return (
     <>
       <div className={`${globalStyleObj.formInnerContainer}`}>
         {/* Welcome Text */}
-        <div className="mb-6 flex flex-col items-center">
-          <h1 className={`${globalStyleObj.formHeading}`}>Forgot Password?</h1>
+        <div className="mb-6">
+          <h1 className={`${globalStyleObj.formHeading}`}>
+            Create new password
+          </h1>
           <p className={`${globalStyleObj.formDescription}`}>
-            Reset password with velzon
+            Your new password must be different from pervious used password.
           </p>
-
-          <PlayerLordIcon />
         </div>
 
-        <ForgotPasswordForm />
+        <ResetPasswordForm />
       </div>
 
       {/* Sign In */}
@@ -36,4 +36,4 @@ const ForgetPasswordPage = () => {
   );
 };
 
-export default ForgetPasswordPage;
+export default ResetPassword;

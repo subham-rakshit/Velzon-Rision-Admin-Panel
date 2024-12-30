@@ -1,30 +1,21 @@
+"use client";
+
 import { signIn } from "next-auth/react";
-import React from "react";
 import { FaFacebookF, FaGoogle, FaTwitter } from "react-icons/fa";
 import { VscGithub } from "react-icons/vsc";
-import { toast } from "react-toastify";
 
 import ROUTES from "@/constants/routes";
+import { showErrorToast } from "@/lib/helpers/toast-notification";
 
 const SocialAuthForm = () => {
   const handleLogin = async (provider) => {
     try {
       await signIn(provider, {
         callbackUrl: ROUTES.HOME,
-        redirect: false,
       });
     } catch (error) {
-      console.log(error);
-      toast.error(error.message || "Error occured during login", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      console.log(`Error in social auth CLIENT: ${error}`);
+      showErrorToast(error.message || "Error occured during login");
     }
   };
 

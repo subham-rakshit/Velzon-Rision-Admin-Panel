@@ -13,18 +13,22 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "Username is required"],
       trim: true,
-      unique: true,
     },
     password: {
       type: String,
       required: [true, "Password is required"],
       trim: true,
     },
-    isVerified: {
-      type: Boolean,
-      default: false,
+    picture: {
+      type: String,
+      default: "/assets/users/avatar-1.jpg",
     },
-    isAdmin: {
+    role: {
+      type: [String],
+      default: ["User"],
+      enum: ["User", "Admin"],
+    },
+    isVerified: {
       type: Boolean,
       default: false,
     },

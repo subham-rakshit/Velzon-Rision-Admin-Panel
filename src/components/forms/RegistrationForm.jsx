@@ -2,227 +2,251 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { ClipLoader } from "react-spinners";
-import { toast } from "react-toastify";
-
-import { PasswordInputFiled, SocialAuthForm, TextInputFile } from "..";
 
 import { globalStyleObj } from "@/app/assets/styles";
 import ROUTES from "@/constants/routes";
+import {
+  showErrorToast,
+  showSuccessToast,
+} from "@/lib/helpers/toast-notification";
+import { RegistrationSchema } from "@/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 const RegistrationForm = () => {
-  const [registerationData, setRegistrationData] = useState({});
-  const [isProcessing, setIsProcessing] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] =
+    useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    setError,
+    reset,
+  } = useForm({ resolver: zodResolver(RegistrationSchema) });
 
   const router = useRouter();
 
-  // NOTE: Handle the all input fields
-  const onHandleInputs = (name, value) => {
-    setRegistrationData({
-      ...registerationData,
-      [name]: value,
-    });
-  };
-
-  // TODO: Registration by Auth.js
-  async function handleFromSubmit(event) {
-    event.preventDefault();
-
-    if (Object.keys(registerationData).length > 0) {
-      try {
-        setIsProcessing(true);
-        const { email, username, password, confirmPassword } =
-          registerationData;
-
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/user/register`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              email,
-              username,
-              password,
-              confirmPassword,
-            }),
-          }
-        );
-
-        const data = await response.json();
-
-        if (data.success) {
-          toast.success(data.message, {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-          setRegistrationData({});
-          setIsProcessing(false);
-          router.push(ROUTES.AUTH_TWO_STEP);
-        } else {
-          setIsProcessing(false);
-          if (typeof data.message === "string") {
-            toast.error(data.message, {
-              position: "top-right",
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
-          } else if (typeof data.message === "object") {
-            Object.values(data.message).map((err, i) =>
-              toast.error(err[0], {
-                position: "top-right",
-                autoClose: 3000 * (i + 1),
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-              })
-            );
-          }
-        }
-      } catch (error) {
-        console.log(error);
+  // Error handling function
+  const handleZodValidationErrors = (data) => {
+    if (data.errors) {
+      const errors = data.errors;
+      if (errors.email) {
+        setError("email", {
+          type: "server",
+          message: errors.email.message,
+        });
+      }
+      if (errors.username) {
+        setError("username", {
+          type: "server",
+          message: errors.username.message,
+        });
+      }
+      if (errors.password) {
+        setError("password", {
+          type: "server",
+          message: errors.password.message,
+        });
+      }
+      if (errors.confirmPassword) {
+        setError("confirmPassword", {
+          type: "server",
+          message: errors.confirmPassword.message,
+        });
       }
     } else {
-      toast.error("Invalid input field", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      showErrorToast(data.message);
     }
-  }
+  };
+
+  // Handle form onSubmit function
+  const onSubmit = async (data) => {
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/user/register`,
+        {
+          ...data,
+        }
+      );
+
+      if (response.data.success && response.status === 201) {
+        showSuccessToast(response.data.message);
+        reset();
+        router.push(ROUTES.AUTH_TWO_STEP);
+      }
+    } catch (error) {
+      console.log(`Error in Register New User CLIENT: ${error}`);
+      if (error.response) {
+        handleZodValidationErrors(error.response.data);
+      } else {
+        showErrorToast("Internal Server Error. Please try again later.");
+      }
+    }
+  };
 
   return (
     <>
-      <form
-        className={`${globalStyleObj.formInnerContainer}`}
-        onSubmit={handleFromSubmit}
-      >
-        {/* Create Text */}
-        <div className="mb-6">
-          <h1 className={`${globalStyleObj.formHeading}`}>
-            Create New Account
-          </h1>
-          <p className={`${globalStyleObj.formDescription}`}>
-            Get your free velzon account now
-          </p>
+      {/* Form Element */}
+      <form onSubmit={handleSubmit(onSubmit)}>
+        {/* Username Input */}
+        <div className="mb-5">
+          <label
+            htmlFor="signup-username"
+            className="text-dark-weight-500 text-[13px] font-poppins-rg"
+          >
+            Username
+            <span className="text-red-500 ml-1">*</span>
+          </label>
+
+          <input
+            {...register("username")}
+            type="text"
+            id="signup-username"
+            name="username"
+            placeholder="Enter email full name"
+            className="w-full rounded-md border border-gray-400 px-3 py-2 font-poppins-rg text-[13px] text-dark-weight-400 focus:outline-none focus:ring-0 mt-2"
+          />
+
+          {errors && errors.username && (
+            <p className="text-[12px] font-poppins-rg text-red-500">
+              {errors.username.message}
+            </p>
+          )}
         </div>
 
-        {/* Form Element */}
-        <div className="flex flex-col gap-5">
-          {/* Email Input */}
-          <TextInputFile
-            labelText="Email"
-            inputId="sigup-email"
-            inputName="email"
-            inputPlaceholder="Enter email address"
-            inputValue={registerationData.email ? registerationData.email : ""}
-            helperText="Please Enter Your Email"
-            onHandleInputs={onHandleInputs}
-          />
-          {/* Username Input */}
-          <TextInputFile
-            labelText="Username"
-            inputId="sigup-username"
-            inputName="username"
-            inputPlaceholder="Enter username"
-            inputValue={
-              registerationData.username ? registerationData.username : ""
-            }
-            helperText="Please Enter Your Username"
-            onHandleInputs={onHandleInputs}
-          />
-          {/* Password Input */}
-          <PasswordInputFiled
-            labelText="Password"
-            inputId="sigup-password"
-            inputName="password"
-            inputValue={
-              registerationData.password ? registerationData.password : ""
-            }
-            helperText="Please enter your password"
-            placeholderText="Enter Password"
-            onHandleInputs={onHandleInputs}
-          />
-          {/* Confirm Password Input */}
-          <div>
-            <PasswordInputFiled
-              labelText="Confirm Password"
-              inputId="sigup-confirm-password"
-              inputName="confirmPassword"
-              inputValue={
-                registerationData.confirmPassword
-                  ? registerationData.confirmPassword
-                  : ""
-              }
-              helperText="Please confirm your password"
-              placeholderText="Confirm Password"
-              onHandleInputs={onHandleInputs}
-            />
-            <p className={`${globalStyleObj.formDescription} mt-2 italic`}>
-              By registering you agree to the Velzon{" "}
-              <Link href="#">
-                <span className="font-poppins-md not-italic text-[#405189] underline">
-                  Terms of Use
-                </span>
-              </Link>
-            </p>
-          </div>
-          {/* Sign up Button */}
-          <button
-            type="submit"
-            disabled={isProcessing}
-            className={`${globalStyleObj.authButton} mt-3 ${
-              isProcessing ? "cursor-not-allowed" : ""
-            }`}
+        {/* Email Input */}
+        <div className="mb-5">
+          <label
+            htmlFor="signup-email"
+            className="text-dark-weight-500 text-[13px] font-poppins-rg"
           >
-            {isProcessing ? (
-              <span className="flex items-center gap-4">
-                <ClipLoader color="#ffffff" size={16} />
-                <span className="text-light-weight-850">Processing...</span>
-              </span>
-            ) : (
-              "Sign Up"
-            )}
-          </button>
+            Email
+            <span className="text-red-500 ml-1">*</span>
+          </label>
+
+          <input
+            {...register("email")}
+            type="email"
+            id="signup-email"
+            name="email"
+            placeholder="Enter email address"
+            className="w-full rounded-md border border-gray-400 px-3 py-2 font-poppins-rg text-[13px] text-dark-weight-400 focus:outline-none focus:ring-0 mt-2"
+          />
+
+          {errors && errors.email && (
+            <p className="text-[12px] font-poppins-rg text-red-500">
+              {errors.email.message}
+            </p>
+          )}
         </div>
-        <div className="my-5 flex items-center gap-2">
-          <hr className="grow border-t border-dotted border-gray-300" />
-          <span className={`${globalStyleObj.authDescriptionText}`}>
-            Create account with
-          </span>
-          <hr className="grow border-t border-dotted border-gray-300" />
+
+        {/* Password Input */}
+        <div className="mb-5">
+          <label
+            htmlFor="signup-password"
+            className="text-dark-weight-500 text-[13px] font-poppins-rg"
+          >
+            Password
+            <span className="text-red-500 ml-1">*</span>
+          </label>
+
+          <div className="flex items-center gap-2 overflow-hidden rounded-md border border-gray-400 pr-3 mt-2">
+            <input
+              id="signup-password"
+              type={isPasswordVisible ? "text" : "password"}
+              name="password"
+              {...register("password")}
+              className="w-full border-0 px-3 py-2 font-poppins-rg text-[13px] text-dark-weight-400 focus:outline-none focus:ring-0"
+              placeholder="Enter your password"
+            />
+            <button
+              type="button"
+              onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+              className="text-[16px] text-light-weight-400"
+            >
+              {isPasswordVisible ? <AiOutlineEye /> : <AiOutlineEyeInvisible />}
+            </button>
+          </div>
+          {errors && errors.password ? (
+            <p className="mt-2 font-poppins-rg text-[12px] text-red-500">
+              {errors.password.message}
+            </p>
+          ) : null}
         </div>
-        {/* Alternate Sign in */}
-        <SocialAuthForm />
+
+        {/* Confirm Password Input */}
+        <div className="mb-5">
+          <label
+            htmlFor="signup-confirm-password"
+            className="text-dark-weight-500 text-[13px] font-poppins-rg"
+          >
+            Confirm Password
+            <span className="text-red-500 ml-1">*</span>
+          </label>
+
+          <div className="flex items-center gap-2 overflow-hidden rounded-md border border-gray-400 pr-3 mt-2">
+            <input
+              id="signup-confirm-password"
+              type={isConfirmPasswordVisible ? "text" : "password"}
+              name="confirmPassword"
+              {...register("confirmPassword")}
+              className="w-full border-0 px-3 py-2 font-poppins-rg text-[13px] text-dark-weight-400 focus:outline-none focus:ring-0"
+              placeholder="Confirm your password"
+            />
+            <button
+              type="button"
+              onClick={() =>
+                setIsConfirmPasswordVisible(!isConfirmPasswordVisible)
+              }
+              className="text-[16px] text-light-weight-400"
+            >
+              {isConfirmPasswordVisible ? (
+                <AiOutlineEye />
+              ) : (
+                <AiOutlineEyeInvisible />
+              )}
+            </button>
+          </div>
+          {errors && errors.confirmPassword ? (
+            <p className="mt-2 font-poppins-rg text-[12px] text-red-500">
+              {errors.confirmPassword.message}
+            </p>
+          ) : null}
+        </div>
+
+        <p className={`${globalStyleObj.formDescription} mt-2 italic`}>
+          By registering you agree to the Velzon{" "}
+          <Link href="#">
+            <span className="font-poppins-md not-italic text-[#405189] underline">
+              Terms of Use
+            </span>
+          </Link>
+        </p>
+
+        {/* Sign up Button */}
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className={`${globalStyleObj.authButton} mt-3 w-full ${
+            isSubmitting ? "cursor-not-allowed" : ""
+          }`}
+        >
+          {isSubmitting ? (
+            <span className="flex items-center gap-4">
+              <ClipLoader color="#ffffff" size={16} />
+              <span className="text-light-weight-850">Processing...</span>
+            </span>
+          ) : (
+            "Sign Up"
+          )}
+        </button>
       </form>
-      {/* Sign Up */}
-      <p className={`${globalStyleObj.authDescriptionText}`}>
-        Already have an account?{" "}
-        <Link href={ROUTES.LOGIN}>
-          <span className="text-[#405189] underline">Signin</span>
-        </Link>
-      </p>
     </>
   );
 };

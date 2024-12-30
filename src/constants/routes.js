@@ -206,9 +206,10 @@ const ROUTES = {
   FORGOT_PASSWORD: "/forgot-password",
   AUTH_TWO_STEP: "/auth-twostep",
   AUTH_OTP_RESEND: "/auth-otp-resend",
+  AUTH_PASS_CHANGE: "/auth-pass-change",
 
   // Dynamic Routes
-  AUTH_PASS_CHANGE: (token) => `/auth-pass-change/${token}`,
+  // AUTH_PASS_CHANGE: (token) => `/auth-pass-change/${token}`,
 };
 
 export default ROUTES;

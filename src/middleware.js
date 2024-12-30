@@ -1,6 +1,6 @@
+import { getToken } from "next-auth/jwt";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-import { getToken } from "next-auth/jwt";
 
 import setLanguageAction from "./actions/setLanguageAction";
 
@@ -86,19 +86,20 @@ export async function middleware(request) {
 
   // JWT Token
   const accessTokenCookie = request.cookies.get("access-token");
+
   const accessToken = accessTokenCookie ? accessTokenCookie.value : null;
   const tokenUserJWT = accessToken
     ? await verifyToken(accessToken, process.env.TOKEN_SECRET)
     : null;
 
-  // Store token based on token availability
+  // Store token user details based on token availability
   const token = nextAuthToken || tokenUserJWT || null;
   const redirect = (path) => NextResponse.redirect(new URL(path, request.url));
 
   // Handle Auth Routes
   if (authRoutes.some((route) => pathname.startsWith(route))) {
     return token
-      ? redirect(token.isAdmin ? "/dashboard" : "/landing")
+      ? redirect(token.role.includes("Admin") ? "/dashboard" : "/landing")
       : NextResponse.next();
   }
 
@@ -106,7 +107,7 @@ export async function middleware(request) {
   if (protectedRoutes.some((route) => pathname.startsWith(route))) {
     if (!token) return redirect("/login");
 
-    if (!token.isAdmin) {
+    if (!token.role.includes("Admin")) {
       return redirect("/landing");
     }
 
@@ -120,7 +121,10 @@ export async function middleware(request) {
     }
 
     return NextResponse.redirect(
-      new URL(token.isAdmin ? "/dashboard" : "/landing", request.url)
+      new URL(
+        token.role.includes("Admin") ? "/dashboard" : "/landing",
+        request.url
+      )
     );
   }
 

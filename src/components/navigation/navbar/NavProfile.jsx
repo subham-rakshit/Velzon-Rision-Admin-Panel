@@ -1,13 +1,12 @@
 "use client";
 
+import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { signOut, useSession } from "next-auth/react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { MdLogout } from "react-icons/md";
 import { BeatLoader } from "react-spinners";
-import { toast } from "react-toastify";
 
 import avatarImg from "../../../app/assets/images/users/avatar-1.jpg";
 
@@ -30,11 +29,16 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import ROUTES from "@/constants/routes";
+import {
+  showErrorToast,
+  showSuccessToast,
+} from "@/lib/helpers/toast-notification";
 import { useAppSelector } from "@/lib/store/hooks";
+import axios from "axios";
 
 const NavProfile = () => {
   const [isFetching, setIsFetching] = useState(false);
-  const [profileName, setProfileName] = useState("");
+  const [userData, setUserData] = useState({});
   const { sidebarUserProfileAvtarType, topbarColorType } = useAppSelector(
     (state) => state.layout
   );
@@ -42,104 +46,68 @@ const NavProfile = () => {
   const session = useSession();
   const router = useRouter();
 
+  // NOTE Handle Logout for credentials Login
   const handleLogout = async () => {
     try {
-      const res = await fetch(
+      const response = await axios(
         `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/user/logout`
       );
-      const data = await res.json();
 
-      if (res.ok && data.success) {
-        toast.success(data.message, {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+      if (response.data.success && response.status === 200) {
+        showSuccessToast(response.data.message);
         router.push(ROUTES.LOGIN); // NOTE: redirect to login page
-      } else {
-        toast.error(data.message, {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
       }
     } catch (error) {
       console.log("Logout Error: ", error);
-      toast.error("Logout failure.", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      showErrorToast(
+        error.response.data.message ||
+          error.response.data.errors ||
+          error.message ||
+          "Logout failure."
+      );
     }
   };
 
+  // NOTE Handle Logout for OAuth Login
   const handleOAuthLogout = () => {
     signOut({
       callbackUrl: ROUTES.LOGIN,
     });
   };
 
-  useEffect(() => {
-    const getUserDetails = async () => {
-      try {
-        setIsFetching(true);
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/user/get-details`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+  // NOTE Get User Details
+  const getUserDetails = async () => {
+    try {
+      setIsFetching(true);
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/user/get-details`
+      );
 
-        const data = await response.json();
-
-        if (response.ok && data.success) {
-          setProfileName(data.message);
-        } else {
-          toast.error(data.message, {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-        }
-      } catch (error) {
-        console.log("Get username error: ", error);
-        toast.error("Profile name Error!", {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-      } finally {
-        setIsFetching(false);
+      if (response.data.success && response.status === 200) {
+        setUserData(response.data.user);
       }
-    };
+    } catch (error) {
+      console.log("Get user details error CLIENT: ", error);
+      if (
+        error.response.status === 400 &&
+        error.response.data.message === "Unauthenticated user."
+      ) {
+        showErrorToast(error.response.data.message);
+        handleLogout();
+      } else {
+        showErrorToast(
+          error.response.data.message ||
+            error.response.data.errors ||
+            error.message ||
+            "Profile details ERROR."
+        );
+      }
+    } finally {
+      setIsFetching(false);
+    }
+  };
+
+  useEffect(() => {
     if (session && session.status === "unauthenticated") {
       getUserDetails();
     }
@@ -155,7 +123,7 @@ const NavProfile = () => {
           <span className={`${globalStyleObj.flexStart} gap-[10px]`}>
             <Image
               alt="User settings"
-              src={avatarImg}
+              src={userData.picture ? userData.picture : avatarImg}
               width={33}
               height={33}
               className="rounded-full"
@@ -170,10 +138,20 @@ const NavProfile = () => {
                   >
                     {session && session.data
                       ? session.data.user.username
-                      : profileName}
+                      : userData.username
+                        ? userData.username
+                        : "Anonymous"}
                   </span>
                   <span className={`${globalStyleObj.text11Light400}`}>
-                    Founder
+                    {session && session.data
+                      ? session.data.user.role.includes("Admin")
+                        ? "Admin"
+                        : "User"
+                      : userData.role
+                        ? userData.role.includes("Admin")
+                          ? "Admin"
+                          : "User"
+                        : "Anonymous"}
                   </span>
                 </>
               )}
@@ -190,7 +168,7 @@ const NavProfile = () => {
               <BeatLoader size={3} color="#b9b1b1" />
             ) : (
               <span className="font-poppins-light text-[12px] tracking-wide text-light-weight-400">
-                {`Welcome ${session && session.data ? session.data.user.username : profileName}!`}
+                {`Welcome ${session && session.data ? session.data.user.username : userData.username ? userData.username : "Anonymous"}!`}
               </span>
             )}
           </DropdownMenuLabel>

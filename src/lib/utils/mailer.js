@@ -1,5 +1,4 @@
 import nodemailer from "nodemailer";
-import { v4 as uuidv4 } from "uuid";
 
 import {
   resetPasswordTokenEmailTemplate,
@@ -31,7 +30,6 @@ export const sendEmail = async ({ email, emailType, username, userId }) => {
   try {
     // INFO: Create tokenCode and save in DB according to email type
     const otp = generateOTP();
-    const verifyToken = uuidv4();
 
     if (emailType === "VERIFY" || emailType === "RESEND") {
       await UserModel.findByIdAndUpdate(userId, {
@@ -40,7 +38,7 @@ export const sendEmail = async ({ email, emailType, username, userId }) => {
       });
     } else if (emailType === "RESET") {
       await UserModel.findByIdAndUpdate(userId, {
-        forgetPasswordCode: verifyToken,
+        forgetPasswordCode: otp,
         forgetPasswordCodeExpiry: Date.now() + 3600000, // 1hr
       });
     }
@@ -61,12 +59,12 @@ export const sendEmail = async ({ email, emailType, username, userId }) => {
       to: email,
       subject:
         emailType === "VERIFY" || emailType === "RESEND"
-          ? "Velzon Admin Verification Code"
-          : "Rest Your Password",
+          ? "Velzon Email Verification Code"
+          : "Velzon Password Reset Code",
       html:
         emailType === "VERIFY" || emailType === "RESEND"
           ? verificationEmailTemplate({ otp, username })
-          : resetPasswordTokenEmailTemplate({ token: verifyToken, username }),
+          : resetPasswordTokenEmailTemplate({ otp, username }),
     };
 
     // INFO: Email Response

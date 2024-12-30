@@ -1,78 +1,75 @@
 import bcrypt from "bcryptjs";
 
 import dbConnect from "@/lib/db/dbConnect";
-import handleResponse from "@/lib/middleware/responseMiddleware";
 import UserModel from "@/model/User";
 import { ResetPasswordSchema } from "@/schemas";
+import { NextResponse } from "next/server";
 
 export async function POST(request) {
   await dbConnect();
   try {
-    const reqBody = await request.json();
-    const { token, newPassword, confirmPassword } = reqBody;
+    const body = await request.json();
+    const { resetPasswordCode, newPassword, confirmNewPassword } = body;
 
-    // INFO: Handle not getting token
-    if (!token) {
-      return handleResponse({
-        res: Response,
-        status: 404,
-        success: false,
-        message: "Token not found",
-      });
-    }
-
-    // INFO: Validate the verification schema
-    const validatedFields = ResetPasswordSchema.safeParse({
-      newPassword,
-      confirmPassword,
-    });
-    if (!validatedFields.success) {
-      return Response.json(
+    // NOTE Handle not getting request data
+    if (!resetPasswordCode || !newPassword || !confirmNewPassword) {
+      return NextResponse.json(
         {
           success: false,
-          message: validatedFields.error.flatten().fieldErrors,
+          message: "Invalid inputs.",
+        },
+        { status: 404 }
+      );
+    }
+
+    // NOTE VALIDATE the verification schema
+    const validatedFields = ResetPasswordSchema.safeParse(body);
+    if (!validatedFields.success) {
+      let zodErrors = {};
+      validatedFields.error.issues.forEach((issue) => {
+        zodErrors = {
+          ...zodErrors,
+          [issue.path[0]]: { message: issue.message },
+        };
+      });
+
+      return NextResponse.json(
+        { success: false, errors: zodErrors },
+        { status: 400 }
+      );
+    }
+
+    // NOTE If RESET_CODE is present in User Model
+    const userDetails = await UserModel.findOne({
+      forgetPasswordCode: resetPasswordCode,
+      forgetPasswordCodeExpiry: { $gte: Date.now() }, // handle 1hr time expiry
+    });
+    if (!userDetails) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Reset password session expired OR Invalid code",
         },
         { status: 400 }
       );
     }
 
-    // INFO: Check the password and cofirmPassword
-    if (newPassword !== confirmPassword) {
-      return handleResponse({
-        res: Response,
-        status: 400,
-        success: false,
-        message: "New password and Confirm password must be same.",
-      });
-    }
-
-    // INFO: If token is present ****
-    const userDetails = await UserModel.findOne({
-      forgetPasswordCode: token,
-      forgetPasswordCodeExpiry: { $gte: Date.now() }, // handle 1hr time expiry
-    });
-
-    if (!userDetails) {
-      return handleResponse({
-        res: Response,
-        status: 400,
-        success: false,
-        message: "Reset password session expired",
-      });
-    }
+    // NOTE Compare the new password with the old password
     const passwordCompareStatus = bcrypt.compareSync(
       newPassword,
       userDetails.password
     );
     if (passwordCompareStatus) {
-      return handleResponse({
-        res: Response,
-        status: 400,
-        success: false,
-        message: "New password cannot be the same as the old password",
-      });
+      return NextResponse.json(
+        {
+          success: false,
+          message: "New password cannot be the same as the old password",
+        },
+        { status: 400 }
+      );
     }
 
+    // NOTE HASHED_NEW_PASSWORD and save in DB AND remove the reset code and expiry
     const hashedPassword = await bcrypt.hash(newPassword, 10);
     userDetails.password = hashedPassword;
     userDetails.forgetPasswordCode = undefined;
@@ -80,20 +77,23 @@ export async function POST(request) {
 
     await userDetails.save(); // Save the updated verified user details.
 
-    // INFO: Response
-    return handleResponse({
-      res: Response,
-      status: 200,
-      success: true,
-      message: `Password reset successful. Please Login`,
-    });
+    // NOTE SUCCESS_RESPONSE
+    return NextResponse.json(
+      {
+        success: true,
+        message: `Password reset successful. Please Login`,
+      },
+      { status: 201 }
+    );
   } catch (error) {
-    console.error(`Password reset error: ${error}`);
-    return handleResponse({
-      res: Response,
-      status: 500,
-      success: false,
-      message: `Password reset error: ${error.message}`,
-    });
+    console.error(`Password reset error SERVER: ${error}`);
+
+    return NextResponse.json(
+      {
+        success: false,
+        message: `Error resetting password: ${error.message}`,
+      },
+      { status: 500 }
+    );
   }
 }

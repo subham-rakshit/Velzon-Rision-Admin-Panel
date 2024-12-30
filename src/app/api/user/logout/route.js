@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 
 import dbConnect from "@/lib/db/dbConnect";
-import handleResponse from "@/lib/middleware/responseMiddleware";
 
 export async function GET(request) {
   await dbConnect(); // INFO: Database connection
@@ -38,11 +37,13 @@ export async function GET(request) {
     return response;
   } catch (error) {
     console.error(`Error logining out user: ${error}`);
-    return handleResponse({
-      res: Response,
-      status: 500,
-      success: false,
-      message: `Error logining out user: ${error.message}`,
-    });
+
+    return NextResponse.json(
+      {
+        success: false,
+        message: `Error logining out user: ${error.message}`,
+      },
+      { status: 500 }
+    );
   }
 }

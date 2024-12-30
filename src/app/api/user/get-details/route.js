@@ -1,45 +1,37 @@
-import jwt from "jsonwebtoken"
-import { cookies } from "next/headers";
-
-import handleResponse from "@/lib/middleware/responseMiddleware";
+import { validateUserFromToken } from "@/lib/middleware/validateUser";
+import { NextResponse } from "next/server";
 
 export async function GET(request) {
   try {
-    const cookieStore = await cookies()
-    const token = cookieStore.get("access-token")
-   
-    if (!token) {
-     return handleResponse({
-       res: Response,
-       status: 401,
-       success: false,
-       message: "User unauthorized!",
-     })
-   }
-   const userData = jwt.verify(token.value, process.env.TOKEN_SECRET);
-    
+    // Get the user details from the token
+    const userData = await validateUserFromToken({ request });
+
     if (!userData) {
-     return handleResponse({
-      res: Response,
-      status: 400,
-      success: false,
-      message: "Need to Login",
-    });
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Unauthenticated user.",
+        },
+        { status: 400 }
+      );
     } else {
-     return handleResponse({
-      res: Response,
-      status: 200,
-      success: true,
-      message: userData.username,
-    });
-    } 
+      return NextResponse.json(
+        {
+          success: true,
+          user: userData,
+        },
+        { status: 200 }
+      );
+    }
   } catch (error) {
-    console.log("Get user details Error: ", error);
-    return handleResponse({
-      res: Response,
-      status: 500,
-      success: false,
-      message: "User Details BackEnd Error",
-    })
+    console.log(`Error getting user details SERVER: ${error}`);
+
+    return NextResponse.json(
+      {
+        success: false,
+        message: `Error getting user details: ${error.message}`,
+      },
+      { status: 500 }
+    );
   }
 }

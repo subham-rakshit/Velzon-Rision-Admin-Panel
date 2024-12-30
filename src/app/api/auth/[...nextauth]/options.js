@@ -103,19 +103,14 @@ export const authOptions = {
         if (!dbUser) {
           // Generate hashed password and create new user
           const generateNewHashedPassword = await bcrypt.hash(user.email, 12);
-          const username = `${user.name
-            .trim()
-            .toLowerCase()
-            .replace(/\s+/g, "")}${Math.random().toString(36).slice(-4)}`;
           const isVerified =
             account.provider === "google" && profile.email_verified;
 
           const newUser = new UserModel({
             email: user.email,
-            username,
+            username: user.name,
             password: generateNewHashedPassword,
             isVerified,
-            isAdmin: false,
           });
 
           await newUser.save();
@@ -124,8 +119,9 @@ export const authOptions = {
           user._id = newUser._id.toString();
           user.username = newUser.username;
           user.email = newUser.email;
+          user.picture = newUser.picture;
+          user.role = newUser.role;
           user.isVerified = newUser.isVerified;
-          user.isAdmin = newUser.isAdmin;
 
           return true;
         }
@@ -139,8 +135,9 @@ export const authOptions = {
         user._id = dbUser._id.toString();
         user.username = dbUser.username;
         user.email = dbUser.email;
+        user.picture = dbUser.picture;
+        user.role = dbUser.role;
         user.isVerified = dbUser.isVerified;
-        user.isAdmin = dbUser.isAdmin;
 
         return true;
       } catch (error) {
@@ -154,14 +151,15 @@ export const authOptions = {
       if (user) {
         // Remove unnecessary properties from the token
         delete token.name;
-        delete token.picture;
         delete token.sub;
 
         // Add user details to the token
         token._id = user._id.toString();
         token.username = user.username;
+        token.email = user.email;
+        token.picture = user.picture;
+        token.role = user.role;
         token.isVerified = user.isVerified;
-        token.isAdmin = user.isAdmin;
       }
 
       return token;
@@ -172,8 +170,10 @@ export const authOptions = {
       if (token) {
         session.user._id = token._id;
         session.user.username = token.username;
+        session.user.email = token.email;
+        session.user.picture = token.picture;
+        session.user.role = token.role;
         session.user.isVerified = token.isVerified;
-        session.user.isAdmin = token.isAdmin;
       }
 
       return session;

@@ -1,6 +1,6 @@
 import dbConnect from "@/lib/db/dbConnect";
-import handleResponse from "@/lib/middleware/responseMiddleware";
 import UserModel from "@/model/User";
+import { NextResponse } from "next/server";
 
 export async function POST(request) {
   await dbConnect();
@@ -10,12 +10,13 @@ export async function POST(request) {
 
     // INFO: Handle not getting token
     if (!otp) {
-      return handleResponse({
-        res: Response,
-        status: 404,
-        success: false,
-        message: "Verification code not found",
-      });
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Verification code not found",
+        },
+        { status: 404 }
+      );
     }
 
     // NOTE: If token is present ****
@@ -25,12 +26,13 @@ export async function POST(request) {
     });
 
     if (!userDetails) {
-      return handleResponse({
-        res: Response,
-        status: 400,
-        success: false,
-        message: "Invalid OTP || Token session has been expired",
-      });
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Invalid OTP || Token session has been expired",
+        },
+        { status: 400 }
+      );
     }
 
     userDetails.isVerified = true;
@@ -40,19 +42,23 @@ export async function POST(request) {
     await userDetails.save(); // Save the updated verified user details.
 
     // INFO: Response
-    return handleResponse({
-      res: Response,
-      status: 200,
-      success: true,
-      message: `Email verification successful`,
-    });
+    return NextResponse.json(
+      {
+        success: true,
+        message:
+          "Email verification successful. Please login with your credentials.",
+      },
+      { status: 200 }
+    );
   } catch (error) {
     console.error(`Error verifying user account: ${error}`);
-    return handleResponse({
-      res: Response,
-      status: 500,
-      success: false,
-      message: `Error verifying user account: ${error.message}`,
-    });
+
+    return NextResponse.json(
+      {
+        success: false,
+        message: `Error verifying user account: ${error.message}`,
+      },
+      { status: 500 }
+    );
   }
 }

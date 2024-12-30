@@ -1,19 +1,29 @@
 import dbConnect from "@/lib/db/dbConnect";
-import handleResponse from "@/lib/middleware/responseMiddleware";
 import { sendEmail } from "@/lib/utils/mailer";
 import UserModel from "@/model/User";
 import { EmailSchema } from "@/schemas";
+import { NextResponse } from "next/server";
 
 export async function POST(request) {
   await dbConnect();
 
   try {
-    const { email } = await request.json();
+    const body = await request.json();
+    const { email } = body;
 
-    // NOTE: Validate the email by zod schema
-    const validatedFields = EmailSchema.safeParse({
-      email,
-    });
+    // NOTE: Handle not getting request data
+    if (!email) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Invalid inputs.",
+        },
+        { status: 404 }
+      );
+    }
+
+    // NOTE Validate the email by zod schema
+    const validatedFields = EmailSchema.safeParse(body);
     if (!validatedFields.success) {
       return Response.json(
         {
@@ -27,12 +37,13 @@ export async function POST(request) {
     // INFO: Fetch the user details
     const userDetails = await UserModel.findOne({ email });
     if (!userDetails) {
-      return handleResponse({
-        res: Response,
-        status: 400,
-        success: false,
-        message: `Invalid email address. Please provide your registered email address`,
-      });
+      return NextResponse.json(
+        {
+          success: false,
+          message: `Invalid email address. Please provide your registered email address`,
+        },
+        { status: 400 }
+      );
     }
 
     // INFO: Send verification email
@@ -45,28 +56,31 @@ export async function POST(request) {
 
     // INFO: Response send email with error
     if (!emailResponse.success) {
-      return handleResponse({
-        res: Response,
-        status: 400,
-        success: false,
-        message: "Unable to send the OTP",
-      });
+      return NextResponse.json(
+        {
+          success: false,
+          message: `Unable to send the OTP`,
+        },
+        { status: 400 }
+      );
     }
 
     // INFO: Response send email with success
-    return handleResponse({
-      res: Response,
-      status: 200,
-      success: true,
-      message: "OTP has been successfully sent to your email.",
-    });
+    return NextResponse.json(
+      {
+        success: true,
+        message: "OTP has been successfully sent to your email.",
+      },
+      { status: 200 }
+    );
   } catch (error) {
-    console.error(`Error resending otp: ${error}`);
-    return handleResponse({
-      res: Response,
-      status: 500,
-      success: false,
-      message: `Error to resend otp: ${error.message}`,
-    });
+    console.error(`Error resending otp SERVER: ${error}`);
+    return NextResponse.json(
+      {
+        success: false,
+        message: `Error to resend otp: ${error.message}`,
+      },
+      { status: 500 }
+    );
   }
 }
