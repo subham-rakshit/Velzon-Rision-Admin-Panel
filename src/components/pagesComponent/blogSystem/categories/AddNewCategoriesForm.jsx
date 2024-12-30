@@ -4,13 +4,16 @@ import {
   showErrorToast,
   showSuccessToast,
 } from "@/lib/helpers/toast-notification";
+import { useAppSelector } from "@/lib/store/hooks";
+import { getCustomColor } from "@/lib/utils/customColor";
 import { NewCategorySchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { ClipLoader } from "react-spinners";
 
-const AddNewCategoriesForm = () => {
+const AddNewCategoriesForm = ({ userId }) => {
   const {
     register,
     handleSubmit,
@@ -18,18 +21,28 @@ const AddNewCategoriesForm = () => {
     reset,
   } = useForm({ resolver: zodResolver(NewCategorySchema) });
 
+  const { layoutThemePrimaryColorType } = useAppSelector(
+    (state) => state.layout
+  );
+  const customColor = getCustomColor({ layoutThemePrimaryColorType });
+  const { active, bgColor, hoverBgColor, textColor, hexCode } = customColor;
+
+  const router = useRouter();
+
   const onSubmit = async (data) => {
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/post/create-new-category`,
         {
           ...data,
+          userId,
         }
       );
 
       if (response.data.success && response.status === 201) {
         showSuccessToast(response.data.message);
         reset();
+        router.refresh();
       }
     } catch (error) {
       console.log("Error in creating new category: ", error);
@@ -74,7 +87,7 @@ const AddNewCategoriesForm = () => {
         <button
           type="submit"
           disabled={isSubmitting}
-          className={`rounded-sm px-5 py-2 font-poppins-rg text-[13px] text-light-weight-800 dark:text-violet-600  dark:hover:text-white transition-all duration-300 ease-in-out max-w-[250px] self-end ${isSubmitting ? "opacity-60 cursor-not-allowed bg-violet-500" : " bg-violet-500/80 hover:bg-violet-500 dark:bg-violet-500/10 dark:hover:bg-violet-500"}`}
+          className={`rounded-sm px-5 py-2 font-poppins-rg text-[13px] text-light-weight-800 dark:text-violet-600  dark:hover:text-white transition-all duration-300 ease-in-out max-w-[250px] self-end ${active} ${isSubmitting ? `opacity-60 cursor-not-allowed` : ""}`}
         >
           {isSubmitting ? (
             <span className="flex items-center gap-2 text-light-weight-800">

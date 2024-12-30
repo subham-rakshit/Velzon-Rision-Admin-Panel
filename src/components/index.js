@@ -35,7 +35,9 @@ import TransitionLink from "./navigation/TransitionLink";
 // Blog System
 import AllPostsForm from "./pagesComponent/blogSystem/allPosts/AllPostsForm";
 import AddNewCategoriesForm from "./pagesComponent/blogSystem/categories/AddNewCategoriesForm";
-import BlogPostCategories from "./pagesComponent/blogSystem/categories/BlogPostCategories";
+import CategoryDeleteButton from "./pagesComponent/blogSystem/categories/CategoryDeleteButton";
+import CategoryEditButton from "./pagesComponent/blogSystem/categories/CategoryEditButton";
+import SearchCategoryForm from "./pagesComponent/blogSystem/categories/SearchCategoryForm";
 import LabelText from "./pagesComponent/blogSystem/LabelText";
 // Dashboard Analytics
 import Breadcrumb from "./pagesComponent/Breadcrumb";
@@ -68,7 +70,6 @@ import Revenue from "./pagesComponent/dashboardEcommerce/Revenue";
 import SalesByLocations from "./pagesComponent/dashboardEcommerce/SalesByLocations";
 import StoreVisits from "./pagesComponent/dashboardEcommerce/StoreVisits";
 import TopSellers from "./pagesComponent/dashboardEcommerce/TopSellers";
-// Blog System
 
 export {
   AddNewCategoriesForm,
@@ -79,8 +80,9 @@ export {
   AuthProtectedLayoutProvider,
   BalanceOverview,
   BestSellingProducts,
-  BlogPostCategories,
   Breadcrumb,
+  CategoryDeleteButton,
+  CategoryEditButton,
   ClosingDeals,
   CountupText,
   CustomExportButton,
@@ -124,6 +126,7 @@ export {
   RightSidebar,
   SalesByLocations,
   SalesForecast,
+  SearchCategoryForm,
   SessionsByCountries,
   SocialAuthForm,
   StoreVisits,
@@ -136,5 +139,6 @@ export {
   UpcomingActivites,
   UserByDevice,
   VerifyAccount,
-  Widget,
+  Widget
 };
+

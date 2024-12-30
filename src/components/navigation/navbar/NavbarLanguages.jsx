@@ -2,11 +2,10 @@
 
 import Cookies from "js-cookie";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { languagesDetails } from "../../../app/assets/navData/navData";
 
-import setLanguageAction from "@/actions/setLanguageAction";
 import { topbarColor } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
 import { globalStyleObj } from "@/app/assets/styles";
 import {
@@ -15,6 +14,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import setLanguageAction from "@/lib/actions/i18n/setLanguageAction";
 import { useAppSelector } from "@/lib/store/hooks";
 
 const NavbarLanguages = () => {
