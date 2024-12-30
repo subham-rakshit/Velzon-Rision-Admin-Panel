@@ -32,9 +32,10 @@ import ToggleButton from "./navigation/navbar/ToggleButton";
 import RightSidebar from "./navigation/rightSidebar/RightSidebar";
 import TransitionLink from "./navigation/TransitionLink";
 // Blog System
-import AllPostsForm from "./pagesComponent/blogSystem/AllPostsForm";
-import BlogPostCategories from "./pagesComponent/blogSystem/BlogPostCategories";
+import AllPostsForm from "./pagesComponent/blogSystem/allPosts/AllPostsForm";
 import LabelText from "./pagesComponent/blogSystem/LabelText";
+import AddNewCategoriesForm from "./pagesComponent/blogSystem/categories/AddNewCategoriesForm";
+import BlogPostCategories from "./pagesComponent/blogSystem/categories/BlogPostCategories";
 // Dashboard Analytics
 import Breadcrumb from "./pagesComponent/Breadcrumb";
 import AudiencesMetrics from "./pagesComponent/dashboardAnalytics/AudiencesMetrics";
@@ -133,4 +134,5 @@ export {
   LabelText,
   AllPostsForm,
   BlogPostCategories,
+  AddNewCategoriesForm,
 };
