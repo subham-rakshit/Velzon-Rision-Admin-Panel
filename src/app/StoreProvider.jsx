@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Provider } from "react-redux";
 
-import { makeStore } from "@/lib/store/store";
+import { makeStore } from "@/store/store";
 
 // StoreProvider renders on the client side and initializes the store (Safe for SSR)
 export default function StoreProvider({ children }) {

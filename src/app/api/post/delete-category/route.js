@@ -2,18 +2,18 @@ import dbConnect from "@/lib/db/dbConnect";
 import { validateUserFromToken } from "@/lib/middleware/validateUser";
 import AllBlogsCategoryModel from "@/model/BlogsCategory";
 import UserModel from "@/model/User";
-import { CategorySchema } from "@/schemas";
 import { NextResponse } from "next/server";
 
-export async function POST(request) {
+export async function DELETE(request) {
   await dbConnect();
 
   try {
-    const body = await request.json();
-    const { newCategory, userId } = body;
+    const { searchParams } = new URL(request.url);
+    const userId = searchParams.get("userId");
+    const categoryId = searchParams.get("categoryId");
 
-    // NOTE Check invalid inputs
-    if (!userId) {
+    // NOTE: Handle not getting request data
+    if (!userId || !categoryId) {
       return NextResponse.json(
         {
           success: false,
@@ -29,26 +29,9 @@ export async function POST(request) {
       return NextResponse.json(
         {
           success: false,
-          message: "Access denied. Invalid credentials.",
+          message: "Unauthorized access. Permission denied.",
         },
         { status: 403 }
-      );
-    }
-
-    // NOTE VALIDATE the registration schema
-    const validatedFields = CategorySchema.safeParse({ newCategory });
-    if (!validatedFields.success) {
-      let zodErrors = {};
-      validatedFields.error.issues.forEach((issue) => {
-        zodErrors = {
-          ...zodErrors,
-          [issue.path[0]]: { message: issue.message },
-        };
-      });
-
-      return NextResponse.json(
-        { success: false, errors: zodErrors },
-        { status: 400 }
       );
     }
 
@@ -59,44 +42,52 @@ export async function POST(request) {
         {
           success: false,
           message:
-            "You do not have the required permissions to create a new category.",
+            "You do not have the required permissions to delete this category.",
         },
         { status: 403 }
       );
     }
 
-    // NOTE Check if category already exists or not
-    const existsCategory = await AllBlogsCategoryModel.findOne({
-      category: newCategory,
+    // NOTE Get the category details
+    const category = await AllBlogsCategoryModel.findOne({
+      _id: categoryId,
       userId,
     });
-    if (existsCategory) {
+    if (!category) {
       return NextResponse.json(
         {
           success: false,
           message:
-            "This category already exists. Please choose a different name.",
+            "The specified category does not exist or does not belong to the user.",
+        },
+        { status: 404 }
+      );
+    }
+
+    // NOTE Delete the category
+    const deletedCategory = await AllBlogsCategoryModel.findOneAndDelete({
+      _id: categoryId,
+    });
+    if (!deletedCategory) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Unable to delete the category. Please try again later.",
         },
         { status: 400 }
       );
     }
 
-    // NOTE Create new category
-    const newCategoryItem = new AllBlogsCategoryModel({
-      userId,
-      category: newCategory,
-    });
-    await newCategoryItem.save();
-
     return NextResponse.json(
       {
         success: true,
-        message: "The category is successfully created.",
+        message: "Category deleted successfully.",
       },
-      { status: 201 }
+      { status: 200 }
     );
   } catch (error) {
-    console.log(`Error in creating new category SERVER: `, error);
+    console.log(`Error in deleting the category SERVER: ${error}`);
+
     return NextResponse.json(
       {
         success: false,

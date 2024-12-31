@@ -16,8 +16,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { getAllCategories } from "@/lib/actions/category";
 import { getAccessTokenData } from "@/lib/middleware/getAccessTokenData";
+import { getAllCategories } from "@/services/actions/category";
 import { getServerSession } from "next-auth";
 import { MdErrorOutline } from "react-icons/md";
 
@@ -128,9 +128,12 @@ const BlogSystemCategories = async ({ searchParams }) => {
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <CategoryEditButton userId={userId} categoryId={item._id} />
+                  <CategoryEditButton userId={userId} categoryDetails={item} />
 
-                  <CategoryDeleteButton userId={userId} categoryId={item._id} />
+                  <CategoryDeleteButton
+                    userId={userId}
+                    categoryDetails={item}
+                  />
                 </div>
               </div>
             ))

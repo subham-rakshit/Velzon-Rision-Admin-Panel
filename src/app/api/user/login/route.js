@@ -12,17 +12,6 @@ export async function POST(request) {
   try {
     const { email, password, rememberMe } = await request.json();
 
-    // NOTE: Handle not getting request data
-    if (!email || !password) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Invalid inputs.",
-        },
-        { status: 404 }
-      );
-    }
-
     // NOTE: Validate the registration schema
     const validatedFields = SignInSchema.safeParse({
       email,
@@ -46,12 +35,12 @@ export async function POST(request) {
 
     // NOTE Find user details
     const userDetails = await UserModel.findOne({ email });
-
     if (!userDetails) {
       return NextResponse.json(
         {
           success: false,
-          message: "User not found! Please register first.",
+          message:
+            "User not found. Please register if you don't have an account.",
         },
         { status: 400 }
       );
@@ -67,7 +56,7 @@ export async function POST(request) {
       return NextResponse.json(
         {
           success: false,
-          message: "Credentials doesn't match",
+          message: "Invalid credentials. Please check your email and password.",
         },
         { status: 400 }
       );
@@ -104,7 +93,7 @@ export async function POST(request) {
     const response = NextResponse.json(
       {
         success: true,
-        message: "Login Successfull.",
+        message: "Login successful. Redirecting...",
       },
       { status: 200 }
     );
@@ -122,7 +111,7 @@ export async function POST(request) {
     return NextResponse.json(
       {
         success: false,
-        message: `Error login user: ${error.message}`,
+        message: `An unexpected error occurred. Please try again later.`,
       },
       { status: 500 }
     );

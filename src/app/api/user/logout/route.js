@@ -9,7 +9,7 @@ export async function GET(request) {
     const response = NextResponse.json(
       {
         success: true,
-        message: `Logout successfully`,
+        message: `Logout successfully. Redirecting...`,
       },
       { status: 200 }
     );
@@ -41,7 +41,7 @@ export async function GET(request) {
     return NextResponse.json(
       {
         success: false,
-        message: `Error logining out user: ${error.message}`,
+        message: `An unexpected error occurred. Please try again later.`,
       },
       { status: 500 }
     );

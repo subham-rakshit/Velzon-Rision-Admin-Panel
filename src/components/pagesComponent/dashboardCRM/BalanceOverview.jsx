@@ -1,16 +1,16 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import {
-  AreaChart,
   Area,
+  AreaChart,
+  CartesianGrid,
+  Legend,
+  ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  Legend,
 } from "recharts";
 
 import {
@@ -25,8 +25,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useAppSelector } from "@/lib/store/hooks";
 import { getCustomColor } from "@/lib/utils/customColor";
+import { useAppSelector } from "@/store/hooks";
 
 const BalanceOverview = () => {
   const { layoutThemePrimaryColorType } = useAppSelector(

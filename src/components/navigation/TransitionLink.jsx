@@ -2,9 +2,8 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React from "react";
 
-import { useAppSelector } from "@/lib/store/hooks";
+import { useAppSelector } from "@/store/hooks";
 
 const sleep = (number) => {
   return new Promise((resolve) => setTimeout(resolve, number));

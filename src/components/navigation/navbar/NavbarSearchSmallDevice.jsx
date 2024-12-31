@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { IoSearch } from "react-icons/io5";
 import { MdSearch } from "react-icons/md";
 
@@ -11,7 +10,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useAppSelector } from "@/lib/store/hooks";
+import { useAppSelector } from "@/store/hooks";
 
 const NavbarSearchSmallDevice = () => {
   const { topbarColorType } = useAppSelector((state) => state.layout);

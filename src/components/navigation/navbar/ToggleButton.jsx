@@ -1,23 +1,21 @@
 "use client";
 
-import React from "react";
-
 import {
   layout,
   sidebarMainSize,
   sidebarSize,
+  sidebarView,
   sidebarVisibility,
   toggleStatus,
   topbarColor,
-  sidebarView,
 } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
 import { globalStyleObj } from "@/app/assets/styles";
 import {
+  changeLeftSidebarVisibilityType,
   changeToggleButtonStatus,
   changeToggleSmallButtonStatus,
-  changeLeftSidebarVisibilityType,
-} from "@/lib/store/features/layoutCustomizer/layoutCustomizerSlice";
-import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
+} from "@/store/features/layoutCustomizer/layoutCustomizerSlice";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
 const ToggleButton = () => {
   const {

@@ -2,7 +2,7 @@
 
 import JoditEditor from "jodit-react";
 import { useTheme } from "next-themes";
-import React, { useState } from "react";
+import { useState } from "react";
 import { MdArrowForward } from "react-icons/md";
 import { ClipLoader } from "react-spinners";
 import { toast } from "react-toastify";
@@ -19,8 +19,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { useAppSelector } from "@/lib/store/hooks";
 import { getCustomColor } from "@/lib/utils/customColor";
+import { useAppSelector } from "@/store/hooks";
 
 const AllPostsForm = () => {
   const { layoutThemePrimaryColorType } = useAppSelector(

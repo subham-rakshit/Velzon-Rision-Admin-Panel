@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { MdFullscreen, MdFullscreenExit } from "react-icons/md";
 
 import { topbarColor } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
 import { globalStyleObj } from "@/app/assets/styles";
-import { useAppSelector } from "@/lib/store/hooks";
+import { useAppSelector } from "@/store/hooks";
 
 const NavFullScreenToggleButton = () => {
   const { topbarColorType } = useAppSelector((state) => state.layout);

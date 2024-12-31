@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { RiBarChart2Fill } from "react-icons/ri";
 
@@ -14,8 +13,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useAppSelector } from "@/lib/store/hooks";
 import { getCustomColor } from "@/lib/utils/customColor";
+import { useAppSelector } from "@/store/hooks";
 
 const TopSellers = () => {
   const { layoutThemePrimaryColorType } = useAppSelector(

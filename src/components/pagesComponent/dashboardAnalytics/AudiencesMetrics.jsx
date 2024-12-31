@@ -1,21 +1,21 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { MdArrowOutward } from "react-icons/md";
 import {
-  BarChart,
   Bar,
-  XAxis,
-  Tooltip,
+  BarChart,
   Legend,
   ResponsiveContainer,
+  Tooltip,
+  XAxis,
 } from "recharts";
 
 import { audienceMatricsData } from "@/app/assets/pagesData/dashboardData/analytics";
 import { globalStyleObj } from "@/app/assets/styles";
 import { CountupText } from "@/components";
-import { useAppSelector } from "@/lib/store/hooks";
 import { getCustomColor } from "@/lib/utils/customColor";
+import { useAppSelector } from "@/store/hooks";
 
 const AudiencesMetrics = () => {
   const { layoutThemePrimaryColorType } = useAppSelector(

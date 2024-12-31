@@ -1,7 +1,7 @@
 "use client";
 
-import { useAppSelector } from "@/lib/store/hooks";
 import { getCustomColor } from "@/lib/utils/customColor";
+import { useAppSelector } from "@/store/hooks";
 import { useRouter } from "next/navigation";
 import { MdSearch } from "react-icons/md";
 

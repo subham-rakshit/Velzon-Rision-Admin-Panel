@@ -9,7 +9,7 @@ import ROUTES from "@/constants/routes";
 import {
   showErrorToast,
   showSuccessToast,
-} from "@/lib/helpers/toast-notification";
+} from "@/lib/utils/toast-notification";
 
 const VerifyAccount = () => {
   const [otpInputs, setOtpInputs] = useState(new Array(4).fill(""));

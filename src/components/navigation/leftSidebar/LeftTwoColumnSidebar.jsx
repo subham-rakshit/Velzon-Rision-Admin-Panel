@@ -1,9 +1,9 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useTranslations } from "next-intl";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BsDash } from "react-icons/bs";
 import { IoIosArrowForward } from "react-icons/io";
 
@@ -26,8 +26,8 @@ import ROUTES from "@/constants/routes";
 import {
   changeToggleButtonStatus,
   changeToggleSmallButtonStatus,
-} from "@/lib/store/features/layoutCustomizer/layoutCustomizerSlice";
-import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
+} from "@/store/features/layoutCustomizer/layoutCustomizerSlice";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
 const LeftTwoColumnSidebar = ({ width }) => {
   const {
@@ -365,7 +365,7 @@ const LeftTwoColumnSidebar = ({ width }) => {
                                       : textColor
                                   }`
                                 : "text-light-weight-450"
-                            } 
+                            }
                               ${
                                 leftSidebarColorType ===
                                   sidebarColor.DARK_BG_COLOR ||
@@ -373,7 +373,7 @@ const LeftTwoColumnSidebar = ({ width }) => {
                                   sidebarColor.GRADIENT_BG_COLOR
                                   ? "hover:text-light-weight-800"
                                   : hoverTextColor
-                              } 
+                              }
                                 ${
                                   leftSidebarSizeType === sidebarSize.COMPACT
                                     ? `${globalStyleObj.flexCenter}`
@@ -408,7 +408,7 @@ const LeftTwoColumnSidebar = ({ width }) => {
                                       sidebarSize.COMPACT
                                         ? `${globalStyleObj.flexCenter}`
                                         : `${globalStyleObj.flexStart} gap-3 pl-7`
-                                    } 
+                                    }
                                       ${
                                         pathname.includes(secondChild.id)
                                           ? `${
@@ -420,7 +420,7 @@ const LeftTwoColumnSidebar = ({ width }) => {
                                                 : textColor
                                             }`
                                           : "text-light-weight-450"
-                                      } 
+                                      }
                                         ${
                                           leftSidebarColorType ===
                                             sidebarColor.DARK_BG_COLOR ||
@@ -439,7 +439,7 @@ const LeftTwoColumnSidebar = ({ width }) => {
                                         sidebarSize.COMPACT
                                           ? "hidden"
                                           : "inline"
-                                      } 
+                                      }
                                         ${
                                           pathname.includes(
                                             secondChild.id.toLowerCase()
@@ -453,7 +453,7 @@ const LeftTwoColumnSidebar = ({ width }) => {
                                                   : borderColor
                                               }`
                                             : "border border-light-weight-450"
-                                        } 
+                                        }
                                           ${
                                             leftSidebarColorType ===
                                               sidebarColor.DARK_BG_COLOR ||
@@ -506,7 +506,7 @@ const LeftTwoColumnSidebar = ({ width }) => {
                                                         : textColor
                                                     }`
                                                   : "text-light-weight-450"
-                                              } 
+                                              }
                                                 ${
                                                   leftSidebarColorType ===
                                                     sidebarColor.DARK_BG_COLOR ||
@@ -514,7 +514,7 @@ const LeftTwoColumnSidebar = ({ width }) => {
                                                     sidebarColor.GRADIENT_BG_COLOR
                                                     ? "hover:text-light-weight-800"
                                                     : hoverTextColor
-                                                } 
+                                                }
                                                   ${
                                                     leftSidebarSizeType ===
                                                     sidebarSize.COMPACT
@@ -528,7 +528,7 @@ const LeftTwoColumnSidebar = ({ width }) => {
                                                   sidebarSize.COMPACT
                                                     ? "hidden"
                                                     : "inline"
-                                                } 
+                                                }
                                                   ${
                                                     mainPath === thirdChild.id
                                                       ? `${
@@ -540,7 +540,7 @@ const LeftTwoColumnSidebar = ({ width }) => {
                                                             : borderColor
                                                         }`
                                                       : "border border-light-weight-450"
-                                                  } 
+                                                  }
                                                     ${
                                                       leftSidebarColorType ===
                                                         sidebarColor.DARK_BG_COLOR ||
@@ -584,7 +584,7 @@ const LeftTwoColumnSidebar = ({ width }) => {
                                               : textColor
                                           }`
                                         : "text-light-weight-450"
-                                    } 
+                                    }
                                       ${
                                         leftSidebarColorType ===
                                           sidebarColor.DARK_BG_COLOR ||
@@ -592,7 +592,7 @@ const LeftTwoColumnSidebar = ({ width }) => {
                                           sidebarColor.GRADIENT_BG_COLOR
                                           ? "hover:text-light-weight-800"
                                           : hoverTextColor
-                                      } 
+                                      }
                                         ${
                                           leftSidebarSizeType ===
                                           sidebarSize.COMPACT
@@ -606,7 +606,7 @@ const LeftTwoColumnSidebar = ({ width }) => {
                                         sidebarSize.COMPACT
                                           ? "hidden"
                                           : "inline"
-                                      } 
+                                      }
                                         ${
                                           mainPath === secondChild.id
                                             ? `${
@@ -618,7 +618,7 @@ const LeftTwoColumnSidebar = ({ width }) => {
                                                   : borderColor
                                               }`
                                             : "border border-light-weight-450"
-                                        } 
+                                        }
                                           ${
                                             leftSidebarColorType ===
                                               sidebarColor.DARK_BG_COLOR ||
@@ -657,7 +657,7 @@ const LeftTwoColumnSidebar = ({ width }) => {
                                       : textColor
                                   }`
                                 : "text-light-weight-450"
-                            } 
+                            }
                               ${
                                 leftSidebarColorType ===
                                   sidebarColor.DARK_BG_COLOR ||
@@ -665,7 +665,7 @@ const LeftTwoColumnSidebar = ({ width }) => {
                                   sidebarColor.GRADIENT_BG_COLOR
                                   ? "hover:text-light-weight-800"
                                   : hoverTextColor
-                              } 
+                              }
                                 ${
                                   leftSidebarSizeType === sidebarSize.COMPACT
                                     ? "text-center"

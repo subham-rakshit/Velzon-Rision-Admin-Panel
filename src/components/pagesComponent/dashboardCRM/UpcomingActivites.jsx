@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import { useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 
 import { upcomingActivities } from "@/app/assets/pagesData/dashboardData/crm";
@@ -13,8 +13,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useAppSelector } from "@/lib/store/hooks";
 import { getCustomColor } from "@/lib/utils/customColor";
+import { useAppSelector } from "@/store/hooks";
 
 const UpcomingActivites = () => {
   const { layoutThemePrimaryColorType } = useAppSelector(

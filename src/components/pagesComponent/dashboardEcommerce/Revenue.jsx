@@ -1,25 +1,25 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
-  ResponsiveContainer,
-  ComposedChart,
-  Line,
   Area,
   Bar,
+  CartesianGrid,
+  ComposedChart,
+  Legend,
+  Line,
+  ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
 } from "recharts";
 
 import { revenueChartData } from "@/app/assets/pagesData/dashboardData/ecommerce";
 import { globalStyleObj } from "@/app/assets/styles";
 import { CountupText } from "@/components";
-import { useAppSelector } from "@/lib/store/hooks";
 import { getCustomColor } from "@/lib/utils/customColor";
+import { useAppSelector } from "@/store/hooks";
 
 const Revenue = () => {
   const { layoutThemePrimaryColorType } = useAppSelector(

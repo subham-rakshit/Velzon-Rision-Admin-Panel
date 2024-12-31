@@ -1,16 +1,16 @@
 "use client";
 
 import NextTopLoader from "nextjs-toploader";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import {
-  LeftSidebar,
-  LeftTwoColumnSidebar,
-  Navbar,
-  RightSidebar,
   Footer,
   HorizontalSidebar,
+  LeftSidebar,
+  LeftTwoColumnSidebar,
   LoadingUI,
+  Navbar,
+  RightSidebar,
 } from "..";
 
 import {
@@ -19,17 +19,17 @@ import {
   position,
   sidebarMainSize,
   sidebarSize,
+  sidebarView,
   sidebarVisibility,
   toggleStatus,
   widthType,
-  sidebarView,
 } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
 import {
   changeLeftSideBarSizeType,
-  changeToggleButtonStatus,
   changeLeftSidebarVisibilityType,
-} from "@/lib/store/features/layoutCustomizer/layoutCustomizerSlice";
-import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
+  changeToggleButtonStatus,
+} from "@/store/features/layoutCustomizer/layoutCustomizerSlice";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
 const AuthProtectedLayoutProvider = ({ children }) => {
   const {

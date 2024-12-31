@@ -1,17 +1,17 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import {
   Bar,
   BarChart,
+  CartesianGrid,
   LabelList,
-  XAxis,
-  YAxis,
+  Legend,
   ResponsiveContainer,
   Tooltip,
-  Legend,
-  CartesianGrid,
+  XAxis,
+  YAxis,
 } from "recharts";
 
 import { salesForecastData } from "@/app/assets/pagesData/dashboardData/crm";
@@ -22,8 +22,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useAppSelector } from "@/lib/store/hooks";
 import { getCustomColor } from "@/lib/utils/customColor";
+import { useAppSelector } from "@/store/hooks";
 
 const SalesForecast = () => {
   const { layoutThemePrimaryColorType } = useAppSelector(

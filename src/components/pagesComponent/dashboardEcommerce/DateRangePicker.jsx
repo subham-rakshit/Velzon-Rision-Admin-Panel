@@ -1,7 +1,7 @@
 "use client";
 
 import { addDays, format } from "date-fns";
-import React, { useState } from "react";
+import { useState } from "react";
 import { SlCalender } from "react-icons/sl";
 
 import { globalStyleObj } from "@/app/assets/styles";
@@ -11,9 +11,9 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useAppSelector } from "@/lib/store/hooks";
 import { cn } from "@/lib/utils";
 import { getCustomColor } from "@/lib/utils/customColor";
+import { useAppSelector } from "@/store/hooks";
 
 const DateRangePicker = () => {
   const { layoutThemePrimaryColorType } = useAppSelector(

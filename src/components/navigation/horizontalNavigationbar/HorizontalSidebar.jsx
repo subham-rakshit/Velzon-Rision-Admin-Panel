@@ -1,8 +1,8 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
-import React, { useEffect, useMemo, useState } from "react";
+import { usePathname } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
 import { BsDash } from "react-icons/bs";
 import { IoIosArrowForward } from "react-icons/io";
 import { RiBriefcase2Line } from "react-icons/ri";
@@ -16,7 +16,7 @@ import {
 import leftSidebarData from "@/app/assets/leftSidebarData/leftSidebarData";
 import { globalStyleObj } from "@/app/assets/styles";
 import { TransitionLink } from "@/components";
-import { useAppSelector } from "@/lib/store/hooks";
+import { useAppSelector } from "@/store/hooks";
 
 const HorizontalSidebar = ({ resizeHeight }) => {
   const {
@@ -253,7 +253,7 @@ const HorizontalSidebar = ({ resizeHeight }) => {
             tabDetails.parent.id === parent.id && tabDetails.parent.isOpen
               ? "h-fit opacity-100"
               : "max-h-0 opacity-0 lg:max-h-fit lg:opacity-100"
-          } 
+          }
             ${
               hoverState.parent.id === parent.id &&
               hoverState.parent.isOpen &&

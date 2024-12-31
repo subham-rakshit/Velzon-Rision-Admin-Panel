@@ -14,8 +14,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import setLanguageAction from "@/lib/actions/i18n/setLanguageAction";
-import { useAppSelector } from "@/lib/store/hooks";
+import setLanguageAction from "@/services/actions/i18n/setLanguageAction";
+import { useAppSelector } from "@/store/hooks";
 
 const NavbarLanguages = () => {
   const { topbarColorType } = useAppSelector((state) => state.layout);

@@ -11,17 +11,6 @@ export async function POST(request) {
     const body = await request.json();
     const { resetPasswordCode, newPassword, confirmNewPassword } = body;
 
-    // NOTE Handle not getting request data
-    if (!resetPasswordCode || !newPassword || !confirmNewPassword) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Invalid inputs.",
-        },
-        { status: 404 }
-      );
-    }
-
     // NOTE VALIDATE the verification schema
     const validatedFields = ResetPasswordSchema.safeParse(body);
     if (!validatedFields.success) {
@@ -48,7 +37,8 @@ export async function POST(request) {
       return NextResponse.json(
         {
           success: false,
-          message: "Reset password session expired OR Invalid code",
+          message:
+            "Invalid or expired password reset code. Please request a new one.",
         },
         { status: 400 }
       );
@@ -63,7 +53,8 @@ export async function POST(request) {
       return NextResponse.json(
         {
           success: false,
-          message: "New password cannot be the same as the old password",
+          message:
+            "New password cannot be the same as the current password. Please choose a different one.",
         },
         { status: 400 }
       );
@@ -81,7 +72,7 @@ export async function POST(request) {
     return NextResponse.json(
       {
         success: true,
-        message: `Password reset successful. Please Login`,
+        message: `Password has been successfully reset. Please log in with your new password.`,
       },
       { status: 201 }
     );
@@ -91,7 +82,8 @@ export async function POST(request) {
     return NextResponse.json(
       {
         success: false,
-        message: `Error resetting password: ${error.message}`,
+        message:
+          "An error occurred while resetting your password. Please try again later.",
       },
       { status: 500 }
     );

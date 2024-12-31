@@ -1,9 +1,7 @@
 "use client";
 
-import React from "react";
-
-import { useAppSelector } from "@/lib/store/hooks";
 import { getCustomColor } from "@/lib/utils/customColor";
+import { useAppSelector } from "@/store/hooks";
 
 const ProgressBar = ({ value }) => {
   const { layoutThemePrimaryColorType } = useAppSelector(

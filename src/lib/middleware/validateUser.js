@@ -1,31 +1,25 @@
 import jwt from "jsonwebtoken";
+import { decode } from "next-auth/jwt";
 import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
-import { getToken } from "next-auth/jwt";
 
 export const validateUserFromToken = async ({ request }) => {
   try {
-    // User details from NextAuth Token
-    const nextAuthToken = await getToken({
-      req: request,
-      secret: process.env.NEXTAUTH_SECRET,
-    });
-
     // Token value for normal JWT token
     const cookieStore = await cookies();
     const accessToken = cookieStore.get("access-token");
+    const nextAuthToken = cookieStore.get("next-auth.session-token");
 
     // If NextAuth and JWT Token are not available, means user is not authenticated
-    if (!nextAuthToken && !accessToken) {
-      return new NextResponse(
-        JSON.stringify({ success: false, message: "User not authenticated" }),
-        { status: 401 }
-      );
-    }
+    if (!nextAuthToken && !accessToken) return {};
 
     // If NextAuth is available, return the user details
     if (nextAuthToken) {
-      return nextAuthToken;
+      const decodedOAuth = await decode({
+        token: nextAuthToken.value,
+        secret: process.env.NEXTAUTH_SECRET,
+      });
+
+      return decodedOAuth;
     }
 
     // If JWT Token is available, verify the token and return the user details
@@ -35,20 +29,11 @@ export const validateUserFromToken = async ({ request }) => {
         return user;
       } catch (err) {
         console.error("JWT Verification Error:", err.message);
-        return new NextResponse(
-          JSON.stringify({
-            success: false,
-            message: "Invalid token",
-          }),
-          { status: 401 }
-        );
+        return {};
       }
     }
   } catch (error) {
     console.error("Error handling the request:", error.message);
-    return new NextResponse(
-      JSON.stringify({ success: false, message: "Internal Server Error" }),
-      { status: 500 }
-    );
+    return {};
   }
 };

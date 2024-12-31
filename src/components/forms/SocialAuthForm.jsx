@@ -5,7 +5,7 @@ import { FaFacebookF, FaGoogle, FaTwitter } from "react-icons/fa";
 import { VscGithub } from "react-icons/vsc";
 
 import ROUTES from "@/constants/routes";
-import { showErrorToast } from "@/lib/helpers/toast-notification";
+import { showErrorToast } from "@/lib/utils/toast-notification";
 
 const SocialAuthForm = () => {
   const handleLogin = async (provider) => {

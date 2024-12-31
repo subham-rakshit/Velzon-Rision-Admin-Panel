@@ -11,17 +11,6 @@ export async function POST(request) {
     const body = await request.json();
     const { email } = body;
 
-    // NOTE: Handle not getting request data
-    if (!email) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Invalid inputs.",
-        },
-        { status: 404 }
-      );
-    }
-
     // NOTE Validate the email by zod schema
     const validatedFields = EmailSchema.safeParse(body);
     if (!validatedFields.success) {
@@ -40,7 +29,7 @@ export async function POST(request) {
       return NextResponse.json(
         {
           success: false,
-          message: `Invalid email address. Please provide your registered email address`,
+          message: `No account found with this email address. Please provide your registered email address.`,
         },
         { status: 400 }
       );
@@ -59,7 +48,7 @@ export async function POST(request) {
       return NextResponse.json(
         {
           success: false,
-          message: `Unable to send the OTP`,
+          message: `There was an issue sending the OTP. Please try again later.`,
         },
         { status: 400 }
       );
@@ -69,7 +58,8 @@ export async function POST(request) {
     return NextResponse.json(
       {
         success: true,
-        message: "OTP has been successfully sent to your email.",
+        message:
+          "An OTP has been successfully sent to your registered email address.",
       },
       { status: 200 }
     );
@@ -78,7 +68,8 @@ export async function POST(request) {
     return NextResponse.json(
       {
         success: false,
-        message: `Error to resend otp: ${error.message}`,
+        message:
+          "An unexpected error occurred while processing your request. Please try again later.",
       },
       { status: 500 }
     );

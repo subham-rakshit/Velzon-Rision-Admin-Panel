@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import React from "react";
 import { BiCategoryAlt } from "react-icons/bi";
 import { IoIosArrowForward } from "react-icons/io";
 
@@ -11,13 +10,13 @@ import { globalStyleObj } from "@/app/assets/styles";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-  DropdownMenuGroup,
 } from "@/components/ui/dropdown-menu";
-import { useAppSelector } from "@/lib/store/hooks";
+import { useAppSelector } from "@/store/hooks";
 
 const NavbarWebApps = () => {
   const { topbarColorType } = useAppSelector((state) => state.layout);

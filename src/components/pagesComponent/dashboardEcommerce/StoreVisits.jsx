@@ -1,14 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import {
-  PieChart,
-  Pie,
   Cell,
+  Legend,
+  Pie,
+  PieChart,
   ResponsiveContainer,
   Tooltip,
-  Legend,
 } from "recharts";
 
 import { globalStyleObj } from "@/app/assets/styles";
@@ -18,8 +18,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useAppSelector } from "@/lib/store/hooks";
 import { getCustomColor } from "@/lib/utils/customColor";
+import { useAppSelector } from "@/store/hooks";
 
 const StoreVisits = () => {
   const { layoutThemePrimaryColorType } = useAppSelector(

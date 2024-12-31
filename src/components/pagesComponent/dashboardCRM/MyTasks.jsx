@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { BsPlus } from "react-icons/bs";
 import { RiSettings3Line } from "react-icons/ri";
 
@@ -12,8 +11,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useAppSelector } from "@/lib/store/hooks";
 import { getCustomColor } from "@/lib/utils/customColor";
+import { useAppSelector } from "@/store/hooks";
 
 const MyTasks = () => {
   const { layoutThemePrimaryColorType } = useAppSelector(

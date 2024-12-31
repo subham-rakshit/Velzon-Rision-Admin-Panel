@@ -29,7 +29,7 @@ export async function GET(request) {
     return NextResponse.json(
       {
         success: false,
-        message: `Error getting user details: ${error.message}`,
+        message: `An unexpected error occurred while processing your request. Please try again later.`,
       },
       { status: 500 }
     );

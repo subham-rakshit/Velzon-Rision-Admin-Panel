@@ -11,17 +11,6 @@ export async function POST(request) {
     const body = await request.json();
     const { email } = body;
 
-    // NOTE: Handle not getting request data
-    if (!email) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Invalid inputs.",
-        },
-        { status: 404 }
-      );
-    }
-
     // NOTE VALIDATE the registration schema
     const validatedFields = EmailSchema.safeParse(body);
     if (!validatedFields.success) {
@@ -45,7 +34,7 @@ export async function POST(request) {
       return NextResponse.json(
         {
           success: false,
-          message: `Invalid email address. Please provide your registered email address`,
+          message: `The provided email address is not registered. Please use a valid registered email address.`,
         },
         { status: 400 }
       );
@@ -64,7 +53,7 @@ export async function POST(request) {
       return NextResponse.json(
         {
           success: false,
-          message: `Unable to send reset password link`,
+          message: `We encountered an issue while sending the reset password email. Please try again later.`,
         },
         { status: 400 }
       );
@@ -74,7 +63,7 @@ export async function POST(request) {
     return NextResponse.json(
       {
         success: true,
-        message: `Reset link has been successfully send to your email`,
+        message: `A password reset link has been successfully sent to your email address. Please check your inbox.`,
       },
       { status: 200 }
     );
@@ -84,7 +73,7 @@ export async function POST(request) {
     return NextResponse.json(
       {
         success: false,
-        message: `Error forgot password send email error: ${error.message}`,
+        message: `An unexpected error occurred while processing your request. Please try again later.`,
       },
       { status: 500 }
     );

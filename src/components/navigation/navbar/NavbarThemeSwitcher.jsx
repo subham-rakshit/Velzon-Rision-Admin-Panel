@@ -1,12 +1,11 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import React from "react";
 import { IoMoonOutline, IoSunnyOutline } from "react-icons/io5";
 
 import { topbarColor } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
 import { globalStyleObj } from "@/app/assets/styles";
-import { useAppSelector } from "@/lib/store/hooks";
+import { useAppSelector } from "@/store/hooks";
 
 const NavbarThemeSwitcher = () => {
   const { topbarColorType } = useAppSelector((state) => state.layout);

@@ -2,7 +2,7 @@
 
 import { Checkbox } from "flowbite-react";
 import Image from "next/image";
-import React, { useState } from "react";
+import { useState } from "react";
 import { FaRegBell, FaRegClock } from "react-icons/fa6";
 import { MdArrowForward } from "react-icons/md";
 
@@ -19,7 +19,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useAppSelector } from "@/lib/store/hooks";
+import { useAppSelector } from "@/store/hooks";
 
 const NavbarNotification = () => {
   const { topbarColorType } = useAppSelector((state) => state.layout);

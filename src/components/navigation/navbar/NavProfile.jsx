@@ -32,8 +32,8 @@ import ROUTES from "@/constants/routes";
 import {
   showErrorToast,
   showSuccessToast,
-} from "@/lib/helpers/toast-notification";
-import { useAppSelector } from "@/lib/store/hooks";
+} from "@/lib/utils/toast-notification";
+import { useAppSelector } from "@/store/hooks";
 import axios from "axios";
 
 const NavProfile = () => {

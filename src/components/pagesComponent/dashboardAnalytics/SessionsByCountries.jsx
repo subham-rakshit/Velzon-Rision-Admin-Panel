@@ -1,20 +1,20 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Bar,
   BarChart,
   LabelList,
-  XAxis,
-  YAxis,
   ResponsiveContainer,
   Tooltip,
+  XAxis,
+  YAxis,
 } from "recharts";
 
 import { sessionByCountriesData } from "@/app/assets/pagesData/dashboardData/analytics";
 import { globalStyleObj } from "@/app/assets/styles";
-import { useAppSelector } from "@/lib/store/hooks";
 import { getCustomColor } from "@/lib/utils/customColor";
+import { useAppSelector } from "@/store/hooks";
 
 const SessionsByCountries = () => {
   const { layoutThemePrimaryColorType } = useAppSelector(

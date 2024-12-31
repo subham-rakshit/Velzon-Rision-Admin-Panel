@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { useState } from "react";
+import { useState } from "react";
 import { MdClose } from "react-icons/md";
 import { PiShoppingCartSimpleBold } from "react-icons/pi";
 import { RiShoppingBagLine } from "react-icons/ri";
@@ -18,7 +18,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useAppSelector } from "@/lib/store/hooks";
+import { useAppSelector } from "@/store/hooks";
 
 const NavbarMyCart = () => {
   const { topbarColorType } = useAppSelector((state) => state.layout);

@@ -12,17 +12,6 @@ export async function POST(request) {
     const body = await request.json();
     const { email, username, password, confirmPassword } = body;
 
-    // NOTE: Handle not getting request data
-    if (!email || !username || !password || !confirmPassword) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Invalid inputs.",
-        },
-        { status: 404 }
-      );
-    }
-
     // NOTE VALIDATE the registration schema
     const validatedFields = RegistrationSchema.safeParse(body);
     if (!validatedFields.success) {
@@ -51,7 +40,7 @@ export async function POST(request) {
           {
             success: false,
             message:
-              "User already exists. Please login with your register credentials.",
+              "An account with this email already exists. Please log in.",
           },
           { status: 400 }
         );
@@ -78,7 +67,8 @@ export async function POST(request) {
           return NextResponse.json(
             {
               success: false,
-              message: emailResponse.message,
+              message:
+                "Failed to send verification email. Please try again later.",
             },
             { status: 400 }
           );
@@ -90,7 +80,8 @@ export async function POST(request) {
         return NextResponse.json(
           {
             success: true,
-            message: "User registered successfully. Please verify your email",
+            message:
+              "Registration successful. Please check your email to verify your account.",
             userData: rest,
           },
           { status: 201 }
@@ -124,7 +115,8 @@ export async function POST(request) {
         return NextResponse.json(
           {
             success: false,
-            message: emailResponse.message,
+            message:
+              "Failed to send verification email. Please try again later.",
           },
           { status: 400 }
         );
@@ -136,7 +128,8 @@ export async function POST(request) {
       return NextResponse.json(
         {
           success: true,
-          message: "User registered successfully. Please verify your email",
+          message:
+            "Registration successful. Please check your email to verify your account.",
           userData: rest,
         },
         { status: 201 }
@@ -148,7 +141,8 @@ export async function POST(request) {
     return NextResponse.json(
       {
         success: false,
-        message: `Error registering user: ${error.message}`,
+        message:
+          "An error occurred while processing your registration. Please try again later.",
       },
       { status: 500 }
     );

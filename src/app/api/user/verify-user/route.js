@@ -13,7 +13,7 @@ export async function POST(request) {
       return NextResponse.json(
         {
           success: false,
-          message: "Verification code not found",
+          message: "Verification code is required to proceed.",
         },
         { status: 404 }
       );
@@ -29,7 +29,8 @@ export async function POST(request) {
       return NextResponse.json(
         {
           success: false,
-          message: "Invalid OTP || Token session has been expired",
+          message:
+            "Invalid OTP or the OTP has expired. Please request a new one.",
         },
         { status: 400 }
       );
@@ -46,7 +47,7 @@ export async function POST(request) {
       {
         success: true,
         message:
-          "Email verification successful. Please login with your credentials.",
+          "Email verification successful. Please login using your credentials.",
       },
       { status: 200 }
     );
@@ -56,7 +57,8 @@ export async function POST(request) {
     return NextResponse.json(
       {
         success: false,
-        message: `Error verifying user account: ${error.message}`,
+        message:
+          "An error occurred while verifying your account. Please try again later.",
       },
       { status: 500 }
     );

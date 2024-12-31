@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const NewCategorySchema = z.object({
+export const CategorySchema = z.object({
   newCategory: z
     .string()
     .min(3, { message: "New category must be at least 3 characters long" })

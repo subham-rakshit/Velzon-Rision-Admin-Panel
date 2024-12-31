@@ -1,9 +1,9 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useTranslations } from "next-intl";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BsDash } from "react-icons/bs";
 import { IoIosArrowForward } from "react-icons/io";
 
@@ -13,21 +13,21 @@ import logoSmall from "../../../app/assets/images/logo-sm.png";
 import leftSidebarData from "../../../app/assets/leftSidebarData/leftSidebarData";
 
 import {
-  sidebarColor,
-  sidebarSize,
-  sidebarMainSize,
-  position,
+  layout,
   layoutThemePrimaryColor,
+  position,
+  sidebarColor,
   sidebarGradientColor,
   sidebarImage,
-  layout,
-  sidebarVisibility,
+  sidebarMainSize,
+  sidebarSize,
   sidebarView,
+  sidebarVisibility,
 } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
 import { globalStyleObj } from "@/app/assets/styles";
 import { LeftSidebarSmallIconView, TransitionLink } from "@/components";
-import { changeToggleSmallButtonStatus } from "@/lib/store/features/layoutCustomizer/layoutCustomizerSlice";
-import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
+import { changeToggleSmallButtonStatus } from "@/store/features/layoutCustomizer/layoutCustomizerSlice";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
 const LeftSidebar = ({ width }) => {
   const {
@@ -329,7 +329,7 @@ const LeftSidebar = ({ width }) => {
                         leftSidebarSizeType === sidebarSize.COMPACT
                           ? `${globalStyleObj.flexColCenter} gap-1`
                           : `${globalStyleObj.flexStart} gap-2`
-                      } 
+                      }
                         ${
                           pathname.includes(parent.id.toLowerCase())
                             ? `${
@@ -341,7 +341,7 @@ const LeftSidebar = ({ width }) => {
                                   : textColor
                               }`
                             : "text-light-weight-450"
-                        } 
+                        }
                         ${
                           leftSidebarColorType === sidebarColor.DARK_BG_COLOR ||
                           leftSidebarColorType ===
@@ -379,7 +379,7 @@ const LeftSidebar = ({ width }) => {
                                         : textColor
                                     }`
                                   : "text-light-weight-450"
-                              } 
+                              }
                               ${
                                 leftSidebarColorType ===
                                   sidebarColor.DARK_BG_COLOR ||
@@ -387,7 +387,7 @@ const LeftSidebar = ({ width }) => {
                                   sidebarColor.GRADIENT_BG_COLOR
                                   ? "hover:text-light-weight-800"
                                   : hoverTextColor
-                              } 
+                              }
                               ${
                                 leftSidebarSizeType === sidebarSize.COMPACT
                                   ? `${globalStyleObj.flexCenter}`
@@ -417,7 +417,7 @@ const LeftSidebar = ({ width }) => {
                                   // Second Child
                                   <li key={secondChild.id}>
                                     <div
-                                      className={`group cursor-pointer pt-4 font-poppins-rg text-[13px] 
+                                      className={`group cursor-pointer pt-4 font-poppins-rg text-[13px]
                                         ${
                                           leftSidebarSizeType ===
                                           sidebarSize.COMPACT
@@ -435,7 +435,7 @@ const LeftSidebar = ({ width }) => {
                                                      : textColor
                                                  }`
                                                : "text-light-weight-450"
-                                           } 
+                                           }
                                             ${
                                               leftSidebarColorType ===
                                                 sidebarColor.DARK_BG_COLOR ||
@@ -456,7 +456,7 @@ const LeftSidebar = ({ width }) => {
                                           sidebarSize.COMPACT
                                             ? "hidden"
                                             : "inline"
-                                        } 
+                                        }
                                             ${
                                               pathname.includes(
                                                 secondChild.id.toLowerCase()
@@ -470,7 +470,7 @@ const LeftSidebar = ({ width }) => {
                                                       : borderColor
                                                   }`
                                                 : "border border-light-weight-450"
-                                            } 
+                                            }
                                               ${
                                                 leftSidebarColorType ===
                                                   sidebarColor.DARK_BG_COLOR ||
@@ -523,7 +523,7 @@ const LeftSidebar = ({ width }) => {
                                                           : textColor
                                                       }`
                                                     : "text-light-weight-450"
-                                                } 
+                                                }
                                                     ${
                                                       leftSidebarColorType ===
                                                         sidebarColor.DARK_BG_COLOR ||
@@ -531,7 +531,7 @@ const LeftSidebar = ({ width }) => {
                                                         sidebarColor.GRADIENT_BG_COLOR
                                                         ? "hover:text-light-weight-800"
                                                         : hoverTextColor
-                                                    } 
+                                                    }
                                                       ${
                                                         leftSidebarSizeType ===
                                                         sidebarSize.COMPACT
@@ -545,7 +545,7 @@ const LeftSidebar = ({ width }) => {
                                                     sidebarSize.COMPACT
                                                       ? "hidden"
                                                       : "inline"
-                                                  } 
+                                                  }
                                                     ${
                                                       mainPath === thirdChild.id
                                                         ? `${
@@ -557,7 +557,7 @@ const LeftSidebar = ({ width }) => {
                                                               : borderColor
                                                           }`
                                                         : "border border-light-weight-450"
-                                                    } 
+                                                    }
                                                       ${
                                                         leftSidebarColorType ===
                                                           sidebarColor.DARK_BG_COLOR ||
@@ -601,7 +601,7 @@ const LeftSidebar = ({ width }) => {
                                                 : textColor
                                             }`
                                           : "text-light-weight-450"
-                                      } 
+                                      }
                                         ${
                                           leftSidebarColorType ===
                                             sidebarColor.DARK_BG_COLOR ||
@@ -609,7 +609,7 @@ const LeftSidebar = ({ width }) => {
                                             sidebarColor.GRADIENT_BG_COLOR
                                             ? "hover:text-light-weight-800"
                                             : hoverTextColor
-                                        } 
+                                        }
                                           ${
                                             leftSidebarSizeType ===
                                             sidebarSize.COMPACT
@@ -623,7 +623,7 @@ const LeftSidebar = ({ width }) => {
                                           sidebarSize.COMPACT
                                             ? "hidden"
                                             : "inline"
-                                        } 
+                                        }
                                           ${
                                             mainPath === secondChild.id
                                               ? `${
@@ -635,7 +635,7 @@ const LeftSidebar = ({ width }) => {
                                                     : borderColor
                                                 }`
                                               : "border border-light-weight-450"
-                                          } 
+                                          }
                                             ${
                                               leftSidebarColorType ===
                                                 sidebarColor.DARK_BG_COLOR ||
@@ -674,7 +674,7 @@ const LeftSidebar = ({ width }) => {
                                         : textColor
                                     }`
                                   : "text-light-weight-450"
-                              } 
+                              }
                                 ${
                                   leftSidebarColorType ===
                                     sidebarColor.DARK_BG_COLOR ||
@@ -682,7 +682,7 @@ const LeftSidebar = ({ width }) => {
                                     sidebarColor.GRADIENT_BG_COLOR
                                     ? "hover:text-light-weight-800"
                                     : hoverTextColor
-                                } 
+                                }
                                   ${
                                     leftSidebarSizeType === sidebarSize.COMPACT
                                       ? "text-center"
@@ -710,7 +710,7 @@ const LeftSidebar = ({ width }) => {
                         leftSidebarSizeType === sidebarSize.COMPACT
                           ? "pl-0"
                           : "pl-1"
-                      } 
+                      }
                         ${
                           pathname.includes(parent.id.toLowerCase())
                             ? `${
@@ -722,7 +722,7 @@ const LeftSidebar = ({ width }) => {
                                   : textColor
                               }`
                             : "text-light-weight-450"
-                        } 
+                        }
                           ${
                             leftSidebarColorType ===
                               sidebarColor.DARK_BG_COLOR ||
@@ -796,7 +796,7 @@ const LeftSidebar = ({ width }) => {
 
       <div
         id="left-sidebar-container"
-        className={`z-[99] bg-cover bg-center ${bgImageUrl} 
+        className={`z-[99] bg-cover bg-center ${bgImageUrl}
         ${
           leftSidebarSizeType === sidebarSize.SMALL_ICON_VIEW ||
           layoutPositionType === position.SCROLLABLE
@@ -821,8 +821,8 @@ const LeftSidebar = ({ width }) => {
                       ? `lg:mt-[90px] lg:h-[calc(100vh-110px)] lg:rounded-sm ${isContainerHover ? "w-[250px]" : width}`
                       : `h-screen ${isContainerHover ? "w-[250px]" : width}`
               }`
-        } 
-        
+        }
+
         ${
           leftSidebarColorType === sidebarColor.DARK_BG_COLOR
             ? `${bgColor} dark:bg-dark-dencity-300`
@@ -864,7 +864,7 @@ const LeftSidebar = ({ width }) => {
             leftSidebarViewType === sidebarView.DETACHED
               ? "transition-300 z-[9999] h-[70px] w-full px-[20px] lg:hidden"
               : "transition-300 z-[9999] h-[70px] w-full px-[20px]"
-          } 
+          }
             ${
               leftSidebarSizeType === sidebarSize.SMALL_ICON_VIEW &&
               layoutPositionType === position.FIXED
@@ -874,7 +874,7 @@ const LeftSidebar = ({ width }) => {
                     ? `${gradientBgColor}`
                     : "bg-light-dencity-900"
                 : "bg-transparent"
-            } 
+            }
                 ${
                   layoutPositionType === position.SCROLLABLE
                     ? "relative"

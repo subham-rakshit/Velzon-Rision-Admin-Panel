@@ -1,10 +1,10 @@
 "use client";
 
 import { motion, useTime, useTransform } from "framer-motion";
-import Image from "next/image";
 import { useTheme } from "next-themes";
-import React, { useEffect, useRef, useState } from "react";
-import { FaCog, FaCheckCircle } from "react-icons/fa";
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
+import { FaCheckCircle, FaCog } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
 import { RiArrowUpLine } from "react-icons/ri";
 import { ClipLoader } from "react-spinners";
@@ -17,33 +17,33 @@ import {
   sidebarVisibility,
 } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
 import {
-  rightSidebarThemeData,
-  rightSidbarLayoutWidthData,
   rightSidbarLayoutPositionData,
+  rightSidbarLayoutWidthData,
   rightSidbarTopbarColorData,
   rightSidebarImagesData,
   rightSidebarPrimaryColorData,
+  rightSidebarThemeData,
 } from "@/app/assets/rightSidebarData/rightSidebarData";
 import { globalStyleObj } from "@/app/assets/styles";
 import {
-  changeLayoutType,
-  changeSidebarUserProfileAvtarType,
-  changeLayoutThemeType,
-  changeLayoutWidthType,
   changeLayoutPositionType,
-  changeTopbarColorType,
-  changeLeftSidebarViewType,
+  changeLayoutThemePrimaryColorType,
+  changeLayoutThemeType,
+  changeLayoutType,
+  changeLayoutWidthType,
+  changeLeftSideBarSizeType,
   changeLeftSidebarColorType,
   changeLeftSidebarGradientColorType,
   changeLeftSidebarImageType,
-  changeLayoutThemePrimaryColorType,
-  changePreloader,
-  changeLeftSideBarSizeType,
   changeLeftSidebarSizeMain,
+  changeLeftSidebarViewType,
   changeLeftSidebarVisibilityType,
+  changePreloader,
+  changeSidebarUserProfileAvtarType,
   changeToggleButtonStatus,
-} from "@/lib/store/features/layoutCustomizer/layoutCustomizerSlice";
-import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
+  changeTopbarColorType,
+} from "@/store/features/layoutCustomizer/layoutCustomizerSlice";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
 const RightSidebar = ({ isScrollTop }) => {
   const {

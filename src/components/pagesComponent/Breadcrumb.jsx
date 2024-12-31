@@ -1,11 +1,10 @@
 "use client";
 
-import React from "react";
 import { IoIosArrowForward } from "react-icons/io";
 
 import { sidebarView } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
 import { globalStyleObj } from "@/app/assets/styles";
-import { useAppSelector } from "@/lib/store/hooks";
+import { useAppSelector } from "@/store/hooks";
 
 const Breadcrumb = ({ title, pageTilte }) => {
   const { leftSidebarViewType } = useAppSelector((state) => state.layout);

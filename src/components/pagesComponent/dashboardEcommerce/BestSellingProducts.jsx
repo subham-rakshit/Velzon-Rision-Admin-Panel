@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 
 import { bestSellingProducts } from "@/app/assets/pagesData/dashboardData/ecommerce";
@@ -13,8 +12,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useAppSelector } from "@/lib/store/hooks";
 import { getCustomColor } from "@/lib/utils/customColor";
+import { useAppSelector } from "@/store/hooks";
 
 const BestSellingProducts = () => {
   const { layoutThemePrimaryColorType } = useAppSelector(

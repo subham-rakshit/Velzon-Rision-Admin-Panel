@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { LuUsers } from "react-icons/lu";
-import { RiArrowDropUpFill, RiArrowDropDownFill } from "react-icons/ri";
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
+import { RiArrowDropDownFill, RiArrowDropUpFill } from "react-icons/ri";
+import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 
 import { userByDeviceData } from "@/app/assets/pagesData/dashboardData/analytics";
 import { globalStyleObj } from "@/app/assets/styles";
@@ -14,8 +14,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useAppSelector } from "@/lib/store/hooks";
 import { getCustomColor } from "@/lib/utils/customColor";
+import { useAppSelector } from "@/store/hooks";
 
 const UserByDevice = () => {
   const { layoutThemePrimaryColorType } = useAppSelector(

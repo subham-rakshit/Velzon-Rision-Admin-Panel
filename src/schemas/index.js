@@ -3,12 +3,12 @@ import { RegistrationSchema } from "./authSchemas/registrationSchema";
 import { ResetPasswordSchema } from "./authSchemas/resetPassword";
 import { SignInSchema } from "./authSchemas/signInSchema";
 import { AllPostsSchema } from "./pagesSchema/blogSystem/allPosts/allPostsSchema";
-import { NewCategorySchema } from "./pagesSchema/blogSystem/categories/newCategorySchema";
+import { CategorySchema } from "./pagesSchema/blogSystem/categories/categorySchema";
 
 export {
   AllPostsSchema,
+  CategorySchema,
   EmailSchema,
-  NewCategorySchema,
   RegistrationSchema,
   ResetPasswordSchema,
   SignInSchema,

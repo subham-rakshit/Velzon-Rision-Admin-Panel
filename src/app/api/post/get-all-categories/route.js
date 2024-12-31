@@ -29,7 +29,7 @@ export async function GET(request) {
         {
           success: false,
           message:
-            "Unauthorized access. You are not authorized to view all categories.",
+            "Access denied. You do not have permission to view categories.",
         },
         { status: 400 }
       );
@@ -54,8 +54,7 @@ export async function GET(request) {
     return NextResponse.json(
       {
         success: false,
-        message:
-          error.message || "Internal Server Error. Please try again later.",
+        message: "An unexpected error occurred. Please try again later.",
       },
       { status: 500 }
     );

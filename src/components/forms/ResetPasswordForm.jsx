@@ -9,7 +9,7 @@ import ROUTES from "@/constants/routes";
 import {
   showErrorToast,
   showSuccessToast,
-} from "@/lib/helpers/toast-notification";
+} from "@/lib/utils/toast-notification";
 import { ResetPasswordSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";

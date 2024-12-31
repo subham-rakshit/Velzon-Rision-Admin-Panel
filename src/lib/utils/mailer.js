@@ -3,7 +3,7 @@ import nodemailer from "nodemailer";
 import {
   resetPasswordTokenEmailTemplate,
   verificationEmailTemplate,
-} from "../helpers/emails/mail-html-templates";
+} from "../templates/emails/mail-html-templates";
 
 import UserModel from "@/model/User";
 
