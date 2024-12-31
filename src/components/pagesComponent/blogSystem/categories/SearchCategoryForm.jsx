@@ -31,7 +31,7 @@ const SearchCategoryForm = ({ searchValue }) => {
         type="text"
         name="search"
         placeholder="Type name & Enter"
-        className="border-none bg-transparent px-2 py-1 font-poppins-rg text-[13px] text-dark-weight-550 dark:text-light-weight-550"
+        className="border-none bg-transparent px-2 py-1 font-poppins-rg text-[13px] text-dark-weight-550 dark:text-light-weight-550 w-full"
       />
 
       <button type="submit" className={`${active} p-2`}>

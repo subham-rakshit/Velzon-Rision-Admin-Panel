@@ -2,10 +2,8 @@
 
 import JoditEditor from "jodit-react";
 import { useTheme } from "next-themes";
-import { useState } from "react";
-import { MdArrowForward } from "react-icons/md";
+import { MdArrowForward, MdErrorOutline } from "react-icons/md";
 import { ClipLoader } from "react-spinners";
-import { toast } from "react-toastify";
 
 import { globalStyleObj } from "@/app/assets/styles";
 import { LabelText } from "@/components";
@@ -20,125 +18,74 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { getCustomColor } from "@/lib/utils/customColor";
+import {
+  showErrorToast,
+  showSuccessToast,
+} from "@/lib/utils/toast-notification";
+import { AllPostsSchema } from "@/schemas";
+import { createNewPost } from "@/services/actions/posts";
 import { useAppSelector } from "@/store/hooks";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Controller, useForm } from "react-hook-form";
 
-const AllPostsForm = () => {
+const AllPostsForm = ({ userId, categoryList }) => {
   const { layoutThemePrimaryColorType } = useAppSelector(
     (state) => state.layout
   );
-  const [blogFieldsObject, setBlogFieldsObject] = useState({
-    title: "",
-    category: "",
-    slug: "",
-    shortDescription: "",
-    description: "",
-    metaTitle: "",
-    metaDescription: "",
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+    setError,
+    setValue,
+  } = useForm({
+    resolver: zodResolver(AllPostsSchema),
+    defaultValues: {
+      title: "",
+      category: "",
+      slug: "",
+      shortDescription: "",
+      description: "",
+      metaTitle: "",
+      metaDescription: "",
+    },
   });
-  const [isProcessing, setIsProcessing] = useState(false);
 
   const { theme } = useTheme();
   const customColor = getCustomColor({ layoutThemePrimaryColorType });
   const { bgColor, hoverBgColor, textColor } = customColor;
 
-  const handleOnChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
+  // NOTE Handle Create New Blog functionality
+  const onSubmit = async (data) => {
+    const response = await createNewPost(data, userId);
 
-    setBlogFieldsObject((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
-
-  const postFormOnSubmit = async (e) => {
-    e.preventDefault();
-
-    if (
-      blogFieldsObject.title &&
-      blogFieldsObject.category &&
-      blogFieldsObject.slug &&
-      blogFieldsObject.shortDescription
-    ) {
-      try {
-        setIsProcessing(true);
-
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/post/create-post`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ blogFieldsObject }),
-          }
-        );
-
-        const data = await response.json();
-
-        if (response.ok && data.success) {
-          toast.success(data.message, {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-          setBlogFieldsObject({
-            title: "",
-            category: "",
-            slug: "",
-            shortDescription: "",
-            description: "",
-            metaTitle: "",
-            metaDescription: "",
-          });
-        } else {
-          if (typeof data.message === "string") {
-            toast.error(data.message, {
-              position: "top-right",
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
-          } else if (typeof data.message === "object") {
-            Object.values(data.message).map((err, i) =>
-              toast.error(err[0], {
-                position: "top-right",
-                autoClose: 3000 * (i + 1),
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-              })
-            );
-          }
-        }
-      } catch (error) {
-        console.log("Error in creating the blog post: ", error);
-      } finally {
-        setIsProcessing(false);
-      }
-    } else {
-      toast.error("Required fields are missing.", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
+    if (response.success) {
+      showSuccessToast(response.message || "Post created successfully.");
+      reset();
+    } else if (response.message.title) {
+      setError("title", {
+        type: "server",
+        message: response.message.title.message,
       });
+    } else if (response.message.category) {
+      setError("category", {
+        type: "server",
+        message: response.message.category.message,
+      });
+    } else if (response.message.slug) {
+      setError("slug", {
+        type: "server",
+        message: response.message.slug.message,
+      });
+    } else if (response.message.shortDescription) {
+      setError("shortDescription", {
+        type: "server",
+        message: response.message.shortDescription.message,
+      });
+    } else {
+      showErrorToast(response.message || "Something went wrong.");
     }
   };
 
@@ -149,82 +96,112 @@ const AllPostsForm = () => {
 
   return (
     <form
-      onSubmit={postFormOnSubmit}
+      onSubmit={handleSubmit(onSubmit)}
       className={`${globalStyleObj.backgroundLight900Dark300} mt-[40px] min-h-full rounded-sm p-3 shadow-light sm:p-5`}
     >
       {/* Blog Title */}
       <div className={commonInputContainerClass}>
         <LabelText text="Blog Title" htmlForId="blog-title" star={true} />
-        <Input
-          id="blog-title"
-          type="text"
-          name="title"
-          value={blogFieldsObject.title}
-          onChange={handleOnChange}
-          required
-          placeholder="Blog Title"
-          className={commonDefaultInputFieldClass}
-        />
+        <div className="flex flex-col gap-2 w-full max-w-[800px]">
+          <Controller
+            name="title"
+            control={control}
+            render={({ field }) => (
+              <Input
+                {...field}
+                id="blog-title"
+                type="text"
+                value={field.value || ""}
+                placeholder="Blog Title"
+                className={commonDefaultInputFieldClass}
+              />
+            )}
+          />
+          {errors && errors.title && (
+            <p className="text-red-500 text-[13px] font-poppins-rg">
+              {errors.title.message}
+            </p>
+          )}
+        </div>
       </div>
 
       {/* Category */}
       <div className={`mt-5 ${commonInputContainerClass}`}>
         <LabelText text="Category" htmlForId="blog-category" star={true} />
-        <Select
-          id="blog-category"
-          value={blogFieldsObject.category}
-          required
-          onValueChange={(value) => {
-            setBlogFieldsObject((prevState) => ({
-              ...prevState,
-              category: value,
-            }));
-          }}
-        >
-          <SelectTrigger className="w-full max-w-[800px] border py-5 font-poppins-rg text-[13px] text-dark-weight-550 dark:border-[#fff]/10 dark:bg-[#000]/10 dark:text-light-weight-400">
-            <SelectValue placeholder="--" className="border " />
-          </SelectTrigger>
-          <SelectContent
-            className={`border-0 ${globalStyleObj.backgroundLight900Dark200} font-poppins-rg text-[13px] text-dark-weight-550 dark:text-light-weight-550`}
-          >
-            <SelectGroup>
-              <SelectItem value="technology">Technology</SelectItem>
-              <SelectItem value="lifestyle">Lifestyle</SelectItem>
-              <SelectItem value="health & wellness">
-                Health & Wellness
-              </SelectItem>
-              <SelectItem value="education">Education</SelectItem>
-              <SelectItem value="travel">Travel</SelectItem>
-              <SelectItem value="food & recipes">Food & Recipes</SelectItem>
-              <SelectItem value="finance & business">
-                Finance & Business
-              </SelectItem>
-              <SelectItem value="entertainment">Entertainment</SelectItem>
-              <SelectItem value="science & innovation">
-                Science & Innovation
-              </SelectItem>
-              <SelectItem value="sports & fitness">Sports & Fitness</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
+        <div className="flex flex-col gap-2 w-full max-w-[800px]">
+          <Controller
+            name="category"
+            control={control}
+            render={({ field }) => (
+              <Select
+                {...field}
+                id="blog-category"
+                value={field.value || ""}
+                onValueChange={(value) => field.onChange(value)}
+              >
+                <SelectTrigger className="w-full border py-5 font-poppins-rg text-[13px] text-dark-weight-550 dark:border-[#fff]/10 dark:bg-[#000]/10 dark:text-light-weight-400">
+                  <SelectValue placeholder="--" />
+                </SelectTrigger>
+                <SelectContent
+                  className={`border-0 ${globalStyleObj.backgroundLight900Dark200} font-poppins-rg text-[13px] text-dark-weight-550 dark:text-light-weight-550`}
+                >
+                  {categoryList.length > 0 ? (
+                    <SelectGroup>
+                      {categoryList.map((item) => (
+                        <SelectItem
+                          key={item._id}
+                          value={item.category.toLowerCase()}
+                        >
+                          {item.category}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  ) : (
+                    <div className="flex w-full items-center justify-center gap-2 font-poppins-rg text-light-weight-400 p-3 text-[16px]">
+                      <MdErrorOutline />
+                      <h1>No Categories Uploaded Yet!</h1>
+                    </div>
+                  )}
+                </SelectContent>
+              </Select>
+            )}
+          />
+          {errors && errors.category && (
+            <p className="text-red-500 text-[13px] font-poppins-rg">
+              {errors.category.message}
+            </p>
+          )}
+        </div>
       </div>
 
       {/* Slug */}
       <div className={`mt-5 ${commonInputContainerClass}`}>
         <LabelText text="Slug" htmlForId="blog-slug" star={true} />
-        <Input
-          id="blog-slug"
-          type="text"
-          name="slug"
-          required
-          value={blogFieldsObject.slug}
-          onChange={handleOnChange}
-          placeholder="Slug"
-          className={commonDefaultInputFieldClass}
-        />
+        <div className="flex flex-col gap-2 w-full max-w-[800px]">
+          <Controller
+            name="slug"
+            control={control}
+            render={({ field }) => (
+              <Input
+                {...field}
+                id="blog-slug"
+                type="text"
+                value={field.value || ""}
+                placeholder="Slug"
+                className={commonDefaultInputFieldClass}
+              />
+            )}
+          />
+
+          {errors && errors.slug && (
+            <p className="text-red-500 text-[13px] font-poppins-rg">
+              {errors.slug.message}
+            </p>
+          )}
+        </div>
       </div>
 
-      {/* Banner (1300 x 650) */}
+      {/* TODO Banner (1300 x 650) */}
       <div className={`mt-5 ${commonInputContainerClass}`}>
         <LabelText
           text="Banner (1300 x 650)"
@@ -245,14 +222,26 @@ const AllPostsForm = () => {
           htmlForId="blog-short-description"
           star={true}
         />
-        <Textarea
-          id="blog-short-description"
-          name="shortDescription"
-          required
-          value={blogFieldsObject.shortDescription}
-          onChange={handleOnChange}
-          className={`h-[100px] ${commonDefaultInputFieldClass}`}
-        />
+        <div className="flex flex-col gap-2 w-full max-w-[800px]">
+          <Controller
+            name="shortDescription"
+            control={control}
+            render={({ field }) => (
+              <Textarea
+                {...field}
+                id="blog-short-description"
+                value={field.value || ""}
+                className={`h-[100px] ${commonDefaultInputFieldClass}`}
+              />
+            )}
+          />
+
+          {errors && errors.shortDescription && (
+            <p className="text-red-500 text-[13px] font-poppins-rg">
+              {errors.shortDescription.message}
+            </p>
+          )}
+        </div>
       </div>
 
       {/* Description */}
@@ -264,28 +253,32 @@ const AllPostsForm = () => {
         />
 
         <div className="w-full max-w-[800px] rounded-sm border dark:border-[#fff]/10">
-          <JoditEditor
-            config={{
-              placeholder: "",
-              showCharsCounter: false,
-              showWordsCounter: false,
-              showXPathInStatusbar: false,
-              height: 300,
-              style: {
-                backgroundColor: theme === "light" ? "#ffffff" : "#22262A",
-                color: theme === "light" ? "#495057" : "#ced4da",
-              },
-              toolbarAdaptive: true,
-              toolbarButtonSize: "middle",
-              toolbar: true,
-            }}
-            value={blogFieldsObject.description}
-            onBlur={(newContent) => {
-              setBlogFieldsObject((prevState) => ({
-                ...prevState,
-                description: newContent,
-              }));
-            }}
+          <Controller
+            name="description"
+            control={control}
+            render={({ field }) => (
+              <JoditEditor
+                {...field}
+                config={{
+                  placeholder: "",
+                  showCharsCounter: false,
+                  showWordsCounter: false,
+                  showXPathInStatusbar: false,
+                  height: 300,
+                  style: {
+                    backgroundColor: theme === "light" ? "#ffffff" : "#22262A",
+                    color: theme === "light" ? "#495057" : "#ced4da",
+                  },
+                  toolbarAdaptive: true,
+                  toolbarButtonSize: "middle",
+                  toolbar: true,
+                }}
+                value={field.value || ""}
+                onBlur={(newContent) => {
+                  field.onChange(newContent);
+                }}
+              />
+            )}
           />
         </div>
       </div>
@@ -293,18 +286,23 @@ const AllPostsForm = () => {
       {/* Meta Title */}
       <div className={`mt-5 ${commonInputContainerClass}`}>
         <LabelText text="Meta Title" htmlForId="blog-meta-title" star={false} />
-        <Input
-          id="blog-meta-title"
-          type="text"
+        <Controller
           name="metaTitle"
-          value={blogFieldsObject.metaTitle}
-          onChange={handleOnChange}
-          placeholder="Meta Title"
-          className={commonDefaultInputFieldClass}
+          control={control}
+          render={({ field }) => (
+            <Input
+              {...field}
+              id="blog-meta-title"
+              type="text"
+              value={field.value || ""}
+              placeholder="Meta Title"
+              className={commonDefaultInputFieldClass}
+            />
+          )}
         />
       </div>
 
-      {/* Meta Image (200 x 200) */}
+      {/* TODO Meta Image (200 x 200) */}
       <div className={`mt-5 ${commonInputContainerClass}`}>
         <LabelText
           text="Meta Image (200 x 200)"
@@ -325,22 +323,28 @@ const AllPostsForm = () => {
           htmlForId="blog-meta-description"
           star={false}
         />
-        <Textarea
-          id="blog-meta-description"
+
+        <Controller
           name="metaDescription"
-          value={blogFieldsObject.metaDescription}
-          onChange={handleOnChange}
-          className={`h-[100px] ${commonDefaultInputFieldClass}`}
+          control={control}
+          render={({ field }) => (
+            <Textarea
+              {...field}
+              id="blog-meta-description"
+              value={field.value || ""}
+              className={`h-[100px] ${commonDefaultInputFieldClass}`}
+            />
+          )}
         />
       </div>
 
       <div className="mt-10 flex items-center justify-center">
         <button
           type="submit"
-          disabled={isProcessing}
+          disabled={isSubmitting}
           className={`mx-auto ${globalStyleObj.flexStart} transition-300 gap-2 rounded-[4px] ${bgColor} ${hoverBgColor} ${textColor} px-5 py-2 font-poppins-rg text-[16px] tracking-wide hover:text-white`}
         >
-          {isProcessing ? (
+          {isSubmitting ? (
             <>
               <ClipLoader color="#fff" size={16} />
               <span>Processing...</span>

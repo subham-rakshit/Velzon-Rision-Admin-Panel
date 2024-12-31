@@ -4,7 +4,7 @@ import axios from "axios";
 export const getAllCategories = async (userId, search) => {
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/post/get-all-categories?userId=${userId}&search=${search}`
+      `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/post/get-all-categories?userId=${userId}&search=${search ? search : ""}`
     );
 
     if (response.data.success && response.status === 200) {
@@ -51,6 +51,10 @@ export const createNewCategory = async (data, userId) => {
           "Something went wrong",
       };
     }
+    return {
+      success: false,
+      message: "Something went wrong",
+    };
   }
 };
 
@@ -84,6 +88,10 @@ export const updatePerticularCategory = async (userId, categoryId, data) => {
           "Something went wrong",
       };
     }
+    return {
+      success: false,
+      message: "Something went wrong",
+    };
   }
 };
 

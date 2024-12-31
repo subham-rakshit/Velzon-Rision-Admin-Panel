@@ -68,7 +68,7 @@ const BlogSystemCategories = async ({ searchParams }) => {
             <DialogTrigger asChild>
               <button
                 type="button"
-                className="rounded-full bg-violet-500/80 hover:bg-violet-500 dark:bg-violet-500/10 px-5 py-2 font-poppins-rg text-[13px] text-white dark:text-violet-600 dark:hover:bg-violet-500 dark:hover:text-white transition-all duration-300 ease-in-out"
+                className="rounded-full bg-violet-500/80 hover:bg-violet-500 dark:bg-violet-500/10 px-3 sm:px-5 py-2 font-poppins-rg text-[11px] sm:text-[13px] text-white dark:text-violet-600 dark:hover:bg-violet-500 dark:hover:text-white transition-all duration-300 ease-in-out"
               >
                 Add New Category
               </button>
@@ -94,7 +94,7 @@ const BlogSystemCategories = async ({ searchParams }) => {
 
         <div className="mx-3 rounded-sm border dark:border-[#fff]/10">
           <div
-            className={`${globalStyleObj.flexBetween} gap-5 border-b p-3 dark:border-[#fff]/10 sm:p-5`}
+            className={`flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-5 border-b p-3 dark:border-[#fff]/10 sm:p-5`}
           >
             <h4 className="font-poppins-md text-[13px] text-dark-weight-550 dark:text-light-weight-550">
               Blog Categories

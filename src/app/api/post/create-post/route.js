@@ -3,29 +3,16 @@ import { NextResponse } from "next/server";
 import dbConnect from "@/lib/db/dbConnect";
 import { validateUserFromToken } from "@/lib/middleware/validateUser";
 import AllBlogPostsModel from "@/model/BlogAllPosts";
-import { AllPostsSchema } from "@/schemas/pagesSchema/blogSystem/allPostsSchema";
+import UserModel from "@/model/User";
+import { AllPostsSchema } from "@/schemas";
 
 export async function POST(request) {
   await dbConnect();
 
   try {
-    // Get the user details from the token
-    const user = await validateUserFromToken({ request });
-
-    // Check if the user is an admin
-    if (user && !user.isAdmin) {
-      return new NextResponse(
-        JSON.stringify({
-          success: false,
-          message: "You are not authorized to create this Blog.",
-        }),
-        { status: 403 }
-      );
-    }
-
-    const { blogFieldsObject } = await request.json();
-
+    const body = await request.json();
     const {
+      userId,
       title,
       category,
       slug,
@@ -33,7 +20,19 @@ export async function POST(request) {
       description,
       metaTitle,
       metaDescription,
-    } = blogFieldsObject || {};
+    } = body;
+
+    // Get the user details from the token
+    const requestedUserDetails = await validateUserFromToken({ request });
+    if (!requestedUserDetails || requestedUserDetails._id !== userId) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Unauthorized access. Please log in and try again.",
+        },
+        { status: 403 }
+      );
+    }
 
     // NOTE: Validate the required fileds schema
     const validatedFields = AllPostsSchema.safeParse({
@@ -41,39 +40,52 @@ export async function POST(request) {
       category,
       slug,
       shortDescription,
+      description,
+      metaTitle,
+      metaDescription,
     });
     if (!validatedFields.success) {
-      return new NextResponse(
-        JSON.stringify(
-          {
-            success: false,
-            message: validatedFields.error.flatten().fieldErrors,
-          },
-          { status: 400 }
-        )
-      );
-    }
+      let zodErrors = {};
+      validatedFields.error.issues.forEach((issue) => {
+        zodErrors = {
+          ...zodErrors,
+          [issue.path[0]]: { message: issue.message },
+        };
+      });
 
-    // Check if title is already exists or not
-    const existsTitle = await AllBlogPostsModel.findOne({ title });
-    if (existsTitle) {
-      return new NextResponse(
-        JSON.stringify({
-          success: false,
-          message: "Title is already exists.",
-        }),
+      return NextResponse.json(
+        { success: false, errors: zodErrors },
         { status: 400 }
       );
     }
 
-    // Check if Slug is already exists or not
-    const existsSlug = await AllBlogPostsModel.findOne({ slug });
-    if (existsSlug) {
-      return new NextResponse(
-        JSON.stringify({
+    // NOTE Get the user details
+    const user = await UserModel.findById(userId);
+    if (!user || !user.role.includes("Admin")) {
+      return NextResponse.json(
+        {
           success: false,
-          message: "Slug is already exists.",
-        }),
+          message:
+            "You do not have the required permissions to create a new post.",
+        },
+        { status: 403 }
+      );
+    }
+
+    // Check if title is already exists or not
+    const duplicateCheck = await AllBlogPostsModel.findOne({
+      $or: [{ title }, { slug }],
+    });
+
+    if (duplicateCheck) {
+      return NextResponse.json(
+        {
+          success: false,
+          message:
+            duplicateCheck.title === title
+              ? "A post with this title already exists. Please choose a different title."
+              : "This slug is already in use. Please choose a different slug.",
+        },
         { status: 400 }
       );
     }
@@ -92,21 +104,20 @@ export async function POST(request) {
 
     await newBlogPost.save();
 
-    return new NextResponse(
-      JSON.stringify({
+    return NextResponse.json(
+      {
         success: true,
         message: "Blog post created successfully.",
-        blogData: newBlogPost,
-      }),
+      },
       { status: 201 }
     );
   } catch (error) {
     console.log("Error in creating the blog post SERVER: ", error);
-    return new NextResponse(
-      JSON.stringify({
+    return NextResponse.json(
+      {
         success: false,
-        message: "Internal Server Error. Please try again later.",
-      }),
+        message: "An unexpected error occurred. Please try again later.",
+      },
       { status: 500 }
     );
   }
