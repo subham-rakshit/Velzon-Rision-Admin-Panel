@@ -1,4 +1,4 @@
-import { layoutThemePrimaryColor } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
+import { layoutThemePrimaryColor } from "@/app/assets/data/layoutCustomizerData/layoutCustomizerData";
 
 const getCustomColor = ({ layoutThemePrimaryColorType }) => {
   let active;

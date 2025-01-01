@@ -23,7 +23,7 @@ import {
   sidebarVisibility,
   toggleStatus,
   widthType,
-} from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
+} from "@/app/assets/data/layoutCustomizerData/layoutCustomizerData";
 import {
   changeLeftSideBarSizeType,
   changeLeftSidebarVisibilityType,

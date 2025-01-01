@@ -15,7 +15,7 @@ import {
   YAxis,
 } from "recharts";
 
-import { revenueChartData } from "@/app/assets/pagesData/dashboardData/ecommerce";
+import { revenueChartData } from "@/app/assets/data/pagesData/dashboardData/ecommerce";
 import { globalStyleObj } from "@/app/assets/styles";
 import { CountupText } from "@/components";
 import { getCustomColor } from "@/lib/utils/customColor";

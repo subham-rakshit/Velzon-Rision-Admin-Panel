@@ -1,34 +1,34 @@
 // NOTE Language Images ---
 
-import { BiBadgeCheck, BiTask, BiMessageSquareDots } from "react-icons/bi";
+import { BiBadgeCheck, BiMessageSquareDots, BiTask } from "react-icons/bi";
 import { IoMdWallet } from "react-icons/io";
 import { IoSettingsOutline } from "react-icons/io5";
-import { MdAccountCircle, MdOutlineMessage, MdLock } from "react-icons/md";
+import { MdAccountCircle, MdLock, MdOutlineMessage } from "react-icons/md";
 import { RiLifebuoyLine } from "react-icons/ri";
 
-import bitbucket from "../images/brands/bitbucket.png";
-import dribbble from "../images/brands/dribbble.png";
-import dropbox from "../images/brands/dropbox.png";
-import github from "../images/brands/github.png";
-import mailChimp from "../images/brands/mail_chimp.png";
-import slack from "../images/brands/slack.png";
-import flagArabic from "../images/flags/ae.svg";
-import flagChina from "../images/flags/china.svg";
-import flagFrench from "../images/flags/french.svg";
-import flagGermany from "../images/flags/germany.svg";
-import flagItaly from "../images/flags/italy.svg";
-import flagRussia from "../images/flags/russia.svg";
-import flagSpain from "../images/flags/spain.svg";
-import flagUs from "../images/flags/us.svg";
-import productImage1 from "../images/products/img-1.png";
-import productImage2 from "../images/products/img-2.png";
-import productImage3 from "../images/products/img-3.png";
-import productImage5 from "../images/products/img-5.png";
-import productImage6 from "../images/products/img-6.png";
-import avatar1 from "../images/users/avatar-2.jpg";
-import avatar3 from "../images/users/avatar-3.jpg";
-import avatar4 from "../images/users/avatar-6.jpg";
-import avatar2 from "../images/users/avatar-8.jpg";
+import bitbucket from "../../images/brands/bitbucket.png";
+import dribbble from "../../images/brands/dribbble.png";
+import dropbox from "../../images/brands/dropbox.png";
+import github from "../../images/brands/github.png";
+import mailChimp from "../../images/brands/mail_chimp.png";
+import slack from "../../images/brands/slack.png";
+import flagArabic from "../../images/flags/ae.svg";
+import flagChina from "../../images/flags/china.svg";
+import flagFrench from "../../images/flags/french.svg";
+import flagGermany from "../../images/flags/germany.svg";
+import flagItaly from "../../images/flags/italy.svg";
+import flagRussia from "../../images/flags/russia.svg";
+import flagSpain from "../../images/flags/spain.svg";
+import flagUs from "../../images/flags/us.svg";
+import productImage1 from "../../images/products/img-1.png";
+import productImage2 from "../../images/products/img-2.png";
+import productImage3 from "../../images/products/img-3.png";
+import productImage5 from "../../images/products/img-5.png";
+import productImage6 from "../../images/products/img-6.png";
+import avatar1 from "../../images/users/avatar-2.jpg";
+import avatar3 from "../../images/users/avatar-3.jpg";
+import avatar4 from "../../images/users/avatar-6.jpg";
+import avatar2 from "../../images/users/avatar-8.jpg";
 
 import ROUTES from "@/constants/routes";
 

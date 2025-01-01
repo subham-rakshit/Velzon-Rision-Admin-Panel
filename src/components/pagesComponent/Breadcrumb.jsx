@@ -2,7 +2,7 @@
 
 import { IoIosArrowForward } from "react-icons/io";
 
-import { sidebarView } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
+import { sidebarView } from "@/app/assets/data/layoutCustomizerData/layoutCustomizerData";
 import { globalStyleObj } from "@/app/assets/styles";
 import { useAppSelector } from "@/store/hooks";
 

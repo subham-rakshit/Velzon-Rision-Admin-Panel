@@ -6,7 +6,7 @@ import { LuUsers } from "react-icons/lu";
 import { RiArrowDropDownFill, RiArrowDropUpFill } from "react-icons/ri";
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 
-import { userByDeviceData } from "@/app/assets/pagesData/dashboardData/analytics";
+import { userByDeviceData } from "@/app/assets/data/pagesData/dashboardData/analytics";
 import { globalStyleObj } from "@/app/assets/styles";
 import {
   DropdownMenu,

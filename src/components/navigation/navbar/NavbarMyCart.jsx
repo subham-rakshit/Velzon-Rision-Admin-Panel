@@ -6,8 +6,8 @@ import { MdClose } from "react-icons/md";
 import { PiShoppingCartSimpleBold } from "react-icons/pi";
 import { RiShoppingBagLine } from "react-icons/ri";
 
-import { topbarColor } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
-import { myCartData } from "@/app/assets/navData/navData";
+import { topbarColor } from "@/app/assets/data/layoutCustomizerData/layoutCustomizerData";
+import { myCartData } from "@/app/assets/data/navData/navData";
 import { globalStyleObj } from "@/app/assets/styles";
 import {
   DropdownMenu,

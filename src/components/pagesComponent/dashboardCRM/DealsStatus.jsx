@@ -1,9 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 
-import { dealsStatus } from "@/app/assets/pagesData/dashboardData/crm";
+import { dealsStatus } from "@/app/assets/data/pagesData/dashboardData/crm";
 import { globalStyleObj } from "@/app/assets/styles";
 import {
   DropdownMenu,

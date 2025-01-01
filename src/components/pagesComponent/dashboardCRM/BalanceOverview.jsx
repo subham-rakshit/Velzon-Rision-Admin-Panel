@@ -16,7 +16,7 @@ import {
 import {
   balanceOverviewData,
   balanceOverViewWidgets,
-} from "@/app/assets/pagesData/dashboardData/crm";
+} from "@/app/assets/data/pagesData/dashboardData/crm";
 import { globalStyleObj } from "@/app/assets/styles";
 import { CountupText } from "@/components";
 import {

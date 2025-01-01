@@ -3,7 +3,7 @@
 import { BsPlus } from "react-icons/bs";
 import { RiSettings3Line } from "react-icons/ri";
 
-import { myTasks } from "@/app/assets/pagesData/dashboardData/crm";
+import { myTasks } from "@/app/assets/data/pagesData/dashboardData/crm";
 import { globalStyleObj } from "@/app/assets/styles";
 import {
   DropdownMenu,

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { MdFullscreen, MdFullscreenExit } from "react-icons/md";
 
-import { topbarColor } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
+import { topbarColor } from "@/app/assets/data/layoutCustomizerData/layoutCustomizerData";
 import { globalStyleObj } from "@/app/assets/styles";
 import { useAppSelector } from "@/store/hooks";
 

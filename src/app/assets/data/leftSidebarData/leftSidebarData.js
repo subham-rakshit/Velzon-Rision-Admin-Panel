@@ -108,13 +108,13 @@ const leftSidebarData = [
       },
 
       {
-        id: "Images",
+        id: "Image-Library",
         tabName: "Image Console",
         tabIcon: <GrGallery />,
         tabDropdownList: [
           {
             id: "image-library-controls",
-            parentTabId: "Images",
+            parentTabId: "Image-Library",
             tabName: "Library Controls",
             pathName: "/image-library-controls",
             tabDropdownList: [],

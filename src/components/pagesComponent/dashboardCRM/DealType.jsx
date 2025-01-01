@@ -1,18 +1,18 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import {
-  Radar,
-  RadarChart,
-  PolarGrid,
   Legend,
   PolarAngleAxis,
+  PolarGrid,
   PolarRadiusAxis,
+  Radar,
+  RadarChart,
   ResponsiveContainer,
 } from "recharts";
 
-import { dealTypeData } from "@/app/assets/pagesData/dashboardData/crm";
+import { dealTypeData } from "@/app/assets/data/pagesData/dashboardData/crm";
 import { globalStyleObj } from "@/app/assets/styles";
 import {
   DropdownMenu,

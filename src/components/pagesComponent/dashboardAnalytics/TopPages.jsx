@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import React, { useState } from "react";
+import { useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 
-import { topPages } from "@/app/assets/pagesData/dashboardData/analytics";
+import { topPages } from "@/app/assets/data/pagesData/dashboardData/analytics";
 import { globalStyleObj } from "@/app/assets/styles";
 import {
   DropdownMenu,

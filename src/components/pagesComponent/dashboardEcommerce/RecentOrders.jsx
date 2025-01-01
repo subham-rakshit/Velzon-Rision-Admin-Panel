@@ -1,8 +1,7 @@
 import Image from "next/image";
-import React from "react";
 import { RiFileList3Line } from "react-icons/ri";
 
-import { recentOrders } from "@/app/assets/pagesData/dashboardData/ecommerce";
+import { recentOrders } from "@/app/assets/data/pagesData/dashboardData/ecommerce";
 import { globalStyleObj } from "@/app/assets/styles";
 import { RecentOrdersOrderId } from "@/components";
 

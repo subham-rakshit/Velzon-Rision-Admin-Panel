@@ -1,5 +1,3 @@
-import React from "react";
-
 import {
   NavbarLanguages,
   NavbarMyCart,
@@ -18,11 +16,11 @@ import {
   layout,
   layoutThemePrimaryColor,
   position,
+  sidebarView,
   sidebarVisibility,
   topbarColor,
   widthType,
-  sidebarView,
-} from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
+} from "@/app/assets/data/layoutCustomizerData/layoutCustomizerData";
 import { globalStyleObj } from "@/app/assets/styles";
 
 const Navbar = ({
@@ -57,14 +55,14 @@ const Navbar = ({
         topbarColorType === topbarColor.LIGHT_COLOR
           ? `${globalStyleObj.backgroundLight900Dark200}`
           : `${bgColor}`
-      } 
+      }
       ${
         layoutType === layout.HORIZONTAL
           ? "px-5 md:px-10 lg:px-[50px]"
           : layoutType === layout.SEMI_BOX
             ? "px-5 2xl:rounded-sm"
             : "px-5"
-      } 
+      }
       ${
         layoutPositionType === position.FIXED
           ? layoutType === layout.VERTICAL &&
@@ -77,7 +75,7 @@ const Navbar = ({
                 leftSidebarViewType === sidebarView.DETACHED
               ? `w-full lg:absolute lg:left-0 lg:z-[999] lg:px-[50px]`
               : ""
-      } 
+      }
       ${globalStyleObj.flexBetween} top-0 min-h-[70px] border-b dark:border-0`}
     >
       <div

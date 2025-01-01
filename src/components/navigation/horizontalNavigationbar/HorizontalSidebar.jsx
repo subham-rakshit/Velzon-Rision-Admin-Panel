@@ -12,8 +12,8 @@ import {
   layoutThemePrimaryColor,
   position,
   widthType,
-} from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
-import leftSidebarData from "@/app/assets/leftSidebarData/leftSidebarData";
+} from "@/app/assets/data/layoutCustomizerData/layoutCustomizerData";
+import leftSidebarData from "@/app/assets/data/leftSidebarData/leftSidebarData";
 import { globalStyleObj } from "@/app/assets/styles";
 import { TransitionLink } from "@/components";
 import { useAppSelector } from "@/store/hooks";

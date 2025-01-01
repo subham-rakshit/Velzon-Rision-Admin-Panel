@@ -11,7 +11,7 @@ import {
   YAxis,
 } from "recharts";
 
-import { sessionByCountriesData } from "@/app/assets/pagesData/dashboardData/analytics";
+import { sessionByCountriesData } from "@/app/assets/data/pagesData/dashboardData/analytics";
 import { globalStyleObj } from "@/app/assets/styles";
 import { getCustomColor } from "@/lib/utils/customColor";
 import { useAppSelector } from "@/store/hooks";

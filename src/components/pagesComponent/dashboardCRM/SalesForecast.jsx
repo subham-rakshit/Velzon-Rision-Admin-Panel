@@ -14,7 +14,7 @@ import {
   YAxis,
 } from "recharts";
 
-import { salesForecastData } from "@/app/assets/pagesData/dashboardData/crm";
+import { salesForecastData } from "@/app/assets/data/pagesData/dashboardData/crm";
 import { globalStyleObj } from "@/app/assets/styles";
 import {
   DropdownMenu,

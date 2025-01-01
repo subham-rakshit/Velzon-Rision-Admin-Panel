@@ -1,11 +1,11 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import React, { useState } from "react";
+import { useState } from "react";
 import { IoIosArrowForward } from "react-icons/io";
 
-import { sidebarColor } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
-import leftSidebarData from "@/app/assets/leftSidebarData/leftSidebarData";
+import { sidebarColor } from "@/app/assets/data/layoutCustomizerData/layoutCustomizerData";
+import leftSidebarData from "@/app/assets/data/leftSidebarData/leftSidebarData";
 import { globalStyleObj } from "@/app/assets/styles";
 import { TransitionLink } from "@/components";
 
@@ -78,8 +78,8 @@ const LeftSidebarSmallIconView = ({
             >
               {/* NOTE Parent Icon */}
               <div
-                className={`py-[13px] text-[22px] 
-                  ${globalStyleObj.flexCenter} 
+                className={`py-[13px] text-[22px]
+                  ${globalStyleObj.flexCenter}
                   ${
                     pathname.includes(parent.id.toLowerCase())
                       ? `${
@@ -90,7 +90,7 @@ const LeftSidebarSmallIconView = ({
                             : textColor
                         }`
                       : "text-light-weight-450"
-                  } 
+                  }
                     ${
                       leftSidebarColorType === sidebarColor.DARK_BG_COLOR ||
                       leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR
@@ -111,7 +111,7 @@ const LeftSidebarSmallIconView = ({
                           ? `${gradientBgColor}`
                           : "bg-light-dencity-900"
                       }`
-                } 
+                }
                   ${
                     hoverState.parent.isOpen &&
                     hoverState.parent.id === parent.id
@@ -131,7 +131,7 @@ const LeftSidebarSmallIconView = ({
                             : textColor
                         }`
                       : "text-light-weight-450"
-                  } 
+                  }
                     ${
                       leftSidebarColorType === sidebarColor.DARK_BG_COLOR ||
                       leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR
@@ -205,7 +205,7 @@ const LeftSidebarSmallIconView = ({
                                         ? `${gradientBgColor}`
                                         : "bg-light-dencity-900"
                                     }`
-                              } 
+                              }
                                 ${
                                   hoverState.firstChild.isOpen &&
                                   hoverState.firstChild.id === firstChild.id
@@ -272,7 +272,7 @@ const LeftSidebarSmallIconView = ({
                                                 ? `${gradientBgColor}`
                                                 : "bg-light-dencity-900"
                                             }`
-                                      } 
+                                      }
                                         ${
                                           hoverState.secondChild.isOpen &&
                                           hoverState.secondChild.id ===
@@ -394,7 +394,7 @@ const LeftSidebarSmallIconView = ({
                                         : textColor
                                     }`
                                   : "text-light-weight-450"
-                              } 
+                              }
                               ${
                                 leftSidebarColorType ===
                                   sidebarColor.DARK_BG_COLOR ||
@@ -447,7 +447,7 @@ const LeftSidebarSmallIconView = ({
                             ? `${gradientBgColor} hover:text-light-weight-800 dark:bg-dark-dencity-300`
                             : `bg-light-dencity-900 ${hoverTextColor}`
                         }`
-                  } 
+                  }
                     ${
                       hoverState.parent.isOpen &&
                       hoverState.parent.id === parent.id

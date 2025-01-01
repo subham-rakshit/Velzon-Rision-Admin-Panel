@@ -5,7 +5,7 @@ import Link from "next/link";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { RiBarChart2Fill } from "react-icons/ri";
 
-import { topSellers } from "@/app/assets/pagesData/dashboardData/ecommerce";
+import { topSellers } from "@/app/assets/data/pagesData/dashboardData/ecommerce";
 import { globalStyleObj } from "@/app/assets/styles";
 import {
   DropdownMenu,

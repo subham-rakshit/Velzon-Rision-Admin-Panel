@@ -19,7 +19,7 @@ import {
   toggleStatus,
   topbarColor,
   widthType,
-} from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
+} from "@/app/assets/data/layoutCustomizerData/layoutCustomizerData";
 
 const initialState = {
   rightSideBarIsOpen: rightSidebarOpenStatus.CLOSE, // OPEN

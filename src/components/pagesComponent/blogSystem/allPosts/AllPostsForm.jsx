@@ -39,7 +39,6 @@ const AllPostsForm = ({ userId, categoryList }) => {
     formState: { errors, isSubmitting },
     reset,
     setError,
-    setValue,
   } = useForm({
     resolver: zodResolver(AllPostsSchema),
     defaultValues: {

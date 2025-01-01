@@ -4,9 +4,9 @@ import Cookies from "js-cookie";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-import { languagesDetails } from "../../../app/assets/navData/navData";
+import { languagesDetails } from "../../../app/assets/data/navData/navData";
 
-import { topbarColor } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
+import { topbarColor } from "@/app/assets/data/layoutCustomizerData/layoutCustomizerData";
 import { globalStyleObj } from "@/app/assets/styles";
 import {
   DropdownMenu,

@@ -4,8 +4,8 @@ import Image from "next/image";
 import { BiCategoryAlt } from "react-icons/bi";
 import { IoIosArrowForward } from "react-icons/io";
 
-import { topbarColor } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
-import { webAppsData } from "@/app/assets/navData/navData";
+import { topbarColor } from "@/app/assets/data/layoutCustomizerData/layoutCustomizerData";
+import { webAppsData } from "@/app/assets/data/navData/navData";
 import { globalStyleObj } from "@/app/assets/styles";
 import {
   DropdownMenu,

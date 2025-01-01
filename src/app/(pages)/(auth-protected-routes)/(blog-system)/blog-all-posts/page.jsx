@@ -1,5 +1,5 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
-import { titlesObject } from "@/app/assets/titlesData/titles";
+import { titlesObject } from "@/app/assets/data/titlesData/titles";
 import { AllPostsForm, Breadcrumb } from "@/components";
 import { getAccessTokenData } from "@/lib/middleware/getAccessTokenData";
 import { getAllCategories } from "@/services/actions/category";

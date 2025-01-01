@@ -1,8 +1,6 @@
-import React from "react";
-
-import { crmWidgets } from "@/app/assets/pagesData/dashboardData/crm";
+import { crmWidgets } from "@/app/assets/data/pagesData/dashboardData/crm";
+import { titlesObject } from "@/app/assets/data/titlesData/titles";
 import { globalStyleObj } from "@/app/assets/styles";
-import { titlesObject } from "@/app/assets/titlesData/titles";
 import {
   BalanceOverview,
   Breadcrumb,

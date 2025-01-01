@@ -1,10 +1,9 @@
 import Link from "next/link";
-import React from "react";
 import { MdCopyright, MdHome } from "react-icons/md";
 
 import { ErrorImage } from "../components";
+import { titlesObject } from "./assets/data/titlesData/titles";
 import { globalStyleObj } from "./assets/styles";
-import { titlesObject } from "./assets/titlesData/titles";
 
 export const metadata = {
   title: titlesObject.error404.title,

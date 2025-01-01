@@ -1,8 +1,6 @@
-import React from "react";
-
-import { ecomWidgets } from "@/app/assets/pagesData/dashboardData/ecommerce";
+import { ecomWidgets } from "@/app/assets/data/pagesData/dashboardData/ecommerce";
+import { titlesObject } from "@/app/assets/data/titlesData/titles";
 import { globalStyleObj } from "@/app/assets/styles";
-import { titlesObject } from "@/app/assets/titlesData/titles";
 import {
   AddPrdocutsAndSheet,
   BestSellingProducts,

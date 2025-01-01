@@ -1,6 +1,6 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
+import { titlesObject } from "@/app/assets/data/titlesData/titles";
 import { globalStyleObj } from "@/app/assets/styles";
-import { titlesObject } from "@/app/assets/titlesData/titles";
 import { AddNewImageButton, Breadcrumb, ImageSearchBox } from "@/components";
 import { getAccessTokenData } from "@/lib/middleware/getAccessTokenData";
 import { getServerSession } from "next-auth";

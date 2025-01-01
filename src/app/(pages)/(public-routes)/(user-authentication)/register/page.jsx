@@ -1,5 +1,5 @@
+import { titlesObject } from "@/app/assets/data/titlesData/titles";
 import { globalStyleObj } from "@/app/assets/styles";
-import { titlesObject } from "@/app/assets/titlesData/titles";
 import { RegistrationForm, SocialAuthForm } from "@/components";
 import ROUTES from "@/constants/routes";
 import Link from "next/link";

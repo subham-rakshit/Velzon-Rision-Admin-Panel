@@ -3,7 +3,7 @@
 import { IoSearch } from "react-icons/io5";
 import { MdSearch } from "react-icons/md";
 
-import { topbarColor } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
+import { topbarColor } from "@/app/assets/data/layoutCustomizerData/layoutCustomizerData";
 import { globalStyleObj } from "@/app/assets/styles";
 import {
   Popover,

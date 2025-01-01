@@ -11,7 +11,7 @@ import {
   XAxis,
 } from "recharts";
 
-import { audienceMatricsData } from "@/app/assets/pagesData/dashboardData/analytics";
+import { audienceMatricsData } from "@/app/assets/data/pagesData/dashboardData/analytics";
 import { globalStyleObj } from "@/app/assets/styles";
 import { CountupText } from "@/components";
 import { getCustomColor } from "@/lib/utils/customColor";

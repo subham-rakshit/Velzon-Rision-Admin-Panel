@@ -8,8 +8,8 @@ import { MdArrowForward } from "react-icons/md";
 
 import bellSvg from "../../../app/assets/images/svg/bell.svg";
 
-import { topbarColor } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
-import { notificationsData } from "@/app/assets/navData/navData";
+import { topbarColor } from "@/app/assets/data/layoutCustomizerData/layoutCustomizerData";
+import { notificationsData } from "@/app/assets/data/navData/navData";
 import { globalStyleObj } from "@/app/assets/styles";
 import {
   DropdownMenu,

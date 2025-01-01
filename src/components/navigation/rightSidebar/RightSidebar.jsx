@@ -15,7 +15,7 @@ import {
   sidebarMainSize,
   sidebarSize,
   sidebarVisibility,
-} from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
+} from "@/app/assets/data/layoutCustomizerData/layoutCustomizerData";
 import {
   rightSidbarLayoutPositionData,
   rightSidbarLayoutWidthData,
@@ -23,7 +23,7 @@ import {
   rightSidebarImagesData,
   rightSidebarPrimaryColorData,
   rightSidebarThemeData,
-} from "@/app/assets/rightSidebarData/rightSidebarData";
+} from "@/app/assets/data/rightSidebarData/rightSidebarData";
 import { globalStyleObj } from "@/app/assets/styles";
 import {
   changeLayoutPositionType,

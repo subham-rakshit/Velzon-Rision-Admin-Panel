@@ -3,7 +3,7 @@
 import { useTheme } from "next-themes";
 import { IoMoonOutline, IoSunnyOutline } from "react-icons/io5";
 
-import { topbarColor } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
+import { topbarColor } from "@/app/assets/data/layoutCustomizerData/layoutCustomizerData";
 import { globalStyleObj } from "@/app/assets/styles";
 import { useAppSelector } from "@/store/hooks";
 

@@ -1,9 +1,8 @@
 import { VectorMap } from "@south-paw/react-vector-maps";
-import React from "react";
 
 import world from "../../../app/assets/jsonData/world.svg.json";
 
-import { salesByLocationsData } from "@/app/assets/pagesData/dashboardData/ecommerce";
+import { salesByLocationsData } from "@/app/assets/data/pagesData/dashboardData/ecommerce";
 import { globalStyleObj } from "@/app/assets/styles";
 import { CustomExportButton, ProgressBar } from "@/components";
 

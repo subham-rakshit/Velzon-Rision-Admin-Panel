@@ -8,7 +8,7 @@ import {
   sidebarVisibility,
   toggleStatus,
   topbarColor,
-} from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
+} from "@/app/assets/data/layoutCustomizerData/layoutCustomizerData";
 import { globalStyleObj } from "@/app/assets/styles";
 import {
   changeLeftSidebarVisibilityType,

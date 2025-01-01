@@ -1,6 +1,4 @@
-import React from "react";
-
-import { titlesObject } from "@/app/assets/titlesData/titles";
+import { titlesObject } from "@/app/assets/data/titlesData/titles";
 
 export const metadata = {
   title: titlesObject.pagesCommingSoon.title,

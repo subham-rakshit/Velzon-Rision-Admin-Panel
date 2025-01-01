@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { MdKeyboardArrowDown } from "react-icons/md";
 
-import { bestSellingProducts } from "@/app/assets/pagesData/dashboardData/ecommerce";
+import { bestSellingProducts } from "@/app/assets/data/pagesData/dashboardData/ecommerce";
 import { globalStyleObj } from "@/app/assets/styles";
 import {
   DropdownMenu,

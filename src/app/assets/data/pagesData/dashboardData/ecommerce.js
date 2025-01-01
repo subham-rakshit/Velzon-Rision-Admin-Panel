@@ -1,26 +1,26 @@
 import { BiUserCircle } from "react-icons/bi";
-import { FiArrowUpRight, FiArrowDownRight } from "react-icons/fi";
+import { FiArrowDownRight, FiArrowUpRight } from "react-icons/fi";
 import {
   RiMoneyDollarCircleLine,
   RiShoppingBagLine,
   RiWalletLine,
 } from "react-icons/ri";
 
-import company1 from "../../images/companies/img-1.png";
-import company2 from "../../images/companies/img-2.png";
-import company3 from "../../images/companies/img-3.png";
-import company5 from "../../images/companies/img-5.png";
-import company8 from "../../images/companies/img-8.png";
-import product1 from "../../images/products/img-1.png";
-import product2 from "../../images/products/img-2.png";
-import product3 from "../../images/products/img-3.png";
-import product4 from "../../images/products/img-4.png";
-import product5 from "../../images/products/img-5.png";
-import avatar1 from "../../images/users/avatar-1.jpg";
-import avatar2 from "../../images/users/avatar-2.jpg";
-import avatar3 from "../../images/users/avatar-3.jpg";
-import avatar4 from "../../images/users/avatar-4.jpg";
-import avatar6 from "../../images/users/avatar-6.jpg";
+import company1 from "../../../images/companies/img-1.png";
+import company2 from "../../../images/companies/img-2.png";
+import company3 from "../../../images/companies/img-3.png";
+import company5 from "../../../images/companies/img-5.png";
+import company8 from "../../../images/companies/img-8.png";
+import product1 from "../../../images/products/img-1.png";
+import product2 from "../../../images/products/img-2.png";
+import product3 from "../../../images/products/img-3.png";
+import product4 from "../../../images/products/img-4.png";
+import product5 from "../../../images/products/img-5.png";
+import avatar1 from "../../../images/users/avatar-1.jpg";
+import avatar2 from "../../../images/users/avatar-2.jpg";
+import avatar3 from "../../../images/users/avatar-3.jpg";
+import avatar4 from "../../../images/users/avatar-4.jpg";
+import avatar6 from "../../../images/users/avatar-6.jpg";
 
 const ecomWidgets = [
   {
@@ -601,10 +601,10 @@ const recentOrders = [
 ];
 
 export {
+  bestSellingProducts,
   ecomWidgets,
+  recentOrders,
   revenueChartData,
   salesByLocationsData,
-  bestSellingProducts,
   topSellers,
-  recentOrders,
 };

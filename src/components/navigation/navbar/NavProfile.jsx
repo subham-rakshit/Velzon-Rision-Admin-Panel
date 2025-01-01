@@ -13,11 +13,11 @@ import avatarImg from "../../../app/assets/images/users/avatar-1.jpg";
 import {
   avatarStatus,
   topbarColor,
-} from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
+} from "@/app/assets/data/layoutCustomizerData/layoutCustomizerData";
 import {
   profileDataGroup1,
   profileDataGroup2,
-} from "@/app/assets/navData/navData";
+} from "@/app/assets/data/navData/navData";
 import { globalStyleObj } from "@/app/assets/styles";
 import {
   DropdownMenu,

@@ -1,4 +1,4 @@
-import defaultImg from "../images/demos/default.png";
+import defaultImg from "../../images/demos/default.png";
 
 export const rightSidebarThemeData = [
   {

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 
-import { upcomingActivities } from "@/app/assets/pagesData/dashboardData/crm";
+import { upcomingActivities } from "@/app/assets/data/pagesData/dashboardData/crm";
 import { globalStyleObj } from "@/app/assets/styles";
 import {
   DropdownMenu,

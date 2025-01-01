@@ -1,11 +1,10 @@
-import Image from "next/image";
 import { useTheme } from "next-themes";
-import React from "react";
+import Image from "next/image";
 
 import logoDark from "../../../app/assets/images/logo-dark.png";
 import logoLight from "../../../app/assets/images/logo-light.png";
 
-import { topbarColor } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
+import { topbarColor } from "@/app/assets/data/layoutCustomizerData/layoutCustomizerData";
 import { TransitionLink } from "@/components";
 import ROUTES from "@/constants/routes";
 

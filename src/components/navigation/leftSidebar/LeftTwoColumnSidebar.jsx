@@ -7,10 +7,10 @@ import { useEffect, useState } from "react";
 import { BsDash } from "react-icons/bs";
 import { IoIosArrowForward } from "react-icons/io";
 
+import leftSidebarData from "../../../app/assets/data/leftSidebarData/leftSidebarData";
 import logoDark from "../../../app/assets/images/logo-dark.png";
 import logoLight from "../../../app/assets/images/logo-light.png";
 import logoSmall from "../../../app/assets/images/logo-sm.png";
-import leftSidebarData from "../../../app/assets/leftSidebarData/leftSidebarData";
 
 import {
   layoutThemePrimaryColor,
@@ -19,7 +19,7 @@ import {
   sidebarGradientColor,
   sidebarImage,
   sidebarSize,
-} from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
+} from "@/app/assets/data/layoutCustomizerData/layoutCustomizerData";
 import { globalStyleObj } from "@/app/assets/styles";
 import { TransitionLink } from "@/components";
 import ROUTES from "@/constants/routes";

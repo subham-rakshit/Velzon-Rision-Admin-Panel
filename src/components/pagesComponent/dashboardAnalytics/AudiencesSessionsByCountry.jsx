@@ -1,11 +1,11 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 import { MdKeyboardArrowDown } from "react-icons/md";
 
-import { audienceSessionsByCountryData } from "@/app/assets/pagesData/dashboardData/analytics";
+import { audienceSessionsByCountryData } from "@/app/assets/data/pagesData/dashboardData/analytics";
 import { globalStyleObj } from "@/app/assets/styles";
 import {
   DropdownMenu,

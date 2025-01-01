@@ -2,7 +2,7 @@
 
 import { ClipLoader } from "react-spinners";
 
-import { layoutThemePrimaryColor } from "@/app/assets/layoutCustomizerData/layoutCustomizerData";
+import { layoutThemePrimaryColor } from "@/app/assets/data/layoutCustomizerData/layoutCustomizerData";
 import { globalStyleObj } from "@/app/assets/styles";
 import { useAppSelector } from "@/store/hooks";
 
