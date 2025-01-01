@@ -1,17 +1,18 @@
 import { BsStack } from "react-icons/bs";
 import { FiMapPin } from "react-icons/fi";
+import { GrGallery } from "react-icons/gr";
 import { MdOutlineAccountCircle, MdOutlineArticle } from "react-icons/md";
 import {
-  RiDashboard2Fill,
   RiApps2Line,
-  RiPagesLine,
-  RiRocketLine,
-  RiHonourLine,
-  RiFileList3Line,
-  RiLayoutGridLine,
-  RiPieChart2Line,
-  RiPencilRuler2Line,
   RiCompasses2Fill,
+  RiDashboard2Fill,
+  RiFileList3Line,
+  RiHonourLine,
+  RiLayoutGridLine,
+  RiPagesLine,
+  RiPencilRuler2Line,
+  RiPieChart2Line,
+  RiRocketLine,
   RiShareLine,
 } from "react-icons/ri";
 
@@ -101,6 +102,21 @@ const leftSidebarData = [
             parentTabId: "Blog",
             tabName: "Categories",
             pathName: "/blog-categories",
+            tabDropdownList: [],
+          },
+        ],
+      },
+
+      {
+        id: "Images",
+        tabName: "Image Console",
+        tabIcon: <GrGallery />,
+        tabDropdownList: [
+          {
+            id: "image-library-controls",
+            parentTabId: "Images",
+            tabName: "Library Controls",
+            pathName: "/image-library-controls",
             tabDropdownList: [],
           },
         ],

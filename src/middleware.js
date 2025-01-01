@@ -18,6 +18,7 @@ const protectedRoutes = [
   "/profile",
   "/dashboard",
   "/blog",
+  "/image",
   "/apps",
   "/pages",
   "/base-ui",
@@ -157,6 +158,8 @@ export const config = {
     // Blog System --
     "/blog-all-posts",
     "/blog-categories",
+    // Image Dashboard --
+    "/image-library-controls",
     // Apps --
     "/apps-calendar-month-grid",
     "/apps-main-calendar",

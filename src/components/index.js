@@ -70,9 +70,13 @@ import Revenue from "./pagesComponent/dashboardEcommerce/Revenue";
 import SalesByLocations from "./pagesComponent/dashboardEcommerce/SalesByLocations";
 import StoreVisits from "./pagesComponent/dashboardEcommerce/StoreVisits";
 import TopSellers from "./pagesComponent/dashboardEcommerce/TopSellers";
+// Image Console
+import AddNewImageButton from "./pagesComponent/imageConsole/AddNewImageButton";
+import ImageSearchBox from "./pagesComponent/imageConsole/ImageSearchBox";
 
 export {
   AddNewCategoriesForm,
+  AddNewImageButton,
   AddPrdocutsAndSheet,
   AllPostsForm,
   AudiencesMetrics,
@@ -94,6 +98,7 @@ export {
   Footer,
   ForgotPasswordForm,
   HorizontalSidebar,
+  ImageSearchBox,
   LabelText,
   LeftSidebar,
   LeftSidebarSmallIconView,
@@ -139,6 +144,5 @@ export {
   UpcomingActivites,
   UserByDevice,
   VerifyAccount,
-  Widget
+  Widget,
 };
-

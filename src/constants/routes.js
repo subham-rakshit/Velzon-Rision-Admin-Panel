@@ -40,6 +40,11 @@ const ROUTES = {
   DASHBOARD_NFT: "/dashboard-nft",
   DASHBOARD_PROJECTS: "/dashboard-projects",
 
+  BLOG_ALL_POSTS: "/blog-all-posts",
+  BLOG_CATEGORIES: "/blog-categories",
+
+  IMAGE_LIBRARY_CONTROLS: "/image-library-controls",
+
   APPS_API_KEY: "/apps-api-key",
   APPS_CALENDAR_MONTH_GRID: "/apps-calendar-month-grid",
   APPS_MAIN_CALENDAR: "/apps-main-calendar",

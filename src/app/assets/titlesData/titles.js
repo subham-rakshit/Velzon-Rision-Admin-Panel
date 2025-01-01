@@ -73,4 +73,10 @@ export const titlesObject = {
   categories: {
     title: "Categories | Velzon - NEXT.js Admin & Dashboard Template",
   },
+
+  // Image Dashboard
+  imageLibraryControls: {
+    title:
+      "Image Library Controls | Velzon - NEXT.js Admin & Dashboard Template",
+  },
 };
