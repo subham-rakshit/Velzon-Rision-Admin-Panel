@@ -38,7 +38,7 @@ import { Controller, useForm } from "react-hook-form";
 import Resizer from "react-image-file-resizer";
 import { ClipLoader } from "react-spinners";
 
-const AddNewImageButton = ({ userId }) => {
+const AddNewImageButton = ({ userId, onCounterChange }) => {
   const { layoutThemePrimaryColorType } = useAppSelector(
     (state) => state.layout
   );
@@ -91,6 +91,7 @@ const AddNewImageButton = ({ userId }) => {
   const handleZodValidationError = (data) => {
     if (data.errors) {
       const errors = data.errors;
+      setIsProcessing(false);
       if (errors.imageType) {
         setError("imageType", {
           type: "server",
@@ -117,6 +118,7 @@ const AddNewImageButton = ({ userId }) => {
       }
     } else {
       showErrorToast(data.message);
+      setIsProcessing(false);
     }
   };
 
@@ -146,6 +148,9 @@ const AddNewImageButton = ({ userId }) => {
             setIsProcessing(false);
             showSuccessToast(response.message);
             router.refresh();
+            if (onCounterChange) {
+              onCounterChange();
+            }
           } else if (response && !response.success) {
             setIsProcessing(false);
             showErrorToast(response.message);
@@ -190,7 +195,7 @@ const AddNewImageButton = ({ userId }) => {
         </button>
       </DialogTrigger>
       <DialogContent
-        className={`w-[95%] ${globalStyleObj.backgroundLight900Dark200}`}
+        className={`w-[95%] z-[99] ${globalStyleObj.backgroundLight900Dark200}`}
       >
         <DialogHeader>
           <DialogTitle className="font-poppins-rg text-[16px] text-dark-weight-550 dark:text-light-weight-550">
@@ -220,7 +225,7 @@ const AddNewImageButton = ({ userId }) => {
                     <SelectValue placeholder="--" />
                   </SelectTrigger>
                   <SelectContent
-                    className={`border-0 ${globalStyleObj.backgroundLight900Dark200} font-poppins-rg text-[13px] text-dark-weight-550 dark:text-light-weight-550`}
+                    className={`border-0 ${globalStyleObj.backgroundLight900Dark200} font-poppins-rg text-[13px] text-dark-weight-550 dark:text-light-weight-550 z-[99]`}
                   >
                     <SelectGroup>
                       {(imageTypeOptions || []).map((type) => (
@@ -266,7 +271,7 @@ const AddNewImageButton = ({ userId }) => {
                       <SelectValue placeholder="--" />
                     </SelectTrigger>
                     <SelectContent
-                      className={`border-0 ${globalStyleObj.backgroundLight900Dark200} font-poppins-rg text-[13px] text-dark-weight-550 dark:text-light-weight-550`}
+                      className={`border-0 ${globalStyleObj.backgroundLight900Dark200} font-poppins-rg text-[13px] text-dark-weight-550 dark:text-light-weight-550 z-[99]`}
                     >
                       <SelectGroup>
                         {(minWidthOptions || []).map((item) => (
@@ -310,7 +315,7 @@ const AddNewImageButton = ({ userId }) => {
                       <SelectValue placeholder="--" />
                     </SelectTrigger>
                     <SelectContent
-                      className={`border-0 ${globalStyleObj.backgroundLight900Dark200} font-poppins-rg text-[13px] text-dark-weight-550 dark:text-light-weight-550`}
+                      className={`border-0 ${globalStyleObj.backgroundLight900Dark200} font-poppins-rg text-[13px] text-dark-weight-550 dark:text-light-weight-550 z-[99]`}
                     >
                       <SelectGroup>
                         {(minHeightOptions || []).map((item) => (

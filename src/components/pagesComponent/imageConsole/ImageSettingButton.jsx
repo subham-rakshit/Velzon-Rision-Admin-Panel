@@ -24,7 +24,7 @@ import { IoSettings } from "react-icons/io5";
 import { MdDelete, MdDownload } from "react-icons/md";
 import { ClipLoader } from "react-spinners";
 
-const ImageSettingButton = ({ userId, imageId }) => {
+const ImageSettingButton = ({ userId, imageId, onCounterChange }) => {
   const { layoutThemePrimaryColorType } = useAppSelector(
     (state) => state.layout
   );
@@ -42,6 +42,9 @@ const ImageSettingButton = ({ userId, imageId }) => {
     if (response.success) {
       setIsProcessing(false);
       showSuccessToast(response.message);
+      if (onCounterChange) {
+        onCounterChange();
+      }
       router.refresh(); // Re-fetching the images list from DB in parent
     } else {
       setIsProcessing(false);
@@ -116,7 +119,7 @@ const ImageSettingButton = ({ userId, imageId }) => {
         )}
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        className={`font-poppins-rg ${globalStyleObj.backgroundLight900Dark300}`}
+        className={`font-poppins-rg z-[99] ${globalStyleObj.backgroundLight900Dark300}`}
       >
         <DropdownMenuItem>
           <button

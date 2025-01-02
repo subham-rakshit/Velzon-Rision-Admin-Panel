@@ -16,9 +16,11 @@ export async function POST(request) {
       title,
       category,
       slug,
+      bannerImage,
       shortDescription,
       description,
       metaTitle,
+      metaImage,
       metaDescription,
     } = body;
 
@@ -39,9 +41,11 @@ export async function POST(request) {
       title,
       category,
       slug,
+      bannerImage,
       shortDescription,
       description,
       metaTitle,
+      metaImage,
       metaDescription,
     });
     if (!validatedFields.success) {
@@ -96,9 +100,11 @@ export async function POST(request) {
       title,
       category,
       slug,
+      bannerImage,
       shortDescription,
       description,
       metaTitle,
+      metaImage,
       metaDescription,
     });
 

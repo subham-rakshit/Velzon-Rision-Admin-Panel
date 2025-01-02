@@ -74,6 +74,8 @@ import TopSellers from "./pagesComponent/dashboardEcommerce/TopSellers";
 // Image Console
 import AddNewImageButton from "./pagesComponent/imageConsole/AddNewImageButton";
 import ImageSearchBox from "./pagesComponent/imageConsole/ImageSearchBox";
+import ImageDialogContent from "./pagesComponent/imageDialogBox/ImageDialogContent";
+import ImageReuseDialog from "./pagesComponent/imageDialogBox/ImageReuseDialog";
 
 export {
   AddNewCategoriesForm,
@@ -99,6 +101,8 @@ export {
   Footer,
   ForgotPasswordForm,
   HorizontalSidebar,
+  ImageDialogContent,
+  ImageReuseDialog,
   ImageSearchBox,
   ImageSettingButton,
   LabelText,

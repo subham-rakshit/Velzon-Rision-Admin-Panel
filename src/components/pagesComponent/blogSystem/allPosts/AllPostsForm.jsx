@@ -6,7 +6,7 @@ import { MdArrowForward, MdErrorOutline } from "react-icons/md";
 import { ClipLoader } from "react-spinners";
 
 import { globalStyleObj } from "@/app/assets/styles";
-import { LabelText } from "@/components";
+import { ImageReuseDialog, LabelText } from "@/components";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -28,7 +28,7 @@ import { useAppSelector } from "@/store/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 
-const AllPostsForm = ({ userId, categoryList }) => {
+const AllPostsForm = ({ userId, searchValue, categoryList }) => {
   const { layoutThemePrimaryColorType } = useAppSelector(
     (state) => state.layout
   );
@@ -37,17 +37,21 @@ const AllPostsForm = ({ userId, categoryList }) => {
     control,
     handleSubmit,
     formState: { errors, isSubmitting },
+    watch,
     reset,
     setError,
+    setValue,
   } = useForm({
     resolver: zodResolver(AllPostsSchema),
     defaultValues: {
       title: "",
       category: "",
       slug: "",
+      bannerImage: "",
       shortDescription: "",
       description: "",
       metaTitle: "",
+      metaImage: "",
       metaDescription: "",
     },
   });
@@ -55,6 +59,16 @@ const AllPostsForm = ({ userId, categoryList }) => {
   const { theme } = useTheme();
   const customColor = getCustomColor({ layoutThemePrimaryColorType });
   const { bgColor, hoverBgColor, textColor } = customColor;
+
+  // NOTE Handle Banner Image
+  const onChangeBannerImage = (url) => {
+    setValue("bannerImage", url);
+  };
+
+  // NOTE Handle Meta Image
+  const onChangeMetaImage = (url) => {
+    setValue("metaImage", url);
+  };
 
   // NOTE Handle Create New Blog functionality
   const onSubmit = async (data) => {
@@ -207,10 +221,10 @@ const AllPostsForm = ({ userId, categoryList }) => {
           htmlForId="blog-banner-img"
           star={false}
         />
-        <Input
-          id="blog-banner-img"
-          type="file"
-          className={`size-full max-w-[800px] border p-0 text-[13px] text-dark-weight-500 dark:border-[#fff]/10 dark:bg-[#000]/10 dark:text-light-weight-400`}
+        <ImageReuseDialog
+          userId={userId}
+          searchValue={searchValue}
+          onChangeBannerImage={onChangeBannerImage}
         />
       </div>
 
@@ -308,10 +322,10 @@ const AllPostsForm = ({ userId, categoryList }) => {
           htmlForId="blog-meta-img"
           star={false}
         />
-        <Input
-          id="blog-meta-img"
-          type="file"
-          className={`size-full max-w-[800px] border p-0 text-[13px] text-dark-weight-500 dark:border-[#fff]/10 dark:bg-[#000]/10 dark:text-light-weight-400`}
+        <ImageReuseDialog
+          userId={userId}
+          searchValue={searchValue}
+          onChangeMetaImage={onChangeMetaImage}
         />
       </div>
 

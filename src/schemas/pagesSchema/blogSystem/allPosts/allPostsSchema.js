@@ -13,6 +13,7 @@ export const AllPostsSchema = z.object({
     .regex(/^[a-z]+(-[a-z]+)*$/, {
       message: "Slug must be in kebab-case (eg. abc-abc)",
     }),
+  bannerImage: z.string().optional(),
   shortDescription: z
     .string()
     .min(3, { message: "Short Description must be at least 3 characters long" })
@@ -21,5 +22,6 @@ export const AllPostsSchema = z.object({
     }),
   description: z.string().optional(),
   metaTitle: z.string().optional(),
+  metaImage: z.string().optional(),
   metaDescription: z.string().optional(),
 });

@@ -24,6 +24,10 @@ const blogAllPostsSchema = new mongoose.Schema(
       trim: true,
       unique: true,
     },
+    bannerImage: {
+      type: String,
+      default: "/assets/auth-images/auth-one-bg.jpg",
+    },
     shortDescription: {
       type: String,
       required: true,
@@ -37,6 +41,10 @@ const blogAllPostsSchema = new mongoose.Schema(
       type: String,
       trim: true,
       default: "Velzon - NEXT.js Admin Panel",
+    },
+    metaImage: {
+      type: String,
+      default: "/assets/logo-sm.png",
     },
     metaDescription: {
       type: String,

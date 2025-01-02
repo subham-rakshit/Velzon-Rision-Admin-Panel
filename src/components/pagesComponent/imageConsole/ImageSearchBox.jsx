@@ -75,7 +75,7 @@ const ImageSearchBox = ({ searchValue }) => {
           <BsThreeDotsVertical className="cursor-pointer" />
         </DropdownMenuTrigger>
         <DropdownMenuContent
-          className={`w-fit ${globalStyleObj.backgroundLight900Dark300} text-[13px] font-poppins-rg text-dark-weight-550 dark:text-light-weight-450`}
+          className={`w-fit ${globalStyleObj.backgroundLight900Dark300} text-[13px] font-poppins-rg text-dark-weight-550 dark:text-light-weight-450 z-[99]`}
         >
           <DropdownMenuLabel className="text-[13px] font-poppins-rg text-dark-weight-600 dark:text-light-weight-550">
             Image Types
@@ -85,6 +85,7 @@ const ImageSearchBox = ({ searchValue }) => {
             value=""
             checked={searchValue === ""}
             onClick={() => handleDropdownMenuItemClick("")}
+            className="cursor-pointer"
           >
             All
           </DropdownMenuCheckboxItem>
@@ -94,6 +95,7 @@ const ImageSearchBox = ({ searchValue }) => {
               value={item.value}
               checked={item.value === searchValue}
               onClick={() => handleDropdownMenuItemClick(item.value)}
+              className="cursor-pointer"
             >
               {item.name}
             </DropdownMenuCheckboxItem>

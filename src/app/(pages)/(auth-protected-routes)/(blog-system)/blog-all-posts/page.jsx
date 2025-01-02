@@ -9,7 +9,7 @@ export const metadata = {
   title: titlesObject.allPosts.title,
 };
 
-const BlogSystemAllPosts = async () => {
+const BlogSystemAllPosts = async ({ searchParams }) => {
   // OAuth Session user data
   const session = await getServerSession(authOptions);
   // JWT ACCESS_TOKEN user data
@@ -21,6 +21,7 @@ const BlogSystemAllPosts = async () => {
         ? session.user._id
         : accessTokenData._id
       : null;
+  const { search } = await searchParams;
 
   // Category List
   let categoryList = [];
@@ -37,7 +38,11 @@ const BlogSystemAllPosts = async () => {
     <div className={`min-h-full`}>
       <Breadcrumb title="All Posts" pageTilte="Blog System" />
 
-      <AllPostsForm userId={userId} categoryList={categoryList} />
+      <AllPostsForm
+        userId={userId}
+        searchValue={search}
+        categoryList={categoryList}
+      />
     </div>
   );
 };
