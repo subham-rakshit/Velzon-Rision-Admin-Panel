@@ -2,7 +2,7 @@
 
 import { MdArrowForward, MdOutlineAddPhotoAlternate } from "react-icons/md";
 
-import { imageTypeConfig } from "@/app/assets/data/imageSizesData";
+import { imageTypeConfig, imageTypeOptions } from "@/app/assets/data/imageData";
 import { globalStyleObj } from "@/app/assets/styles";
 import { LabelText } from "@/components";
 import {
@@ -219,20 +219,11 @@ const AddNewImageButton = ({ userId }) => {
                     className={`border-0 ${globalStyleObj.backgroundLight900Dark200} font-poppins-rg text-[13px] text-dark-weight-550 dark:text-light-weight-550`}
                   >
                     <SelectGroup>
-                      <SelectItem value="profile-pictures">
-                        Profile Pictures
-                      </SelectItem>
-                      <SelectItem value="thumbnails">Thumbnails</SelectItem>
-                      <SelectItem value="blog-article">
-                        Blog or Artical Images
-                      </SelectItem>
-                      <SelectItem value="web-banner">Web Banner</SelectItem>
-                      <SelectItem value="ecommerce-product-image">
-                        E-commerce Product Image
-                      </SelectItem>
-                      <SelectItem value="general-web-use">
-                        General Web Use
-                      </SelectItem>
+                      {(imageTypeOptions || []).map((type) => (
+                        <SelectItem key={type.id} value={type.value}>
+                          {type.name}
+                        </SelectItem>
+                      ))}
                     </SelectGroup>
                   </SelectContent>
                 </Select>

@@ -39,6 +39,7 @@ import CategoryDeleteButton from "./pagesComponent/blogSystem/categories/Categor
 import CategoryEditButton from "./pagesComponent/blogSystem/categories/CategoryEditButton";
 import SearchCategoryForm from "./pagesComponent/blogSystem/categories/SearchCategoryForm";
 import LabelText from "./pagesComponent/blogSystem/LabelText";
+import ImageSettingButton from "./pagesComponent/imageConsole/ImageSettingButton";
 // Dashboard Analytics
 import Breadcrumb from "./pagesComponent/Breadcrumb";
 import AudiencesMetrics from "./pagesComponent/dashboardAnalytics/AudiencesMetrics";
@@ -99,6 +100,7 @@ export {
   ForgotPasswordForm,
   HorizontalSidebar,
   ImageSearchBox,
+  ImageSettingButton,
   LabelText,
   LeftSidebar,
   LeftSidebarSmallIconView,

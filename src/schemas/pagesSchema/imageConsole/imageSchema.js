@@ -22,6 +22,7 @@ export const AllImageSchema = z.object({
           "web-banner",
           "ecommerce-product-image",
           "general-web-use",
+          "meta-image",
         ].includes(value),
       { message: "Invalid image type" }
     ),

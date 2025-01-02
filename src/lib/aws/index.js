@@ -1,4 +1,9 @@
-import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import {
+  DeleteObjectCommand,
+  GetObjectCommand,
+  PutObjectCommand,
+  S3Client,
+} from "@aws-sdk/client-s3";
 import { nanoid } from "nanoid";
 
 // Create instance of S3Client
@@ -10,6 +15,7 @@ const s3Client = new S3Client({
   },
 });
 
+// NOTE UPLOAD NEW IMAGE
 export const awsS3ClientUploadNewImage = async (image) => {
   try {
     // Prepare the S3 upload params
@@ -44,6 +50,62 @@ export const awsS3ClientUploadNewImage = async (image) => {
     return {
       success: false,
       message: error.message,
+    };
+  }
+};
+
+// NOTE DELETE IMAGE
+export const awsS3ClientDeleteImage = async (imageKey) => {
+  try {
+    // Prepare the S3 upload params
+    const imageParams = {
+      Bucket: process.env.AWS_BUCKET_NAME || "",
+      Key: imageKey,
+    };
+
+    // Delete the image in AWS S3
+    await s3Client.send(new DeleteObjectCommand(imageParams));
+
+    return {
+      success: true,
+      message: "Image deleted successfully.",
+    };
+  } catch (error) {
+    console.log(`Error in deleting image in AWS S3 CLIENT: ${error}`);
+    return {
+      success: false,
+      message:
+        "Something went wrong in deleting image in AWS S3. Please try again later.",
+    };
+  }
+};
+
+// NOTE DOWNLOAD IMAGE
+export const awsS3ClientDownloadImage = async (imageKey) => {
+  try {
+    // Prepare the S3 upload params
+    const imageParams = {
+      Bucket: process.env.AWS_BUCKET_NAME || "",
+      Key: imageKey,
+    };
+
+    // Download the image from S3
+    const imageResponseData = await s3Client.send(
+      new GetObjectCommand(imageParams)
+    );
+
+    if (imageResponseData["$metadata"].httpStatusCode === 200) {
+      return {
+        success: true,
+        responseData: imageResponseData,
+      };
+    }
+  } catch (error) {
+    console.log(`Error in downloading image in AWS S3 CLIENT: ${error}`);
+    return {
+      success: false,
+      message:
+        "Something went wrong in downloading image in AWS S3. Please try again later.",
     };
   }
 };
