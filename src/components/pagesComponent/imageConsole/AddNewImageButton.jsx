@@ -64,9 +64,10 @@ const AddNewImageButton = ({ userId }) => {
   const [minWidthOptions, setMinWidthOptions] = useState([]);
   const [minHeightOptions, setMinHeightOptions] = useState([]);
   const [preview, setPreview] = useState(null);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const customColor = getCustomColor({ layoutThemePrimaryColorType });
-  const { bgColor, hoverBgColor, textColor, active } = customColor;
+  const { bgColor, hoverBgColor, textColor, active, hexCode } = customColor;
 
   const router = useRouter();
 
@@ -131,6 +132,7 @@ const AddNewImageButton = ({ userId }) => {
         100, // Is the quality of the resized new image.
         0, // Is the degree of clockwise rotation to apply to uploaded image.
         async (uri) => {
+          setIsProcessing(true);
           const response = await createNewImage(
             uri,
             data,
@@ -141,9 +143,11 @@ const AddNewImageButton = ({ userId }) => {
           if (response && response.success) {
             reset();
             setPreview(null);
+            setIsProcessing(false);
             showSuccessToast(response.message);
             router.refresh();
           } else if (response && !response.success) {
+            setIsProcessing(false);
             showErrorToast(response.message);
           }
         }, // Is the callBack function of the resized new image URI.
@@ -384,12 +388,12 @@ const AddNewImageButton = ({ userId }) => {
           {/* Submit Button */}
           <button
             type="submit"
-            disabled={isSubmitting}
-            className={`${globalStyleObj.flexCenter} transition-300 gap-2 rounded-[4px] ${bgColor} ${hoverBgColor} ${textColor} px-5 py-2 font-poppins-rg text-[13px] tracking-wide hover:text-white w-full`}
+            disabled={isProcessing || isSubmitting}
+            className={`${globalStyleObj.flexCenter} transition-300 gap-2 rounded-[4px] ${bgColor} ${hoverBgColor} ${textColor} px-5 py-2 font-poppins-rg text-[13px] tracking-wide hover:text-white w-full ${isProcessing || isSubmitting ? "cursor-not-allowed" : ""}`}
           >
-            {isSubmitting ? (
+            {isSubmitting || isProcessing ? (
               <>
-                <ClipLoader color="#fff" size={16} />
+                <ClipLoader color={hexCode} size={16} />
                 <span>Processing...</span>
               </>
             ) : (
