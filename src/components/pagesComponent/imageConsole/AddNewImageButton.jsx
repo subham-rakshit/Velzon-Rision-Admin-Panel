@@ -1,6 +1,6 @@
 "use client";
 
-import { MdOutlineAddPhotoAlternate } from "react-icons/md";
+import { MdArrowForward, MdOutlineAddPhotoAlternate } from "react-icons/md";
 
 import { imageTypeConfig } from "@/app/assets/data/imageSizesData";
 import { globalStyleObj } from "@/app/assets/styles";
@@ -13,6 +13,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -22,12 +23,20 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { getCustomColor } from "@/lib/utils/customColor";
+import {
+  showErrorToast,
+  showSuccessToast,
+} from "@/lib/utils/toast-notification";
 import { AllImageSchema } from "@/schemas";
+import { createNewImage } from "@/services/actions/image";
 import { useAppSelector } from "@/store/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import Resizer from "react-image-file-resizer";
+import { ClipLoader } from "react-spinners";
 
 const AddNewImageButton = ({ userId }) => {
   const { layoutThemePrimaryColorType } = useAppSelector(
@@ -35,6 +44,7 @@ const AddNewImageButton = ({ userId }) => {
   );
 
   const {
+    register,
     control,
     handleSubmit,
     formState: { errors, isSubmitting },
@@ -44,95 +54,128 @@ const AddNewImageButton = ({ userId }) => {
     setValue,
   } = useForm({
     resolver: zodResolver(AllImageSchema),
+    defaultValues: {
+      imageType: "",
+      maxWidth: 0,
+      maxHeight: 0,
+      imageFile: null,
+    },
   });
-  const [maxWidthOptions, setMaxWidthOptions] = useState([]);
-  const [maxHeightOptions, setMaxHeightOptions] = useState([]);
+  const [minWidthOptions, setMinWidthOptions] = useState([]);
+  const [minHeightOptions, setMinHeightOptions] = useState([]);
+  const [preview, setPreview] = useState(null);
 
   const customColor = getCustomColor({ layoutThemePrimaryColorType });
   const { bgColor, hoverBgColor, textColor, active } = customColor;
 
   const router = useRouter();
 
+  // NOTE: Watch Image Type and handle maxWidth and maxHeight options
   const watchImageType = watch("imageType");
   useEffect(() => {
     if (watchImageType) {
       const config = imageTypeConfig[watchImageType];
 
       if (config) {
-        setMaxWidthOptions(config.maxWidthOptions);
-        setMaxHeightOptions(config.maxHeightOptions);
+        setMinWidthOptions(config.minWidthOptions);
+        setMinHeightOptions(config.minHeightOptions);
       } else {
-        setMaxWidthOptions([]);
-        setMaxHeightOptions([]);
+        setMinWidthOptions([]);
+        setMinHeightOptions([]);
       }
     }
   }, [watchImageType]);
 
-  const handleImageUpload = (e) => {
-    const imageFile = e.target.files[0];
-
-    // Resize the image (react-image-file-resizer)
-    Resizer.imageFileResizer(
-      imageFile, // Is the file of the image which will resized.
-      700, // Is the maxWidth of the resized new image.
-      500, // Is the maxHeight of the resized new image.
-      "JPEG", // Is the compressFormat of the resized new image.
-      100, // Is the quality of the resized new image.
-      0, // Is the degree of clockwise rotation to apply to uploaded image.
-      async (uri) => {
-        try {
-          setImageObj((prev) => ({
-            ...prev,
-            isImageUploading: true,
-          }));
-
-          const response = await axios.post(
-            `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/image/upload-image`,
-            {
-              image: uri,
-              imageFileName: imageFile.name,
-              userId: userId,
-            }
-          );
-
-          if (response.data.success && response.status === 201) {
-            setImageObj((prev) => ({
-              ...prev,
-              isImageUploading: false,
-              fileName: imageFile.name,
-              imagePreview: response.data.url,
-              uploadBtnText: imageFile.name,
-            }));
-
-            router.refresh(); // Re-fetching the new images list from DB in parent
-          }
-        } catch (error) {
-          console.log(`Error while uploading image: ${error}`);
-          setImageObj((prev) => ({
-            ...prev,
-            isImageUploading: false,
-            fileName: "",
-            imagePreview: "",
-            uploadBtnText: "Upload Image",
-          }));
-
-          showErrorToast(
-            error?.response?.data?.message || error?.response?.data?.errors
-          );
-        }
-      }, // Is the callBack function of the resized new image URI.
-      "base64" // Is the output type of the resized new image.
-      // minWidth, // Is the minWidth of the resized new image.
-      // minHeight // Is the minHeight of the resized new image.
-    );
+  // NOTE: Handle Zod Validation Error
+  const handleZodValidationError = (data) => {
+    if (data.errors) {
+      const errors = data.errors;
+      if (errors.imageType) {
+        setError("imageType", {
+          type: "server",
+          message: errors.imageType.message,
+        });
+      }
+      if (errors.maxWidth) {
+        setError("maxWidth", {
+          type: "server",
+          message: errors.maxWidth.message,
+        });
+      }
+      if (errors.maxHeight) {
+        setError("maxHeight", {
+          type: "server",
+          message: errors.maxHeight.message,
+        });
+      }
+      if (errors.imageFile) {
+        setError("imageFile", {
+          type: "server",
+          message: errors.imageFile.message,
+        });
+      }
+    } else {
+      showErrorToast(data.message);
+    }
   };
 
+  // NOTE: Handle Create New Image functionality
   const onSubmit = async (data) => {
-    console.log(data);
+    // Resize the image (react-image-file-resizer)
+    if (data.imageFile && data.minWidth && data.minHeight && data.imageType) {
+      Resizer.imageFileResizer(
+        data.imageFile, // Is the file of the image which will resized.
+        1980, // Is the maxWidth of the resized new image.
+        1080, // Is the maxHeight of the resized new image.
+        "JPEG", // Is the compressFormat of the resized new image.
+        100, // Is the quality of the resized new image.
+        0, // Is the degree of clockwise rotation to apply to uploaded image.
+        async (uri) => {
+          const response = await createNewImage(
+            uri,
+            data,
+            userId,
+            handleZodValidationError
+          );
+
+          if (response && response.success) {
+            reset();
+            setPreview(null);
+            showSuccessToast(response.message);
+            router.refresh();
+          } else if (response && !response.success) {
+            showErrorToast(response.message);
+          }
+        }, // Is the callBack function of the resized new image URI.
+        "base64", // Is the output type of the resized new image.
+        data.minWidth, // Is the minWidth of the resized new image.
+        data.minHeight // Is the minHeight of the resized new image.
+      );
+    }
+    if (!data.imageType) {
+      setError("imageType", {
+        message: "Image type is required",
+      });
+    }
+    if (!data.minWidth) {
+      setError("minWidth", {
+        message: "Min width is required",
+      });
+    }
+    if (!data.minHeight) {
+      setError("minHeight", {
+        message: "Min height is required",
+      });
+    }
+    if (!data.imageFile) {
+      setError("imageFile", {
+        message: "Image file is required",
+      });
+    }
   };
 
   return (
-    <Dialog className="relative">
+    <Dialog>
       <DialogTrigger asChild>
         <button
           type="button"
@@ -157,7 +200,7 @@ const AddNewImageButton = ({ userId }) => {
 
         <form onSubmit={handleSubmit(onSubmit)}>
           {/* Image Type */}
-          <div className="flex flex-col gap-3 mb-5">
+          <div className="flex flex-col mb-3">
             <LabelText text="Type" htmlForId="new-image-type" star={true} />
             <Controller
               name="imageType"
@@ -169,7 +212,7 @@ const AddNewImageButton = ({ userId }) => {
                   id="new-image-type"
                   onValueChange={(value) => field.onChange(value)}
                 >
-                  <SelectTrigger className="w-full border py-5 font-poppins-rg text-[13px] text-dark-weight-550 dark:border-[#fff]/10 dark:bg-[#000]/10 dark:text-light-weight-400">
+                  <SelectTrigger className="w-full border py-5 font-poppins-rg text-[13px] text-dark-weight-550 dark:border-[#fff]/10 dark:bg-[#000]/10 dark:text-light-weight-400 mt-2 mb-1">
                     <SelectValue placeholder="--" />
                   </SelectTrigger>
                   <SelectContent
@@ -196,40 +239,42 @@ const AddNewImageButton = ({ userId }) => {
               )}
             />
             {errors && errors.imageType && (
-              <p className="text-[13px] font-poppins-rg text-red-500 mt-1">
+              <p className="text-[13px] font-poppins-rg text-red-500">
                 {errors.imageType.message}
               </p>
             )}
           </div>
 
           {/* Image Sizes */}
-          <div className="flex items-center justify-between gap-3 mb-5">
+          <div className="flex items-center justify-between gap-3 mb-3">
             {/* Max Width */}
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col">
               <LabelText
-                text="Max Width"
-                htmlForId="new-image-max-width"
+                text="Min Width"
+                htmlForId="new-image-min-width"
                 star={true}
               />
               <Controller
-                name="maxWidth"
+                name="minWidth"
                 control={control}
-                defaultValue=""
+                defaultValue={0}
                 render={({ field }) => (
                   <Select
                     {...field}
-                    id="new-image-max-width"
-                    disabled={maxWidthOptions.length === 0 ? true : false}
-                    onValueChange={(value) => field.onChange(parseInt(value))}
+                    id="new-image-min-width"
+                    disabled={minWidthOptions.length === 0 ? true : false}
+                    onValueChange={(value) =>
+                      field.onChange(parseInt(value) || 0)
+                    }
                   >
-                    <SelectTrigger className="w-full min-w-[100px] border py-5 font-poppins-rg text-[13px] text-dark-weight-550 dark:border-[#fff]/10 dark:bg-[#000]/10 dark:text-light-weight-400">
+                    <SelectTrigger className="w-full min-w-[100px] border py-5 font-poppins-rg text-[13px] text-dark-weight-550 dark:border-[#fff]/10 dark:bg-[#000]/10 dark:text-light-weight-400 mt-2 mb-1">
                       <SelectValue placeholder="--" />
                     </SelectTrigger>
                     <SelectContent
                       className={`border-0 ${globalStyleObj.backgroundLight900Dark200} font-poppins-rg text-[13px] text-dark-weight-550 dark:text-light-weight-550`}
                     >
                       <SelectGroup>
-                        {(maxWidthOptions || []).map((item) => (
+                        {(minWidthOptions || []).map((item) => (
                           <SelectItem key={`value-${item}`} value={item}>
                             {item}
                           </SelectItem>
@@ -239,34 +284,41 @@ const AddNewImageButton = ({ userId }) => {
                   </Select>
                 )}
               />
+              {errors && errors.minWidth && (
+                <p className="text-[13px] font-poppins-rg text-red-500">
+                  {errors.minWidth.message}
+                </p>
+              )}
             </div>
 
             {/* Max Height */}
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col">
               <LabelText
-                text="Max Height"
-                htmlForId="new-image-max-height"
+                text="Min Height"
+                htmlForId="new-image-min-height"
                 star={true}
               />
               <Controller
-                name="maxHeight"
+                name="minHeight"
                 control={control}
-                defaultValue=""
+                defaultValue={0}
                 render={({ field }) => (
                   <Select
                     {...field}
-                    id="new-image-max-height"
-                    disabled={maxHeightOptions.length === 0 ? true : false}
-                    onValueChange={(value) => field.onChange(parseInt(value))}
+                    id="new-image-min-height"
+                    disabled={minHeightOptions.length === 0 ? true : false}
+                    onValueChange={(value) =>
+                      field.onChange(parseInt(value) || 0)
+                    }
                   >
-                    <SelectTrigger className="w-full min-w-[100px] border py-5 font-poppins-rg text-[13px] text-dark-weight-550 dark:border-[#fff]/10 dark:bg-[#000]/10 dark:text-light-weight-400">
+                    <SelectTrigger className="w-full min-w-[100px] border py-5 font-poppins-rg text-[13px] text-dark-weight-550 dark:border-[#fff]/10 dark:bg-[#000]/10 dark:text-light-weight-400 mt-2 mb-1">
                       <SelectValue placeholder="--" />
                     </SelectTrigger>
                     <SelectContent
                       className={`border-0 ${globalStyleObj.backgroundLight900Dark200} font-poppins-rg text-[13px] text-dark-weight-550 dark:text-light-weight-550`}
                     >
                       <SelectGroup>
-                        {(maxHeightOptions || []).map((item) => (
+                        {(minHeightOptions || []).map((item) => (
                           <SelectItem key={`value-${item}`} value={item}>
                             {item}
                           </SelectItem>
@@ -276,34 +328,85 @@ const AddNewImageButton = ({ userId }) => {
                   </Select>
                 )}
               />
+              {errors && errors.minHeight && (
+                <p className="text-[13px] font-poppins-rg text-red-500">
+                  {errors.minHeight.message}
+                </p>
+              )}
             </div>
           </div>
 
-          {/* Generate Image URL */}
-          <div className="flex flex-col gap-3 mb-5">
+          {/* Image file */}
+          <div className="flex flex-col mb-3">
             <LabelText
               text="Image file"
               htmlForId="new-image-url"
               star={true}
             />
 
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => {
-                const file = e.target.files[0];
-                console.log(file);
-                setValue("imageFile", file);
-              }}
-              className="border rounded-md text-[13px] font-poppins-rg text-dark-weight-550 dark:text-light-weight-550 dark:border-[#fff]/10 dark:bg-[#000]/10"
+            <Controller
+              name="imageFile"
+              control={control}
+              defaultValue={null}
+              render={({ field }) => (
+                <>
+                  <Input
+                    id="imageFile"
+                    type="file"
+                    accept=".jpeg, .jpg, .png, .webp"
+                    onChange={(e) => {
+                      const file = e.target.files[0];
+                      field.onChange(file); // Bind file to the field value
+                      if (file) {
+                        const reader = new FileReader();
+                        reader.onload = () => setPreview(reader.result); // result:"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAA"
+                        reader.readAsDataURL(file);
+                      } else {
+                        setPreview(null);
+                      }
+                    }}
+                    className="min-h-fit rounded-md border dark:border-[#fff]/10 text-[13px] text-dark-weight-500 dark:text-light-weight-400 font-poppins-rg p-0 mt-2"
+                  />
+                </>
+              )}
             />
+
+            {preview && (
+              <div className="mt-3 h-[200px] w-full rounded-md">
+                <Image
+                  src={preview}
+                  alt="Preview"
+                  width={100}
+                  height={100}
+                  style={{ width: "100%", height: "100%" }}
+                  className="rounded-md"
+                />
+              </div>
+            )}
+            {errors && errors.imageFile && (
+              <p className="text-[13px] font-poppins-rg text-red-500 mt-2">
+                {errors.imageFile.message}
+              </p>
+            )}
           </div>
 
+          {/* Submit Button */}
           <button
             type="submit"
-            className={`${bgColor} ${hoverBgColor} ${textColor} hover:text-white transition-all duration-300 ease-in-out px-4 py-2 rounded-md text-[13px] font-poppins-rg w-full`}
+            disabled={isSubmitting}
+            className={`${globalStyleObj.flexCenter} transition-300 gap-2 rounded-[4px] ${bgColor} ${hoverBgColor} ${textColor} px-5 py-2 font-poppins-rg text-[13px] tracking-wide hover:text-white w-full`}
           >
-            Uplaod
+            {isSubmitting ? (
+              <>
+                <ClipLoader color="#fff" size={16} />
+                <span>Processing...</span>
+              </>
+            ) : (
+              <>
+                Upload Image
+                <MdArrowForward />
+              </>
+            )}
           </button>
         </form>
       </DialogContent>

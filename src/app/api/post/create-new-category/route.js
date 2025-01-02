@@ -29,7 +29,7 @@ export async function POST(request) {
       return NextResponse.json(
         {
           success: false,
-          message: "Access denied. Invalid credentials.",
+          message: "Unauthorized access. Please log in and try again.",
         },
         { status: 403 }
       );

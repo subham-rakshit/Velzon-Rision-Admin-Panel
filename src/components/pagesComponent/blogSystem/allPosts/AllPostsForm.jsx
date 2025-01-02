@@ -341,11 +341,11 @@ const AllPostsForm = ({ userId, categoryList }) => {
         <button
           type="submit"
           disabled={isSubmitting}
-          className={`mx-auto ${globalStyleObj.flexStart} transition-300 gap-2 rounded-[4px] ${bgColor} ${hoverBgColor} ${textColor} px-5 py-2 font-poppins-rg text-[16px] tracking-wide hover:text-white`}
+          className={`mx-auto ${globalStyleObj.flexStart} transition-300 gap-2 rounded-[4px] ${bgColor} ${hoverBgColor} ${textColor} px-5 py-2 font-poppins-rg text-[13px] tracking-wide hover:text-white`}
         >
           {isSubmitting ? (
             <>
-              <ClipLoader color="#fff" size={16} />
+              <ClipLoader color="#fff" size={13} />
               <span>Processing...</span>
             </>
           ) : (
