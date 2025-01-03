@@ -13,11 +13,11 @@ body {
 }
 
 html::-webkit-scrollbar-thumb {
-  background-color: #F3F3F9;
+  background-color: #f3f3f9;
   cursor: pointer;
 }
 html .dark::-webkit-scrollbar-thumb {
-  background-color: #292E32;
+  background-color: #292e32;
   cursor: pointer;
 }
 
@@ -33,7 +33,7 @@ html .dark::-webkit-scrollbar-thumb {
   border-radius: 4px;
 }
 .dark .scrollbar-custom::-webkit-scrollbar-thumb {
-  background-color: #292E32;
+  background-color: #292e32;
   border-radius: 4px;
 }
 .scrollbar-custom::-webkit-scrollbar-hover {
@@ -78,7 +78,6 @@ html .dark::-webkit-scrollbar-thumb {
   transition: transform 0.3s ease-in-out;
   z-index: 99;
 }
-
 
 .sidebar.open {
   transform: translateX(0);
@@ -132,6 +131,14 @@ html .dark::-webkit-scrollbar-thumb {
 
 .jodit-container:not(.jodit_inline) {
   border: none !important;
+}
+
+.glass-effect {
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0px 8px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: "blur(5.5px)";
+  border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
 @layer utilities {

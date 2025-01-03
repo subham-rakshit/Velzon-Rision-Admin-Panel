@@ -58,7 +58,7 @@ const AllPostsForm = ({ userId, searchValue, categoryList }) => {
 
   const { theme } = useTheme();
   const customColor = getCustomColor({ layoutThemePrimaryColorType });
-  const { bgColor, hoverBgColor, textColor } = customColor;
+  const { bgColor, hoverBgColor, textColor, hexCode } = customColor;
 
   // NOTE Handle Banner Image
   const onChangeBannerImage = (url) => {
@@ -266,32 +266,27 @@ const AllPostsForm = ({ userId, searchValue, categoryList }) => {
         />
 
         <div className="w-full max-w-[800px] rounded-sm border dark:border-[#fff]/10">
-          <Controller
+          <JoditEditor
+            config={{
+              placeholder: "",
+              showCharsCounter: false,
+              showWordsCounter: false,
+              showXPathInStatusbar: false,
+              height: 300,
+              style: {
+                backgroundColor: theme === "light" ? "#ffffff" : "#22262A",
+                color: theme === "light" ? "#495057" : "#ced4da",
+              },
+              toolbarAdaptive: true,
+              toolbarButtonSize: "middle",
+              toolbar: true,
+            }}
+            id="blog-description"
+            value={watch("description")}
             name="description"
-            control={control}
-            render={({ field }) => (
-              <JoditEditor
-                {...field}
-                config={{
-                  placeholder: "",
-                  showCharsCounter: false,
-                  showWordsCounter: false,
-                  showXPathInStatusbar: false,
-                  height: 300,
-                  style: {
-                    backgroundColor: theme === "light" ? "#ffffff" : "#22262A",
-                    color: theme === "light" ? "#495057" : "#ced4da",
-                  },
-                  toolbarAdaptive: true,
-                  toolbarButtonSize: "middle",
-                  toolbar: true,
-                }}
-                value={field.value || ""}
-                onBlur={(newContent) => {
-                  field.onChange(newContent);
-                }}
-              />
-            )}
+            onBlur={(newContent) => {
+              setValue("description", newContent);
+            }}
           />
         </div>
       </div>
@@ -359,7 +354,7 @@ const AllPostsForm = ({ userId, searchValue, categoryList }) => {
         >
           {isSubmitting ? (
             <>
-              <ClipLoader color="#fff" size={13} />
+              <ClipLoader color={hexCode} size={13} />
               <span>Processing...</span>
             </>
           ) : (

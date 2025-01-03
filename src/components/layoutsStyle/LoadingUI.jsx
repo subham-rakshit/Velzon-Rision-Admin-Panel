@@ -3,7 +3,6 @@
 import { ClipLoader } from "react-spinners";
 
 import { layoutThemePrimaryColor } from "@/app/assets/data/layoutCustomizerData/layoutCustomizerData";
-import { globalStyleObj } from "@/app/assets/styles";
 import { useAppSelector } from "@/store/hooks";
 
 const LoadingUI = () => {
@@ -28,9 +27,7 @@ const LoadingUI = () => {
       break;
   }
   return (
-    <div
-      className={`main-tranisiton page-transition-off ${globalStyleObj.backgroundLight900Dark200}`}
-    >
+    <div className={`main-tranisiton page-transition-off glass-effect`}>
       <ClipLoader size={36} color={colorHex} />
     </div>
   );
