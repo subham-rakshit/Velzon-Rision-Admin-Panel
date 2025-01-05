@@ -26,6 +26,7 @@ import {
 } from "@/app/assets/data/layoutCustomizerData/layoutCustomizerData";
 import { globalStyleObj } from "@/app/assets/styles";
 import { LeftSidebarSmallIconView, TransitionLink } from "@/components";
+import ROUTES from "@/constants/routes";
 import { changeToggleSmallButtonStatus } from "@/store/features/layoutCustomizer/layoutCustomizerSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
@@ -43,8 +44,13 @@ const LeftSidebar = ({ width }) => {
     leftSidebarVisibilityType,
     leftSidebarViewType,
   } = useAppSelector((state) => state.layout);
+
   const pathname = usePathname();
-  const mainPath = pathname.split("/")[1];
+  const mainPath = pathname
+    .split("/")
+    .filter((segment) => segment !== "" && segment !== "admin")
+    .join("-"); // NOTE Example -> /admin/dashboard/analytics -> dashboard-analytics
+
   const dispatch = useAppDispatch();
   const t = useTranslations();
 
@@ -331,7 +337,7 @@ const LeftSidebar = ({ width }) => {
                           : `${globalStyleObj.flexStart} gap-2`
                       }
                         ${
-                          pathname.includes(parent.id.toLowerCase())
+                          mainPath.includes(parent.id.toLowerCase())
                             ? `${
                                 leftSidebarColorType ===
                                   sidebarColor.DARK_BG_COLOR ||
@@ -356,7 +362,7 @@ const LeftSidebar = ({ width }) => {
                         {t(parent.tabName)}
                       </span>
                       <IoIosArrowForward
-                        className={`${leftSidebarSizeType === sidebarSize.COMPACT ? "hidden" : "ml-auto"} ${pathname.includes(parent.id.toLowerCase()) ? "rotate-90" : ""}`}
+                        className={`${leftSidebarSizeType === sidebarSize.COMPACT ? "hidden" : "ml-auto"} ${mainPath.includes(parent.id.toLowerCase()) ? "rotate-90" : ""}`}
                       />
                     </div>
 
@@ -369,7 +375,7 @@ const LeftSidebar = ({ width }) => {
                           <li key={firstChild.id}>
                             <div
                               className={`${
-                                pathname.includes(firstChild.id.toLowerCase())
+                                mainPath.includes(firstChild.id.toLowerCase())
                                   ? `${
                                       leftSidebarColorType ===
                                         sidebarColor.DARK_BG_COLOR ||
@@ -405,7 +411,7 @@ const LeftSidebar = ({ width }) => {
                                 : t(firstChild.tabName)}
                               <IoIosArrowForward
                                 size={15}
-                                className={`${leftSidebarSizeType === sidebarSize.COMPACT ? "" : "ml-auto"} ${pathname.includes(firstChild.id.toLowerCase()) ? "rotate-90" : ""}`}
+                                className={`${leftSidebarSizeType === sidebarSize.COMPACT ? "" : "ml-auto"} ${mainPath.includes(firstChild.id.toLowerCase()) ? "rotate-90" : ""}`}
                               />
                             </div>
 
@@ -425,7 +431,7 @@ const LeftSidebar = ({ width }) => {
                                             : `${globalStyleObj.flexStart} gap-3 pl-7`
                                         }
                                            ${
-                                             pathname.includes(secondChild.id)
+                                             mainPath.includes(secondChild.id)
                                                ? `${
                                                    leftSidebarColorType ===
                                                      sidebarColor.DARK_BG_COLOR ||
@@ -458,7 +464,7 @@ const LeftSidebar = ({ width }) => {
                                             : "inline"
                                         }
                                             ${
-                                              pathname.includes(
+                                              mainPath.includes(
                                                 secondChild.id.toLowerCase()
                                               )
                                                 ? `${
@@ -485,7 +491,7 @@ const LeftSidebar = ({ width }) => {
                                         : t(secondChild.tabName)}
                                       <IoIosArrowForward
                                         size={15}
-                                        className={`${leftSidebarSizeType === sidebarSize.COMPACT ? "" : "ml-auto"} ${pathname.includes(secondChild.id.toLowerCase()) ? "rotate-90" : ""}`}
+                                        className={`${leftSidebarSizeType === sidebarSize.COMPACT ? "" : "ml-auto"} ${mainPath.includes(secondChild.id.toLowerCase()) ? "rotate-90" : ""}`}
                                       />
                                     </div>
 
@@ -712,7 +718,7 @@ const LeftSidebar = ({ width }) => {
                           : "pl-1"
                       }
                         ${
-                          pathname.includes(parent.id.toLowerCase())
+                          mainPath === parent.id.toLowerCase()
                             ? `${
                                 leftSidebarColorType ===
                                   sidebarColor.DARK_BG_COLOR ||
@@ -882,7 +888,7 @@ const LeftSidebar = ({ width }) => {
                 }`}
         >
           <TransitionLink
-            href="/dashboard"
+            href={ROUTES.DASHBOARD_ECOMMERCE}
             className={`${leftSidebarSizeType === sidebarSize.SMALL_HOVER_VIEW ? "hidden" : `${globalStyleObj.flexCenter}`} size-full `}
           >
             {leftSidebarSizeType === sidebarSize.SMALL_ICON_VIEW ? (
@@ -917,7 +923,7 @@ const LeftSidebar = ({ width }) => {
             className={`${leftSidebarSizeType === sidebarSize.SMALL_HOVER_VIEW ? `${globalStyleObj.flexBetween} transition-300` : "hidden"} h-full`}
           >
             <TransitionLink
-              href="/dashboard"
+              href={ROUTES.DASHBOARD_ECOMMERCE}
               className={`${globalStyleObj.flexStart} transition-300 h-full w-fit`}
             >
               {leftSidebarSizeMain === sidebarMainSize.SM_HOVER &&
@@ -974,7 +980,7 @@ const LeftSidebar = ({ width }) => {
           <LeftSidebarSmallIconView
             tabDetails={tabDetails}
             leftSidebarColorType={leftSidebarColorType}
-            pathname={pathname}
+            pathname={mainPath}
             bgColor={bgColor}
             textColor={textColor}
             hoverTextColor={hoverTextColor}
@@ -988,7 +994,7 @@ const LeftSidebar = ({ width }) => {
           <LeftSidebarSmallIconView
             tabDetails={tabDetails}
             leftSidebarColorType={leftSidebarColorType}
-            pathname={pathname}
+            pathname={mainPath}
             bgColor={bgColor}
             textColor={textColor}
             hoverTextColor={hoverTextColor}
@@ -1002,7 +1008,7 @@ const LeftSidebar = ({ width }) => {
           <LeftSidebarSmallIconView
             tabDetails={tabDetails}
             leftSidebarColorType={leftSidebarColorType}
-            pathname={pathname}
+            pathname={mainPath}
             bgColor={bgColor}
             textColor={textColor}
             hoverTextColor={hoverTextColor}
@@ -1016,7 +1022,7 @@ const LeftSidebar = ({ width }) => {
           <LeftSidebarSmallIconView
             tabDetails={tabDetails}
             leftSidebarColorType={leftSidebarColorType}
-            pathname={pathname}
+            pathname={mainPath}
             bgColor={bgColor}
             textColor={textColor}
             hoverTextColor={hoverTextColor}

@@ -39,11 +39,15 @@ const LeftTwoColumnSidebar = ({ width }) => {
     leftSidebarImageType,
     leftSidebarSizeType,
   } = useAppSelector((state) => state.layout);
+
   const pathname = usePathname();
+  const mainPath = pathname
+    .split("/")
+    .filter((segment) => segment !== "" && segment !== "admin")
+    .join("-");
+
   const dispatch = useAppDispatch();
   const t = useTranslations();
-
-  const mainPath = pathname.split("/")[1];
 
   const [tabDetails, setTabDetails] = useState({
     parent: { id: "", isOpen: false },
@@ -283,7 +287,7 @@ const LeftTwoColumnSidebar = ({ width }) => {
                 tab.tabDropdownList.length > 0 ? (
                   <li
                     key={tab.id}
-                    className={`${globalStyleObj.flexCenter} size-[42px] cursor-pointer rounded-[4px] text-[22px] ${pathname.includes(tab.id.toLowerCase()) ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "bg-[#f3f3f3]/10 text-light-weight-800" : `${textColor} ${lightBgColor}`}` : "text-light-weight-450"}`}
+                    className={`${globalStyleObj.flexCenter} size-[42px] cursor-pointer rounded-[4px] text-[22px] ${mainPath.includes(tab.id.toLowerCase()) ? `${leftSidebarColorType === sidebarColor.DARK_BG_COLOR || leftSidebarColorType === sidebarColor.GRADIENT_BG_COLOR ? "bg-[#f3f3f3]/10 text-light-weight-800" : `${textColor} ${lightBgColor}`}` : "text-light-weight-450"}`}
                     onClick={() => handleParentTabToggle(tab.id)}
                   >
                     <span>{tab.tabIcon}</span>
@@ -355,7 +359,7 @@ const LeftTwoColumnSidebar = ({ width }) => {
                         <li key={firstChild.id}>
                           <div
                             className={`${
-                              pathname.includes(firstChild.id.toLowerCase())
+                              mainPath.includes(firstChild.id.toLowerCase())
                                 ? `${
                                     leftSidebarColorType ===
                                       sidebarColor.DARK_BG_COLOR ||
@@ -391,7 +395,7 @@ const LeftTwoColumnSidebar = ({ width }) => {
                               : t(firstChild.tabName)}
                             <IoIosArrowForward
                               size={15}
-                              className={`${leftSidebarSizeType === sidebarSize.COMPACT ? "" : "ml-auto"} ${pathname.includes(firstChild.id.toLowerCase()) ? "rotate-90" : ""}`}
+                              className={`${leftSidebarSizeType === sidebarSize.COMPACT ? "" : "ml-auto"} ${mainPath.includes(firstChild.id.toLowerCase()) ? "rotate-90" : ""}`}
                             />
                           </div>
 
@@ -410,7 +414,7 @@ const LeftTwoColumnSidebar = ({ width }) => {
                                         : `${globalStyleObj.flexStart} gap-3 pl-7`
                                     }
                                       ${
-                                        pathname.includes(secondChild.id)
+                                        mainPath.includes(secondChild.id)
                                           ? `${
                                               leftSidebarColorType ===
                                                 sidebarColor.DARK_BG_COLOR ||
@@ -441,7 +445,7 @@ const LeftTwoColumnSidebar = ({ width }) => {
                                           : "inline"
                                       }
                                         ${
-                                          pathname.includes(
+                                          mainPath.includes(
                                             secondChild.id.toLowerCase()
                                           )
                                             ? `${
@@ -468,7 +472,7 @@ const LeftTwoColumnSidebar = ({ width }) => {
                                       : t(secondChild.tabName)}
                                     <IoIosArrowForward
                                       size={15}
-                                      className={`${leftSidebarSizeType === sidebarSize.COMPACT ? "" : "ml-auto"} ${pathname.includes(secondChild.id.toLowerCase()) ? "rotate-90" : ""}`}
+                                      className={`${leftSidebarSizeType === sidebarSize.COMPACT ? "" : "ml-auto"} ${mainPath.includes(secondChild.id.toLowerCase()) ? "rotate-90" : ""}`}
                                     />
                                   </div>
 

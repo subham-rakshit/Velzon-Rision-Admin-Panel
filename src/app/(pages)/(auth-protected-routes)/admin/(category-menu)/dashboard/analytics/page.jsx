@@ -5,9 +5,9 @@ import { FiActivity, FiAlertTriangle, FiExternalLink } from "react-icons/fi";
 import { LuUsers } from "react-icons/lu";
 import { RiArrowRightLine } from "react-icons/ri";
 
-import illustrator from "../../../../assets/images/illustrator-1.png";
-import illustaratorImg from "../../../../assets/images/user-illustarator-2.png";
-import world from "../../../../assets/jsonData/world.svg.json";
+import illustrator from "../../../../../../assets/images/illustrator-1.png";
+import illustaratorImg from "../../../../../../assets/images/user-illustarator-2.png";
+import world from "../../../../../../assets/jsonData/world.svg.json";
 
 import { titlesObject } from "@/app/assets/data/titlesData/titles";
 import { globalStyleObj } from "@/app/assets/styles";

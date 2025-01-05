@@ -31,7 +31,7 @@ import {
 } from "@/store/features/layoutCustomizer/layoutCustomizerSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
-const AuthProtectedLayoutProvider = ({ children }) => {
+const AuthProtectedLayoutProvider = ({ children, accessTokenData }) => {
   const {
     layoutType,
     layoutWidthType,
@@ -253,6 +253,7 @@ const AuthProtectedLayoutProvider = ({ children }) => {
             layoutWidthType={layoutWidthType}
             leftSidebarVisibilityType={leftSidebarVisibilityType}
             leftSidebarViewType={leftSidebarViewType}
+            accessTokenData={accessTokenData}
           />
           {layoutType === layout.HORIZONTAL && (
             <HorizontalSidebar resizeHeight={horizontalNavHeight} />

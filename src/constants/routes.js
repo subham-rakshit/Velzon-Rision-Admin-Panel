@@ -31,7 +31,7 @@ const ROUTES = {
 
   // NOTE Protected Routes
 
-  DASHBOARD_ECOMMERCE: "/dashboard",
+  DASHBOARD_ECOMMERCE: "/admin/dashboard",
   DASHBOARD_ANALYTICS: "/dashboard-analytics",
   DASHBOARD_BLOG: "/dashboard-blog",
   DASHBOARD_CRM: "/dashboard-crm",

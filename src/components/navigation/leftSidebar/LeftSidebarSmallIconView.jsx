@@ -18,6 +18,7 @@ const LeftSidebarSmallIconView = ({
   hoverTextColor,
   gradientBgColor,
 }) => {
+  console.log(pathname);
   const t = useTranslations();
 
   const [hoverState, setHoverState] = useState({
@@ -301,8 +302,7 @@ const LeftSidebarSmallIconView = ({
                                                   thirdChild.secondChildId
                                                 }
                                                 className={`${globalStyleObj.flexStart} px-4 py-2 text-[13px] ${
-                                                  pathname.split("/")[1] ===
-                                                  thirdChild.id
+                                                  pathname === thirdChild.id
                                                     ? `${
                                                         leftSidebarColorType ===
                                                           sidebarColor.DARK_BG_COLOR ||
@@ -345,8 +345,7 @@ const LeftSidebarSmallIconView = ({
                                       parenttabid={secondChild.parentTabId}
                                       firstchildid={secondChild.firstChildId}
                                       className={`${globalStyleObj.flexStart} gap-2 px-4 py-2 text-[13px] ${
-                                        pathname.split("/")[1] ===
-                                        secondChild.id
+                                        pathname === secondChild.id
                                           ? `${
                                               leftSidebarColorType ===
                                                 sidebarColor.DARK_BG_COLOR ||
@@ -384,7 +383,7 @@ const LeftSidebarSmallIconView = ({
                               id={firstChild.id}
                               parenttabid={firstChild.parentTabId}
                               className={`${globalStyleObj.flexStart} gap-2 px-4 py-2 text-[13px] ${
-                                pathname.split("/")[1] === firstChild.id
+                                pathname === firstChild.id
                                   ? `${
                                       leftSidebarColorType ===
                                         sidebarColor.DARK_BG_COLOR ||

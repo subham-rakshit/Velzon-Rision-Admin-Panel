@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { MdCopyright, MdHome } from "react-icons/md";
 
+import ROUTES from "@/constants/routes";
 import { ErrorImage } from "../components";
 import { titlesObject } from "./assets/data/titlesData/titles";
 import { globalStyleObj } from "./assets/styles";
@@ -41,7 +42,7 @@ const NotFoundPage = () => {
           <p className="mb-6 font-poppins-rg text-[14px] text-[#878A99] sm:text-[16px]">
             The page you are looking for not available!
           </p>
-          <Link href="/dashboard">
+          <Link href={ROUTES.DASHBOARD_ECOMMERCE}>
             <span className={`${globalStyleObj.authButton} gap-2`}>
               <MdHome />
               <span>Back to home</span>

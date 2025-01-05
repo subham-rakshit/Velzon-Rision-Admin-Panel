@@ -31,6 +31,7 @@ const Navbar = ({
   layoutWidthType,
   leftSidebarVisibilityType,
   leftSidebarViewType,
+  accessTokenData,
 }) => {
   let bgColor;
 
@@ -114,7 +115,7 @@ const Navbar = ({
 
           <NavbarNotification />
 
-          <NavProfile />
+          <NavProfile accessTokenData={accessTokenData} />
         </div>
       </div>
     </nav>

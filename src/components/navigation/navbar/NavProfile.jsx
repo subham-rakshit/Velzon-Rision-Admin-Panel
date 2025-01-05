@@ -4,7 +4,7 @@ import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { MdLogout } from "react-icons/md";
 import { BeatLoader } from "react-spinners";
 
@@ -36,9 +36,9 @@ import {
 import { useAppSelector } from "@/store/hooks";
 import axios from "axios";
 
-const NavProfile = () => {
+const NavProfile = ({ accessTokenData }) => {
   const [isFetching, setIsFetching] = useState(false);
-  const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState(accessTokenData || {});
   const { sidebarUserProfileAvtarType, topbarColorType } = useAppSelector(
     (state) => state.layout
   );
@@ -75,44 +75,6 @@ const NavProfile = () => {
     });
   };
 
-  // NOTE Get User Details
-  const getUserDetails = async () => {
-    try {
-      setIsFetching(true);
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/user/get-details`
-      );
-
-      if (response.data.success && response.status === 200) {
-        setUserData(response.data.user);
-      }
-    } catch (error) {
-      console.log("Get user details error CLIENT: ", error);
-      if (
-        error.response.status === 400 &&
-        error.response.data.message === "Unauthenticated user."
-      ) {
-        showErrorToast(error.response.data.message);
-        handleLogout();
-      } else {
-        showErrorToast(
-          error.response.data.message ||
-            error.response.data.errors ||
-            error.message ||
-            "Profile details ERROR."
-        );
-      }
-    } finally {
-      setIsFetching(false);
-    }
-  };
-
-  useEffect(() => {
-    if (session && session.status === "unauthenticated") {
-      getUserDetails();
-    }
-  }, [session]);
-
   if (sidebarUserProfileAvtarType === avatarStatus.SHOW) {
     return (
       <DropdownMenu modal={false}>
@@ -123,7 +85,13 @@ const NavProfile = () => {
           <span className={`${globalStyleObj.flexStart} gap-[10px]`}>
             <Image
               alt="User settings"
-              src={userData.picture ? userData.picture : avatarImg}
+              src={
+                session && session.data
+                  ? session.data.user.picture
+                  : userData.picture
+                    ? userData.picture
+                    : avatarImg
+              }
               width={33}
               height={33}
               className="rounded-full"

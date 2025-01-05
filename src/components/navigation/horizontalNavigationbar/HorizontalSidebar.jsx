@@ -25,8 +25,13 @@ const HorizontalSidebar = ({ resizeHeight }) => {
     layoutWidthType,
     layoutType,
   } = useAppSelector((state) => state.layout);
+
   const pathname = usePathname();
-  const mainPath = pathname.split("/")[1];
+  const mainPath = pathname
+    .split("/")
+    .filter((segment) => segment !== "" && segment !== "admin")
+    .join("-");
+
   const t = useTranslations();
 
   const [tabDetails, setTabDetails] = useState({
@@ -236,7 +241,7 @@ const HorizontalSidebar = ({ resizeHeight }) => {
       >
         {/* Parent Tab */}
         <div
-          className={`${globalStyleObj.flexStart} cursor-pointer gap-2 ${pathname.includes(parent.id.toLowerCase()) ? `${textColor} dark:text-light-weight-800` : "text-light-weight-400 dark:text-light-weight-450"} ${hoverTextColor} dark:hover:text-light-weight-800`}
+          className={`${globalStyleObj.flexStart} cursor-pointer gap-2 ${mainPath.includes(parent.id.toLowerCase()) ? `${textColor} dark:text-light-weight-800` : "text-light-weight-400 dark:text-light-weight-450"} ${hoverTextColor} dark:hover:text-light-weight-800`}
           onClick={() => handleParentTabToggle(parent.id)}
         >
           <span className="text-[18px]">{parent.tabIcon}</span>
@@ -244,7 +249,7 @@ const HorizontalSidebar = ({ resizeHeight }) => {
             {t(parent.tabName)}
           </span>
           <IoIosArrowForward
-            className={`ml-auto ${pathname.includes(parent.id.toLowerCase()) ? "rotate-90" : "lg:rotate-90"}`}
+            className={`ml-auto ${mainPath.includes(parent.id.toLowerCase()) ? "rotate-90" : "lg:rotate-90"}`}
           />
         </div>
 
@@ -276,14 +281,14 @@ const HorizontalSidebar = ({ resizeHeight }) => {
                 onMouseLeave={() => handleFirstChildHoverState(firstChild.id)}
               >
                 <div
-                  className={`${pathname.includes(firstChild.id.toLowerCase()) ? `${textColor} dark:text-light-weight-800` : "text-light-weight-400 dark:text-light-weight-450"} ${globalStyleObj.flexStart} cursor-pointer gap-2 pt-4 font-poppins-rg text-[13px] ${hoverTextColor} dark:hover:text-light-weight-800 lg:pl-3 lg:pr-2`}
+                  className={`${mainPath.includes(firstChild.id.toLowerCase()) ? `${textColor} dark:text-light-weight-800` : "text-light-weight-400 dark:text-light-weight-450"} ${globalStyleObj.flexStart} cursor-pointer gap-2 pt-4 font-poppins-rg text-[13px] ${hoverTextColor} dark:hover:text-light-weight-800 lg:pl-3 lg:pr-2`}
                   onClick={() => handleFirstChildTabToggle(firstChild.id)}
                 >
                   <BsDash className="lg:hidden" />
                   {t(firstChild.tabName)}
                   <IoIosArrowForward
                     size={15}
-                    className={`ml-auto ${pathname.includes(firstChild.id.toLowerCase()) ? "rotate-90 lg:rotate-0" : "lg:rotate-0"}`}
+                    className={`ml-auto ${mainPath.includes(firstChild.id.toLowerCase()) ? "rotate-90 lg:rotate-0" : "lg:rotate-0"}`}
                   />
                 </div>
 
@@ -304,18 +309,18 @@ const HorizontalSidebar = ({ resizeHeight }) => {
                         }
                       >
                         <div
-                          className={`${globalStyleObj.flexStart} cursor-pointer gap-3 pl-7 pt-4 font-poppins-rg text-[13px] lg:px-5 ${pathname.includes(secondChild.id) ? `${textColor} dark:text-light-weight-800` : "text-light-weight-400 dark:text-light-weight-450"} group ${hoverTextColor} dark:hover:text-light-weight-800`}
+                          className={`${globalStyleObj.flexStart} cursor-pointer gap-3 pl-7 pt-4 font-poppins-rg text-[13px] lg:px-5 ${mainPath.includes(secondChild.id) ? `${textColor} dark:text-light-weight-800` : "text-light-weight-400 dark:text-light-weight-450"} group ${hoverTextColor} dark:hover:text-light-weight-800`}
                           onClick={() =>
                             handleSecondChildTabToggle(secondChild.id)
                           }
                         >
                           <span
-                            className={`size-[5px] rounded-full lg:hidden ${pathname.includes(secondChild.id) ? `${borderColor}` : "border border-light-weight-450"} ${groupHoverBgColor} dark:border-light-weight-800 dark:group-hover:bg-light-weight-800`}
+                            className={`size-[5px] rounded-full lg:hidden ${mainPath.includes(secondChild.id) ? `${borderColor}` : "border border-light-weight-450"} ${groupHoverBgColor} dark:border-light-weight-800 dark:group-hover:bg-light-weight-800`}
                           ></span>
                           {t(secondChild.tabName)}
                           <IoIosArrowForward
                             size={15}
-                            className={`ml-auto ${pathname.includes(secondChild.id.toLowerCase()) ? "rotate-90 lg:rotate-0" : "lg:rotate-0"}`}
+                            className={`ml-auto ${mainPath.includes(secondChild.id.toLowerCase()) ? "rotate-90 lg:rotate-0" : "lg:rotate-0"}`}
                           />
                         </div>
 
@@ -389,7 +394,7 @@ const HorizontalSidebar = ({ resizeHeight }) => {
       <TransitionLink key={parent.id} href={parent.pathName}>
         <li
           id={parent.id}
-          className={`pb-5 ${pathname.includes(parent.id.toLowerCase()) ? `${textColor} dark:text-light-weight-800` : "text-light-weight-400 dark:text-light-weight-450"} ${hoverTextColor} dark:hover:text-light-weight-800`}
+          className={`pb-5 ${mainPath === parent.id.toLowerCase() ? `${textColor} dark:text-light-weight-800` : "text-light-weight-400 dark:text-light-weight-450"} ${hoverTextColor} dark:hover:text-light-weight-800`}
         >
           <div className={`${globalStyleObj.flexStart} cursor-pointer gap-2`}>
             <span className="text-[18px]">{parent.tabIcon}</span>
