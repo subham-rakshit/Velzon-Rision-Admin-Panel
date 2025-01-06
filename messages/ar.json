@@ -228,6 +228,9 @@
   "Blog System": "نظام المدونة",
   "All Posts": "جميع المشاركات",
   "Categories": "فئات",
+  "All Categories": "جميع الفئات",
+  "Create Category": "إنشاء فئة",
+  "Update Category": "تحديث الفئة",
   "Image Console": "وحدة تحكم الصور",
   "Library Controls": "ضوابط المكتبة"
 }

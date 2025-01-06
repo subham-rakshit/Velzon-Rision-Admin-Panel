@@ -229,6 +229,9 @@
   "Blog System": "Sistema blog",
   "All Posts": "Tutti i post",
   "Categories": "Categorie",
+  "All Categories": "Tutte le categorie",
+  "Create Category": "Crea categoria",
+  "Update Category": "Aggiorna categoria",
   "Image Console": "Console di immagine",
   "Library Controls": "Controlli della libreria"
 }

@@ -15,6 +15,7 @@ import { useState } from "react";
 const ImageReuseDialog = ({
   userId,
   searchValue,
+  htmlId,
   onChangeBannerImage,
   onChangeMetaImage,
 }) => {
@@ -52,7 +53,7 @@ const ImageReuseDialog = ({
   };
 
   return (
-    <Dialog>
+    <Dialog id={htmlId}>
       <DialogTrigger asChild>
         <button
           type="button"

@@ -228,6 +228,9 @@
   "Blog System": "Blog System",
   "All Posts": "Alle Beiträge",
   "Categories": "Kategorien",
+  "All Categories": "Όλες οι Κατηγορίες",
+  "Create Category": "Δημιουργία κατηγορίας",
+  "Update Category": "Ενημέρωση κατηγορίας",
   "Image Console": "Κονσόλα εικόνας",
   "Library Controls": "Έλεγχοι βιβλιοθήκης"
 }

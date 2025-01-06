@@ -41,20 +41,22 @@ export const createNewCategory = async (data, userId) => {
     }
   } catch (error) {
     console.log(`Error in creating new category CLIENT: ${error}`);
-    if (error.response) {
+    if (error.response.data.errors) {
       return {
         success: false,
-        message:
-          error.response.data.errors ||
-          error.response.data.message ||
-          error.message ||
-          "Something went wrong",
+        errors: error.response.data.errors,
+      };
+    } else if (error.response.data.message) {
+      return {
+        success: false,
+        message: error.response.data.message,
+      };
+    } else {
+      return {
+        success: false,
+        message: "An unexpected error occurred. Please try again later.",
       };
     }
-    return {
-      success: false,
-      message: "Something went wrong",
-    };
   }
 };
 

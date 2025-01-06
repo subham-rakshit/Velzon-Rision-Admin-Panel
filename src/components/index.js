@@ -37,6 +37,7 @@ import AllPostsForm from "./pagesComponent/blogSystem/allPosts/AllPostsForm";
 import AddNewCategoriesForm from "./pagesComponent/blogSystem/categories/AddNewCategoriesForm";
 import CategoryDeleteButton from "./pagesComponent/blogSystem/categories/CategoryDeleteButton";
 import CategoryEditButton from "./pagesComponent/blogSystem/categories/CategoryEditButton";
+import CreateNewCategoryForm from "./pagesComponent/blogSystem/categories/CreateNewCategoryForm";
 import SearchCategoryForm from "./pagesComponent/blogSystem/categories/SearchCategoryForm";
 import LabelText from "./pagesComponent/blogSystem/LabelText";
 import ImageSettingButton from "./pagesComponent/imageConsole/ImageSettingButton";
@@ -92,6 +93,7 @@ export {
   CategoryEditButton,
   ClosingDeals,
   CountupText,
+  CreateNewCategoryForm,
   CustomExportButton,
   DateRangePicker,
   DealsStatus,

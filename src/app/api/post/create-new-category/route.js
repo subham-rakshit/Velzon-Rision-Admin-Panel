@@ -1,6 +1,6 @@
 import dbConnect from "@/lib/db/dbConnect";
 import { validateUserFromToken } from "@/lib/middleware/validateUser";
-import AllBlogsCategoryModel from "@/model/BlogsCategory";
+import AllBlogsCategoryModel from "@/model/blog/BlogsCategory";
 import UserModel from "@/model/User";
 import { CategorySchema } from "@/schemas";
 import { NextResponse } from "next/server";
@@ -10,14 +10,26 @@ export async function POST(request) {
 
   try {
     const body = await request.json();
-    const { newCategory, userId } = body;
+    const {
+      userId,
+      name,
+      slug,
+      description,
+      parentCategoryId,
+      colorTheme,
+      isFeatured,
+      tags,
+      metaTitle,
+      metaImage,
+      metaDescription,
+    } = body;
 
     // NOTE Check invalid inputs
     if (!userId) {
       return NextResponse.json(
         {
           success: false,
-          message: "Invalid inputs.",
+          message: "Invalid user. Please log in and try again.",
         },
         { status: 400 }
       );
@@ -36,7 +48,18 @@ export async function POST(request) {
     }
 
     // NOTE VALIDATE the registration schema
-    const validatedFields = CategorySchema.safeParse({ newCategory });
+    const validatedFields = CategorySchema.safeParse({
+      name,
+      slug,
+      description,
+      parentCategoryId,
+      colorTheme,
+      isFeatured,
+      tags,
+      metaTitle,
+      metaImage,
+      metaDescription,
+    });
     if (!validatedFields.success) {
       let zodErrors = {};
       validatedFields.error.issues.forEach((issue) => {

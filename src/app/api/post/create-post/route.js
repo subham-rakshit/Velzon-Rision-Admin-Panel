@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 import dbConnect from "@/lib/db/dbConnect";
 import { validateUserFromToken } from "@/lib/middleware/validateUser";
-import AllBlogPostsModel from "@/model/BlogAllPosts";
+import AllBlogPostsModel from "@/model/blog/BlogAllPosts";
 import UserModel from "@/model/User";
 import { AllPostsSchema } from "@/schemas";
 

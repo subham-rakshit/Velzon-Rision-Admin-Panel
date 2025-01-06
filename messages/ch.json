@@ -228,6 +228,9 @@
   "Blog System": "部落格系統",
   "All Posts": "所有貼文",
   "Categories": "類別",
+  "All Categories": "所有類別",
+  "Create Category": "建立類別",
+  "Update Category": "更新類別",
   "Image Console": "影像控制台",
   "Library Controls": "庫控件"
 }

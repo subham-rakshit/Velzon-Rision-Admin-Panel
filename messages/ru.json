@@ -228,6 +228,9 @@
   "Blog System": "Система блогов",
   "All Posts": "Все сообщения",
   "Categories": "Категории",
+  "All Categories": "Все категории",
+  "Create Category": "Создать категорию",
+  "Update Category": "Обновить категорию",
   "Image Console": "Консоль изображений",
   "Library Controls": "Элементы управления библиотекой"
 }

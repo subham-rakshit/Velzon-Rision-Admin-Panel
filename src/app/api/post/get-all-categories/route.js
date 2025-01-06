@@ -1,5 +1,5 @@
 import dbConnect from "@/lib/db/dbConnect";
-import AllBlogsCategoryModel from "@/model/BlogsCategory";
+import AllBlogsCategoryModel from "@/model/blog/BlogsCategory";
 import UserModel from "@/model/User";
 import { NextResponse } from "next/server";
 

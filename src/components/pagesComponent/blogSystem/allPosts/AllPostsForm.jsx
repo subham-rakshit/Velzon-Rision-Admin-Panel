@@ -102,18 +102,13 @@ const AllPostsForm = ({ userId, searchValue, categoryList }) => {
     }
   };
 
-  const commonInputContainerClass =
-    "flex w-full flex-col justify-between gap-3 xl:flex-row";
-  const commonDefaultInputFieldClass =
-    "w-full max-w-[800px] border py-5 font-poppins-rg text-[13px] text-dark-weight-500 focus-visible:outline-none focus-visible:ring-0 dark:border-[#fff]/10 dark:bg-[#000]/10 dark:text-light-weight-400";
-
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
       className={`${globalStyleObj.backgroundLight900Dark300} mt-[40px] min-h-full rounded-sm p-3 shadow-light sm:p-5`}
     >
       {/* Blog Title */}
-      <div className={commonInputContainerClass}>
+      <div className={globalStyleObj.commonInputContainerClass}>
         <LabelText text="Blog Title" htmlForId="blog-title" star={true} />
         <div className="flex flex-col gap-2 w-full max-w-[800px]">
           <Controller
@@ -126,7 +121,7 @@ const AllPostsForm = ({ userId, searchValue, categoryList }) => {
                 type="text"
                 value={field.value || ""}
                 placeholder="Blog Title"
-                className={commonDefaultInputFieldClass}
+                className={globalStyleObj.commonDefaultInputFieldClass}
               />
             )}
           />
@@ -139,7 +134,7 @@ const AllPostsForm = ({ userId, searchValue, categoryList }) => {
       </div>
 
       {/* Category */}
-      <div className={`mt-5 ${commonInputContainerClass}`}>
+      <div className={`mt-5 ${globalStyleObj.commonInputContainerClass}`}>
         <LabelText text="Category" htmlForId="blog-category" star={true} />
         <div className="flex flex-col gap-2 w-full max-w-[800px]">
           <Controller
@@ -188,7 +183,7 @@ const AllPostsForm = ({ userId, searchValue, categoryList }) => {
       </div>
 
       {/* Slug */}
-      <div className={`mt-5 ${commonInputContainerClass}`}>
+      <div className={`mt-5 ${globalStyleObj.commonInputContainerClass}`}>
         <LabelText text="Slug" htmlForId="blog-slug" star={true} />
         <div className="flex flex-col gap-2 w-full max-w-[800px]">
           <Controller
@@ -201,7 +196,7 @@ const AllPostsForm = ({ userId, searchValue, categoryList }) => {
                 type="text"
                 value={field.value || ""}
                 placeholder="Slug"
-                className={commonDefaultInputFieldClass}
+                className={globalStyleObj.commonDefaultInputFieldClass}
               />
             )}
           />
@@ -215,7 +210,7 @@ const AllPostsForm = ({ userId, searchValue, categoryList }) => {
       </div>
 
       {/* TODO Banner (1300 x 650) */}
-      <div className={`mt-5 ${commonInputContainerClass}`}>
+      <div className={`mt-5 ${globalStyleObj.commonInputContainerClass}`}>
         <LabelText
           text="Banner (1300 x 650)"
           htmlForId="blog-banner-img"
@@ -229,7 +224,7 @@ const AllPostsForm = ({ userId, searchValue, categoryList }) => {
       </div>
 
       {/* Short Description */}
-      <div className={`mt-5 ${commonInputContainerClass}`}>
+      <div className={`mt-5 ${globalStyleObj.commonInputContainerClass}`}>
         <LabelText
           text="Short Description"
           htmlForId="blog-short-description"
@@ -244,7 +239,7 @@ const AllPostsForm = ({ userId, searchValue, categoryList }) => {
                 {...field}
                 id="blog-short-description"
                 value={field.value || ""}
-                className={`h-[100px] ${commonDefaultInputFieldClass}`}
+                className={`h-[100px] ${globalStyleObj.commonDefaultInputFieldClass}`}
               />
             )}
           />
@@ -258,7 +253,7 @@ const AllPostsForm = ({ userId, searchValue, categoryList }) => {
       </div>
 
       {/* Description */}
-      <div className={`mt-5 ${commonInputContainerClass}`}>
+      <div className={`mt-5 ${globalStyleObj.commonInputContainerClass}`}>
         <LabelText
           text="Description"
           htmlForId="blog-description"
@@ -292,7 +287,7 @@ const AllPostsForm = ({ userId, searchValue, categoryList }) => {
       </div>
 
       {/* Meta Title */}
-      <div className={`mt-5 ${commonInputContainerClass}`}>
+      <div className={`mt-5 ${globalStyleObj.commonInputContainerClass}`}>
         <LabelText text="Meta Title" htmlForId="blog-meta-title" star={false} />
         <Controller
           name="metaTitle"
@@ -304,14 +299,14 @@ const AllPostsForm = ({ userId, searchValue, categoryList }) => {
               type="text"
               value={field.value || ""}
               placeholder="Meta Title"
-              className={commonDefaultInputFieldClass}
+              className={globalStyleObj.commonDefaultInputFieldClass}
             />
           )}
         />
       </div>
 
       {/* TODO Meta Image (200 x 200) */}
-      <div className={`mt-5 ${commonInputContainerClass}`}>
+      <div className={`mt-5 ${globalStyleObj.commonInputContainerClass}`}>
         <LabelText
           text="Meta Image (200 x 200)"
           htmlForId="blog-meta-img"
@@ -320,12 +315,13 @@ const AllPostsForm = ({ userId, searchValue, categoryList }) => {
         <ImageReuseDialog
           userId={userId}
           searchValue={searchValue}
+          htmlId="blog-meta-img"
           onChangeMetaImage={onChangeMetaImage}
         />
       </div>
 
       {/* Meta Description */}
-      <div className={`mt-5 ${commonInputContainerClass}`}>
+      <div className={`mt-5 ${globalStyleObj.commonInputContainerClass}`}>
         <LabelText
           text="Meta Description"
           htmlForId="blog-meta-description"
@@ -340,7 +336,7 @@ const AllPostsForm = ({ userId, searchValue, categoryList }) => {
               {...field}
               id="blog-meta-description"
               value={field.value || ""}
-              className={`h-[100px] ${commonDefaultInputFieldClass}`}
+              className={`h-[100px] ${globalStyleObj.commonDefaultInputFieldClass}`}
             />
           )}
         />

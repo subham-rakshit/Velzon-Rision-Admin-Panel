@@ -93,6 +93,12 @@ export const globalStyleObj = {
   layoutBoxBackgroundLightDark: "bg-light-dencity-700 dark:bg-[#383838]",
   layoutInnerBoxBackgroundLightDark: "bg-light-dencity-100 dark:bg-[#494b52]",
 
+  // Forms
+  commonInputContainerClass:
+    "flex w-full flex-col justify-between gap-3 xl:flex-row",
+  commonDefaultInputFieldClass:
+    "w-full max-w-[800px] border py-5 font-poppins-rg text-[13px] text-light-weight-400 focus-visible:outline-none focus-visible:ring-0 dark:border-[#fff]/10 dark:bg-[#000]/10 dark:text-light-weight-400",
+
   // Miscellaneous
   noFocus:
     "focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0",
