@@ -34,14 +34,13 @@ import RightSidebar from "./navigation/rightSidebar/RightSidebar";
 import TransitionLink from "./navigation/TransitionLink";
 // Blog System
 import AllPostsForm from "./pagesComponent/blogSystem/allPosts/AllPostsForm";
-import AddNewCategoriesForm from "./pagesComponent/blogSystem/categories/AddNewCategoriesForm";
 import CategoryDeleteButton from "./pagesComponent/blogSystem/categories/CategoryDeleteButton";
-import CategoryEditButton from "./pagesComponent/blogSystem/categories/CategoryEditButton";
+import CategoryFeaturedButton from "./pagesComponent/blogSystem/categories/CategoryFeaturedButton";
 import CreateNewCategoryForm from "./pagesComponent/blogSystem/categories/CreateNewCategoryForm";
+import RenderAllCategories from "./pagesComponent/blogSystem/categories/RenderAllCategories";
 import RenderCategoryOptions from "./pagesComponent/blogSystem/categories/RenderCategoryOptions";
 import SearchCategoryForm from "./pagesComponent/blogSystem/categories/SearchCategoryForm";
-import LabelText from "./pagesComponent/blogSystem/LabelText";
-import ImageSettingButton from "./pagesComponent/imageConsole/ImageSettingButton";
+import LabelText from "./pagesComponent/LabelText";
 // Dashboard Analytics
 import Breadcrumb from "./pagesComponent/Breadcrumb";
 import AudiencesMetrics from "./pagesComponent/dashboardAnalytics/AudiencesMetrics";
@@ -76,11 +75,11 @@ import TopSellers from "./pagesComponent/dashboardEcommerce/TopSellers";
 // Image Console
 import AddNewImageButton from "./pagesComponent/imageConsole/AddNewImageButton";
 import ImageSearchBox from "./pagesComponent/imageConsole/ImageSearchBox";
+import ImageSettingButton from "./pagesComponent/imageConsole/ImageSettingButton";
 import ImageDialogContent from "./pagesComponent/imageDialogBox/ImageDialogContent";
 import ImageReuseDialog from "./pagesComponent/imageDialogBox/ImageReuseDialog";
 
 export {
-  AddNewCategoriesForm,
   AddNewImageButton,
   AddPrdocutsAndSheet,
   AllPostsForm,
@@ -91,7 +90,7 @@ export {
   BestSellingProducts,
   Breadcrumb,
   CategoryDeleteButton,
-  CategoryEditButton,
+  CategoryFeaturedButton,
   ClosingDeals,
   CountupText,
   CreateNewCategoryForm,
@@ -134,6 +133,7 @@ export {
   RecentOrdersOrderId,
   RegistrationForm,
   RememberMe,
+  RenderAllCategories,
   RenderCategoryOptions,
   ResendOtpForm,
   ResetPasswordForm,

@@ -11,17 +11,14 @@ import { useState } from "react";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import { ClipLoader } from "react-spinners";
 
-const CategoryDeleteButton = ({ userId, categoryDetails }) => {
+const CategoryDeleteButton = ({ userId, categoryId }) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const router = useRouter();
 
   // NOTE Handle Delete Category functionality
   const handleCategoryDelete = async () => {
     setIsProcessing(true);
-    const response = await deletePerticularCategory(
-      userId,
-      categoryDetails._id
-    );
+    const response = await deletePerticularCategory(userId, categoryId);
 
     if (response.success) {
       showSuccessToast(response.message || "Category deleted successfully.");
@@ -46,7 +43,7 @@ const CategoryDeleteButton = ({ userId, categoryDetails }) => {
       {isProcessing ? (
         <ClipLoader size={12} color="#F06548" />
       ) : (
-        <RiDeleteBin2Line size={15} />
+        <RiDeleteBin2Line size={12} />
       )}
     </button>
   );

@@ -3,11 +3,11 @@ import { titlesObject } from "@/app/assets/data/titlesData/titles";
 import { globalStyleObj } from "@/app/assets/styles";
 import {
   Breadcrumb,
-  CategoryDeleteButton,
-  CategoryEditButton,
+  RenderAllCategories,
   SearchCategoryForm,
 } from "@/components";
 import { getAccessTokenData } from "@/lib/middleware/getAccessTokenData";
+import { buildCategoryTree } from "@/lib/utils/blog-categories-tree";
 import { getAllCategories } from "@/services/actions/category";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
@@ -43,6 +43,10 @@ const BlogSystemCategories = async ({ searchParams }) => {
   } else {
     categoryList = [];
   }
+
+  // NOTE Create category TREE structure
+  const categoryTree =
+    categoryList.length > 0 ? buildCategoryTree(categoryList) : [];
 
   return (
     <div className={`min-h-full`}>
@@ -87,32 +91,17 @@ const BlogSystemCategories = async ({ searchParams }) => {
               <span>Name</span>
             </div>
 
-            <span className="font-poppins-md text-[13px] text-dark-weight-600 dark:text-light-weight-550">
-              Options
-            </span>
+            <div className="font-poppins-md text-[13px] text-dark-weight-600 dark:text-light-weight-550">
+              <span>Featured</span>
+            </div>
+
+            <div className="font-poppins-md text-[13px] text-dark-weight-600 dark:text-light-weight-550">
+              <span>Options</span>
+            </div>
           </div>
 
-          {categoryList.length > 0 ? (
-            (categoryList || []).map((item, index) => (
-              <div
-                key={`category-${index}`}
-                className={`${globalStyleObj.flexBetween} gap-5 p-3 sm:p-5 border-b dark:border-[#fff]/10`}
-              >
-                <div className="flex items-center gap-5 font-poppins-md text-[13px] text-dark-weight-550 dark:text-light-weight-400">
-                  <span>{index + 1}</span>
-                  <span>{item.category}</span>
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <CategoryEditButton userId={userId} categoryDetails={item} />
-
-                  <CategoryDeleteButton
-                    userId={userId}
-                    categoryDetails={item}
-                  />
-                </div>
-              </div>
-            ))
+          {categoryTree.length > 0 ? (
+            <RenderAllCategories userId={userId} categoryTree={categoryTree} />
           ) : (
             <div className="flex w-full items-center justify-center gap-2 font-poppins-rg text-light-weight-400 p-3 text-[16px]">
               <MdErrorOutline />

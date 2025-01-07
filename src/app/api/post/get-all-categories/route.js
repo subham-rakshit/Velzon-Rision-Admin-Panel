@@ -11,6 +11,8 @@ export async function GET(request) {
     const userId = searchParams.get("userId");
     const search = searchParams.get("search");
 
+    console.log("Search: ", search);
+
     // NOTE: Handle not getting request data
     if (!userId) {
       return NextResponse.json(
@@ -38,9 +40,13 @@ export async function GET(request) {
     // NOTE Get all categories
     const query = {
       userId,
-      ...(search ? { category: { $regex: search, $options: "i" } } : {}),
+      $or: [
+        { name: { $regex: search, $options: "i" } },
+        { slug: { $regex: search, $options: "i" } },
+      ],
     };
     const categoryList = await AllBlogsCategoryModel.find(query);
+    console.log("Category Lists: ", categoryList);
 
     return NextResponse.json(
       {
