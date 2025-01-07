@@ -9,7 +9,8 @@ export const CategorySchema = z.object({
     .min(1, { message: "Category name is required." })
     .max(150, { message: "Category name must not exceed 150 characters." })
     .regex(/^(?!.* {2,})[a-zA-Z0-9\s]+$/, {
-      message: "Name can only have one space between words.",
+      message:
+        "Category name can only include letters, numbers, and spaces, with no extra spaces between words.",
     })
     .transform((name) => name.trim()), // Trim leading and trailing whitespace
 
@@ -41,7 +42,7 @@ export const CategorySchema = z.object({
     .string()
     .min(1, "Parent category is required.")
     .refine((value) => value === "none" || isValidId(value), {
-      message: "Parent category must be a valid id or 'none'.",
+      message: "Parent category must be either 'none' or a valid ObjectId.",
     }),
 
   colorTheme: z
@@ -69,6 +70,7 @@ export const CategorySchema = z.object({
     .default("")
     .transform((title) => title.trim()),
 
+  // TODO Need to validate metaImage with valid URL
   metaImage: z.string().optional().default(""),
 
   metaDescription: z

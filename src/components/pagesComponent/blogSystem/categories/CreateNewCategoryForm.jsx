@@ -1,7 +1,11 @@
 "use client";
 
 import { globalStyleObj } from "@/app/assets/styles";
-import { ImageReuseDialog, LabelText } from "@/components";
+import {
+  ImageReuseDialog,
+  LabelText,
+  RenderCategoryOptions,
+} from "@/components";
 import { getCustomColor } from "@/lib/utils/customColor";
 import { useAppSelector } from "@/store/hooks";
 import { Controller, useForm } from "react-hook-form";
@@ -26,6 +30,7 @@ import {
 import { CategorySchema } from "@/schemas";
 import { createNewCategory } from "@/services/actions/category";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 const defaultValues = {
@@ -64,6 +69,7 @@ const CreateNewCategoryForm = ({ userId, searchValue, categoryList }) => {
   );
   const customColor = getCustomColor({ layoutThemePrimaryColorType });
   const { bgColor, hoverBgColor, textColor, hexCode } = customColor;
+  const router = useRouter();
 
   // NOTE Watched tag value change for add new, delete functionality
   const watchedTags = watch("tags");
@@ -179,12 +185,12 @@ const CreateNewCategoryForm = ({ userId, searchValue, categoryList }) => {
 
   // NOTE Handle Create New Category functionality
   const onSubmit = async (data) => {
-    console.log("Form Data:", data);
     const createNewCategoryResponse = await createNewCategory(data, userId);
 
     if (createNewCategoryResponse.success) {
       showSuccessToast(createNewCategoryResponse.message);
-      // reset();
+      reset();
+      router.refresh();
     } else {
       if (createNewCategoryResponse.errors) {
         handleValidationErrors(createNewCategoryResponse.errors);
@@ -281,22 +287,18 @@ const CreateNewCategoryForm = ({ userId, searchValue, categoryList }) => {
                   <SelectValue placeholder="--" />
                 </SelectTrigger>
                 <SelectContent
-                  className={`border-0 ${globalStyleObj.backgroundLight900Dark200} font-poppins-rg text-[13px] text-dark-weight-550 dark:text-light-weight-550`}
+                  className={`border-0 ${globalStyleObj.backgroundLight900Dark200}`}
                 >
                   <SelectGroup>
-                    <SelectItem value="none">None</SelectItem>
-                    <SelectItem value="6772a829a9f4ff35b4004ebe">
-                      Category 1
+                    <SelectItem
+                      value="none"
+                      className="text-red-500 test-[13px] font-poppins-rg"
+                    >
+                      None
                     </SelectItem>
-                    {categoryList.length > 0 &&
-                      categoryList.map((item) => (
-                        <SelectItem
-                          key={item._id}
-                          value={item.category.toLowerCase()}
-                        >
-                          {item.category}
-                        </SelectItem>
-                      ))}
+                    {categoryList.length > 0 && (
+                      <RenderCategoryOptions categoryList={categoryList} />
+                    )}
                   </SelectGroup>
                 </SelectContent>
               </Select>

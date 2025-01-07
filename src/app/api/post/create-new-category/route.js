@@ -3,6 +3,7 @@ import { validateUserFromToken } from "@/lib/middleware/validateUser";
 import AllBlogsCategoryModel from "@/model/blog/BlogsCategory";
 import UserModel from "@/model/User";
 import { CategorySchema } from "@/schemas";
+import { nanoid } from "nanoid";
 import { NextResponse } from "next/server";
 
 export async function POST(request) {
@@ -29,7 +30,7 @@ export async function POST(request) {
       return NextResponse.json(
         {
           success: false,
-          message: "Invalid user. Please log in and try again.",
+          message: "User not found. Please log in.",
         },
         { status: 400 }
       );
@@ -41,7 +42,8 @@ export async function POST(request) {
       return NextResponse.json(
         {
           success: false,
-          message: "Unauthorized access. Please log in and try again.",
+          message:
+            "Access denied. You do not have permission to create a category.",
         },
         { status: 403 }
       );
@@ -89,11 +91,12 @@ export async function POST(request) {
     }
 
     // NOTE Check if category already exists or not
+    let newSlug;
     const existsCategory = await AllBlogsCategoryModel.findOne({
-      category: newCategory,
       userId,
+      $or: [{ slug }, { name }],
     });
-    if (existsCategory) {
+    if (existsCategory && existsCategory.name === name) {
       return NextResponse.json(
         {
           success: false,
@@ -103,12 +106,52 @@ export async function POST(request) {
         { status: 400 }
       );
     }
+    if (existsCategory && existsCategory.slug === slug) {
+      const newCharacters = nanoid(4)
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, "r") // Remove invalid characters
+        .replace(/\s+/g, "-") // Replace spaces with hyphens
+        .replace(/-+/g, "-") // Replace multiple hyphens with single hyphen
+        .replace(/^-|-$/g, ""); // Remove leading or trailing hyphens
+      newSlug = slug + "-" + newCharacters;
+    }
+
+    // TODO Need to work on META Image
+
+    // NOTE Set the META title if not provided
+    let newMetaTitle;
+    if (!metaTitle) {
+      const createMetaTile = name
+        .split(" ")
+        .map((word) => `${word[0].toUpperCase()}${word.slice(1)}`)
+        .join(" ")
+        .slice(0, 50);
+      newMetaTitle = createMetaTile + " || Velzon Category";
+    }
+
+    // NOTE Set the META description if not provided
+    let newMetaDescription;
+    if (!metaDescription) {
+      newMetaDescription = description;
+    }
+
+    // NOTE Set new category object
+    const newCategory = {
+      userId: user._id.toString(),
+      name,
+      slug: newSlug || slug,
+      description,
+      parentCategoryId,
+      colorTheme,
+      isFeatured,
+      tags,
+      metaTitle: newMetaTitle || metaTitle,
+      metaImage,
+      metaDescription: newMetaDescription || metaDescription,
+    };
 
     // NOTE Create new category
-    const newCategoryItem = new AllBlogsCategoryModel({
-      userId,
-      category: newCategory,
-    });
+    const newCategoryItem = new AllBlogsCategoryModel(newCategory);
     await newCategoryItem.save();
 
     return NextResponse.json(

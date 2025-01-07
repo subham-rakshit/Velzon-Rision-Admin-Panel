@@ -38,6 +38,7 @@ import AddNewCategoriesForm from "./pagesComponent/blogSystem/categories/AddNewC
 import CategoryDeleteButton from "./pagesComponent/blogSystem/categories/CategoryDeleteButton";
 import CategoryEditButton from "./pagesComponent/blogSystem/categories/CategoryEditButton";
 import CreateNewCategoryForm from "./pagesComponent/blogSystem/categories/CreateNewCategoryForm";
+import RenderCategoryOptions from "./pagesComponent/blogSystem/categories/RenderCategoryOptions";
 import SearchCategoryForm from "./pagesComponent/blogSystem/categories/SearchCategoryForm";
 import LabelText from "./pagesComponent/blogSystem/LabelText";
 import ImageSettingButton from "./pagesComponent/imageConsole/ImageSettingButton";
@@ -133,6 +134,7 @@ export {
   RecentOrdersOrderId,
   RegistrationForm,
   RememberMe,
+  RenderCategoryOptions,
   ResendOtpForm,
   ResetPasswordForm,
   Revenue,

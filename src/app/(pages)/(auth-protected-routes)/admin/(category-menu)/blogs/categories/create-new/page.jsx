@@ -1,6 +1,7 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { Breadcrumb, CreateNewCategoryForm } from "@/components";
 import { getAccessTokenData } from "@/lib/middleware/getAccessTokenData";
+import { buildCategoryTree } from "@/lib/utils/blog-categories-tree";
 import { getAllCategories } from "@/services/actions/category";
 import { getServerSession } from "next-auth";
 
@@ -27,6 +28,10 @@ const CreateNewBlogCategory = async ({ searchParams }) => {
     categoryList = [];
   }
 
+  // NOTE Create category TREE structure
+  const categoryTree =
+    categoryList.length > 0 ? buildCategoryTree(categoryList) : [];
+
   return (
     <div className={`min-h-full`}>
       <Breadcrumb
@@ -38,7 +43,7 @@ const CreateNewBlogCategory = async ({ searchParams }) => {
       <CreateNewCategoryForm
         userId={userId}
         searchValue={search}
-        categoryList={categoryList}
+        categoryList={categoryTree}
       />
     </div>
   );
