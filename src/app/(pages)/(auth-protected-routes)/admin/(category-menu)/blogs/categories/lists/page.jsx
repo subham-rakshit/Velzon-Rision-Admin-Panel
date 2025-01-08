@@ -35,7 +35,6 @@ const BlogSystemCategories = async ({ searchParams }) => {
 
   // Search options
   const { search } = await searchParams;
-  // console.log("Search: ", search);
 
   // Fetch all List of Categories
   const { success, fetchData } = await getAllCategories(userId, search || "");
@@ -52,7 +51,6 @@ const BlogSystemCategories = async ({ searchParams }) => {
         ? buildCategoryTree(categoryList)
         : categoryList
       : [];
-  // console.log("Category Tree: ", categoryTree);
 
   return (
     <div className={`min-h-full`}>

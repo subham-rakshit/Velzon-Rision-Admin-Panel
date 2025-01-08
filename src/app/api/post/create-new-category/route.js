@@ -3,6 +3,7 @@ import { validateUserFromToken } from "@/lib/middleware/validateUser";
 import AllBlogsCategoryModel from "@/model/blog/BlogsCategory";
 import UserModel from "@/model/User";
 import { CategorySchema } from "@/schemas";
+import mongoose from "mongoose";
 import { nanoid } from "nanoid";
 import { NextResponse } from "next/server";
 
@@ -11,7 +12,6 @@ export async function POST(request) {
 
   try {
     const body = await request.json();
-    console.log("BODY: ", body);
     const {
       userId,
       name,
@@ -19,7 +19,6 @@ export async function POST(request) {
       description,
       parentCategoryId,
       colorTheme,
-      isFeatured,
       isDefault,
       tags,
       metaTitle,
@@ -28,11 +27,11 @@ export async function POST(request) {
     } = body;
 
     // NOTE Check invalid inputs
-    if (!userId) {
+    if (!userId || !mongoose.Types.ObjectId.isValid(userId)) {
       return NextResponse.json(
         {
           success: false,
-          message: "User not found. Please log in.",
+          message: "Invalid request. Please try again later.",
         },
         { status: 400 }
       );
@@ -58,7 +57,6 @@ export async function POST(request) {
       description,
       parentCategoryId,
       colorTheme,
-      isFeatured,
       isDefault,
       tags,
       metaTitle,
@@ -87,7 +85,7 @@ export async function POST(request) {
         {
           success: false,
           message:
-            "You do not have the required permissions to create a new category.",
+            "Access denied. You do not have permission to create a category.",
         },
         { status: 403 }
       );
@@ -157,7 +155,6 @@ export async function POST(request) {
       description,
       parentCategoryId: parentCategoryId === "none" ? null : parentCategoryId,
       colorTheme,
-      isFeatured: isDefault ? true : isFeatured,
       isDefault,
       tags,
       metaTitle: newMetaTitle || metaTitle,

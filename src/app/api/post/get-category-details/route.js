@@ -10,10 +10,15 @@ export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url);
     const userId = searchParams.get("userId");
-    const search = searchParams.get("search");
+    const categoryId = searchParams.get("categoryId");
 
     // NOTE Validate Category and User IDs
-    if (!userId || !mongoose.Types.ObjectId.isValid(userId)) {
+    if (
+      !userId ||
+      !categoryId ||
+      !mongoose.Types.ObjectId.isValid(userId) ||
+      !mongoose.Types.ObjectId.isValid(categoryId)
+    ) {
       return NextResponse.json(
         {
           success: false,
@@ -25,35 +30,38 @@ export async function GET(request) {
 
     // NOTE Get User info
     const user = await UserModel.findById(userId);
-    if (!user) {
+    if (!user || !user.role.includes("Admin")) {
       return NextResponse.json(
         {
           success: false,
           message:
             "Access denied. You do not have permission to view categories.",
         },
+        { status: 400 }
+      );
+    }
+
+    // NOTE Get category details
+    const category = await AllBlogsCategoryModel.findOne({
+      _id: categoryId,
+      userId,
+    });
+    if (!category) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Category not found or does not belong to the user.",
+        },
         { status: 404 }
       );
     }
 
-    // NOTE Get all categories
-    const query = {
-      $or: [
-        { name: { $regex: search, $options: "i" } },
-        { slug: { $regex: search, $options: "i" } },
-      ],
-    };
-    const categoryList = await AllBlogsCategoryModel.find(query);
-
-    return NextResponse.json(
-      {
-        success: true,
-        categories: categoryList,
-      },
-      { status: 200 }
-    );
+    return NextResponse.json({
+      success: true,
+      categoryDetails: category,
+    });
   } catch (error) {
-    console.log(`Error in getting all categories SERVER: ${error}`);
+    console.log(`Error in getting category details SERVER: ${error}`);
     return NextResponse.json(
       {
         success: false,

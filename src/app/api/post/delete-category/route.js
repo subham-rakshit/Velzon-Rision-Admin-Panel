@@ -2,6 +2,7 @@ import dbConnect from "@/lib/db/dbConnect";
 import { validateUserFromToken } from "@/lib/middleware/validateUser";
 import AllBlogsCategoryModel from "@/model/blog/BlogsCategory";
 import UserModel from "@/model/User";
+import mongoose from "mongoose";
 import { NextResponse } from "next/server";
 
 export async function DELETE(request) {
@@ -13,11 +14,16 @@ export async function DELETE(request) {
     const categoryId = searchParams.get("categoryId");
 
     // NOTE: Handle not getting request data
-    if (!userId || !categoryId) {
+    if (
+      !userId ||
+      !categoryId ||
+      !mongoose.Types.ObjectId.isValid(userId) ||
+      !mongoose.Types.ObjectId.isValid(categoryId)
+    ) {
       return NextResponse.json(
         {
           success: false,
-          message: "Invalid inputs.",
+          message: "Invalid request. Please try again later.",
         },
         { status: 400 }
       );
@@ -29,7 +35,8 @@ export async function DELETE(request) {
       return NextResponse.json(
         {
           success: false,
-          message: "Unauthorized access. Permission denied.",
+          message:
+            "Access denied. You do not have permission to delete this category.",
         },
         { status: 403 }
       );
@@ -64,6 +71,18 @@ export async function DELETE(request) {
       );
     }
 
+    // NOTE IF category is a default category, return an error message
+    if (category.isDefault) {
+      return NextResponse.json(
+        {
+          success: false,
+          message:
+            "You cannot delete a default category. Please choose a different category to delete.",
+        },
+        { status: 400 }
+      );
+    }
+
     // NOTE Delete the category
     const deletedCategory = await AllBlogsCategoryModel.findOneAndDelete({
       _id: categoryId,
@@ -77,6 +96,12 @@ export async function DELETE(request) {
         { status: 400 }
       );
     }
+
+    // NOTE Check if the category has any parent category, and having any child category, then make those child category's parentCategoryId as the deleted category's parentCategoryId otherwise make the parentCategoryId as null
+    await AllBlogsCategoryModel.updateMany(
+      { parentCategoryId: category._id },
+      { $set: { parentCategoryId: category.parentCategoryId || null } }
+    );
 
     return NextResponse.json(
       {

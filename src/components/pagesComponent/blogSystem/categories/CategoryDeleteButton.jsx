@@ -9,8 +9,8 @@ import {
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { CgDanger } from "react-icons/cg";
+import { LiaSpinnerSolid } from "react-icons/lia";
 import { RiDeleteBin2Line } from "react-icons/ri";
-import { ClipLoader } from "react-spinners";
 
 const CategoryDeleteButton = ({ userId, categoryDetails }) => {
   const [isProcessing, setIsProcessing] = useState(false);
@@ -45,7 +45,7 @@ const CategoryDeleteButton = ({ userId, categoryDetails }) => {
       className={`transition-300 rounded-full bg-[#F06548]/20 p-2 text-[#F06548] ${categoryDetails.isDefault ? "cursor-not-allowed" : "hover:bg-[#F06548] hover:text-white"}`}
     >
       {isProcessing ? (
-        <ClipLoader size={12} color="#F06548" />
+        <LiaSpinnerSolid size={12} color="#F06548" className="animate-spin" />
       ) : categoryDetails.isDefault ? (
         <CgDanger size={12} />
       ) : (

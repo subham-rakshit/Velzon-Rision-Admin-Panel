@@ -9,7 +9,7 @@ import {
 import { getCustomColor } from "@/lib/utils/customColor";
 import { useAppSelector } from "@/store/hooks";
 import { Controller, useForm } from "react-hook-form";
-import { MdCategory, MdClose } from "react-icons/md";
+import { MdClose } from "react-icons/md";
 import { ClipLoader } from "react-spinners";
 
 import { Input } from "@/components/ui/input";
@@ -23,30 +23,19 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
-import { createNewCategory } from "@/lib/api/category";
+import { updatePerticularCategory } from "@/lib/api/category";
 import {
   showErrorToast,
   showSuccessToast,
 } from "@/lib/utils/toast-notification";
 import { CategorySchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { isEqual } from "lodash"; // For deep comparison
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { RiEdit2Line } from "react-icons/ri";
 
-const defaultValues = {
-  name: "",
-  slug: "",
-  description: "",
-  parentCategoryId: "",
-  colorTheme: "#495057",
-  isDefault: false,
-  tags: [],
-  metaTitle: "",
-  metaImage: "",
-  metaDescription: "",
-};
-
-const CreateNewCategoryForm = ({ userId, searchValue, categoryList }) => {
+const UpdateCategoryForm = ({ userId, categoryDetails, categoryList }) => {
   // React Hook Form Instance
   const {
     register,
@@ -54,13 +43,23 @@ const CreateNewCategoryForm = ({ userId, searchValue, categoryList }) => {
     handleSubmit,
     formState: { errors, isSubmitting },
     watch,
-    reset,
     setError,
     setValue,
     getValues,
   } = useForm({
     resolver: zodResolver(CategorySchema),
-    defaultValues,
+    defaultValues: {
+      name: categoryDetails.name || "",
+      slug: categoryDetails.slug || "",
+      description: categoryDetails.description || "",
+      parentCategoryId: categoryDetails.parentCategoryId || "none",
+      colorTheme: categoryDetails.colorTheme || "#495057",
+      isDefault: categoryDetails.isDefault,
+      tags: categoryDetails.tags || [],
+      metaTitle: categoryDetails.metaTitle || "",
+      metaImage: categoryDetails.metaImage || "",
+      metaDescription: categoryDetails.metaDescription || "",
+    },
   });
 
   // Custom Colors
@@ -71,9 +70,30 @@ const CreateNewCategoryForm = ({ userId, searchValue, categoryList }) => {
   const { bgColor, hoverBgColor, textColor, hexCode } = customColor;
   const router = useRouter();
 
-  // NOTE Watched tag value change for add new, delete functionality
+  // NOTE Watch form all fields and Compare with categoryDetails
+  const currentValues = watch();
+  const watchedName = watch("name");
   const watchedTags = watch("tags");
-  // Add tag validation
+  const watchedIsDefault = watch("isDefault");
+
+  // NOTE Relevant fields for comparison with categoryDetails
+  const relevantFields = {
+    name: categoryDetails.name,
+    slug: categoryDetails.slug,
+    description: categoryDetails.description,
+    parentCategoryId: categoryDetails.parentCategoryId || "none",
+    colorTheme: categoryDetails.colorTheme,
+    isDefault: categoryDetails.isDefault,
+    tags: categoryDetails.tags,
+    metaTitle: categoryDetails.metaTitle,
+    metaImage: categoryDetails.metaImage,
+    metaDescription: categoryDetails.metaDescription,
+  };
+
+  // NOTE Compare currentValues with relevantFields (With deep comparison from Lodash)
+  const hasChanges = !isEqual(currentValues, relevantFields);
+
+  // NOTE Add tag with validation
   const addTag = (tag) => {
     setError("tags", null);
     if (watchedTags.length <= 20) {
@@ -88,7 +108,7 @@ const CreateNewCategoryForm = ({ userId, searchValue, categoryList }) => {
       setError("tags", { message: "A maximum of 20 tags are allowed." });
     }
   };
-  // Remove tag functionality
+  // NOTE Remove tag functionality
   const removeTag = (index) => {
     setValue(
       "tags",
@@ -97,9 +117,12 @@ const CreateNewCategoryForm = ({ userId, searchValue, categoryList }) => {
   };
 
   // NOTE Handle Slug value according to the category name
-  const watchedName = watch("name");
   useEffect(() => {
-    if (watchedName && watchedName.length > 0) {
+    if (
+      watchedName &&
+      watchedName.length > 0 &&
+      watchedName !== categoryDetails.name
+    ) {
       setError("slug", "");
       const generatedSlug = watchedName
         .toLowerCase()
@@ -110,13 +133,9 @@ const CreateNewCategoryForm = ({ userId, searchValue, categoryList }) => {
         .trim();
       setValue("slug", generatedSlug);
     } else {
-      setValue("slug", "");
+      setValue("slug", categoryDetails.slug);
     }
   }, [watchedName, setValue]);
-
-  // NOTE Watch isDefault and isFeatured
-  const watchedIsFeatured = watch("isFeatured");
-  const watchedIsDefault = watch("isDefault");
 
   // NOTE Handle Meta Image
   const onChangeMetaImage = (url) => {
@@ -183,11 +202,14 @@ const CreateNewCategoryForm = ({ userId, searchValue, categoryList }) => {
 
   // NOTE Handle Create New Category functionality
   const onSubmit = async (data) => {
-    const createNewCategoryResponse = await createNewCategory(data, userId);
+    const createNewCategoryResponse = await updatePerticularCategory(
+      userId,
+      categoryDetails._id,
+      data
+    );
 
     if (createNewCategoryResponse.success) {
       showSuccessToast(createNewCategoryResponse.message);
-      reset();
       router.push("/admin/blogs/categories/lists");
       router.refresh();
     } else {
@@ -312,6 +334,7 @@ const CreateNewCategoryForm = ({ userId, searchValue, categoryList }) => {
         </div>
       </div>
 
+      {/* Color Theme & Make Default */}
       <div className="mt-5 flex flex-col sm:flex-row sm:justify-between sm:gap-2">
         {/* Category Color Theme */}
         <div className="flex-1">
@@ -350,7 +373,6 @@ const CreateNewCategoryForm = ({ userId, searchValue, categoryList }) => {
                 onCheckedChange={(checked) => {
                   setValue("isDefault", checked);
                 }}
-                defaultChecked={defaultValues.isDefault || false}
                 className="data-[state=checked]:bg-green-500 data-[state=unchecked]:bg-slate-200 dark:data-[state=checked]:bg-green-500 dark:data-[state=unchecked]:bg-[#000]/20"
                 thumbClassName="data-[state=checked]:bg-[#fff] data-[state=unchecked]:bg-[#fff] dark:data-[state=checked]:bg-[#fff] dark:data-[state=unchecked]:bg-[#fff]/20"
               />
@@ -432,7 +454,7 @@ const CreateNewCategoryForm = ({ userId, searchValue, categoryList }) => {
         />
         <ImageReuseDialog
           userId={userId}
-          searchValue={searchValue}
+          // searchValue={searchValue}
           htmlId="blog-category-meta-img"
           onChangeMetaImage={onChangeMetaImage}
         />
@@ -460,8 +482,8 @@ const CreateNewCategoryForm = ({ userId, searchValue, categoryList }) => {
 
       <button
         type="submit"
-        disabled={isSubmitting}
-        className={`${globalStyleObj.flexCenter} transition-300 gap-2 rounded-[4px] ${bgColor} ${hoverBgColor} ${textColor} px-5 py-2 font-poppins-rg text-[13px] tracking-wide hover:text-white mt-10 w-full sm:max-w-[300px] dark:text-light-weight-800`}
+        disabled={isSubmitting || !hasChanges}
+        className={`${globalStyleObj.flexCenter} transition-300 gap-2 rounded-[4px] ${bgColor} ${hoverBgColor} ${textColor} px-5 py-2 font-poppins-rg text-[13px] tracking-wide hover:text-white mt-10 w-full sm:max-w-[300px] dark:text-light-weight-800 ${!hasChanges ? "cursor-not-allowed" : ""}`}
       >
         {isSubmitting ? (
           <>
@@ -470,8 +492,8 @@ const CreateNewCategoryForm = ({ userId, searchValue, categoryList }) => {
           </>
         ) : (
           <>
-            <MdCategory />
-            Create Ctegory
+            <RiEdit2Line />
+            Update Ctegory
           </>
         )}
       </button>
@@ -479,4 +501,4 @@ const CreateNewCategoryForm = ({ userId, searchValue, categoryList }) => {
   );
 };
 
-export default CreateNewCategoryForm;
+export default UpdateCategoryForm;

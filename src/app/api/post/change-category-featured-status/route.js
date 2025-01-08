@@ -1,5 +1,8 @@
 import dbConnect from "@/lib/db/dbConnect";
-import { updateChildCategories } from "@/lib/middleware/updateChildCategories";
+import {
+  updateChildCategories,
+  updateParentCategories,
+} from "@/lib/middleware/updateCategoriesFeaturedStatus";
 import { validateUserFromToken } from "@/lib/middleware/validateUser";
 import AllBlogsCategoryModel from "@/model/blog/BlogsCategory";
 import UserModel from "@/model/User";
@@ -73,7 +76,7 @@ export async function PUT(request) {
       );
     }
 
-    // NOTE Update the isFeatured status
+    // NOTE Toggle isFeatured status
     const updatedCategory = await AllBlogsCategoryModel.findByIdAndUpdate(
       { _id: categoryId },
       { $set: { isFeatured: !category.isFeatured } },
@@ -89,8 +92,11 @@ export async function PUT(request) {
       );
     }
 
-    // NOTE Update the isFeatured status of all child categories also
-    await updateChildCategories(categoryId, user._id, isFeatured);
+    // NOTE Update the isFeatured status of all child categories also (Top to Bottom)
+    await updateChildCategories(categoryId, isFeatured);
+
+    // NOTE Update the isFeatured status of parent categories also (Bottom to Top)
+    await updateParentCategories(category.parentCategoryId, isFeatured);
 
     return NextResponse.json(
       {

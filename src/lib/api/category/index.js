@@ -1,27 +1,5 @@
 import axios from "axios";
 
-// NOTE GET ALL CATEGORIES
-export const getAllCategories = async (userId, search) => {
-  try {
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/post/get-all-categories?userId=${userId}&search=${search ? search : ""}`
-    );
-
-    if (response.data.success && response.status === 200) {
-      return {
-        success: true,
-        fetchData: response.data.categories,
-      };
-    }
-  } catch (error) {
-    console.log(`Error in getting all categories CLIENT: ${error}`);
-    return {
-      success: false,
-      fetchData: [],
-    };
-  }
-};
-
 // NOTE CREATE A NEW CATEGORY
 export const createNewCategory = async (data, userId) => {
   try {
@@ -60,6 +38,81 @@ export const createNewCategory = async (data, userId) => {
   }
 };
 
+// NOTE GET ALL CATEGORIES
+export const getAllCategories = async (userId, search) => {
+  try {
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/post/get-all-categories?userId=${userId}&search=${search ? search : ""}`
+    );
+
+    if (response.data.success && response.status === 200) {
+      return {
+        success: true,
+        fetchData: response.data.categories,
+      };
+    }
+  } catch (error) {
+    console.log(`Error in getting all categories CLIENT: ${error}`);
+    return {
+      success: false,
+      fetchData: [],
+    };
+  }
+};
+
+// NOTE Change Category Featured Status
+export const changeCategoryFeaturedStatus = async (
+  userId,
+  categoryId,
+  isFeatured
+) => {
+  try {
+    const response = await axios.put(
+      `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/post/change-category-featured-status`,
+      {
+        userId,
+        categoryId,
+        isFeatured,
+      }
+    );
+
+    if (response.data.success && response.status === 200) {
+      return {
+        success: true,
+      };
+    }
+  } catch (error) {
+    console.log(`Error in changing category featured status CLIENT: ${error}`);
+    return {
+      success: false,
+      message:
+        error.response.data.message || error.message || "Something went wrong",
+    };
+  }
+};
+
+// NOTE GET A PERTICULAR CATEGORY
+export const getPerticularCategory = async (userId, categoryId) => {
+  try {
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/post/get-category-details?userId=${userId}&categoryId=${categoryId ? categoryId : ""}`
+    );
+
+    if (response.data.success && response.status === 200) {
+      return {
+        successStatus: true,
+        categoryData: response.data.categoryDetails,
+      };
+    }
+  } catch (error) {
+    console.log(`Error in getting all categories CLIENT: ${error}`);
+    return {
+      successStatus: false,
+      categoryData: {},
+    };
+  }
+};
+
 // NOTE UPDATE A PERTICULAR CATEGORY
 export const updatePerticularCategory = async (userId, categoryId, data) => {
   try {
@@ -83,7 +136,7 @@ export const updatePerticularCategory = async (userId, categoryId, data) => {
     if (error.response) {
       return {
         success: false,
-        message:
+        errors:
           error.response.data.errors ||
           error.response.data.message ||
           error.message ||
@@ -112,37 +165,6 @@ export const deletePerticularCategory = async (userId, categoryId) => {
     }
   } catch (error) {
     console.log(`Error in deleting the category CLIENT: ${error}`);
-    return {
-      success: false,
-      message:
-        error.response.data.message || error.message || "Something went wrong",
-    };
-  }
-};
-
-// NOTE Change Category Featured Status
-export const changeCategoryFeaturedStatus = async (
-  userId,
-  categoryId,
-  isFeatured
-) => {
-  try {
-    const response = await axios.put(
-      `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/post/change-category-featured-status`,
-      {
-        userId,
-        categoryId,
-        isFeatured,
-      }
-    );
-
-    if (response.data.success && response.status === 200) {
-      return {
-        success: true,
-      };
-    }
-  } catch (error) {
-    console.log(`Error in changing category featured status CLIENT: ${error}`);
     return {
       success: false,
       message:

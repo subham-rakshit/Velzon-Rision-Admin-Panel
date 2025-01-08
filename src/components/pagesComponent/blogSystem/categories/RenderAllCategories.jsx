@@ -1,6 +1,7 @@
 "use client";
 
 import { CategoryDeleteButton, CategoryFeaturedButton } from "@/components";
+import Link from "next/link";
 import { useState } from "react";
 import { AiOutlineFolderOpen } from "react-icons/ai";
 import { FaMinus } from "react-icons/fa";
@@ -68,12 +69,12 @@ const renderAllCategories = (
 
         {/* Edit and Delete Buttons */}
         <div className="flex items-center gap-2">
-          <button
-            type="button"
+          <Link
+            href={`/admin/blogs/categories/update/${category._id}`}
             className="transition-300 rounded-full bg-[#49ABE0]/20 p-2 text-[#49ABE0] hover:bg-[#49ABE0] hover:text-white"
           >
             <RiEditBoxLine size={12} />
-          </button>
+          </Link>
 
           <CategoryDeleteButton userId={userId} categoryDetails={category} />
         </div>

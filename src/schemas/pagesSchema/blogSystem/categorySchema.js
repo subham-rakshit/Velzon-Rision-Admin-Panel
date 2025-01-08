@@ -52,8 +52,6 @@ export const CategorySchema = z.object({
     })
     .default("#495057"),
 
-  isFeatured: z.boolean().default(true),
-
   isDefault: z.boolean().default(false),
 
   tags: z

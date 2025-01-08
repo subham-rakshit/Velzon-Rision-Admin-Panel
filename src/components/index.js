@@ -40,6 +40,7 @@ import CreateNewCategoryForm from "./pagesComponent/blogSystem/categories/Create
 import RenderAllCategories from "./pagesComponent/blogSystem/categories/RenderAllCategories";
 import RenderCategoryOptions from "./pagesComponent/blogSystem/categories/RenderCategoryOptions";
 import SearchCategoryForm from "./pagesComponent/blogSystem/categories/SearchCategoryForm";
+import UpdateCategoryForm from "./pagesComponent/blogSystem/categories/UpdateCategoryForm";
 import LabelText from "./pagesComponent/LabelText";
 // Dashboard Analytics
 import Breadcrumb from "./pagesComponent/Breadcrumb";
@@ -152,6 +153,7 @@ export {
   TopSellers,
   TransitionLink,
   UpcomingActivites,
+  UpdateCategoryForm,
   UserByDevice,
   VerifyAccount,
   Widget,
