@@ -23,12 +23,12 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
+import { createNewCategory } from "@/lib/api/category";
 import {
   showErrorToast,
   showSuccessToast,
 } from "@/lib/utils/toast-notification";
 import { CategorySchema } from "@/schemas";
-import { createNewCategory } from "@/services/actions/category";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -40,6 +40,7 @@ const defaultValues = {
   parentCategoryId: "",
   colorTheme: "#495057",
   isFeatured: true,
+  isDefault: false,
   tags: [],
   metaTitle: "",
   metaImage: "",
@@ -113,6 +114,10 @@ const CreateNewCategoryForm = ({ userId, searchValue, categoryList }) => {
       setValue("slug", "");
     }
   }, [watchedName, setValue]);
+
+  // NOTE Watch isDefault and isFeatured
+  const watchedIsFeatured = watch("isFeatured");
+  const watchedIsDefault = watch("isDefault");
 
   // NOTE Handle Meta Image
   const onChangeMetaImage = (url) => {
@@ -313,49 +318,72 @@ const CreateNewCategoryForm = ({ userId, searchValue, categoryList }) => {
         </div>
       </div>
 
-      {/* Category Color Theme */}
-      <div className={`mt-5 ${globalStyleObj.commonInputContainerClass}`}>
-        <LabelText
-          text="Color Theme"
-          htmlForId="blog-category-color-theme"
-          star={false}
-        />
-        <div className="flex flex-col gap-2 w-full max-w-[800px]">
+      <div className="mt-5 flex flex-col sm:flex-row sm:justify-between sm:gap-2">
+        {/* Category Color Theme */}
+        <div className="flex-1">
+          <LabelText
+            text="Color Theme"
+            htmlForId="blog-category-color-theme"
+            star={false}
+          />
+
           <Input
             {...register("colorTheme")}
             id="blog-category-color-theme"
             type="color"
-            className="w-full max-w-[100px] border dark:border-[#fff]/10 dark:bg-[#000]/10 cursor-pointer"
+            className="w-full sm:max-w-[150px] border dark:border-[#fff]/10 dark:bg-[#000]/10 cursor-pointer mt-2"
           />
 
           {errors && errors.colorTheme && (
-            <p className="text-red-500 text-[13px] font-poppins-rg">
+            <p className="text-red-500 text-[13px] font-poppins-rg mt-1">
               {errors.colorTheme.message}
             </p>
           )}
         </div>
-      </div>
 
-      {/* Is Featured */}
-      <div className={`mt-5 ${globalStyleObj.commonInputContainerClass}`}>
-        <LabelText
-          text="Active Status"
-          htmlForId="blog-category-features"
-          star={true}
-        />
-        <div className="flex items-center gap-2 w-full max-w-[800px]">
-          <Switch
-            {...register("isFeatured")}
-            id="blog-category-feature-status"
-            defaultChecked={defaultValues.isFeatured || false}
-            className="data-[state=checked]:bg-green-500 data-[state=unchecked]:bg-slate-200 dark:data-[state=checked]:bg-green-500 dark:data-[state=unchecked]:bg-[#000]/20"
-            thumbClassName="data-[state=checked]:bg-[#fff] data-[state=unchecked]:bg-[#fff] dark:data-[state=checked]:bg-[#fff] dark:data-[state=unchecked]:bg-[#fff]/20"
-          />
-          <LabelText
-            text="Featured"
-            htmlForId="blog-category-feature-status"
-            star={false}
-          />
+        <div className="flex justify-between mt-5 sm:mt-0 flex-1">
+          {/* Is Featured */}
+          <div className="flex flex-col">
+            <LabelText
+              text="Active Status"
+              htmlForId="blog-category-features"
+              star={true}
+            />
+
+            <div className="mt-2">
+              <Switch
+                id="blog-category-features"
+                checked={watchedIsFeatured}
+                onCheckedChange={(checked) => {
+                  setValue("isFeatured", checked);
+                }}
+                defaultChecked={defaultValues.isFeatured || false}
+                className="data-[state=checked]:bg-green-500 data-[state=unchecked]:bg-slate-200 dark:data-[state=checked]:bg-green-500 dark:data-[state=unchecked]:bg-[#000]/20"
+                thumbClassName="data-[state=checked]:bg-[#fff] data-[state=unchecked]:bg-[#fff] dark:data-[state=checked]:bg-[#fff] dark:data-[state=unchecked]:bg-[#fff]/20"
+              />
+            </div>
+          </div>
+
+          {/* Is Default */}
+          <div className="flex flex-col">
+            <LabelText
+              text="Make Default"
+              htmlForId="blog-category-default-status"
+              star={true}
+            />
+            <div className="mt-2">
+              <Switch
+                id="blog-category-default-status"
+                checked={watchedIsDefault}
+                onCheckedChange={(checked) => {
+                  setValue("isDefault", checked);
+                }}
+                defaultChecked={defaultValues.isDefault || false}
+                className="data-[state=checked]:bg-green-500 data-[state=unchecked]:bg-slate-200 dark:data-[state=checked]:bg-green-500 dark:data-[state=unchecked]:bg-[#000]/20"
+                thumbClassName="data-[state=checked]:bg-[#fff] data-[state=unchecked]:bg-[#fff] dark:data-[state=checked]:bg-[#fff] dark:data-[state=unchecked]:bg-[#fff]/20"
+              />
+            </div>
+          </div>
         </div>
       </div>
 
@@ -365,7 +393,7 @@ const CreateNewCategoryForm = ({ userId, searchValue, categoryList }) => {
         <div className="flex flex-col w-full max-w-[800px]">
           <Input
             id="blog-category-tags"
-            placeholder="Enter tag and click Enter"
+            placeholder="Enter tag"
             onKeyDown={(e) => {
               if (e.key === "Enter" && e.target.value) {
                 e.preventDefault();

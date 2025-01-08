@@ -17,13 +17,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { createNewPost } from "@/lib/api/posts";
 import { getCustomColor } from "@/lib/utils/customColor";
 import {
   showErrorToast,
   showSuccessToast,
 } from "@/lib/utils/toast-notification";
 import { AllPostsSchema } from "@/schemas";
-import { createNewPost } from "@/services/actions/posts";
 import { useAppSelector } from "@/store/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";

@@ -11,6 +11,7 @@ export async function POST(request) {
 
   try {
     const body = await request.json();
+    console.log("BODY: ", body);
     const {
       userId,
       name,
@@ -19,6 +20,7 @@ export async function POST(request) {
       parentCategoryId,
       colorTheme,
       isFeatured,
+      isDefault,
       tags,
       metaTitle,
       metaImage,
@@ -57,6 +59,7 @@ export async function POST(request) {
       parentCategoryId,
       colorTheme,
       isFeatured,
+      isDefault,
       tags,
       metaTitle,
       metaImage,
@@ -93,9 +96,11 @@ export async function POST(request) {
     // NOTE Check if category already exists or not
     let newSlug;
     const existsCategory = await AllBlogsCategoryModel.findOne({
-      userId,
+      userId: user._id,
       $or: [{ slug }, { name }],
     });
+
+    // Handle Duplicate Category Name (Return an error message)
     if (existsCategory && existsCategory.name === name) {
       return NextResponse.json(
         {
@@ -106,6 +111,8 @@ export async function POST(request) {
         { status: 400 }
       );
     }
+
+    // Handle Duplicate Category Slug (Add Random Characters)
     if (existsCategory && existsCategory.slug === slug) {
       const newCharacters = nanoid(4)
         .toLowerCase()
@@ -116,7 +123,14 @@ export async function POST(request) {
       newSlug = slug + "-" + newCharacters;
     }
 
-    // TODO Need to work on META Image
+    // Handle Default Category
+    if (isDefault) {
+      // Update any existing default categories to set isDefault to false
+      await AllBlogsCategoryModel.updateMany(
+        { userId: user._id, isDefault: true },
+        { $set: { isDefault: false } }
+      );
+    }
 
     // NOTE Set the META title if not provided
     let newMetaTitle;
@@ -141,9 +155,10 @@ export async function POST(request) {
       name,
       slug: newSlug || slug,
       description,
-      parentCategoryId,
+      parentCategoryId: parentCategoryId === "none" ? null : parentCategoryId,
       colorTheme,
-      isFeatured,
+      isFeatured: isDefault ? true : isFeatured,
+      isDefault,
       tags,
       metaTitle: newMetaTitle || metaTitle,
       metaImage,

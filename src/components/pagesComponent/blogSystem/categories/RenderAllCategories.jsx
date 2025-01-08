@@ -2,7 +2,9 @@
 
 import { CategoryDeleteButton, CategoryFeaturedButton } from "@/components";
 import { useState } from "react";
-import { FaMinus, FaPlus } from "react-icons/fa";
+import { AiOutlineFolderOpen } from "react-icons/ai";
+import { FaMinus } from "react-icons/fa";
+import { MdOutlineFolderOpen } from "react-icons/md";
 import { RiEditBoxLine } from "react-icons/ri";
 
 const renderAllCategories = (
@@ -14,36 +16,55 @@ const renderAllCategories = (
   return categoryTree.map((category) => (
     <div
       key={category._id}
-      className={`${category.parentCategoryId === "none" ? "px-3 sm:px-5 border-b dark:border-[#fff]/10 py-5" : "my-5"} text-[13px] font-poppins-rg text-dark-weight-500 dark:text-light-weight-450`}
+      className={`${category.parentCategoryId === null || !category.children ? "px-3 sm:px-5 border-b dark:border-[#fff]/10 py-5" : "my-5"} text-[13px] font-poppins-rg text-dark-weight-500 dark:text-light-weight-450`}
     >
-      <div className="flex items-center justify-between gap-2">
+      <div className="flex items-center justify-between">
         {/* Category Name with Toggle Button */}
         <div
           className="flex items-center gap-2 cursor-pointer"
           onClick={
-            category.children.length > 0
+            category.children && category.children.length > 0
               ? () => toggleCategory(category._id)
               : null
           }
         >
-          {category.children.length > 0 ? (
+          {category.children && category.children.length > 0 ? (
             <button className="bg-green-500/20 rounded-full p-1">
               {expandedCategories.includes(category._id) ? (
-                <FaMinus size={8} className="text-green-500" />
+                <AiOutlineFolderOpen size={12} className="text-green-500" />
               ) : (
-                <FaPlus size={8} className="text-green-500" />
+                <MdOutlineFolderOpen size={12} className="text-green-500" />
               )}
             </button>
           ) : (
-            <button className="bg-green-500/20 rounded-full p-1">
-              <FaMinus size={8} className="text-green-500" />
+            <button className="bg-[#000]/20 dark:bg-[#fff]/10 rounded-full p-1">
+              <FaMinus
+                size={8}
+                className="text-dark-weight-500 dark:text-light-weight-550"
+              />
             </button>
           )}
-          <span>{category.name}</span>
+          <span
+            className={`${category.isFeatured ? "" : "line-through text-light-weight-400 opacity-80"}`}
+          >
+            {category.name}
+            {category.isDefault && (
+              <span className="text-[10px] bg-red-500/20 rounded-full font-poppins-md text-red-600 px-2 py-0.5 ml-1">
+                Default
+              </span>
+            )}
+          </span>
         </div>
 
         {/* Featured Button */}
-        <CategoryFeaturedButton userId={userId} categoryDetails={category} />
+        {!category.isDefault && (
+          <div>
+            <CategoryFeaturedButton
+              userId={userId}
+              categoryDetails={category}
+            />
+          </div>
+        )}
 
         {/* Edit and Delete Buttons */}
         <div className="flex items-center gap-2">
@@ -54,18 +75,20 @@ const renderAllCategories = (
             <RiEditBoxLine size={12} />
           </button>
 
-          <CategoryDeleteButton userId={userId} categoryId={category._id} />
+          <CategoryDeleteButton userId={userId} categoryDetails={category} />
         </div>
       </div>
 
       {/* Render Children if Expanded */}
       {expandedCategories.includes(category._id) &&
+        category.children &&
         category.children.length > 0 && (
-          <div className="pl-2">
+          <div className="pl-1 sm:pl-3">
             {renderAllCategories(
               category.children,
               expandedCategories,
-              toggleCategory
+              toggleCategory,
+              userId
             )}
           </div>
         )}

@@ -1,8 +1,8 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { titlesObject } from "@/app/assets/data/titlesData/titles";
 import { AllPostsForm, Breadcrumb } from "@/components";
+import { getAllCategories } from "@/lib/api/category";
 import { getAccessTokenData } from "@/lib/middleware/getAccessTokenData";
-import { getAllCategories } from "@/services/actions/category";
 import { getServerSession } from "next-auth";
 
 export const metadata = {

@@ -14,7 +14,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import setLanguageAction from "@/services/actions/i18n/setLanguageAction";
+import setLanguageAction from "@/lib/api/i18n/setLanguageAction";
 import { useAppSelector } from "@/store/hooks";
 
 const NavbarLanguages = () => {

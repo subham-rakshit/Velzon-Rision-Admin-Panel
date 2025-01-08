@@ -2,7 +2,7 @@ import { getToken } from "next-auth/jwt";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
-import setLanguageAction from "./services/actions/i18n/setLanguageAction";
+import setLanguageAction from "./lib/api/i18n/setLanguageAction";
 
 // NOTE: Deifine Routes -->
 const authRoutes = [

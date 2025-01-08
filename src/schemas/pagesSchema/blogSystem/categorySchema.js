@@ -54,6 +54,8 @@ export const CategorySchema = z.object({
 
   isFeatured: z.boolean().default(true),
 
+  isDefault: z.boolean().default(false),
+
   tags: z
     .array(
       z

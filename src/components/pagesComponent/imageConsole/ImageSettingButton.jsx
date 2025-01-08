@@ -12,13 +12,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
+  deletePerticularImage,
+  downloadPerticularImage,
+} from "@/lib/api/image";
+import {
   showErrorToast,
   showSuccessToast,
 } from "@/lib/utils/toast-notification";
-import {
-  deletePerticularImage,
-  downloadPerticularImage,
-} from "@/services/actions/image";
 import { useState } from "react";
 import { IoSettings } from "react-icons/io5";
 import { MdDelete, MdDownload } from "react-icons/md";

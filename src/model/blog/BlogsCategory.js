@@ -24,16 +24,9 @@ const blogsCategorySchema = new mongoose.Schema(
       default: "",
     },
     parentCategoryId: {
-      type: mongoose.Schema.Types.Mixed, // Allowing mixed type for both ObjectId and "none"
-      default: "none",
-      validate: {
-        validator: async function (value) {
-          if (value === "none") return true; // Allow "none" as a valid value
-          return mongoose.Types.ObjectId.isValid(value); // Otherwise check for valid ObjectId
-        },
-        message:
-          "Parent category must be 'none' or a valid existing category id.",
-      },
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category",
+      default: null,
     },
     colorTheme: {
       type: String,
@@ -42,6 +35,10 @@ const blogsCategorySchema = new mongoose.Schema(
     isFeatured: {
       type: Boolean,
       default: true,
+    },
+    isDefault: {
+      type: Boolean,
+      default: false,
     },
     tags: {
       type: [String],

@@ -22,13 +22,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { createNewImage } from "@/lib/api/image";
 import { getCustomColor } from "@/lib/utils/customColor";
 import {
   showErrorToast,
   showSuccessToast,
 } from "@/lib/utils/toast-notification";
 import { AllImageSchema } from "@/schemas";
-import { createNewImage } from "@/services/actions/image";
 import { useAppSelector } from "@/store/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";

@@ -18,7 +18,6 @@ const LeftSidebarSmallIconView = ({
   hoverTextColor,
   gradientBgColor,
 }) => {
-  console.log(pathname);
   const t = useTranslations();
 
   const [hoverState, setHoverState] = useState({

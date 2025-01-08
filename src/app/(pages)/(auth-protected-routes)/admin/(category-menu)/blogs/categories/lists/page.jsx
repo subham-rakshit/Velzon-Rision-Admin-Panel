@@ -6,9 +6,9 @@ import {
   RenderAllCategories,
   SearchCategoryForm,
 } from "@/components";
+import { getAllCategories } from "@/lib/api/category";
 import { getAccessTokenData } from "@/lib/middleware/getAccessTokenData";
 import { buildCategoryTree } from "@/lib/utils/blog-categories-tree";
-import { getAllCategories } from "@/services/actions/category";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { MdErrorOutline } from "react-icons/md";
@@ -35,6 +35,7 @@ const BlogSystemCategories = async ({ searchParams }) => {
 
   // Search options
   const { search } = await searchParams;
+  // console.log("Search: ", search);
 
   // Fetch all List of Categories
   const { success, fetchData } = await getAllCategories(userId, search || "");
@@ -46,7 +47,12 @@ const BlogSystemCategories = async ({ searchParams }) => {
 
   // NOTE Create category TREE structure
   const categoryTree =
-    categoryList.length > 0 ? buildCategoryTree(categoryList) : [];
+    categoryList.length > 0
+      ? !search || search === ""
+        ? buildCategoryTree(categoryList)
+        : categoryList
+      : [];
+  // console.log("Category Tree: ", categoryTree);
 
   return (
     <div className={`min-h-full`}>

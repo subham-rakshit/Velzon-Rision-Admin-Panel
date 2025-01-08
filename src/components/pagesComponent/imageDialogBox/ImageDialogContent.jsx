@@ -10,7 +10,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { getAllImages } from "@/services/actions/image";
+import { getAllImages } from "@/lib/api/image";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { BsEmojiAstonished } from "react-icons/bs";

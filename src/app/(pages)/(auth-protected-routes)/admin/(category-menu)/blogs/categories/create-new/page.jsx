@@ -1,8 +1,8 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { Breadcrumb, CreateNewCategoryForm } from "@/components";
+import { getAllCategories } from "@/lib/api/category";
 import { getAccessTokenData } from "@/lib/middleware/getAccessTokenData";
 import { buildCategoryTree } from "@/lib/utils/blog-categories-tree";
-import { getAllCategories } from "@/services/actions/category";
 import { getServerSession } from "next-auth";
 
 const CreateNewBlogCategory = async ({ searchParams }) => {

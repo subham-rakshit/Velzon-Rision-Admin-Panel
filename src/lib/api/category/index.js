@@ -119,3 +119,34 @@ export const deletePerticularCategory = async (userId, categoryId) => {
     };
   }
 };
+
+// NOTE Change Category Featured Status
+export const changeCategoryFeaturedStatus = async (
+  userId,
+  categoryId,
+  isFeatured
+) => {
+  try {
+    const response = await axios.put(
+      `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/post/change-category-featured-status`,
+      {
+        userId,
+        categoryId,
+        isFeatured,
+      }
+    );
+
+    if (response.data.success && response.status === 200) {
+      return {
+        success: true,
+      };
+    }
+  } catch (error) {
+    console.log(`Error in changing category featured status CLIENT: ${error}`);
+    return {
+      success: false,
+      message:
+        error.response.data.message || error.message || "Something went wrong",
+    };
+  }
+};

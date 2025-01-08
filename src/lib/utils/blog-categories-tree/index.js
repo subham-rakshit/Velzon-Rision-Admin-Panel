@@ -11,14 +11,13 @@ export const buildCategoryTree = (categories) => {
 
   // NOTE 3: Iterate through the categories again to build the tree
   categories.forEach((category) => {
-    if (category.parentCategoryId !== "none" && category.isFeatured) {
+    if (category.parentCategoryId) {
       // If the category has a parent, find the parent in the map and add this category to the parent's children array
       map[category.parentCategoryId].children.push(map[category._id]);
     } else {
       // If the category has no parent (i.e., it's a top-level category), add it directly to the tree array
-      if (category.isFeatured) {
-        tree.push(map[category._id]);
-      }
+
+      tree.push(map[category._id]);
     }
   });
 
