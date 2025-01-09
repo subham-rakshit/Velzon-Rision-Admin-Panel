@@ -2,7 +2,10 @@
 
 import { Switch } from "@/components/ui/switch";
 import { changeCategoryFeaturedStatus } from "@/lib/api/category";
-import { showErrorToast } from "@/lib/utils/toast-notification";
+import {
+  showErrorToast,
+  showSuccessToast,
+} from "@/lib/utils/toast-notification";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { PulseLoader } from "react-spinners";
@@ -21,6 +24,7 @@ const CategoryFeaturedButton = ({ userId, categoryDetails }) => {
 
     if (changeCategoryFeaturedResponse.success) {
       setIsProcessing(false);
+      showSuccessToast(changeCategoryFeaturedResponse.message);
       router.refresh();
     } else {
       setIsProcessing(false);

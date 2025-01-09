@@ -10,12 +10,14 @@ const blogsCategorySchema = new mongoose.Schema(
     name: {
       type: String,
       required: true,
+      index: true,
       unique: true,
       trim: true,
     },
     slug: {
       type: String,
       required: true,
+      index: true,
       unique: true,
     },
     description: {

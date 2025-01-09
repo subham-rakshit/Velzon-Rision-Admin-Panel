@@ -101,6 +101,7 @@ export async function PUT(request) {
     return NextResponse.json(
       {
         success: true,
+        message: "Refreshing...",
       },
       { status: 200 }
     );

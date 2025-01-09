@@ -445,17 +445,19 @@ const CreateNewCategoryForm = ({ userId, searchValue, categoryList }) => {
           htmlForId="blog-category-meta-description"
           star={false}
         />
-        <Textarea
-          id="blog-category-meta-description"
-          {...register("metaDescription")}
-          placeholder="Enter meta description"
-          className={`h-[100px] ${globalStyleObj.commonDefaultInputFieldClass}`}
-        />
-        {errors && errors.metaDescription && (
-          <p className="text-red-500 text-[13px] font-poppins-rg">
-            {errors.metaDescription.message}
-          </p>
-        )}
+        <div className="flex flex-col gap-2 w-full max-w-[800px]">
+          <Textarea
+            id="blog-category-meta-description"
+            {...register("metaDescription")}
+            placeholder="Enter meta description"
+            className={`h-[100px] ${globalStyleObj.commonDefaultInputFieldClass}`}
+          />
+          {errors && errors.metaDescription && (
+            <p className="text-red-500 text-[13px] font-poppins-rg">
+              {errors.metaDescription.message}
+            </p>
+          )}
+        </div>
       </div>
 
       <button

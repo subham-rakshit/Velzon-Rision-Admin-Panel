@@ -8,10 +8,6 @@ export const CategorySchema = z.object({
     .string()
     .min(1, { message: "Category name is required." })
     .max(150, { message: "Category name must not exceed 150 characters." })
-    .regex(/^(?!.* {2,})[a-zA-Z0-9\s]+$/, {
-      message:
-        "Category name can only include letters, numbers, and spaces, with no extra spaces between words.",
-    })
     .transform((name) => name.trim()), // Trim leading and trailing whitespace
 
   slug: z
@@ -34,8 +30,8 @@ export const CategorySchema = z.object({
 
   description: z
     .string()
-    .min(50, { message: "Description must be at least 50 characters long." })
-    .max(1000, { message: "Description must not exceed 1000 characters." })
+    .min(30, { message: "Description must be at least 30 characters long." })
+    .max(200, { message: "Description must not exceed 200 characters." })
     .default(""),
 
   parentCategoryId: z
@@ -75,7 +71,7 @@ export const CategorySchema = z.object({
 
   metaDescription: z
     .string()
-    .max(160, "Meta description must not exceed 160 characters")
+    .max(200, "Meta description must not exceed 200 characters")
     .default("")
     .transform((desc) => desc.trim()),
 });

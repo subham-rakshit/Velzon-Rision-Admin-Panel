@@ -212,14 +212,11 @@ export async function PUT(request) {
       );
     }
 
-    // NOTE Update the isFeatured status of all child categories
-    // await updateChildCategories(categoryId);
-
     // NOTE RESPONSE
     return NextResponse.json(
       {
         success: true,
-        message: "Category updated successfully.",
+        message: "Category updated successfully. Redirecting...",
       },
       { status: 200 }
     );

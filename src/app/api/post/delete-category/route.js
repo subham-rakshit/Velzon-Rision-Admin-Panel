@@ -106,7 +106,7 @@ export async function DELETE(request) {
     return NextResponse.json(
       {
         success: true,
-        message: "Category deleted successfully.",
+        message: "Category deleted successfully. Refreshing...",
       },
       { status: 200 }
     );

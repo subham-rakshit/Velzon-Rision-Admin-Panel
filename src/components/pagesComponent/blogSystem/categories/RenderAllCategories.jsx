@@ -12,17 +12,19 @@ const renderAllCategories = (
   categoryTree,
   expandedCategories,
   toggleCategory,
-  userId
+  userId,
+  level = 0
 ) => {
-  return categoryTree.map((category) => (
+  return categoryTree.map((category, index) => (
     <div
       key={category._id}
-      className={`${category.parentCategoryId === null || !category.children ? "px-3 sm:px-5 border-b dark:border-[#fff]/10 py-5" : "my-5"} text-[13px] font-poppins-rg text-dark-weight-500 dark:text-light-weight-450`}
+      className={`${category.parentCategoryId === null || !category.children ? `px-3 sm:px-5 ${index !== categoryTree.length - 1 ? "border-b dark:border-[#fff]/10" : ""} py-5` : "mt-5"} text-[13px] font-poppins-rg text-dark-weight-500 dark:text-light-weight-450`}
     >
       <div className="flex items-center justify-between">
         {/* Category Name with Toggle Button */}
         <div
-          className="flex items-center gap-2 cursor-pointer"
+          className="flex items-center gap-2 cursor-pointer flex-1"
+          style={{ paddingLeft: `${level}px` }}
           onClick={
             category.children && category.children.length > 0
               ? () => toggleCategory(category._id)
@@ -59,7 +61,7 @@ const renderAllCategories = (
 
         {/* Featured Button */}
         {!category.isDefault && (
-          <div>
+          <div className="flex-1 flex items-center justify-center">
             <CategoryFeaturedButton
               userId={userId}
               categoryDetails={category}
@@ -68,7 +70,7 @@ const renderAllCategories = (
         )}
 
         {/* Edit and Delete Buttons */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center justify-end gap-2 flex-1">
           <Link
             href={`/admin/blogs/categories/update/${category._id}`}
             className="transition-300 rounded-full bg-[#49ABE0]/20 p-2 text-[#49ABE0] hover:bg-[#49ABE0] hover:text-white"
@@ -84,14 +86,15 @@ const renderAllCategories = (
       {expandedCategories.includes(category._id) &&
         category.children &&
         category.children.length > 0 && (
-          <div className="pl-1 sm:pl-3">
+          <>
             {renderAllCategories(
               category.children,
               expandedCategories,
               toggleCategory,
-              userId
+              userId,
+              level + 8
             )}
-          </div>
+          </>
         )}
     </div>
   ));

@@ -11,7 +11,7 @@ import { getAccessTokenData } from "@/lib/middleware/getAccessTokenData";
 import { buildCategoryTree } from "@/lib/utils/blog-categories-tree";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
-import { MdErrorOutline } from "react-icons/md";
+import { BsEmojiAstonished } from "react-icons/bs";
 
 export const metadata = {
   title: titlesObject.categories.title,
@@ -32,16 +32,22 @@ const BlogSystemCategories = async ({ searchParams }) => {
 
   // Category List
   let categoryList = [];
+  let errorMessage;
 
   // Search options
   const { search } = await searchParams;
 
   // Fetch all List of Categories
-  const { success, fetchData } = await getAllCategories(userId, search || "");
+  const { success, fetchData, message } = await getAllCategories(
+    userId,
+    search || ""
+  );
   if (success) {
     categoryList = fetchData;
+    errorMessage = "";
   } else {
     categoryList = [];
+    errorMessage = message;
   }
 
   // NOTE Create category TREE structure
@@ -107,9 +113,18 @@ const BlogSystemCategories = async ({ searchParams }) => {
           {categoryTree.length > 0 ? (
             <RenderAllCategories userId={userId} categoryTree={categoryTree} />
           ) : (
-            <div className="flex w-full items-center justify-center gap-2 font-poppins-rg text-light-weight-400 p-3 text-[16px]">
-              <MdErrorOutline />
-              <h1>No Categories Uploaded Yet!</h1>
+            <div className="flex flex-col w-full items-center justify-center gap-2 p-3 min-h-[50vh]">
+              <BsEmojiAstonished size={50} />
+              <h1 className="text-center text-[16px] md:text-[18px] text-dark-weight-600 dark:text-light-weight-800 font-poppins-rg">
+                {errorMessage ? errorMessage : "No Categories Uploaded Yet!"}
+              </h1>
+
+              {!errorMessage && (
+                <p className="text-center text-[13px] italic text-dark-weight-350 dark:text-light-weight-400 font-poppins-rg">
+                  Create your first category to get started.
+                  <br /> Please click the Add New Category.
+                </p>
+              )}
             </div>
           )}
         </div>

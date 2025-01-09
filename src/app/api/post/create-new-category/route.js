@@ -169,7 +169,7 @@ export async function POST(request) {
     return NextResponse.json(
       {
         success: true,
-        message: "The category is successfully created.",
+        message: "The category is successfully created. Redirecting...",
       },
       { status: 201 }
     );

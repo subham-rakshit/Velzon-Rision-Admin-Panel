@@ -1,6 +1,7 @@
 import dbConnect from "@/lib/db/dbConnect";
 import AllBlogsCategoryModel from "@/model/blog/BlogsCategory";
 import UserModel from "@/model/User";
+import escapeStringRegexp from "escape-string-regexp";
 import mongoose from "mongoose";
 import { NextResponse } from "next/server";
 
@@ -19,7 +20,7 @@ export async function GET(request) {
           success: false,
           message: "Invalid request. Please try again later.",
         },
-        { status: 404 }
+        { status: 400 }
       );
     }
 
@@ -29,21 +30,32 @@ export async function GET(request) {
       return NextResponse.json(
         {
           success: false,
-          message:
-            "Access denied. You do not have permission to view categories.",
+          message: "User not found.",
         },
         { status: 404 }
       );
     }
+    if (!Array.isArray(user.role) || !user.role.includes("Admin")) {
+      return NextResponse.json(
+        {
+          success: false,
+          message:
+            "Access denied. You do not have permission to view categories.",
+        },
+        { status: 403 }
+      );
+    }
 
-    // NOTE Get all categories
+    // NOTE Escape special characters - (), ., *, +, ?, [, ], ^, $, \ -> Prevents regex injection attacks. More info: https://www.freeformatter.com/regexp-escape.html [Ex - hello(world) = hello\(world\)]. Ensures your search strings behave as intended in a regular expression. Reduces runtime errors caused by invalid regex patterns.
+    const searchQuery = escapeStringRegexp(search || "");
     const query = {
       $or: [
-        { name: { $regex: search, $options: "i" } },
-        { slug: { $regex: search, $options: "i" } },
+        { name: { $regex: searchQuery, $options: "i" } },
+        { slug: { $regex: searchQuery, $options: "i" } },
       ],
     };
-    const categoryList = await AllBlogsCategoryModel.find(query);
+
+    let categoryList = await AllBlogsCategoryModel.find(query);
 
     return NextResponse.json(
       {
@@ -53,7 +65,9 @@ export async function GET(request) {
       { status: 200 }
     );
   } catch (error) {
-    console.log(`Error in getting all categories SERVER: ${error}`);
+    console.log(
+      `Error in getting all categories SERVER: ${error.stack || error}`
+    );
     return NextResponse.json(
       {
         success: false,

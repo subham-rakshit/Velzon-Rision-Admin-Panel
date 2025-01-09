@@ -10,8 +10,6 @@ export const updateChildCategories = async (categoryId, isFeatured) => {
     isFeatured: true,
   });
 
-  console.log("Child Category: ", childCategories);
-
   // Update each child category's isFeatured status
   for (let category of childCategories) {
     await AllBlogsCategoryModel.findByIdAndUpdate(

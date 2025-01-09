@@ -53,8 +53,14 @@ export const getAllCategories = async (userId, search) => {
     }
   } catch (error) {
     console.log(`Error in getting all categories CLIENT: ${error}`);
+    const errorMessage =
+      error?.response?.data?.errors ||
+      error?.response?.data?.message ||
+      "An unexpected error occurred. Please try again later.";
+
     return {
       success: false,
+      message: errorMessage,
       fetchData: [],
     };
   }
@@ -79,6 +85,7 @@ export const changeCategoryFeaturedStatus = async (
     if (response.data.success && response.status === 200) {
       return {
         success: true,
+        message: response.data.message,
       };
     }
   } catch (error) {
