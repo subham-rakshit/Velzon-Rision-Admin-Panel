@@ -79,7 +79,7 @@ const leftSidebarData = [
           {
             id: "blogs-create",
             parentTabId: "Blog",
-            tabName: "All Posts",
+            tabName: "Create Post",
             pathName: "/admin/blogs/create",
             tabDropdownList: [],
           },

@@ -1,8 +1,9 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { titlesObject } from "@/app/assets/data/titlesData/titles";
-import { AllPostsForm, Breadcrumb } from "@/components";
+import { Breadcrumb, CreatePostsForm } from "@/components";
 import { getAllCategories } from "@/lib/api/category";
 import { getAccessTokenData } from "@/lib/middleware/getAccessTokenData";
+import { buildCategoryTree } from "@/lib/utils/blog-categories-tree";
 import { getServerSession } from "next-auth";
 
 export const metadata = {
@@ -34,14 +35,18 @@ const BlogSystemAllPosts = async ({ searchParams }) => {
     categoryList = [];
   }
 
+  // Create category tree structure
+  const categoryTree =
+    categoryList.length > 0 ? buildCategoryTree(categoryList) : [];
+
   return (
     <div className={`min-h-full`}>
       <Breadcrumb title="All Posts" pageTilte="Blog System" />
 
-      <AllPostsForm
+      <CreatePostsForm
         userId={userId}
         searchValue={search}
-        categoryList={categoryList}
+        categoryList={categoryTree}
       />
     </div>
   );

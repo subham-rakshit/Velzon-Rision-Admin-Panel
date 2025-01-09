@@ -6,13 +6,16 @@ import { MdArrowForward, MdErrorOutline } from "react-icons/md";
 import { ClipLoader } from "react-spinners";
 
 import { globalStyleObj } from "@/app/assets/styles";
-import { ImageReuseDialog, LabelText } from "@/components";
+import {
+  ImageReuseDialog,
+  LabelText,
+  RenderCategoryOptions,
+} from "@/components";
 import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
   SelectGroup,
-  SelectItem,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -28,7 +31,7 @@ import { useAppSelector } from "@/store/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 
-const AllPostsForm = ({ userId, searchValue, categoryList }) => {
+const CreatePostsForm = ({ userId, searchValue, categoryList }) => {
   const { layoutThemePrimaryColorType } = useAppSelector(
     (state) => state.layout
   );
@@ -144,32 +147,25 @@ const AllPostsForm = ({ userId, searchValue, categoryList }) => {
               <Select
                 {...field}
                 id="blog-category"
-                value={field.value || ""}
+                value={field.value}
                 onValueChange={(value) => field.onChange(value)}
               >
                 <SelectTrigger className="w-full border py-5 font-poppins-rg text-[13px] text-dark-weight-550 dark:border-[#fff]/10 dark:bg-[#000]/10 dark:text-light-weight-400">
                   <SelectValue placeholder="--" />
                 </SelectTrigger>
                 <SelectContent
-                  className={`border-0 ${globalStyleObj.backgroundLight900Dark200} font-poppins-rg text-[13px] text-dark-weight-550 dark:text-light-weight-550`}
+                  className={`border-0 ${globalStyleObj.backgroundLight900Dark200}`}
                 >
-                  {categoryList.length > 0 ? (
-                    <SelectGroup>
-                      {categoryList.map((item) => (
-                        <SelectItem
-                          key={item._id}
-                          value={item.category.toLowerCase()}
-                        >
-                          {item.category}
-                        </SelectItem>
-                      ))}
-                    </SelectGroup>
-                  ) : (
-                    <div className="flex w-full items-center justify-center gap-2 font-poppins-rg text-light-weight-400 p-3 text-[16px]">
-                      <MdErrorOutline />
-                      <h1>No Categories Uploaded Yet!</h1>
-                    </div>
-                  )}
+                  <SelectGroup>
+                    {categoryList.length > 0 ? (
+                      <RenderCategoryOptions categoryList={categoryList} />
+                    ) : (
+                      <p className="text-light-weight-400 text-[13px] font-poppins-rg flex items-center justify-center gap-2">
+                        <MdErrorOutline size={16} color="#878a99" />
+                        Category does not created yet
+                      </p>
+                    )}
+                  </SelectGroup>
                 </SelectContent>
               </Select>
             )}
@@ -365,4 +361,4 @@ const AllPostsForm = ({ userId, searchValue, categoryList }) => {
   );
 };
 
-export default AllPostsForm;
+export default CreatePostsForm;

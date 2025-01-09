@@ -33,7 +33,7 @@ import ToggleButton from "./navigation/navbar/ToggleButton";
 import RightSidebar from "./navigation/rightSidebar/RightSidebar";
 import TransitionLink from "./navigation/TransitionLink";
 // Blog System
-import AllPostsForm from "./pagesComponent/blogSystem/allPosts/AllPostsForm";
+import CreatePostsForm from "./pagesComponent/blogSystem/allPosts/CreatePostsForm";
 import CategoryDeleteButton from "./pagesComponent/blogSystem/categories/CategoryDeleteButton";
 import CategoryFeaturedButton from "./pagesComponent/blogSystem/categories/CategoryFeaturedButton";
 import CreateNewCategoryForm from "./pagesComponent/blogSystem/categories/CreateNewCategoryForm";
@@ -83,7 +83,6 @@ import ImageReuseDialog from "./pagesComponent/imageDialogBox/ImageReuseDialog";
 export {
   AddNewImageButton,
   AddPrdocutsAndSheet,
-  AllPostsForm,
   AudiencesMetrics,
   AudiencesSessionsByCountry,
   AuthProtectedLayoutProvider,
@@ -95,6 +94,7 @@ export {
   ClosingDeals,
   CountupText,
   CreateNewCategoryForm,
+  CreatePostsForm,
   CustomExportButton,
   DateRangePicker,
   DealsStatus,
