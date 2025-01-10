@@ -57,7 +57,7 @@ const ImageReuseDialog = ({
       <DialogTrigger asChild>
         <button
           type="button"
-          className="w-full max-w-[800px] flex items-center gap-5 rounded-md overflow-hidden text-[13px] font-poppins-rg text-dark-weight-550 dark:text-light-weight-550 border dark:border-[#fff]/10"
+          className="w-full flex items-center gap-5 rounded-md overflow-hidden text-[13px] font-poppins-rg text-dark-weight-550 dark:text-light-weight-550 border dark:border-[#fff]/10"
         >
           <p className="bg-[#000]/70 dark:bg-[#fff]/20 px-3 py-[10px] text-light-weight-800">
             Choose File

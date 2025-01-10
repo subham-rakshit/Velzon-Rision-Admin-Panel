@@ -20,18 +20,31 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { createNewPost } from "@/lib/api/posts";
+import { createNewBlogPost } from "@/lib/api/blogs";
 import { getCustomColor } from "@/lib/utils/customColor";
 import {
   showErrorToast,
   showSuccessToast,
 } from "@/lib/utils/toast-notification";
-import { AllPostsSchema } from "@/schemas";
+import { AllBlogsSchema } from "@/schemas";
 import { useAppSelector } from "@/store/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 
-const CreatePostsForm = ({ userId, searchValue, categoryList }) => {
+const defaultValues = {
+  title: "",
+  category: "",
+  slug: "",
+  bannerImage: "",
+  shortDescription: "",
+  description: "",
+  metaTitle: "",
+  metaImage: "",
+  metaDescription: "",
+};
+
+const CreateBlogPostForm = ({ userId, searchValue, categoryList }) => {
   const { layoutThemePrimaryColorType } = useAppSelector(
     (state) => state.layout
   );
@@ -45,23 +58,31 @@ const CreatePostsForm = ({ userId, searchValue, categoryList }) => {
     setError,
     setValue,
   } = useForm({
-    resolver: zodResolver(AllPostsSchema),
-    defaultValues: {
-      title: "",
-      category: "",
-      slug: "",
-      bannerImage: "",
-      shortDescription: "",
-      description: "",
-      metaTitle: "",
-      metaImage: "",
-      metaDescription: "",
-    },
+    resolver: zodResolver(AllBlogsSchema),
+    defaultValues,
   });
 
   const { theme } = useTheme();
   const customColor = getCustomColor({ layoutThemePrimaryColorType });
   const { bgColor, hoverBgColor, textColor, hexCode } = customColor;
+
+  // NOTE Handle Slug value according to the category name
+  const watchedTitle = watch("title");
+  useEffect(() => {
+    if (watchedTitle && watchedTitle.length > 0) {
+      setError("slug", "");
+      const generatedSlug = watchedTitle
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, "") // Remove invalid characters
+        .replace(/\s+/g, "-") // Replace spaces with hyphens
+        .replace(/-+/g, "-") // Replace multiple hyphens with single hyphen
+        .replace(/^-|-$/g, "") // Remove leading or trailing hyphens
+        .trim();
+      setValue("slug", generatedSlug);
+    } else {
+      setValue("slug", "");
+    }
+  }, [watchedTitle, setValue]);
 
   // NOTE Handle Banner Image
   const onChangeBannerImage = (url) => {
@@ -73,35 +94,29 @@ const CreatePostsForm = ({ userId, searchValue, categoryList }) => {
     setValue("metaImage", url);
   };
 
+  // NOTE Handle Validation Errors
+  const handleValidationErrors = (errors) => {
+    Object.keys(errors).forEach((field) => {
+      setError(field, {
+        type: "server",
+        message: errors[field].message,
+      });
+    });
+  };
+
   // NOTE Handle Create New Blog functionality
   const onSubmit = async (data) => {
-    const response = await createNewPost(data, userId);
+    const response = await createNewBlogPost(data, userId);
 
     if (response.success) {
       showSuccessToast(response.message || "Post created successfully.");
       reset();
-    } else if (response.message.title) {
-      setError("title", {
-        type: "server",
-        message: response.message.title.message,
-      });
-    } else if (response.message.category) {
-      setError("category", {
-        type: "server",
-        message: response.message.category.message,
-      });
-    } else if (response.message.slug) {
-      setError("slug", {
-        type: "server",
-        message: response.message.slug.message,
-      });
-    } else if (response.message.shortDescription) {
-      setError("shortDescription", {
-        type: "server",
-        message: response.message.shortDescription.message,
-      });
     } else {
-      showErrorToast(response.message || "Something went wrong.");
+      if (response.errors) {
+        handleValidationErrors(response.errors);
+      } else {
+        showErrorToast(response.message || "Something went wrong.");
+      }
     }
   };
 
@@ -210,13 +225,20 @@ const CreatePostsForm = ({ userId, searchValue, categoryList }) => {
         <LabelText
           text="Banner (1300 x 650)"
           htmlForId="blog-banner-img"
-          star={false}
+          star={true}
         />
-        <ImageReuseDialog
-          userId={userId}
-          searchValue={searchValue}
-          onChangeBannerImage={onChangeBannerImage}
-        />
+        <div className="flex flex-col gap-2 w-full max-w-[800px]">
+          <ImageReuseDialog
+            userId={userId}
+            searchValue={searchValue}
+            onChangeBannerImage={onChangeBannerImage}
+          />
+          {errors && errors.bannerImage && (
+            <p className="text-red-500 text-[13px] font-poppins-rg">
+              {errors.bannerImage.message}
+            </p>
+          )}
+        </div>
       </div>
 
       {/* Short Description */}
@@ -308,12 +330,20 @@ const CreatePostsForm = ({ userId, searchValue, categoryList }) => {
           htmlForId="blog-meta-img"
           star={false}
         />
-        <ImageReuseDialog
-          userId={userId}
-          searchValue={searchValue}
-          htmlId="blog-meta-img"
-          onChangeMetaImage={onChangeMetaImage}
-        />
+
+        <div className="flex flex-col gap-2 w-full max-w-[800px]">
+          <ImageReuseDialog
+            userId={userId}
+            searchValue={searchValue}
+            htmlId="blog-meta-img"
+            onChangeMetaImage={onChangeMetaImage}
+          />
+          {errors && errors.metaImage && (
+            <p className="text-red-500 text-[13px] font-poppins-rg">
+              {errors.metaImage.message}
+            </p>
+          )}
+        </div>
       </div>
 
       {/* Meta Description */}
@@ -361,4 +391,4 @@ const CreatePostsForm = ({ userId, searchValue, categoryList }) => {
   );
 };
 
-export default CreatePostsForm;
+export default CreateBlogPostForm;

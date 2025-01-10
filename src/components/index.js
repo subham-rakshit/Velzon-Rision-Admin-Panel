@@ -33,14 +33,14 @@ import ToggleButton from "./navigation/navbar/ToggleButton";
 import RightSidebar from "./navigation/rightSidebar/RightSidebar";
 import TransitionLink from "./navigation/TransitionLink";
 // Blog System
-import CreatePostsForm from "./pagesComponent/blogSystem/allPosts/CreatePostsForm";
-import CategoryDeleteButton from "./pagesComponent/blogSystem/categories/CategoryDeleteButton";
-import CategoryFeaturedButton from "./pagesComponent/blogSystem/categories/CategoryFeaturedButton";
-import CreateNewCategoryForm from "./pagesComponent/blogSystem/categories/CreateNewCategoryForm";
-import RenderAllCategories from "./pagesComponent/blogSystem/categories/RenderAllCategories";
-import RenderCategoryOptions from "./pagesComponent/blogSystem/categories/RenderCategoryOptions";
-import SearchCategoryForm from "./pagesComponent/blogSystem/categories/SearchCategoryForm";
-import UpdateCategoryForm from "./pagesComponent/blogSystem/categories/UpdateCategoryForm";
+import CreateBlogPostForm from "./pagesComponent/blogs/posts/CreateBlogPostForm";
+import CategoryDeleteButton from "./pagesComponent/blogs/categories/CategoryDeleteButton";
+import CategoryFeaturedButton from "./pagesComponent/blogs/categories/CategoryFeaturedButton";
+import CreateNewCategoryForm from "./pagesComponent/blogs/categories/CreateNewCategoryForm";
+import RenderAllCategories from "./pagesComponent/blogs/categories/RenderAllCategories";
+import RenderCategoryOptions from "./pagesComponent/blogs/categories/RenderCategoryOptions";
+import SearchCategoryForm from "./pagesComponent/blogs/categories/SearchCategoryForm";
+import UpdateCategoryForm from "./pagesComponent/blogs/categories/UpdateCategoryForm";
 import LabelText from "./pagesComponent/LabelText";
 // Dashboard Analytics
 import Breadcrumb from "./pagesComponent/Breadcrumb";
@@ -93,8 +93,8 @@ export {
   CategoryFeaturedButton,
   ClosingDeals,
   CountupText,
+  CreateBlogPostForm,
   CreateNewCategoryForm,
-  CreatePostsForm,
   CustomExportButton,
   DateRangePicker,
   DealsStatus,

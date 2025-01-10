@@ -94,7 +94,6 @@ export async function POST(request) {
     // NOTE Check if category already exists or not
     let newSlug;
     const existsCategory = await AllBlogsCategoryModel.findOne({
-      userId: user._id,
       $or: [{ slug }, { name }],
     });
 

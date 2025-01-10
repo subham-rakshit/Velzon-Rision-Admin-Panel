@@ -6,8 +6,8 @@ const isValidId = (id) => mongoose.Types.ObjectId.isValid(id);
 export const CategorySchema = z.object({
   name: z
     .string()
-    .min(1, { message: "Category name is required." })
-    .max(150, { message: "Category name must not exceed 150 characters." })
+    .min(5, { message: "Category name must atleast 5 characters long." })
+    .max(100, { message: "Category name must not exceed 100 characters." })
     .transform((name) => name.trim()), // Trim leading and trailing whitespace
 
   slug: z

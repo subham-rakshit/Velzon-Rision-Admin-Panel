@@ -14,7 +14,7 @@ import Link from "next/link";
 import { BsEmojiAstonished } from "react-icons/bs";
 
 export const metadata = {
-  title: titlesObject.categories.title,
+  title: titlesObject.allCategories.title,
 };
 
 const BlogSystemCategories = async ({ searchParams }) => {

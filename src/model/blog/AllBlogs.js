@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const blogAllPostsSchema = new mongoose.Schema(
+const allBlogsSchema = new mongoose.Schema(
   {
     userId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -10,17 +10,19 @@ const blogAllPostsSchema = new mongoose.Schema(
     title: {
       type: String,
       required: true,
+      index: true,
       trim: true,
       unique: true,
     },
     category: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category",
       required: true,
-      trim: true,
     },
     slug: {
       type: String,
       required: true,
+      index: true,
       trim: true,
       unique: true,
     },
@@ -31,10 +33,12 @@ const blogAllPostsSchema = new mongoose.Schema(
     shortDescription: {
       type: String,
       required: true,
+      index: true,
       trim: true,
     },
     description: {
       type: String,
+      index: true,
       trim: true,
     },
     metaTitle: {
@@ -55,7 +59,7 @@ const blogAllPostsSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const AllBlogPostsModel =
-  mongoose.models.Blog || mongoose.model("Blog", blogAllPostsSchema);
+const AllBlogsModel =
+  mongoose.models.Blog || mongoose.model("Blog", allBlogsSchema);
 
-export default AllBlogPostsModel;
+export default AllBlogsModel;

@@ -125,60 +125,12 @@ const CreateNewCategoryForm = ({ userId, searchValue, categoryList }) => {
 
   // NOTE Handle Validation Errors
   const handleValidationErrors = (errors) => {
-    if (errors.name) {
-      setError("name", {
+    Object.keys(errors).forEach((field) => {
+      setError(field, {
         type: "server",
-        message: errors.name.message,
+        message: errors[field].message,
       });
-    }
-    if (errors.slug) {
-      setError("slug", {
-        type: "server",
-        message: errors.slug.message,
-      });
-    }
-    if (errors.description) {
-      setError("description", {
-        type: "server",
-        message: errors.description.message,
-      });
-    }
-    if (errors.parentCategoryId) {
-      setError("parentCategoryId", {
-        type: "server",
-        message: errors.parentCategoryId.message,
-      });
-    }
-    if (errors.colorTheme) {
-      setError("colorTheme", {
-        type: "server",
-        message: errors.colorTheme.message,
-      });
-    }
-    if (errors.tags) {
-      setError("tags", {
-        type: "server",
-        message: errors.tags.message,
-      });
-    }
-    if (errors.metaTitle) {
-      setError("metaTitle", {
-        type: "server",
-        message: errors.metaTitle.message,
-      });
-    }
-    if (errors.metaImage) {
-      setError("metaImage", {
-        type: "server",
-        message: errors.metaImage.message,
-      });
-    }
-    if (errors.metaDescription) {
-      setError("metaDescription", {
-        type: "server",
-        message: errors.metaDescription.message,
-      });
-    }
+    });
   };
 
   // NOTE Handle Create New Category functionality

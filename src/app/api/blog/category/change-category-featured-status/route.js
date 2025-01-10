@@ -101,7 +101,9 @@ export async function PUT(request) {
     return NextResponse.json(
       {
         success: true,
-        message: "Refreshing...",
+        message: isFeatured
+          ? `${category.name} has been deactivated. Refreshing the page...`
+          : `${category.name} has been activated. Refreshing the page...`,
       },
       { status: 200 }
     );

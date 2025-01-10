@@ -39,8 +39,8 @@ export const titlesObject = {
     title: "Profile | Velzon - NEXT.js Admin & Dashboard Template",
   },
 
-  // Admin Pages
-  // INFO: Dashborad Pages
+  // NOTE Admin Pages ****
+  // Dashborad Pages Section
   dashboard: {
     title: "Dashboard | Velzon - NEXT.js Admin & Dashboard Template",
   },
@@ -66,15 +66,22 @@ export const titlesObject = {
     title: "Blog | Velzon - NEXT.js Admin & Dashboard Template",
   },
 
-  // Bog System
-  allPosts: {
-    title: "All Posts | Velzon - NEXT.js Admin & Dashboard Template",
-  },
-  categories: {
-    title: "Categories | Velzon - NEXT.js Admin & Dashboard Template",
+  // NOTE Bog System ****
+
+  // For Blog Section
+  createPost: {
+    title: "Create New Post | Velzon - NEXT.js Admin & Dashboard Template",
   },
 
-  // Image Dashboard
+  // For Categories Section
+  allCategories: {
+    title: "All Categories | Velzon - NEXT.js Admin & Dashboard Template",
+  },
+  createCategory: {
+    title: "Create New Category | Velzon - NEXT.js Admin & Dashboard Template",
+  },
+
+  // NOTE Image Dashboard
   imageLibraryControls: {
     title:
       "Image Library Controls | Velzon - NEXT.js Admin & Dashboard Template",

@@ -4,7 +4,7 @@ import axios from "axios";
 export const createNewCategory = async (data, userId) => {
   try {
     const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/post/create-new-category`,
+      `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/blog/category/create-new-category`,
       {
         ...data,
         userId,
@@ -42,7 +42,7 @@ export const createNewCategory = async (data, userId) => {
 export const getAllCategories = async (userId, search) => {
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/post/get-all-categories?userId=${userId}&search=${search ? search : ""}`
+      `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/blog/category/get-all-categories?userId=${userId}&search=${search ? search : ""}`
     );
 
     if (response.data.success && response.status === 200) {
@@ -74,7 +74,7 @@ export const changeCategoryFeaturedStatus = async (
 ) => {
   try {
     const response = await axios.put(
-      `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/post/change-category-featured-status`,
+      `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/blog/category/change-category-featured-status`,
       {
         userId,
         categoryId,
@@ -102,7 +102,7 @@ export const changeCategoryFeaturedStatus = async (
 export const getPerticularCategory = async (userId, categoryId) => {
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/post/get-category-details?userId=${userId}&categoryId=${categoryId ? categoryId : ""}`
+      `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/blog/category/get-category-details?userId=${userId}&categoryId=${categoryId ? categoryId : ""}`
     );
 
     if (response.data.success && response.status === 200) {
@@ -124,7 +124,7 @@ export const getPerticularCategory = async (userId, categoryId) => {
 export const updatePerticularCategory = async (userId, categoryId, data) => {
   try {
     const response = await axios.put(
-      `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/post/update-category`,
+      `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/blog/category/update-category`,
       {
         userId,
         categoryId,
@@ -161,7 +161,7 @@ export const updatePerticularCategory = async (userId, categoryId, data) => {
 export const deletePerticularCategory = async (userId, categoryId) => {
   try {
     const response = await axios.delete(
-      `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/post/delete-category?userId=${userId}&categoryId=${categoryId}`
+      `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/blog/category/delete-category?userId=${userId}&categoryId=${categoryId}`
     );
 
     if (response.data.success && response.status === 200) {
