@@ -77,12 +77,30 @@ const leftSidebarData = [
         tabIcon: <MdOutlineArticle />,
         tabDropdownList: [
           {
-            id: "blogs-create",
+            id: "blogs-posts",
             parentTabId: "Blog",
-            tabName: "Create Post",
-            pathName: "/admin/blogs/create",
-            tabDropdownList: [],
+            tabName: "Posts",
+            pathName: "",
+            tabDropdownList: [
+              {
+                id: "blogs-posts-lists",
+                parentTabId: "Blog",
+                firstChildId: "blogs-posts",
+                tabName: "All Posts",
+                pathName: "/admin/blogs/posts/lists",
+                tabDropdownList: [],
+              },
+              {
+                id: "blogs-posts-create",
+                parentTabId: "Blog",
+                firstChildId: "blogs-posts",
+                tabName: "Create Post",
+                pathName: "/admin/blogs/posts/create",
+                tabDropdownList: [],
+              },
+            ],
           },
+
           {
             id: "blogs-categories",
             parentTabId: "Blog",

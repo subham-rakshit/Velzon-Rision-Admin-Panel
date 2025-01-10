@@ -1,7 +1,7 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { titlesObject } from "@/app/assets/data/titlesData/titles";
 import { Breadcrumb, CreateBlogPostForm } from "@/components";
-import { getAllCategories } from "@/lib/api/category";
+import { getAllCategories } from "@/lib/api/blogs/category";
 import { getAccessTokenData } from "@/lib/middleware/getAccessTokenData";
 import { buildCategoryTree } from "@/lib/utils/blog-categories-tree";
 import { getServerSession } from "next-auth";
@@ -41,7 +41,11 @@ const BlogSystemAllPosts = async ({ searchParams }) => {
 
   return (
     <div className={`min-h-full`}>
-      <Breadcrumb title="Create Blog" pageTilte="Blog System" />
+      <Breadcrumb
+        title="Create Post"
+        pageTilte="Blog System"
+        firstChildTitle="Posts"
+      />
 
       <CreateBlogPostForm
         userId={userId}

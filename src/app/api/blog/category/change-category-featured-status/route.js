@@ -102,8 +102,8 @@ export async function PUT(request) {
       {
         success: true,
         message: isFeatured
-          ? `${category.name} has been deactivated. Refreshing the page...`
-          : `${category.name} has been activated. Refreshing the page...`,
+          ? `You've disabled ${category.name}. Refreshing to apply changes...`
+          : `You've enabled ${category.name}. Refreshing to apply changes...`,
       },
       { status: 200 }
     );

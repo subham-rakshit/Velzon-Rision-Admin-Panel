@@ -1,7 +1,7 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { titlesObject } from "@/app/assets/data/titlesData/titles";
 import { Breadcrumb, CreateNewCategoryForm } from "@/components";
-import { getAllCategories } from "@/lib/api/category";
+import { getAllCategories } from "@/lib/api/blogs/category";
 import { getAccessTokenData } from "@/lib/middleware/getAccessTokenData";
 import { buildCategoryTree } from "@/lib/utils/blog-categories-tree";
 import { getServerSession } from "next-auth";

@@ -1,30 +1,25 @@
 "use client";
 
-import { deletePerticularCategory } from "@/lib/api/blogs/category";
 import {
   showErrorToast,
   showSuccessToast,
 } from "@/lib/utils/toast-notification";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { CgDanger } from "react-icons/cg";
 import { LiaSpinnerSolid } from "react-icons/lia";
 import { RiDeleteBin2Line } from "react-icons/ri";
 
-const CategoryDeleteButton = ({ userId, categoryDetails }) => {
+const PostDeleteButton = ({ userId, postId }) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const router = useRouter();
 
-  // NOTE Handle Delete Category functionality
-  const handleCategoryDelete = async () => {
+  // NOTE Handle Delete Post functionality
+  const handlePostDelete = async () => {
     setIsProcessing(true);
-    const response = await deletePerticularCategory(
-      userId,
-      categoryDetails._id
-    );
+    const response = await deletePerticularPost(userId, postId);
 
     if (response.success) {
-      showSuccessToast(response.message || "Category deleted successfully.");
+      showSuccessToast(response.message || "Post deleted successfully.");
       setIsProcessing(false);
       router.refresh();
     } else {
@@ -36,14 +31,12 @@ const CategoryDeleteButton = ({ userId, categoryDetails }) => {
   return (
     <button
       type="button"
-      onClick={handleCategoryDelete}
-      disabled={isProcessing || categoryDetails.isDefault}
-      className={`transition-300 rounded-full bg-[#F06548]/20 p-2 text-[#F06548] ${categoryDetails.isDefault ? "cursor-not-allowed" : "hover:bg-[#F06548] hover:text-white"}`}
+      onClick={handlePostDelete}
+      disabled={isProcessing}
+      className={`transition-300 rounded-full bg-[#F06548]/20 p-2 text-[#F06548] hover:bg-[#F06548] hover:text-white`}
     >
       {isProcessing ? (
         <LiaSpinnerSolid size={12} color="#F06548" className="animate-spin" />
-      ) : categoryDetails.isDefault ? (
-        <CgDanger size={12} />
       ) : (
         <RiDeleteBin2Line size={12} />
       )}
@@ -51,4 +44,4 @@ const CategoryDeleteButton = ({ userId, categoryDetails }) => {
   );
 };
 
-export default CategoryDeleteButton;
+export default PostDeleteButton;

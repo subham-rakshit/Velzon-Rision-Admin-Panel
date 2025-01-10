@@ -1,7 +1,7 @@
 "use client";
 
 import { Switch } from "@/components/ui/switch";
-import { changeCategoryFeaturedStatus } from "@/lib/api/category";
+import { changeCategoryFeaturedStatus } from "@/lib/api/blogs/category";
 import {
   showErrorToast,
   showSuccessToast,

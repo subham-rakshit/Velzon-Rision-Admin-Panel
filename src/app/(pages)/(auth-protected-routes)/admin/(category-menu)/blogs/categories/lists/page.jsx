@@ -6,7 +6,7 @@ import {
   RenderAllCategories,
   SearchCategoryForm,
 } from "@/components";
-import { getAllCategories } from "@/lib/api/category";
+import { getAllCategories } from "@/lib/api/blogs/category";
 import { getAccessTokenData } from "@/lib/middleware/getAccessTokenData";
 import { buildCategoryTree } from "@/lib/utils/blog-categories-tree";
 import { getServerSession } from "next-auth";
@@ -89,8 +89,7 @@ const BlogSystemCategories = async ({ searchParams }) => {
             <h4 className="font-poppins-md text-[13px] text-dark-weight-550 dark:text-light-weight-550">
               Blog Categories
             </h4>
-
-            <SearchCategoryForm searchValue={search} />
+            {!errorMessage && <SearchCategoryForm searchValue={search} />}
           </div>
 
           <div
@@ -116,13 +115,13 @@ const BlogSystemCategories = async ({ searchParams }) => {
             <div className="flex flex-col w-full items-center justify-center gap-2 p-3 min-h-[50vh]">
               <BsEmojiAstonished size={50} />
               <h1 className="text-center text-[16px] md:text-[18px] text-dark-weight-600 dark:text-light-weight-800 font-poppins-rg">
-                {errorMessage ? errorMessage : "No Categories Uploaded Yet!"}
+                {errorMessage ? errorMessage : "No Categories Created Yet!"}
               </h1>
 
               {!errorMessage && (
                 <p className="text-center text-[13px] italic text-dark-weight-350 dark:text-light-weight-400 font-poppins-rg">
                   Create your first category to get started.
-                  <br /> Please click the Add New Category.
+                  <br /> Please click the Add New Category button.
                 </p>
               )}
             </div>

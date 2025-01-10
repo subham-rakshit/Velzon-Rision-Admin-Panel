@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
-import { updatePerticularCategory } from "@/lib/api/category";
+import { updatePerticularCategory } from "@/lib/api/blogs/category";
 import {
   showErrorToast,
   showSuccessToast,

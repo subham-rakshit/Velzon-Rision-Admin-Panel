@@ -2,7 +2,7 @@
 
 import JoditEditor from "jodit-react";
 import { useTheme } from "next-themes";
-import { MdArrowForward, MdErrorOutline } from "react-icons/md";
+import { MdErrorOutline } from "react-icons/md";
 import { ClipLoader } from "react-spinners";
 
 import { globalStyleObj } from "@/app/assets/styles";
@@ -20,7 +20,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { createNewBlogPost } from "@/lib/api/blogs";
+import { createNewBlogPost } from "@/lib/api/blogs/posts";
 import { getCustomColor } from "@/lib/utils/customColor";
 import {
   showErrorToast,
@@ -29,8 +29,10 @@ import {
 import { AllBlogsSchema } from "@/schemas";
 import { useAppSelector } from "@/store/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { BiNews } from "react-icons/bi";
 
 const defaultValues = {
   title: "",
@@ -65,6 +67,7 @@ const CreateBlogPostForm = ({ userId, searchValue, categoryList }) => {
   const { theme } = useTheme();
   const customColor = getCustomColor({ layoutThemePrimaryColorType });
   const { bgColor, hoverBgColor, textColor, hexCode } = customColor;
+  const router = useRouter();
 
   // NOTE Handle Slug value according to the category name
   const watchedTitle = watch("title");
@@ -111,6 +114,7 @@ const CreateBlogPostForm = ({ userId, searchValue, categoryList }) => {
     if (response.success) {
       showSuccessToast(response.message || "Post created successfully.");
       reset();
+      router.push("/admin/blogs/posts/lists");
     } else {
       if (response.errors) {
         handleValidationErrors(response.errors);
@@ -368,25 +372,23 @@ const CreateBlogPostForm = ({ userId, searchValue, categoryList }) => {
         />
       </div>
 
-      <div className="mt-10 flex items-center justify-center">
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className={`mx-auto ${globalStyleObj.flexStart} transition-300 gap-2 rounded-[4px] ${bgColor} ${hoverBgColor} ${textColor} px-5 py-2 font-poppins-rg text-[13px] tracking-wide hover:text-white`}
-        >
-          {isSubmitting ? (
-            <>
-              <ClipLoader color={hexCode} size={13} />
-              <span>Processing...</span>
-            </>
-          ) : (
-            <>
-              Create Post
-              <MdArrowForward />
-            </>
-          )}
-        </button>
-      </div>
+      <button
+        type="submit"
+        disabled={isSubmitting}
+        className={`${globalStyleObj.flexCenter} transition-300 gap-2 rounded-[4px] ${bgColor} ${hoverBgColor} ${textColor} px-5 py-2 font-poppins-rg text-[13px] tracking-wide hover:text-white mt-10 w-full sm:max-w-[300px] dark:text-light-weight-800`}
+      >
+        {isSubmitting ? (
+          <>
+            <ClipLoader color={hexCode} size={13} />
+            <span>Processing...</span>
+          </>
+        ) : (
+          <>
+            <BiNews />
+            Create Blog Post
+          </>
+        )}
+      </button>
     </form>
   );
 };
