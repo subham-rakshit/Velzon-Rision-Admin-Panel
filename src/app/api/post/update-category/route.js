@@ -158,7 +158,8 @@ export async function PUT(request) {
         .map((word) => `${word[0].toUpperCase()}${word.slice(1)}`)
         .join(" ")
         .slice(0, 50);
-      newMetaTitle = createMetaTile + " || Velzon Category";
+      newMetaTitle =
+        createMetaTile + " || Velzon - NEXT.js Admin & Dashboard Template";
     }
 
     // NOTE Set the META description if not provided
