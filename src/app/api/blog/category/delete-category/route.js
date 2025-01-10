@@ -1,5 +1,6 @@
 import dbConnect from "@/lib/db/dbConnect";
 import { validateUserFromToken } from "@/lib/middleware/validateUser";
+import AllBlogsModel from "@/model/blog/AllBlogs";
 import AllBlogsCategoryModel from "@/model/blog/BlogsCategory";
 import UserModel from "@/model/User";
 import mongoose from "mongoose";
@@ -43,7 +44,7 @@ export async function DELETE(request) {
     }
 
     // NOTE Get the user details
-    const user = await UserModel.findById(userId);
+    const user = await UserModel.findById(userId).exec();
     if (!user || !user.role.includes("Admin")) {
       return NextResponse.json(
         {
@@ -59,7 +60,7 @@ export async function DELETE(request) {
     const category = await AllBlogsCategoryModel.findOne({
       _id: categoryId,
       userId,
-    });
+    }).exec();
     if (!category) {
       return NextResponse.json(
         {
@@ -83,10 +84,26 @@ export async function DELETE(request) {
       );
     }
 
+    // NOTE Check if there is a default category
+    const defaultCategory = await AllBlogsCategoryModel.findOne({
+      userId: user._id,
+      isDefault: true,
+    }).exec();
+    if (!defaultCategory) {
+      return NextResponse.json(
+        {
+          success: false,
+          message:
+            "No default category found. Please ensure a default category exists before deleting categories.",
+        },
+        { status: 400 }
+      );
+    }
+
     // NOTE Delete the category
     const deletedCategory = await AllBlogsCategoryModel.findOneAndDelete({
       _id: categoryId,
-    });
+    }).exec();
     if (!deletedCategory) {
       return NextResponse.json(
         {
@@ -101,6 +118,12 @@ export async function DELETE(request) {
     await AllBlogsCategoryModel.updateMany(
       { parentCategoryId: category._id },
       { $set: { parentCategoryId: category.parentCategoryId || null } }
+    );
+
+    // NOTE Update all blog posts related to the deleted category to use the default category
+    await AllBlogsModel.updateMany(
+      { category: category._id, userId: user._id },
+      { $set: { category: defaultCategory ? defaultCategory._id : null } }
     );
 
     return NextResponse.json(

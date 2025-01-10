@@ -1,8 +1,8 @@
 import dbConnect from "@/lib/db/dbConnect";
 import { validateUserFromToken } from "@/lib/middleware/validateUser";
-import AllBlogsCategoryModel from "@/model/blog/BlogsCategory";
+import AllBlogsModel from "@/model/blog/AllBlogs";
 import UserModel from "@/model/User";
-import { CategorySchema } from "@/schemas";
+import { AllBlogsSchema } from "@/schemas";
 import mongoose from "mongoose";
 import { NextResponse } from "next/server";
 
@@ -13,14 +13,13 @@ export async function PUT(request) {
     const body = await request.json();
     const {
       userId,
-      categoryId,
-      name,
+      postId,
+      title,
+      category,
       slug,
+      bannerImage,
+      shortDescription,
       description,
-      parentCategoryId,
-      colorTheme,
-      isDefault,
-      tags,
       metaTitle,
       metaImage,
       metaDescription,
@@ -29,9 +28,9 @@ export async function PUT(request) {
     // NOTE Check validate requested IDs
     if (
       !userId ||
-      !categoryId ||
+      !postId ||
       !mongoose.Types.ObjectId.isValid(userId) ||
-      !mongoose.Types.ObjectId.isValid(categoryId)
+      !mongoose.Types.ObjectId.isValid(postId)
     ) {
       return NextResponse.json(
         {
@@ -49,21 +48,20 @@ export async function PUT(request) {
         {
           success: false,
           message:
-            "Access denied. You do not have permission to update this category.",
+            "Access denied. You do not have permission to update this post.",
         },
         { status: 403 }
       );
     }
 
     // NOTE VALIDATE the registration schema
-    const validatedFields = CategorySchema.safeParse({
-      name,
+    const validatedFields = AllBlogsSchema.safeParse({
+      title,
+      category,
       slug,
+      bannerImage,
+      shortDescription,
       description,
-      parentCategoryId,
-      colorTheme,
-      isDefault,
-      tags,
       metaTitle,
       metaImage,
       metaDescription,
@@ -83,29 +81,29 @@ export async function PUT(request) {
       );
     }
 
-    // NOTE Get the user and category details
+    // NOTE Get the user details
     const user = await UserModel.findById(userId);
     if (!user || !user.role.includes("Admin")) {
       return NextResponse.json(
         {
           success: false,
           message:
-            "Access denied. You do not have permission to update this category.",
+            "Access denied. You do not have permission to update this post.",
         },
         { status: 403 }
       );
     }
 
-    // NOTE Get the category details
-    const existsCategory = await AllBlogsCategoryModel.findOne({
-      _id: categoryId,
+    // NOTE Get the post details
+    const existsPost = await AllBlogsModel.findOne({
+      _id: postId,
       userId: user._id,
     });
-    if (!existsCategory) {
+    if (!existsPost) {
       return NextResponse.json(
         {
           success: false,
-          message: "Category not found.",
+          message: "Post not found.",
         },
         { status: 404 }
       );
@@ -113,24 +111,22 @@ export async function PUT(request) {
 
     // NOTE Only check for duplicates if name or slug are changed
     let newSlug;
-    if (name !== existsCategory.name || slug !== existsCategory.slug) {
-      const existingCategory = await AllBlogsCategoryModel.findOne({
+    let newTitle;
+    if (title !== existsPost.name || slug !== existsPost.slug) {
+      const existingPostDetails = await AllBlogsModel.findOne({
         userId: user._id,
-        $or: [{ slug }, { name }],
+        $or: [{ slug }, { title }],
       });
+      // Handle Duplicate Post Title (Add Random Characters)
+      if (existingPostDetails && existingPostDetails.title === title) {
+        const newTitleCharacters = nanoid(4)
+          .toUpperCase()
+          .replace(/[^a-zA-Z0-9]/g, "0"); // Remove invalid characters
 
-      if (existingCategory && existingCategory.name === name) {
-        return NextResponse.json(
-          {
-            success: false,
-            message:
-              "This category already exists. Please choose a different name.",
-          },
-          { status: 400 }
-        );
+        newTitle = title + " " + newTitleCharacters;
       }
-      // Handle Duplicate Category Slug (Add Random Characters)
-      if (existingCategory && existingCategory.slug === slug) {
+      // Handle Duplicate Post Slug (Add Random Characters)
+      if (existingPostDetails && existingPostDetails.slug === slug) {
         const newCharacters = nanoid(4)
           .toLowerCase()
           .replace(/[^a-z0-9\s-]/g, "r") // Remove invalid characters
@@ -141,19 +137,10 @@ export async function PUT(request) {
       }
     }
 
-    // NOTE Handle Default Category
-    if (isDefault) {
-      // Update any existing default categories to set isDefault to false
-      await AllBlogsCategoryModel.updateMany(
-        { userId: user._id, isDefault: true },
-        { $set: { isDefault: false } }
-      );
-    }
-
     // NOTE Set the META title if not provided
     let newMetaTitle;
     if (!metaTitle) {
-      const createMetaTile = name
+      const createMetaTile = title
         .split(" ")
         .map((word) => `${word[0].toUpperCase()}${word.slice(1)}`)
         .join(" ")
@@ -165,49 +152,33 @@ export async function PUT(request) {
     // NOTE Set the META description if not provided
     let newMetaDescription;
     if (!metaDescription) {
-      newMetaDescription = description;
+      newMetaDescription = shortDescription;
     }
 
-    // NOTE Check the parent featured status
-    let parentFeatured;
-    if (existsCategory.parentCategoryId) {
-      const parentCategoryDetails = await AllBlogsCategoryModel.findById(
-        existsCategory.parentCategoryId
-      );
-
-      if (parentCategoryDetails) {
-        parentFeatured = parentCategoryDetails.isFeatured;
-      } else {
-        parentFeatured = true;
-      }
-    }
-
-    // NOTE Set category updated values object
-    const updatedCategoryObj = {
-      name,
+    // NOTE Set post updated values object
+    const updatedPostObj = {
+      title: newTitle || title,
+      category,
       slug: newSlug || slug,
+      bannerImage,
+      shortDescription,
       description,
-      parentCategoryId: parentCategoryId === "none" ? null : parentCategoryId,
-      colorTheme,
-      isFeatured: isDefault ? true : parentFeatured,
-      isDefault,
-      tags,
       metaTitle: newMetaTitle || metaTitle,
       metaImage,
       metaDescription: newMetaDescription || metaDescription,
     };
 
-    // NOTE Update the category
-    const updatedCategory = await AllBlogsCategoryModel.findOneAndUpdate(
-      { _id: categoryId },
-      { $set: updatedCategoryObj },
+    // NOTE Update the post
+    const updatedPost = await AllBlogsModel.findOneAndUpdate(
+      { _id: postId },
+      { $set: updatedPostObj },
       { new: true }
     );
-    if (!updatedCategory) {
+    if (!updatedPost) {
       return NextResponse.json(
         {
           success: false,
-          message: "Unable to update the category. Please try again later.",
+          message: "Unable to update the post. Please try again later.",
         },
         { status: 400 }
       );
@@ -217,12 +188,13 @@ export async function PUT(request) {
     return NextResponse.json(
       {
         success: true,
+        titleName: updatedPost.title,
         message: "Category updated successfully. Redirecting...",
       },
       { status: 200 }
     );
   } catch (error) {
-    console.log(`Error in updating the category SERVER: ${error}`);
+    console.log(`Error in updating the post SERVER: ${error}`);
     return NextResponse.json(
       {
         success: false,

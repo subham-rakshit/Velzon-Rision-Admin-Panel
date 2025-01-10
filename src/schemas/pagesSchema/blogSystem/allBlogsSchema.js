@@ -29,7 +29,7 @@ export const AllBlogsSchema = z.object({
       message:
         "Slug must contain only lowercase letters, numbers, and hyphens.",
     }),
-  bannerImage: z.string().url({ message: "Banner image must be a valid URL." }),
+  bannerImage: z.string().optional(),
   shortDescription: z
     .string()
     .min(5, { message: "Short Description must be at least 5 characters long" })
@@ -42,7 +42,7 @@ export const AllBlogsSchema = z.object({
     .max(150, "Meta title must not exceed 150 characters")
     .default("")
     .transform((title) => title.trim()),
-  metaImage: z.string().optional(),
+  metaImage: z.string().optional().default(""),
   metaDescription: z
     .string()
     .max(200, "Meta description must be not exceed 200 characters")

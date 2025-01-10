@@ -26,8 +26,9 @@ export const generateMetadata = async ({ params }) => {
   // If no userId is found, return default metadata
   if (!userId) {
     return {
-      title: "Update Blog Category",
-      description: "You must be logged in to update categories.",
+      title:
+        "Update Blog Category | Velzon - NEXT.js Admin & Dashboard Template",
+      description: "Category details not found.",
     };
   }
 
@@ -40,7 +41,9 @@ export const generateMetadata = async ({ params }) => {
   // Generate dynamic metadata based on category data
   if (successStatus && Object.keys(categoryData).length > 0) {
     return {
-      title: categoryData.metaTitle || "Update Blog Category",
+      title:
+        categoryData.metaTitle ||
+        "Update Blog Category | Velzon - NEXT.js Admin & Dashboard Template",
       description: categoryData.metaDescription || "Category details page.",
     };
   }

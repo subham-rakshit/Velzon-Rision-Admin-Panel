@@ -67,6 +67,70 @@ export const getAllBlogPosts = async (userId, search, page, limit) => {
   }
 };
 
+// NOTE GET A PERTICULAR POST
+export const getPerticularPost = async (userId, postId) => {
+  try {
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/blog/post/get-post-details?userId=${userId || ""}&postId=${postId || ""}`
+    );
+
+    if (response.data.success && response.status === 200) {
+      return {
+        success: true,
+        postData: response.data.postDetails,
+      };
+    }
+  } catch (error) {
+    console.log(`Error in getting all categories CLIENT: ${error}`);
+    return {
+      success: false,
+      message:
+        error.response.data.message ||
+        "An unexpected error occurred. Please try again later.",
+    };
+  }
+};
+
+// NOTE UPDATE A PERTICULAR POST
+export const updatePerticularPost = async (userId, postId, data) => {
+  try {
+    const response = await axios.put(
+      `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/blog/post/update-post`,
+      {
+        ...data,
+        userId,
+        postId,
+      }
+    );
+    if (response.data.success && response.status === 200) {
+      return {
+        success: true,
+        message: response.data.message,
+        postTile: response.data.titleName,
+      };
+    }
+  } catch (error) {
+    console.log(`Error in updating the post CLIENT: ${error}`);
+
+    if (error.response.data.errors) {
+      return {
+        success: false,
+        errors: error.response.data.errors,
+      };
+    } else if (error.response.data.message) {
+      return {
+        success: false,
+        message: error.response.data.message,
+      };
+    } else {
+      return {
+        success: false,
+        message: "An unexpected error occurred. Please try again later.",
+      };
+    }
+  }
+};
+
 // NOTE DELETE A PERTICULAR POST
 export const deletePerticularPost = async (userId, postId) => {
   try {

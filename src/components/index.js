@@ -43,6 +43,7 @@ import AllBlogPostsList from "./pagesComponent/blogs/posts/AllBlogPostsList";
 import CreateBlogPostForm from "./pagesComponent/blogs/posts/CreateBlogPostForm";
 import PostDeleteButton from "./pagesComponent/blogs/posts/PostDeleteButton";
 import RowsPerPageSelection from "./pagesComponent/blogs/posts/RowsPerPageSelection";
+import UpdatePostForm from "./pagesComponent/blogs/posts/UpdatePostForm";
 import LabelText from "./pagesComponent/LabelText";
 import PaginationComponent from "./pagesComponent/PaginationComponent";
 import SearchInputField from "./pagesComponent/SearchInputField";
@@ -162,6 +163,7 @@ export {
   TransitionLink,
   UpcomingActivites,
   UpdateCategoryForm,
+  UpdatePostForm,
   UserByDevice,
   VerifyAccount,
   Widget,

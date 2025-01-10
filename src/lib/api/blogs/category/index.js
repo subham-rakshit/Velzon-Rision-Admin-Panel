@@ -93,7 +93,9 @@ export const changeCategoryFeaturedStatus = async (
     return {
       success: false,
       message:
-        error.response.data.message || error.message || "Something went wrong",
+        error.response.data.message ||
+        error.message ||
+        "An unexpected error occurred. Please try again later.",
     };
   }
 };
@@ -147,12 +149,12 @@ export const updatePerticularCategory = async (userId, categoryId, data) => {
           error.response.data.errors ||
           error.response.data.message ||
           error.message ||
-          "Something went wrong",
+          "An unexpected error occurred. Please try again later.",
       };
     }
     return {
       success: false,
-      message: "Something went wrong",
+      message: "An unexpected error occurred. Please try again later.",
     };
   }
 };

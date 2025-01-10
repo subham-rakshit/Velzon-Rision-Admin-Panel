@@ -68,6 +68,7 @@ export async function GET(request) {
         model: AllBlogsCategoryModel,
         select: "name",
       })
+      .sort({ createdAt: -1 })
       .skip((page - 1) * limit)
       .limit(limit);
     let totalPosts = await AllBlogsModel.countDocuments(query);
