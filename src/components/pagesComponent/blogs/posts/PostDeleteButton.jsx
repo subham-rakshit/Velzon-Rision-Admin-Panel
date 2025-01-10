@@ -1,5 +1,6 @@
 "use client";
 
+import { deletePerticularPost } from "@/lib/api/blogs/posts";
 import {
   showErrorToast,
   showSuccessToast,

@@ -66,3 +66,27 @@ export const getAllBlogPosts = async (userId, search, page, limit) => {
     };
   }
 };
+
+// NOTE DELETE A PERTICULAR POST
+export const deletePerticularPost = async (userId, postId) => {
+  try {
+    const response = await axios.delete(
+      `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/blog/post/delete-post?userId=${userId}&postId=${postId}`
+    );
+
+    if (response.data.success && response.status === 200) {
+      return {
+        success: true,
+        message: response.data.message,
+      };
+    }
+  } catch (error) {
+    console.log(`Error in deleting the category CLIENT: ${error}`);
+    return {
+      success: false,
+      message:
+        error.response.data.message ||
+        "An unexpected error occurred. Please try again later.",
+    };
+  }
+};

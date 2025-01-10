@@ -4,7 +4,7 @@ import { globalStyleObj } from "@/app/assets/styles";
 import {
   Breadcrumb,
   RenderAllCategories,
-  SearchCategoryForm,
+  SearchInputField,
 } from "@/components";
 import { getAllCategories } from "@/lib/api/blogs/category";
 import { getAccessTokenData } from "@/lib/middleware/getAccessTokenData";
@@ -89,7 +89,7 @@ const BlogSystemCategories = async ({ searchParams }) => {
             <h4 className="font-poppins-md text-[13px] text-dark-weight-550 dark:text-light-weight-550">
               Blog Categories
             </h4>
-            {!errorMessage && <SearchCategoryForm searchValue={search} />}
+            {!errorMessage && <SearchInputField searchValue={search} />}
           </div>
 
           <div

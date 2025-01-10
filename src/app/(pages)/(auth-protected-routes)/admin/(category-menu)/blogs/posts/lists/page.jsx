@@ -5,7 +5,7 @@ import {
   AllBlogPostsList,
   Breadcrumb,
   RowsPerPageSelection,
-  SearchCategoryForm,
+  SearchInputField,
 } from "@/components";
 import { getAccessTokenData } from "@/lib/middleware/getAccessTokenData";
 import { getServerSession } from "next-auth";
@@ -90,7 +90,7 @@ const AllBlogs = async ({ searchParams }) => {
                 <RowsPerPageSelection paginationDetails={paginationDetails} />
               </div>
 
-              <SearchCategoryForm searchValue={search} />
+              <SearchInputField searchValue={search} />
             </div>
           </div>
         )}

@@ -70,7 +70,7 @@ export async function GET(request) {
       })
       .skip((page - 1) * limit)
       .limit(limit);
-    let totalPosts = await AllBlogsModel.estimatedDocumentCount();
+    let totalPosts = await AllBlogsModel.countDocuments(query);
 
     // Pagination
     const paginationData = {

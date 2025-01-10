@@ -38,14 +38,14 @@ import CategoryFeaturedButton from "./pagesComponent/blogs/categories/CategoryFe
 import CreateNewCategoryForm from "./pagesComponent/blogs/categories/CreateNewCategoryForm";
 import RenderAllCategories from "./pagesComponent/blogs/categories/RenderAllCategories";
 import RenderCategoryOptions from "./pagesComponent/blogs/categories/RenderCategoryOptions";
-import SearchCategoryForm from "./pagesComponent/blogs/categories/SearchCategoryForm";
 import UpdateCategoryForm from "./pagesComponent/blogs/categories/UpdateCategoryForm";
 import AllBlogPostsList from "./pagesComponent/blogs/posts/AllBlogPostsList";
 import CreateBlogPostForm from "./pagesComponent/blogs/posts/CreateBlogPostForm";
-import PaginationComponent from "./pagesComponent/PaginationComponent";
 import PostDeleteButton from "./pagesComponent/blogs/posts/PostDeleteButton";
 import RowsPerPageSelection from "./pagesComponent/blogs/posts/RowsPerPageSelection";
 import LabelText from "./pagesComponent/LabelText";
+import PaginationComponent from "./pagesComponent/PaginationComponent";
+import SearchInputField from "./pagesComponent/SearchInputField";
 // Dashboard Analytics
 import Breadcrumb from "./pagesComponent/Breadcrumb";
 import AudiencesMetrics from "./pagesComponent/dashboardAnalytics/AudiencesMetrics";
@@ -150,7 +150,7 @@ export {
   RowsPerPageSelection,
   SalesByLocations,
   SalesForecast,
-  SearchCategoryForm,
+  SearchInputField,
   SessionsByCountries,
   SocialAuthForm,
   StoreVisits,
