@@ -32,7 +32,7 @@ export async function POST(request) {
     // NOTE: EXISTENCE_CHECK if user is already existing by email address but not verified
     const existingUserByEmail = await UserModel.findOne({
       email,
-    });
+    }).exec();
     if (existingUserByEmail) {
       // NOTE Check if existing user is verified
       if (existingUserByEmail.isVerified) {

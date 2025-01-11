@@ -37,18 +37,12 @@ const LoginForm = () => {
   const handleZodValidationErrors = (data) => {
     if (data.errors) {
       const errors = data.errors;
-      if (errors.email) {
-        setError("email", {
+      Object.keys(errors).forEach((field) => {
+        setError(field, {
           type: "server",
-          message: errors.email.message,
+          message: errors[field].message,
         });
-      }
-      if (errors.password) {
-        setError("password", {
-          type: "server",
-          message: errors.password.message,
-        });
-      }
+      });
     } else {
       showErrorToast(data.message);
     }

@@ -7,6 +7,7 @@ import {
 import { getAccessTokenData } from "@/lib/middleware/getAccessTokenData";
 import { buildCategoryTree } from "@/lib/utils/blog-categories-tree";
 import { getServerSession } from "next-auth";
+import { BsEmojiAstonished } from "react-icons/bs";
 
 // Handle dynamic meta data info
 export const generateMetadata = async ({ params }) => {
@@ -73,6 +74,7 @@ const UpdateBlogCategory = async ({ params, searchParams }) => {
 
   let categoryDetails;
   let categoryList = [];
+  let errorMessage;
 
   // NOTE Fetch all List of Categories
   const { success, fetchData } = await getAllCategories(userId, search || "");
@@ -83,14 +85,16 @@ const UpdateBlogCategory = async ({ params, searchParams }) => {
   }
 
   //NOTE Fetch the category details
-  const { successStatus, categoryData } = await getPerticularCategory(
+  const { successStatus, categoryData, message } = await getPerticularCategory(
     userId,
     categoryId
   );
   if (successStatus) {
     categoryDetails = categoryData;
+    errorMessage = "";
   } else {
     categoryDetails = categoryData;
+    errorMessage = message;
   }
 
   // NOTE Create category TREE structure
@@ -105,11 +109,20 @@ const UpdateBlogCategory = async ({ params, searchParams }) => {
         firstChildTitle="Categories"
       />
 
-      <UpdateCategoryForm
-        userId={userId}
-        categoryDetails={categoryDetails}
-        categoryList={categoryTree}
-      />
+      {errorMessage ? (
+        <div className="flex flex-col w-full items-center justify-center gap-2 p-3 min-h-[80vh]">
+          <BsEmojiAstonished size={50} />
+          <h1 className="text-center text-[16px] md:text-[18px] text-dark-weight-600 dark:text-light-weight-800 font-poppins-rg">
+            {errorMessage}
+          </h1>
+        </div>
+      ) : (
+        <UpdateCategoryForm
+          userId={userId}
+          categoryDetails={categoryDetails}
+          categoryList={categoryTree}
+        />
+      )}
     </div>
   );
 };

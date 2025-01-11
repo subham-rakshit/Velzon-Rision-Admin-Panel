@@ -25,7 +25,7 @@ export async function GET(request) {
     }
 
     // NOTE Get User info
-    const user = await UserModel.findById(userId);
+    const user = await UserModel.findById(userId).exec();
     if (!user) {
       return NextResponse.json(
         {
@@ -55,7 +55,7 @@ export async function GET(request) {
       ],
     };
 
-    let categoryList = await AllBlogsCategoryModel.find(query);
+    let categoryList = await AllBlogsCategoryModel.find(query).exec();
 
     return NextResponse.json(
       {

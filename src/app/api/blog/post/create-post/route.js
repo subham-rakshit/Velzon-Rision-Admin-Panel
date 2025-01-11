@@ -77,7 +77,7 @@ export async function POST(request) {
     }
 
     // NOTE Get the user details
-    const user = await UserModel.findById(userId);
+    const user = await UserModel.findById(userId).exec();
     if (!user || !user.role.includes("Admin")) {
       return NextResponse.json(
         {
@@ -93,7 +93,7 @@ export async function POST(request) {
     let newSlug;
     const existsBlogSlug = await AllBlogsModel.findOne({
       $or: [{ slug }, { title }],
-    });
+    }).exec();
 
     if (existsBlogSlug && existsBlogSlug.slug === slug) {
       const newCharacters = nanoid(4)
@@ -122,7 +122,7 @@ export async function POST(request) {
         .join(" ")
         .slice(0, 50);
       newMetaTitle =
-        createMetaTile + " || Velzon - NEXT.js Admin & Dashboard Template";
+        createMetaTile + " | Velzon - NEXT.js Admin & Dashboard Template";
     }
     if (!metaDescription) {
       newMetaDescription = shortDescription;

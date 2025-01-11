@@ -45,7 +45,7 @@ export async function GET(request) {
     const category = await AllBlogsCategoryModel.findOne({
       _id: categoryId,
       userId,
-    });
+    }).exec();
     if (!category) {
       return NextResponse.json(
         {

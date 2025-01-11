@@ -16,22 +16,17 @@ export async function PUT(request) {
     const body = await request.json();
 
     const { userId, categoryId, isFeatured } = body;
-    if (!userId || !categoryId) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Invalid request parameters.",
-        },
-        { status: 400 }
-      );
-    }
-    // Check if IDs are valid MongoDB ObjectIDs
     if (
+      !userId ||
+      !categoryId ||
       !mongoose.Types.ObjectId.isValid(userId) ||
       !mongoose.Types.ObjectId.isValid(categoryId)
     ) {
       return NextResponse.json(
-        { success: false, message: "Invalid request parameters." },
+        {
+          success: false,
+          message: "Invalid request. Please try again later.",
+        },
         { status: 400 }
       );
     }
@@ -49,7 +44,7 @@ export async function PUT(request) {
     }
 
     // NOTE Get the user details
-    const user = await UserModel.findById(userId);
+    const user = await UserModel.findById(userId).exec();
     if (!user || !user.role.includes("Admin")) {
       return NextResponse.json(
         {
@@ -65,7 +60,7 @@ export async function PUT(request) {
     const category = await AllBlogsCategoryModel.findOne({
       _id: categoryId,
       userId: user._id,
-    });
+    }).exec();
     if (!category) {
       return NextResponse.json(
         {
@@ -81,7 +76,7 @@ export async function PUT(request) {
       { _id: categoryId },
       { $set: { isFeatured: !category.isFeatured } },
       { new: true }
-    );
+    ).exec();
     if (!updatedCategory) {
       return NextResponse.json(
         {

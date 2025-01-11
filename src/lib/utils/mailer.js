@@ -35,12 +35,12 @@ export const sendEmail = async ({ email, emailType, username, userId }) => {
       await UserModel.findByIdAndUpdate(userId, {
         verifyCode: otp,
         verifyCodeExpiry: Date.now() + 3600000, // 1hr
-      });
+      }).exec();
     } else if (emailType === "RESET") {
       await UserModel.findByIdAndUpdate(userId, {
         forgetPasswordCode: otp,
         forgetPasswordCodeExpiry: Date.now() + 3600000, // 1hr
-      });
+      }).exec();
     }
 
     // INFO: Nodemailer transporter with MailTrap SMTP

@@ -84,7 +84,7 @@ export async function PUT(request) {
     }
 
     // NOTE Get the user and category details
-    const user = await UserModel.findById(userId);
+    const user = await UserModel.findById(userId).exec();
     if (!user || !user.role.includes("Admin")) {
       return NextResponse.json(
         {
@@ -100,7 +100,7 @@ export async function PUT(request) {
     const existsCategory = await AllBlogsCategoryModel.findOne({
       _id: categoryId,
       userId: user._id,
-    });
+    }).exec();
     if (!existsCategory) {
       return NextResponse.json(
         {
@@ -117,7 +117,7 @@ export async function PUT(request) {
       const existingCategory = await AllBlogsCategoryModel.findOne({
         userId: user._id,
         $or: [{ slug }, { name }],
-      });
+      }).exec();
 
       if (existingCategory && existingCategory.name === name) {
         return NextResponse.json(
@@ -147,7 +147,7 @@ export async function PUT(request) {
       await AllBlogsCategoryModel.updateMany(
         { userId: user._id, isDefault: true },
         { $set: { isDefault: false } }
-      );
+      ).exec();
     }
 
     // NOTE Set the META title if not provided
@@ -173,7 +173,7 @@ export async function PUT(request) {
     if (existsCategory.parentCategoryId) {
       const parentCategoryDetails = await AllBlogsCategoryModel.findById(
         existsCategory.parentCategoryId
-      );
+      ).exec();
 
       if (parentCategoryDetails) {
         parentFeatured = parentCategoryDetails.isFeatured;
@@ -202,7 +202,7 @@ export async function PUT(request) {
       { _id: categoryId },
       { $set: updatedCategoryObj },
       { new: true }
-    );
+    ).exec();
     if (!updatedCategory) {
       return NextResponse.json(
         {

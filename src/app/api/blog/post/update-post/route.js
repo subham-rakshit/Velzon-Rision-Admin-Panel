@@ -82,7 +82,7 @@ export async function PUT(request) {
     }
 
     // NOTE Get the user details
-    const user = await UserModel.findById(userId);
+    const user = await UserModel.findById(userId).exec();
     if (!user || !user.role.includes("Admin")) {
       return NextResponse.json(
         {
@@ -98,7 +98,7 @@ export async function PUT(request) {
     const existsPost = await AllBlogsModel.findOne({
       _id: postId,
       userId: user._id,
-    });
+    }).exec();
     if (!existsPost) {
       return NextResponse.json(
         {
@@ -116,7 +116,7 @@ export async function PUT(request) {
       const existingPostDetails = await AllBlogsModel.findOne({
         userId: user._id,
         $or: [{ slug }, { title }],
-      });
+      }).exec();
       // Handle Duplicate Post Title (Add Random Characters)
       if (existingPostDetails && existingPostDetails.title === title) {
         const newTitleCharacters = nanoid(4)
@@ -173,7 +173,7 @@ export async function PUT(request) {
       { _id: postId },
       { $set: updatedPostObj },
       { new: true }
-    );
+    ).exec();
     if (!updatedPost) {
       return NextResponse.json(
         {

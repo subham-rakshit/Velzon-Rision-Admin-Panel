@@ -32,7 +32,7 @@ export async function POST(request) {
     const userDetails = await UserModel.findOne({
       forgetPasswordCode: resetPasswordCode,
       forgetPasswordCodeExpiry: { $gte: Date.now() }, // handle 1hr time expiry
-    });
+    }).exec();
     if (!userDetails) {
       return NextResponse.json(
         {

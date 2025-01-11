@@ -29,7 +29,7 @@ export async function POST(request) {
     }
 
     // NOTE GET the user details by provided forgotPasswordEmail
-    const userDetails = await UserModel.findOne({ email });
+    const userDetails = await UserModel.findOne({ email }).exec();
     if (!userDetails) {
       return NextResponse.json(
         {

@@ -29,7 +29,7 @@ export async function GET(request) {
     }
 
     // NOTE Get User info
-    const user = await UserModel.findById(userId);
+    const user = await UserModel.findById(userId).exec();
     if (!user || !user.role.includes("Admin")) {
       return NextResponse.json(
         {
@@ -44,7 +44,7 @@ export async function GET(request) {
     const post = await AllBlogsModel.findOne({
       _id: postId,
       userId,
-    });
+    }).exec();
     if (!post) {
       return NextResponse.json(
         {

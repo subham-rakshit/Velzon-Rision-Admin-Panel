@@ -23,7 +23,7 @@ export async function POST(request) {
     const userDetails = await UserModel.findOne({
       verifyCode: otp,
       verifyCodeExpiry: { $gte: Date.now() }, // handle 1hr time expiry
-    });
+    }).exec();
 
     if (!userDetails) {
       return NextResponse.json(

@@ -28,7 +28,9 @@ const RegistrationForm = () => {
     formState: { errors, isSubmitting },
     setError,
     reset,
-  } = useForm({ resolver: zodResolver(RegistrationSchema) });
+  } = useForm({
+    resolver: zodResolver(RegistrationSchema),
+  });
 
   const router = useRouter();
 
@@ -36,30 +38,12 @@ const RegistrationForm = () => {
   const handleZodValidationErrors = (data) => {
     if (data.errors) {
       const errors = data.errors;
-      if (errors.email) {
-        setError("email", {
+      Object.keys(errors).forEach((field) => {
+        setError(field, {
           type: "server",
-          message: errors.email.message,
+          message: errors[field].message,
         });
-      }
-      if (errors.username) {
-        setError("username", {
-          type: "server",
-          message: errors.username.message,
-        });
-      }
-      if (errors.password) {
-        setError("password", {
-          type: "server",
-          message: errors.password.message,
-        });
-      }
-      if (errors.confirmPassword) {
-        setError("confirmPassword", {
-          type: "server",
-          message: errors.confirmPassword.message,
-        });
-      }
+      });
     } else {
       showErrorToast(data.message);
     }

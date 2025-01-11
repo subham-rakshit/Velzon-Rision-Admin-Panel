@@ -117,6 +117,9 @@ export const getPerticularCategory = async (userId, categoryId) => {
     console.log(`Error in getting all categories CLIENT: ${error}`);
     return {
       successStatus: false,
+      message:
+        error.response.data.message ||
+        "An unexpected error occurred. Please try again later.",
       categoryData: {},
     };
   }

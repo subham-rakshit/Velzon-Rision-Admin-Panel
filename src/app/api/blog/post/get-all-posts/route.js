@@ -28,7 +28,7 @@ export async function GET(request) {
     }
 
     // NOTE Get User info
-    const user = await UserModel.findById(userId);
+    const user = await UserModel.findById(userId).exec();
     if (!user) {
       return NextResponse.json(
         {
@@ -70,8 +70,9 @@ export async function GET(request) {
       })
       .sort({ createdAt: -1 })
       .skip((page - 1) * limit)
-      .limit(limit);
-    let totalPosts = await AllBlogsModel.countDocuments(query);
+      .limit(limit)
+      .exec();
+    let totalPosts = await AllBlogsModel.countDocuments(query).exec();
 
     // Pagination
     const paginationData = {

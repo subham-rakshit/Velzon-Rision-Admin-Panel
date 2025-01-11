@@ -34,7 +34,7 @@ export async function POST(request) {
     }
 
     // NOTE Find user details
-    const userDetails = await UserModel.findOne({ email });
+    const userDetails = await UserModel.findOne({ email }).exec();
     if (!userDetails) {
       return NextResponse.json(
         {

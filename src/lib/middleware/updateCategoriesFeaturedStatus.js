@@ -8,7 +8,7 @@ export const updateChildCategories = async (categoryId, isFeatured) => {
   const childCategories = await AllBlogsCategoryModel.find({
     parentCategoryId: categoryId,
     isFeatured: true,
-  });
+  }).exec();
 
   // Update each child category's isFeatured status
   for (let category of childCategories) {
@@ -16,7 +16,7 @@ export const updateChildCategories = async (categoryId, isFeatured) => {
       category._id,
       { $set: { isFeatured: !category.isDefault ? !isFeatured : true } },
       { new: true }
-    );
+    ).exec();
 
     // Recursively update children of this category (if any)
     await updateChildCategories(category._id, isFeatured);
@@ -31,7 +31,7 @@ export const updateParentCategories = async (parentId, isFeatured) => {
   const parentCategoryDetails = await AllBlogsCategoryModel.findOne({
     _id: parentId,
     isFeatured: false,
-  });
+  }).exec();
 
   if (!parentCategoryDetails) return;
 
@@ -40,7 +40,7 @@ export const updateParentCategories = async (parentId, isFeatured) => {
     parentId,
     { $set: { isFeatured: true } },
     { new: true }
-  );
+  ).exec();
 
   // Recursively update parent categories of this category (if any)
   await updateParentCategories(

@@ -42,7 +42,7 @@ export const authOptions = {
         await dbConnect();
 
         try {
-          const dbUser = await UserModel.findOne({ email });
+          const dbUser = await UserModel.findOne({ email }).exec();
           if (!dbUser) {
             throw new Error("User not found");
           }
@@ -98,7 +98,7 @@ export const authOptions = {
       await dbConnect();
 
       try {
-        const dbUser = await UserModel.findOne({ email: user.email });
+        const dbUser = await UserModel.findOne({ email: user.email }).exec();
 
         if (!dbUser) {
           // Generate hashed password and create new user

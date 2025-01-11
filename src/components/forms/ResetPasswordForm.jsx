@@ -36,24 +36,12 @@ const ResetPasswordForm = () => {
   const handleZodValidationErrors = (data) => {
     if (data.errors) {
       const errors = data.errors;
-      if (errors.resetPasswordCode) {
-        setError("resetPasswordCode", {
+      Object.keys(errors).forEach((field) => {
+        setError(field, {
           type: "server",
-          message: errors.resetPasswordCode.message,
+          message: errors[field].message,
         });
-      }
-      if (errors.newPassword) {
-        setError("newPassword", {
-          type: "server",
-          message: errors.newPassword.message,
-        });
-      }
-      if (errors.confirmNewPassword) {
-        setError("confirmNewPassword", {
-          type: "server",
-          message: errors.confirmNewPassword.message,
-        });
-      }
+      });
     } else {
       showErrorToast(data.message);
     }

@@ -43,7 +43,7 @@ export async function DELETE(request) {
     }
 
     // NOTE Get the user details
-    const user = await UserModel.findById(userId);
+    const user = await UserModel.findById(userId).exec();
     if (!user || !user.role.includes("Admin")) {
       return NextResponse.json(
         {
@@ -55,31 +55,17 @@ export async function DELETE(request) {
       );
     }
 
-    // NOTE Get the post details
-    const post = await AllBlogsModel.findOne({
+    // NOTE Delete the post
+    const deletedPost = await AllBlogsModel.findOneAndDelete({
       _id: postId,
       userId,
-    });
-    if (!post) {
+    }).exec();
+    if (!deletedPost) {
       return NextResponse.json(
         {
           success: false,
           message:
             "The specified post does not exist or does not belong to the user.",
-        },
-        { status: 404 }
-      );
-    }
-
-    // NOTE Delete the post
-    const deletedPost = await AllBlogsModel.findOneAndDelete({
-      _id: postId,
-    });
-    if (!deletedPost) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Unable to delete the post. Please try again later.",
         },
         { status: 400 }
       );

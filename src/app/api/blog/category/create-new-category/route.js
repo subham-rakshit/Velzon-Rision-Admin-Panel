@@ -79,7 +79,7 @@ export async function POST(request) {
     }
 
     // NOTE Get the user details
-    const user = await UserModel.findById(userId);
+    const user = await UserModel.findById(userId).exec();
     if (!user || !user.role.includes("Admin")) {
       return NextResponse.json(
         {
@@ -95,7 +95,7 @@ export async function POST(request) {
     let newSlug;
     const existsCategory = await AllBlogsCategoryModel.findOne({
       $or: [{ slug }, { name }],
-    });
+    }).exec();
 
     // Handle Duplicate Category Name (Return an error message)
     if (existsCategory && existsCategory.name === name) {
@@ -126,7 +126,7 @@ export async function POST(request) {
       await AllBlogsCategoryModel.updateMany(
         { userId: user._id, isDefault: true },
         { $set: { isDefault: false } }
-      );
+      ).exec();
     }
 
     // NOTE Set the META title if not provided
