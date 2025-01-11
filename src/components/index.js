@@ -1,3 +1,4 @@
+import DeletePopup from "./DeletePopup";
 import ErrorImage from "./ErrorImage";
 import ForgotPasswordForm from "./forms/ForgotPasswordForm";
 import LoginForm from "./forms/LoginForm";
@@ -109,6 +110,7 @@ export {
   DateRangePicker,
   DealsStatus,
   DealType,
+  DeletePopup,
   EcommerceWidgets,
   ErrorImage,
   Footer,

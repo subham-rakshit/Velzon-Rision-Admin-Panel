@@ -13,22 +13,31 @@ import { FaMinus } from "react-icons/fa";
 import { MdOutlineFolderOpen } from "react-icons/md";
 import { RiEditBoxLine } from "react-icons/ri";
 
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import React from "react";
+
 const renderAllCategories = (
   categoryTree,
   expandedCategories,
   toggleCategory,
   userId,
-  level = 0
+  level = 12
 ) => {
   return categoryTree.map((category, index) => (
-    <div
-      key={category._id}
-      className={`${category.parentCategoryId === null || !category.children ? `px-3 sm:px-5 ${index !== categoryTree.length - 1 ? "border-b dark:border-[#fff]/10" : ""} py-5` : "mt-5"} text-[13px] font-poppins-rg text-dark-weight-500 dark:text-light-weight-450`}
-    >
-      <div className="flex items-center justify-between">
+    <React.Fragment key={category._id}>
+      <TableRow
+        className={`text-[11px] sm:text-[13px] font-poppins-rg text-dark-weight-500 dark:text-light-weight-450`}
+      >
         {/* Category Name with Toggle Button */}
-        <div
-          className="flex items-center gap-2 cursor-pointer flex-1"
+        <TableCell
+          className="cursor-pointer"
           style={{ paddingLeft: `${level}px` }}
           onClick={
             category.children && category.children.length > 0
@@ -54,7 +63,7 @@ const renderAllCategories = (
           )}
           {/* Category name for small devices */}
           <span
-            className={`${category.isFeatured ? "" : "line-through text-light-weight-400 opacity-80"} md:hidden`}
+            className={`${category.activeStatus ? "" : "line-through text-light-weight-400 opacity-80"} md:hidden ml-2`}
           >
             {category.name.length > 20
               ? category.name.slice(0, 20) + "..."
@@ -67,7 +76,7 @@ const renderAllCategories = (
           </span>
           {/* Category name for above small devices */}
           <span
-            className={`${category.activeStatus ? "" : "line-through text-light-weight-400 opacity-80"} hidden md:inline`}
+            className={`${category.activeStatus ? "" : "line-through text-light-weight-400 opacity-80"} hidden md:inline ml-2`}
           >
             {category.name}
             {category.isDefault && (
@@ -76,26 +85,26 @@ const renderAllCategories = (
               </span>
             )}
           </span>
-        </div>
+        </TableCell>
 
         {/* Active Status Button */}
-        <div className="flex-1 flex items-center justify-center">
+        <TableCell className="">
           <CategoryStatusButton userId={userId} categoryDetails={category} />
-        </div>
+        </TableCell>
 
         {/* Featured Button */}
 
-        <div className="flex-1 flex items-center justify-center">
+        <TableCell className="">
           <CategoryFeaturedButton userId={userId} categoryDetails={category} />
-        </div>
+        </TableCell>
 
         {/* Default Status Button */}
-        <div className="flex-1 flex items-center justify-center">
+        <TableCell className="">
           <CategoryDefaultdButton userId={userId} categoryDetails={category} />
-        </div>
+        </TableCell>
 
         {/* Edit and Delete Buttons */}
-        <div className="flex items-center justify-end gap-2 flex-1">
+        <TableCell className="flex items-center justify-end gap-2 flex-1 pr-3">
           <Link
             href={`/admin/blogs/categories/update/${category._id}`}
             className="transition-300 rounded-full bg-[#49ABE0]/20 p-2 text-[#49ABE0] hover:bg-[#49ABE0] hover:text-white"
@@ -104,8 +113,8 @@ const renderAllCategories = (
           </Link>
 
           <CategoryDeleteButton userId={userId} categoryDetails={category} />
-        </div>
-      </div>
+        </TableCell>
+      </TableRow>
 
       {/* Render Children if Expanded */}
       {expandedCategories.includes(category._id) &&
@@ -117,11 +126,11 @@ const renderAllCategories = (
               expandedCategories,
               toggleCategory,
               userId,
-              level + 8
+              level + 5
             )}
           </>
         )}
-    </div>
+    </React.Fragment>
   ));
 };
 
@@ -140,14 +149,35 @@ const RenderAllCategories = ({ categoryTree, userId }) => {
   };
 
   return (
-    <div>
-      {renderAllCategories(
-        categoryTree,
-        expandedCategories,
-        toggleCategory,
-        userId
-      )}
-    </div>
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead className="font-poppins-md text-[11px] sm:text-[13px] text-dark-weight-600 dark:text-light-weight-800 pl-3">
+            # Name
+          </TableHead>
+          <TableHead className="font-poppins-md text-[11px] sm:text-[13px] text-dark-weight-600 dark:text-light-weight-800">
+            Status
+          </TableHead>
+          <TableHead className="font-poppins-md text-[11px] sm:text-[13px] text-dark-weight-600 dark:text-light-weight-800">
+            Featured
+          </TableHead>
+          <TableHead className="font-poppins-md text-[11px] sm:text-[13px] text-dark-weight-600 dark:text-light-weight-800">
+            Default
+          </TableHead>
+          <TableHead className="font-poppins-md text-[11px] sm:text-[13px] text-dark-weight-600 dark:text-light-weight-800 text-right pr-3">
+            Options
+          </TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody className="font-poppins-rg text-[11px] sm:text-[13px] text-dark-weight-400 dark:text-light-weight-450">
+        {renderAllCategories(
+          categoryTree,
+          expandedCategories,
+          toggleCategory,
+          userId
+        )}
+      </TableBody>
+    </Table>
   );
 };
 

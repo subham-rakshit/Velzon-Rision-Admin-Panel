@@ -92,31 +92,6 @@ const BlogSystemCategories = async ({ searchParams }) => {
             {!errorMessage && <SearchInputField searchValue={search} />}
           </div>
 
-          <div
-            className={`${globalStyleObj.flexBetween} gap-5 border-b px-3 py-2 dark:border-[#fff]/10 sm:px-5`}
-          >
-            <div className="flex items-center gap-5 font-poppins-md text-[13px] text-dark-weight-600 dark:text-light-weight-550">
-              <span>#</span>
-              <span>Name</span>
-            </div>
-
-            <div className="font-poppins-md text-[13px] text-dark-weight-600 dark:text-light-weight-550">
-              <span>Status</span>
-            </div>
-
-            <div className="font-poppins-md text-[13px] text-dark-weight-600 dark:text-light-weight-550">
-              <span>Features</span>
-            </div>
-
-            <div className="font-poppins-md text-[13px] text-dark-weight-600 dark:text-light-weight-550">
-              <span>Default</span>
-            </div>
-
-            <div className="font-poppins-md text-[13px] text-dark-weight-600 dark:text-light-weight-550">
-              <span>Options</span>
-            </div>
-          </div>
-
           {categoryTree.length > 0 ? (
             <RenderAllCategories userId={userId} categoryTree={categoryTree} />
           ) : (
