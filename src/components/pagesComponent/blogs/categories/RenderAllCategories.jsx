@@ -47,8 +47,22 @@ const renderAllCategories = (
               />
             </button>
           )}
+          {/* Category name for small devices */}
           <span
-            className={`${category.isFeatured ? "" : "line-through text-light-weight-400 opacity-80"}`}
+            className={`${category.isFeatured ? "" : "line-through text-light-weight-400 opacity-80"} md:hidden`}
+          >
+            {category.name.length > 20
+              ? category.name.slice(0, 20) + "..."
+              : category.name}
+            {category.isDefault && (
+              <span className="text-[10px] bg-red-500/20 rounded-full font-poppins-md text-red-600 px-2 py-0.5 ml-1">
+                Default
+              </span>
+            )}
+          </span>
+          {/* Category name for above small devices */}
+          <span
+            className={`${category.isFeatured ? "" : "line-through text-light-weight-400 opacity-80"} hidden md:inline`}
           >
             {category.name}
             {category.isDefault && (
