@@ -53,6 +53,8 @@ const AllBlogs = async ({ searchParams }) => {
     errorMessage = message;
   }
 
+  console.log("Blog Posts: ", blogPostsList);
+
   return (
     <div className={`min-h-full`}>
       <Breadcrumb

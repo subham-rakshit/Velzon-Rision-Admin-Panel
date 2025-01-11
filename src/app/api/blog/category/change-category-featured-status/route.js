@@ -1,8 +1,5 @@
 import dbConnect from "@/lib/db/dbConnect";
-import {
-  updateChildCategories,
-  updateParentCategories,
-} from "@/lib/middleware/updateCategoriesFeaturedStatus";
+import { updateParentCategories } from "@/lib/middleware/updateCategoriesFeaturedStatus";
 import { validateUserFromToken } from "@/lib/middleware/validateUser";
 import AllBlogsCategoryModel from "@/model/blog/BlogsCategory";
 import UserModel from "@/model/User";
@@ -15,7 +12,7 @@ export async function PUT(request) {
   try {
     const body = await request.json();
 
-    const { userId, categoryId, isFeatured } = body;
+    const { userId, categoryId, featuredStatus } = body;
     if (
       !userId ||
       !categoryId ||
@@ -57,10 +54,7 @@ export async function PUT(request) {
     }
 
     // NOTE Get the category details
-    const category = await AllBlogsCategoryModel.findOne({
-      _id: categoryId,
-      userId: user._id,
-    }).exec();
+    const category = await AllBlogsCategoryModel.findById(categoryId).exec();
     if (!category) {
       return NextResponse.json(
         {
@@ -71,10 +65,15 @@ export async function PUT(request) {
       );
     }
 
-    // NOTE Toggle isFeatured status
+    // NOTE Toggle isFeatured
     const updatedCategory = await AllBlogsCategoryModel.findByIdAndUpdate(
-      { _id: categoryId },
-      { $set: { isFeatured: !category.isFeatured } },
+      category._id,
+      {
+        $set: {
+          isFeatured: !category.isFeatured,
+          activeStatus: true,
+        },
+      },
       { new: true }
     ).exec();
     if (!updatedCategory) {
@@ -87,18 +86,19 @@ export async function PUT(request) {
       );
     }
 
-    // NOTE Update the isFeatured status of all child categories also (Top to Bottom)
-    await updateChildCategories(categoryId, isFeatured);
-
-    // NOTE Update the isFeatured status of parent categories also (Bottom to Top)
-    await updateParentCategories(category.parentCategoryId, isFeatured);
+    // NOTE Check if the updated category has any parent category, if so then make that parent category's activeStatus as true
+    if (updatedCategory.isFeatured && updatedCategory.parentCategoryId) {
+      await updateParentCategories(updatedCategory.parentCategoryId, false);
+    }
 
     return NextResponse.json(
       {
         success: true,
-        message: isFeatured
-          ? `You've disabled ${category.name}. Refreshing to apply changes...`
-          : `You've enabled ${category.name}. Refreshing to apply changes...`,
+        message: `${updatedCategory.name} has been successfully updated ${
+          updatedCategory.isFeatured
+            ? "as a featured category"
+            : "and is no longer featured"
+        }. Refreshing to apply changes...`,
       },
       { status: 200 }
     );

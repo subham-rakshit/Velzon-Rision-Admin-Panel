@@ -66,11 +66,75 @@ export const getAllCategories = async (userId, search) => {
   }
 };
 
+// NOTE Change Category Active Status
+export const changeCategoryStatus = async (userId, categoryId, active) => {
+  try {
+    const response = await axios.put(
+      `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/blog/category/change-category-active-status`,
+      {
+        userId,
+        categoryId,
+        active,
+      }
+    );
+
+    if (response.data.success && response.status === 200) {
+      return {
+        success: true,
+        message: response.data.message,
+      };
+    }
+  } catch (error) {
+    console.log(`Error in changing category active status CLIENT: ${error}`);
+    return {
+      success: false,
+      message:
+        error.response.data.message ||
+        error.message ||
+        "An unexpected error occurred. Please try again later.",
+    };
+  }
+};
+
+// NOTE Change Category Default Status
+export const changeCategoryDefaultStatus = async (
+  userId,
+  categoryId,
+  defaultStatus
+) => {
+  try {
+    const response = await axios.put(
+      `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/blog/category/change-category-default-status`,
+      {
+        userId,
+        categoryId,
+        defaultStatus,
+      }
+    );
+
+    if (response.data.success && response.status === 200) {
+      return {
+        success: true,
+        message: response.data.message,
+      };
+    }
+  } catch (error) {
+    console.log(`Error in changing category default status CLIENT: ${error}`);
+    return {
+      success: false,
+      message:
+        error.response.data.message ||
+        error.message ||
+        "An unexpected error occurred. Please try again later.",
+    };
+  }
+};
+
 // NOTE Change Category Featured Status
 export const changeCategoryFeaturedStatus = async (
   userId,
   categoryId,
-  isFeatured
+  featuredStatus
 ) => {
   try {
     const response = await axios.put(
@@ -78,7 +142,7 @@ export const changeCategoryFeaturedStatus = async (
       {
         userId,
         categoryId,
-        isFeatured,
+        featuredStatus,
       }
     );
 

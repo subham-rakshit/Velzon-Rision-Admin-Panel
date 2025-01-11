@@ -3,7 +3,7 @@ import { SelectItem } from "@/components/ui/select";
 const renderOptions = (categoryList, level = 0) => {
   return categoryList.map(
     (category) =>
-      category.isFeatured && (
+      category.activeStatus && (
         <div key={category._id}>
           <SelectItem
             value={category._id}

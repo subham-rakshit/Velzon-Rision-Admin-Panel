@@ -1,6 +1,11 @@
 "use client";
 
-import { CategoryDeleteButton, CategoryFeaturedButton } from "@/components";
+import {
+  CategoryDefaultdButton,
+  CategoryDeleteButton,
+  CategoryFeaturedButton,
+  CategoryStatusButton,
+} from "@/components";
 import Link from "next/link";
 import { useState } from "react";
 import { AiOutlineFolderOpen } from "react-icons/ai";
@@ -62,7 +67,7 @@ const renderAllCategories = (
           </span>
           {/* Category name for above small devices */}
           <span
-            className={`${category.isFeatured ? "" : "line-through text-light-weight-400 opacity-80"} hidden md:inline`}
+            className={`${category.activeStatus ? "" : "line-through text-light-weight-400 opacity-80"} hidden md:inline`}
           >
             {category.name}
             {category.isDefault && (
@@ -73,15 +78,21 @@ const renderAllCategories = (
           </span>
         </div>
 
+        {/* Active Status Button */}
+        <div className="flex-1 flex items-center justify-center">
+          <CategoryStatusButton userId={userId} categoryDetails={category} />
+        </div>
+
         {/* Featured Button */}
-        {!category.isDefault && (
-          <div className="flex-1 flex items-center justify-center">
-            <CategoryFeaturedButton
-              userId={userId}
-              categoryDetails={category}
-            />
-          </div>
-        )}
+
+        <div className="flex-1 flex items-center justify-center">
+          <CategoryFeaturedButton userId={userId} categoryDetails={category} />
+        </div>
+
+        {/* Default Status Button */}
+        <div className="flex-1 flex items-center justify-center">
+          <CategoryDefaultdButton userId={userId} categoryDetails={category} />
+        </div>
 
         {/* Edit and Delete Buttons */}
         <div className="flex items-center justify-end gap-2 flex-1">

@@ -57,10 +57,7 @@ export async function DELETE(request) {
     }
 
     // NOTE Get the category details
-    const category = await AllBlogsCategoryModel.findOne({
-      _id: categoryId,
-      userId,
-    }).exec();
+    const category = await AllBlogsCategoryModel.findById(categoryId).exec();
     if (!category) {
       return NextResponse.json(
         {
@@ -86,7 +83,6 @@ export async function DELETE(request) {
 
     // NOTE Check if there is a default category
     const defaultCategory = await AllBlogsCategoryModel.findOne({
-      userId: user._id,
       isDefault: true,
     }).exec();
     if (!defaultCategory) {
@@ -101,9 +97,9 @@ export async function DELETE(request) {
     }
 
     // NOTE Delete the category
-    const deletedCategory = await AllBlogsCategoryModel.findOneAndDelete({
-      _id: categoryId,
-    }).exec();
+    const deletedCategory = await AllBlogsCategoryModel.findByIdAndDelete(
+      category._id
+    ).exec();
     if (!deletedCategory) {
       return NextResponse.json(
         {
@@ -122,7 +118,7 @@ export async function DELETE(request) {
 
     // NOTE Update all blog posts related to the deleted category to use the default category
     await AllBlogsModel.updateMany(
-      { category: category._id, userId: user._id },
+      { category: category._id },
       { $set: { category: defaultCategory ? defaultCategory._id : null } }
     );
 

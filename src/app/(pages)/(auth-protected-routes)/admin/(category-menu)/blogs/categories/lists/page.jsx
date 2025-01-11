@@ -101,7 +101,15 @@ const BlogSystemCategories = async ({ searchParams }) => {
             </div>
 
             <div className="font-poppins-md text-[13px] text-dark-weight-600 dark:text-light-weight-550">
-              <span>Featured</span>
+              <span>Status</span>
+            </div>
+
+            <div className="font-poppins-md text-[13px] text-dark-weight-600 dark:text-light-weight-550">
+              <span>Features</span>
+            </div>
+
+            <div className="font-poppins-md text-[13px] text-dark-weight-600 dark:text-light-weight-550">
+              <span>Default</span>
             </div>
 
             <div className="font-poppins-md text-[13px] text-dark-weight-600 dark:text-light-weight-550">

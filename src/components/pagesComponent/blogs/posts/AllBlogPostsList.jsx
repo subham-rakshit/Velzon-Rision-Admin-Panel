@@ -57,6 +57,7 @@ const AllBlogPostsList = ({ userId, data, paginationDetails }) => {
                       className="object-cover"
                     />
                   </div>
+                  ``{" "}
                 </TableCell>
                 <TableCell>
                   {eachPost.title.length > 25
@@ -64,7 +65,7 @@ const AllBlogPostsList = ({ userId, data, paginationDetails }) => {
                     : eachPost.title}
                 </TableCell>
                 <TableCell className="hidden sm:table-cell">
-                  {eachPost.category.name}
+                  {eachPost.category?.name || "No Category"}
                 </TableCell>
                 <TableCell className="text-right">
                   <div className="flex items-center justify-end gap-2">

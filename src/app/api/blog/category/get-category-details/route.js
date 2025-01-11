@@ -42,15 +42,12 @@ export async function GET(request) {
     }
 
     // NOTE Get category details
-    const category = await AllBlogsCategoryModel.findOne({
-      _id: categoryId,
-      userId,
-    }).exec();
+    const category = await AllBlogsCategoryModel.findById(categoryId).exec();
     if (!category) {
       return NextResponse.json(
         {
           success: false,
-          message: "Category not found or does not belong to the user.",
+          message: "Category not found.",
         },
         { status: 404 }
       );

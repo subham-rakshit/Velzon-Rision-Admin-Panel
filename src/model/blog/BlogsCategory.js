@@ -22,7 +22,6 @@ const blogsCategorySchema = new mongoose.Schema(
     },
     description: {
       type: String,
-      required: true,
       default: "",
     },
     parentCategoryId: {
@@ -30,21 +29,17 @@ const blogsCategorySchema = new mongoose.Schema(
       ref: "Category",
       default: null,
     },
-    colorTheme: {
-      type: String,
-      default: "#495057",
+    activeStatus: {
+      type: Boolean,
+      default: true,
     },
     isFeatured: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     isDefault: {
       type: Boolean,
       default: false,
-    },
-    tags: {
-      type: [String],
-      default: [],
     },
     metaTitle: {
       type: String,

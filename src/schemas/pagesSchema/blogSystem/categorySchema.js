@@ -30,48 +30,28 @@ export const CategorySchema = z.object({
 
   description: z
     .string()
-    .min(30, { message: "Description must be at least 30 characters long." })
     .max(200, { message: "Description must not exceed 200 characters." })
-    .default(""),
+    .optional(),
 
   parentCategoryId: z
     .string()
-    .min(1, "Parent category is required.")
-    .refine((value) => value === "none" || isValidId(value), {
+    .optional()
+    .refine((value) => !value || value === "none" || isValidId(value), {
       message: "Parent category must be either 'none' or a valid ObjectId.",
     }),
 
-  colorTheme: z
-    .string()
-    .regex(/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/, {
-      message: "Color theme must be a valid hex color code.",
-    })
-    .default("#495057"),
-
-  isDefault: z.boolean().default(false),
-
-  tags: z
-    .array(
-      z
-        .string()
-        .min(1, { message: "Tag must not be empty." })
-        .max(20, { message: "Each tag must not exceed 20 characters." })
-    )
-    .min(1, { message: "Tags are required." })
-    .max(20, { message: "A maximum of 20 tags are allowed." }),
-
   metaTitle: z
     .string()
-    .max(150, "Meta title must not exceed 150 characters")
-    .default("")
-    .transform((title) => title.trim()),
+    .max(150, { message: "Meta title must not exceed 150 characters." })
+    .optional()
+    .transform((title) => title?.trim() || ""),
 
   // TODO Need to validate metaImage with valid URL
-  metaImage: z.string().optional().default(""),
+  metaImage: z.string().optional(),
 
   metaDescription: z
     .string()
-    .max(200, "Meta description must not exceed 200 characters")
-    .default("")
-    .transform((desc) => desc.trim()),
+    .max(200, { message: "Meta description must not exceed 200 characters." })
+    .optional()
+    .transform((desc) => desc?.trim() || ""),
 });

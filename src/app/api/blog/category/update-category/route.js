@@ -97,10 +97,8 @@ export async function PUT(request) {
     }
 
     // NOTE Get the category details
-    const existsCategory = await AllBlogsCategoryModel.findOne({
-      _id: categoryId,
-      userId: user._id,
-    }).exec();
+    const existsCategory =
+      await AllBlogsCategoryModel.findById(categoryId).exec();
     if (!existsCategory) {
       return NextResponse.json(
         {
@@ -115,7 +113,6 @@ export async function PUT(request) {
     let newSlug;
     if (name !== existsCategory.name || slug !== existsCategory.slug) {
       const existingCategory = await AllBlogsCategoryModel.findOne({
-        userId: user._id,
         $or: [{ slug }, { name }],
       }).exec();
 
@@ -145,7 +142,7 @@ export async function PUT(request) {
     if (isDefault) {
       // Update any existing default categories to set isDefault to false
       await AllBlogsCategoryModel.updateMany(
-        { userId: user._id, isDefault: true },
+        { isDefault: true },
         { $set: { isDefault: false } }
       ).exec();
     }

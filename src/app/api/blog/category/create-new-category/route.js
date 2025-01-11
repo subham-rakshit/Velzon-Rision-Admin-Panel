@@ -18,9 +18,6 @@ export async function POST(request) {
       slug,
       description,
       parentCategoryId,
-      colorTheme,
-      isDefault,
-      tags,
       metaTitle,
       metaImage,
       metaDescription,
@@ -56,9 +53,6 @@ export async function POST(request) {
       slug,
       description,
       parentCategoryId,
-      colorTheme,
-      isDefault,
-      tags,
       metaTitle,
       metaImage,
       metaDescription,
@@ -120,15 +114,6 @@ export async function POST(request) {
       newSlug = slug + "-" + newCharacters;
     }
 
-    // Handle Default Category
-    if (isDefault) {
-      // Update any existing default categories to set isDefault to false
-      await AllBlogsCategoryModel.updateMany(
-        { userId: user._id, isDefault: true },
-        { $set: { isDefault: false } }
-      ).exec();
-    }
-
     // NOTE Set the META title if not provided
     let newMetaTitle;
     if (!metaTitle) {
@@ -138,13 +123,7 @@ export async function POST(request) {
         .join(" ")
         .slice(0, 50);
       newMetaTitle =
-        createMetaTile + " || Velzon - NEXT.js Admin & Dashboard Template";
-    }
-
-    // NOTE Set the META description if not provided
-    let newMetaDescription;
-    if (!metaDescription) {
-      newMetaDescription = description;
+        createMetaTile + " | Velzon - NEXT.js Admin & Dashboard Template";
     }
 
     // NOTE Set new category object
@@ -153,13 +132,14 @@ export async function POST(request) {
       name,
       slug: newSlug || slug,
       description,
-      parentCategoryId: parentCategoryId === "none" ? null : parentCategoryId,
-      colorTheme,
-      isDefault,
-      tags,
+      parentCategoryId: parentCategoryId
+        ? parentCategoryId === "none"
+          ? null
+          : parentCategoryId
+        : null,
       metaTitle: newMetaTitle || metaTitle,
       metaImage,
-      metaDescription: newMetaDescription || metaDescription,
+      metaDescription: metaDescription,
     };
 
     // NOTE Create new category

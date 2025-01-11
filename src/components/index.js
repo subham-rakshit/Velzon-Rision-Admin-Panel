@@ -33,8 +33,10 @@ import ToggleButton from "./navigation/navbar/ToggleButton";
 import RightSidebar from "./navigation/rightSidebar/RightSidebar";
 import TransitionLink from "./navigation/TransitionLink";
 // Blog System
+import CategoryDefaultdButton from "./pagesComponent/blogs/categories/CategoryDefaultdButton";
 import CategoryDeleteButton from "./pagesComponent/blogs/categories/CategoryDeleteButton";
 import CategoryFeaturedButton from "./pagesComponent/blogs/categories/CategoryFeaturedButton";
+import CategoryStatusButton from "./pagesComponent/blogs/categories/CategoryStatusButton";
 import CreateNewCategoryForm from "./pagesComponent/blogs/categories/CreateNewCategoryForm";
 import RenderAllCategories from "./pagesComponent/blogs/categories/RenderAllCategories";
 import RenderCategoryOptions from "./pagesComponent/blogs/categories/RenderCategoryOptions";
@@ -95,8 +97,10 @@ export {
   BalanceOverview,
   BestSellingProducts,
   Breadcrumb,
+  CategoryDefaultdButton,
   CategoryDeleteButton,
   CategoryFeaturedButton,
+  CategoryStatusButton,
   ClosingDeals,
   CountupText,
   CreateBlogPostForm,
