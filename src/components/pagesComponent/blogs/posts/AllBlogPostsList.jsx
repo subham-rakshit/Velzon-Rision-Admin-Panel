@@ -57,7 +57,6 @@ const AllBlogPostsList = ({ userId, data, paginationDetails }) => {
                       className="object-cover"
                     />
                   </div>
-                  ``{" "}
                 </TableCell>
                 <TableCell>
                   {eachPost.title.length > 25

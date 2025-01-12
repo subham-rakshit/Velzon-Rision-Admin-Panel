@@ -9,9 +9,6 @@ export const AllBlogsSchema = z.object({
     .min(5, { message: "Title must be at least 5 characters long" })
     .max(150, { message: "Title must be at most 150 characters long" })
     .transform((title) => title.trim()),
-  category: z.string().refine((value) => isValidId(value), {
-    message: "Category must be a valid ObjectId.",
-  }),
   slug: z
     .string()
     .min(1, { message: "Slug is required." })
@@ -29,7 +26,13 @@ export const AllBlogsSchema = z.object({
       message:
         "Slug must contain only lowercase letters, numbers, and hyphens.",
     }),
-  bannerImage: z.string().optional(),
+  category: z.string().refine((value) => isValidId(value), {
+    message: "Category must be a valid ObjectId.",
+  }),
+  bannerImage: z
+    .string()
+    .url({ message: "Banner image must be a valid URL" })
+    .optional(),
   shortDescription: z
     .string()
     .min(5, { message: "Short Description must be at least 5 characters long" })
@@ -37,6 +40,7 @@ export const AllBlogsSchema = z.object({
       message: "Short Description must be at most 200 characters long",
     }),
   description: z.string().optional(),
+  source: z.string().optional().default(""),
   metaTitle: z
     .string()
     .max(150, "Meta title must not exceed 150 characters")

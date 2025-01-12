@@ -41,6 +41,7 @@ const defaultValues = {
   bannerImage: "",
   shortDescription: "",
   description: "",
+  source: "",
   metaTitle: "",
   metaImage: "",
   metaDescription: "",
@@ -155,6 +156,33 @@ const CreateBlogPostForm = ({ userId, searchValue, categoryList }) => {
         </div>
       </div>
 
+      {/* Slug */}
+      <div className={`mt-5 ${globalStyleObj.commonInputContainerClass}`}>
+        <LabelText text="Slug" htmlForId="blog-slug" star={true} />
+        <div className="flex flex-col gap-2 w-full max-w-[800px]">
+          <Controller
+            name="slug"
+            control={control}
+            render={({ field }) => (
+              <Input
+                {...field}
+                id="blog-slug"
+                type="text"
+                value={field.value || ""}
+                placeholder="Slug"
+                className={globalStyleObj.commonDefaultInputFieldClass}
+              />
+            )}
+          />
+
+          {errors && errors.slug && (
+            <p className="text-red-500 text-[13px] font-poppins-rg">
+              {errors.slug.message}
+            </p>
+          )}
+        </div>
+      </div>
+
       {/* Category */}
       <div className={`mt-5 ${globalStyleObj.commonInputContainerClass}`}>
         <LabelText text="Category" htmlForId="blog-category" star={true} />
@@ -192,33 +220,6 @@ const CreateBlogPostForm = ({ userId, searchValue, categoryList }) => {
           {errors && errors.category && (
             <p className="text-red-500 text-[13px] font-poppins-rg">
               {errors.category.message}
-            </p>
-          )}
-        </div>
-      </div>
-
-      {/* Slug */}
-      <div className={`mt-5 ${globalStyleObj.commonInputContainerClass}`}>
-        <LabelText text="Slug" htmlForId="blog-slug" star={true} />
-        <div className="flex flex-col gap-2 w-full max-w-[800px]">
-          <Controller
-            name="slug"
-            control={control}
-            render={({ field }) => (
-              <Input
-                {...field}
-                id="blog-slug"
-                type="text"
-                value={field.value || ""}
-                placeholder="Slug"
-                className={globalStyleObj.commonDefaultInputFieldClass}
-              />
-            )}
-          />
-
-          {errors && errors.slug && (
-            <p className="text-red-500 text-[13px] font-poppins-rg">
-              {errors.slug.message}
             </p>
           )}
         </div>
@@ -305,6 +306,32 @@ const CreateBlogPostForm = ({ userId, searchValue, categoryList }) => {
               setValue("description", newContent);
             }}
           />
+        </div>
+      </div>
+
+      {/* Source */}
+      <div className={`mt-5 ${globalStyleObj.commonInputContainerClass}`}>
+        <LabelText text="Blog Source" htmlForId="blog-source" star={false} />
+        <div className="flex flex-col gap-2 w-full max-w-[800px]">
+          <Controller
+            name="source"
+            control={control}
+            render={({ field }) => (
+              <Input
+                {...field}
+                id="blog-source"
+                type="text"
+                value={field.value || ""}
+                placeholder="Blog Source"
+                className={globalStyleObj.commonDefaultInputFieldClass}
+              />
+            )}
+          />
+          {errors && errors.source && (
+            <p className="text-red-500 text-[13px] font-poppins-rg">
+              {errors.source.message}
+            </p>
+          )}
         </div>
       </div>
 

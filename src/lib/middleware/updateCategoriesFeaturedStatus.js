@@ -1,4 +1,5 @@
 import AllBlogsCategoryModel from "@/model/blog/BlogsCategory";
+import mongoose from "mongoose";
 
 export const updateChildCategories = async (categoryId, active) => {
   // Child featured changes only happen if parent want to be inactive (means when active = true)
@@ -14,7 +15,12 @@ export const updateChildCategories = async (categoryId, active) => {
   for (let category of childCategories) {
     await AllBlogsCategoryModel.findByIdAndUpdate(
       category._id,
-      { $set: { activeStatus: !active } },
+      {
+        $set: {
+          activeStatus: false,
+          isFeatured: false,
+        },
+      },
       { new: true }
     ).exec();
 
@@ -69,4 +75,21 @@ export const checkDefaultChildCategoryPresence = async (categoryId) => {
 
   // No default category found in this branch
   return false;
+};
+
+export const preventCircularReference = async (
+  categoryId,
+  parentCategoryId
+) => {
+  if (!mongoose.Types.ObjectId.isValid(categoryId)) return;
+
+  const newParentCategory =
+    await AllBlogsCategoryModel.findById(parentCategoryId).exec();
+  if (newParentCategory?.parentCategoryId?.toString() === categoryId) {
+    await AllBlogsCategoryModel.findByIdAndUpdate(
+      parentCategoryId,
+      { $set: { parentCategoryId: null } },
+      { new: true }
+    ).exec();
+  }
 };

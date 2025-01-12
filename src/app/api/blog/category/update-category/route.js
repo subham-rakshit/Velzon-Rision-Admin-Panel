@@ -18,9 +18,6 @@ export async function PUT(request) {
       slug,
       description,
       parentCategoryId,
-      colorTheme,
-      isDefault,
-      tags,
       metaTitle,
       metaImage,
       metaDescription,
@@ -55,15 +52,25 @@ export async function PUT(request) {
       );
     }
 
+    // NOTE Get the user and category details
+    const user = await UserModel.findById(userId).exec();
+    if (!user || !user.role.includes("Admin")) {
+      return NextResponse.json(
+        {
+          success: false,
+          message:
+            "Access denied. You do not have permission to update this category.",
+        },
+        { status: 403 }
+      );
+    }
+
     // NOTE VALIDATE the registration schema
     const validatedFields = CategorySchema.safeParse({
       name,
       slug,
       description,
       parentCategoryId,
-      colorTheme,
-      isDefault,
-      tags,
       metaTitle,
       metaImage,
       metaDescription,
@@ -83,19 +90,6 @@ export async function PUT(request) {
       );
     }
 
-    // NOTE Get the user and category details
-    const user = await UserModel.findById(userId).exec();
-    if (!user || !user.role.includes("Admin")) {
-      return NextResponse.json(
-        {
-          success: false,
-          message:
-            "Access denied. You do not have permission to update this category.",
-        },
-        { status: 403 }
-      );
-    }
-
     // NOTE Get the category details
     const existsCategory =
       await AllBlogsCategoryModel.findById(categoryId).exec();
@@ -109,7 +103,7 @@ export async function PUT(request) {
       );
     }
 
-    // NOTE Only check for duplicates if name or slug are changed
+    // NOTE // Handle duplicate category name or slug. Only check for duplicates if name or slug are changed
     let newSlug;
     if (name !== existsCategory.name || slug !== existsCategory.slug) {
       const existingCategory = await AllBlogsCategoryModel.findOne({
@@ -138,15 +132,6 @@ export async function PUT(request) {
       }
     }
 
-    // NOTE Handle Default Category
-    if (isDefault) {
-      // Update any existing default categories to set isDefault to false
-      await AllBlogsCategoryModel.updateMany(
-        { isDefault: true },
-        { $set: { isDefault: false } }
-      ).exec();
-    }
-
     // NOTE Set the META title if not provided
     let newMetaTitle;
     if (!metaTitle) {
@@ -159,23 +144,56 @@ export async function PUT(request) {
         createMetaTile + " | Velzon - NEXT.js Admin & Dashboard Template";
     }
 
-    // NOTE Set the META description if not provided
-    let newMetaDescription;
-    if (!metaDescription) {
-      newMetaDescription = description;
-    }
+    // Validate parentCategoryId
+    if (parentCategoryId && parentCategoryId !== "none") {
+      // Check if parentCategoryId is a valid ObjectId
+      if (!mongoose.Types.ObjectId.isValid(parentCategoryId)) {
+        return NextResponse.json(
+          {
+            success: false,
+            message: "Invalid parent category ID.",
+          },
+          { status: 400 }
+        );
+      }
 
-    // NOTE Check the parent featured status
-    let parentFeatured;
-    if (existsCategory.parentCategoryId) {
-      const parentCategoryDetails = await AllBlogsCategoryModel.findById(
-        existsCategory.parentCategoryId
-      ).exec();
+      // Prevent self-referencing
+      if (parentCategoryId === categoryId) {
+        return NextResponse.json(
+          {
+            success: false,
+            message: "A category cannot be its own parent.",
+          },
+          { status: 400 }
+        );
+      }
 
-      if (parentCategoryDetails) {
-        parentFeatured = parentCategoryDetails.isFeatured;
-      } else {
-        parentFeatured = true;
+      // Check if parentCategoryId exists
+      const parentCategory =
+        await AllBlogsCategoryModel.findById(parentCategoryId).exec();
+      if (!parentCategory) {
+        return NextResponse.json(
+          {
+            success: false,
+            message: "Parent category does not exist.",
+          },
+          { status: 404 }
+        );
+      }
+
+      // Prevent circular references
+      const isDescendant = await AllBlogsCategoryModel.findOne({
+        parentCategoryId: categoryId,
+      }).exec();
+      if (isDescendant) {
+        return NextResponse.json(
+          {
+            success: false,
+            message:
+              "Invalid parent category. A category cannot be a child of itself or its descendants.",
+          },
+          { status: 400 }
+        );
       }
     }
 
@@ -185,13 +203,9 @@ export async function PUT(request) {
       slug: newSlug || slug,
       description,
       parentCategoryId: parentCategoryId === "none" ? null : parentCategoryId,
-      colorTheme,
-      isFeatured: isDefault ? true : parentFeatured,
-      isDefault,
-      tags,
       metaTitle: newMetaTitle || metaTitle,
       metaImage,
-      metaDescription: newMetaDescription || metaDescription,
+      metaDescription: metaDescription,
     };
 
     // NOTE Update the category

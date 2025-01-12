@@ -209,20 +209,22 @@ export const updatePerticularCategory = async (userId, categoryId, data) => {
     }
   } catch (error) {
     console.log(`Error in updating the category CLIENT: ${error}`);
-    if (error.response) {
+    if (error.response.data.errors) {
       return {
         success: false,
-        errors:
-          error.response.data.errors ||
-          error.response.data.message ||
-          error.message ||
-          "An unexpected error occurred. Please try again later.",
+        errors: error.response.data.errors || "Something went wrong",
+      };
+    } else if (error.response.data.message) {
+      return {
+        success: false,
+        message: error.response.data.message || "Something went wrong",
+      };
+    } else {
+      return {
+        success: false,
+        message: "An unexpected error occurred. Please try again later.",
       };
     }
-    return {
-      success: false,
-      message: "An unexpected error occurred. Please try again later.",
-    };
   }
 };
 

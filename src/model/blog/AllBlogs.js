@@ -38,6 +38,13 @@ const allBlogsSchema = new mongoose.Schema(
     },
     description: {
       type: String,
+      default: "",
+      index: true,
+      trim: true,
+    },
+    source: {
+      type: String,
+      default: "",
       index: true,
       trim: true,
     },
