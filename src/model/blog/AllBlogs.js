@@ -14,17 +14,17 @@ const allBlogsSchema = new mongoose.Schema(
       trim: true,
       unique: true,
     },
-    category: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Category",
-      required: true,
-    },
     slug: {
       type: String,
       required: true,
       index: true,
       trim: true,
       unique: true,
+    },
+    category: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category",
+      required: true,
     },
     bannerImage: {
       type: String,
@@ -42,11 +42,22 @@ const allBlogsSchema = new mongoose.Schema(
       index: true,
       trim: true,
     },
+    tags: {
+      type: [String],
+      default: [],
+    },
     source: {
       type: String,
       default: "",
-      index: true,
       trim: true,
+    },
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
+    isFeatured: {
+      type: Boolean,
+      default: false,
     },
     metaTitle: {
       type: String,

@@ -44,7 +44,10 @@ import RenderCategoryOptions from "./pagesComponent/blogs/categories/RenderCateg
 import UpdateCategoryForm from "./pagesComponent/blogs/categories/UpdateCategoryForm";
 import AllBlogPostsList from "./pagesComponent/blogs/posts/AllBlogPostsList";
 import CreateBlogPostForm from "./pagesComponent/blogs/posts/CreateBlogPostForm";
+import EachPostActions from "./pagesComponent/blogs/posts/EachPostActions";
+import PostActiveButton from "./pagesComponent/blogs/posts/PostActiveButton";
 import PostDeleteButton from "./pagesComponent/blogs/posts/PostDeleteButton";
+import PostFeaturedButton from "./pagesComponent/blogs/posts/PostFeaturedButton";
 import RowsPerPageSelection from "./pagesComponent/blogs/posts/RowsPerPageSelection";
 import UpdatePostForm from "./pagesComponent/blogs/posts/UpdatePostForm";
 import LabelText from "./pagesComponent/LabelText";
@@ -111,6 +114,7 @@ export {
   DealsStatus,
   DealType,
   DeletePopup,
+  EachPostActions,
   EcommerceWidgets,
   ErrorImage,
   Footer,
@@ -142,7 +146,9 @@ export {
   PaginationComponent,
   PasswordInputFiled,
   PlayerLordIcon,
+  PostActiveButton,
   PostDeleteButton,
+  PostFeaturedButton,
   ProgressBar,
   RecentOrders,
   RecentOrdersOrderId,

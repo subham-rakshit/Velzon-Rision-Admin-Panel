@@ -2,7 +2,7 @@
 
 import JoditEditor from "jodit-react";
 import { useTheme } from "next-themes";
-import { MdErrorOutline } from "react-icons/md";
+import { MdClose, MdErrorOutline } from "react-icons/md";
 import { ClipLoader } from "react-spinners";
 
 import { globalStyleObj } from "@/app/assets/styles";
@@ -52,11 +52,13 @@ const UpdatePostForm = ({ userId, postDetails, categoryList, searchValue }) => {
     resolver: zodResolver(AllBlogsSchema),
     defaultValues: {
       title: postDetails.title || "",
-      category: postDetails.category || "",
       slug: postDetails.slug || "",
+      category: postDetails.category || "",
       bannerImage: postDetails.bannerImage || "",
       shortDescription: postDetails.shortDescription || "",
       description: postDetails.description || "",
+      tags: postDetails.tags || [],
+      source: postDetails.source || "",
       metaTitle: postDetails.metaTitle || "",
       metaImage: postDetails.metaImage || "",
       metaDescription: postDetails.metaDescription || "",
@@ -71,18 +73,21 @@ const UpdatePostForm = ({ userId, postDetails, categoryList, searchValue }) => {
   // NOTE Watch form all fields and Compare with categoryDetails
   const currentValues = watch();
   const watchedTitle = watch("title");
+  const watchedTags = watch("tags");
 
   // NOTE Relevant fields for comparison with postDetails
   const relevantFields = {
-    title: postDetails.title,
-    category: postDetails.category,
-    slug: postDetails.slug,
-    bannerImage: postDetails.bannerImage,
-    shortDescription: postDetails.shortDescription,
-    description: postDetails.description,
-    metaTitle: postDetails.metaTitle,
-    metaImage: postDetails.metaImage,
-    metaDescription: postDetails.metaDescription,
+    title: postDetails.title || "",
+    slug: postDetails.slug || "",
+    category: postDetails.category || "",
+    bannerImage: postDetails.bannerImage || "",
+    shortDescription: postDetails.shortDescription || "",
+    description: postDetails.description || "",
+    tags: postDetails.tags || [],
+    source: postDetails.source || "",
+    metaTitle: postDetails.metaTitle || "",
+    metaImage: postDetails.metaImage || "",
+    metaDescription: postDetails.metaDescription || "",
   };
 
   // NOTE Compare currentValues with relevantFields (With deep comparison from Lodash)
@@ -104,6 +109,30 @@ const UpdatePostForm = ({ userId, postDetails, categoryList, searchValue }) => {
       setValue("slug", "");
     }
   }, [watchedTitle, setValue]);
+
+  // NOTE Watched tag value change for add new, delete functionality
+  // Add tag validation
+  const addTag = (tag) => {
+    setError("tags", null);
+    if (watchedTags.length <= 20) {
+      if (tag.length <= 20) {
+        setValue("tags", [...watchedTags, tag]);
+      } else {
+        setError("tags", {
+          message: "Each tag must not exceed 20 characters.",
+        });
+      }
+    } else {
+      setError("tags", { message: "A maximum of 20 tags are allowed." });
+    }
+  };
+  // Remove tag functionality
+  const removeTag = (index) => {
+    setValue(
+      "tags",
+      watchedTags.filter((_, i) => i !== index)
+    );
+  };
 
   // NOTE Handle Banner Image
   const onChangeBannerImage = (url) => {
@@ -154,7 +183,11 @@ const UpdatePostForm = ({ userId, postDetails, categoryList, searchValue }) => {
     >
       {/* Blog Title */}
       <div className={globalStyleObj.commonInputContainerClass}>
-        <LabelText text="Blog Title" htmlForId="blog-title" star={true} />
+        <LabelText
+          text="Blog Title"
+          htmlForId="update-blog-title"
+          star={true}
+        />
         <div className="flex flex-col gap-2 w-full max-w-[800px]">
           <Controller
             name="title"
@@ -162,10 +195,10 @@ const UpdatePostForm = ({ userId, postDetails, categoryList, searchValue }) => {
             render={({ field }) => (
               <Input
                 {...field}
-                id="blog-title"
+                id="update-blog-title"
                 type="text"
                 value={field.value || ""}
-                placeholder="Blog Title"
+                placeholder="Enter Blog Title"
                 className={globalStyleObj.commonDefaultInputFieldClass}
               />
             )}
@@ -178,9 +211,40 @@ const UpdatePostForm = ({ userId, postDetails, categoryList, searchValue }) => {
         </div>
       </div>
 
+      {/* Slug */}
+      <div className={`mt-5 ${globalStyleObj.commonInputContainerClass}`}>
+        <LabelText text="Slug" htmlForId="update-blog-slug" star={true} />
+        <div className="flex flex-col gap-2 w-full max-w-[800px]">
+          <Controller
+            name="slug"
+            control={control}
+            render={({ field }) => (
+              <Input
+                {...field}
+                id="update-blog-slug"
+                type="text"
+                value={field.value || ""}
+                placeholder="Enter Slug"
+                className={globalStyleObj.commonDefaultInputFieldClass}
+              />
+            )}
+          />
+
+          {errors && errors.slug && (
+            <p className="text-red-500 text-[13px] font-poppins-rg">
+              {errors.slug.message}
+            </p>
+          )}
+        </div>
+      </div>
+
       {/* Category */}
       <div className={`mt-5 ${globalStyleObj.commonInputContainerClass}`}>
-        <LabelText text="Category" htmlForId="blog-category" star={true} />
+        <LabelText
+          text="Category"
+          htmlForId="update-blog-category"
+          star={true}
+        />
         <div className="flex flex-col gap-2 w-full max-w-[800px]">
           <Controller
             name="category"
@@ -188,7 +252,7 @@ const UpdatePostForm = ({ userId, postDetails, categoryList, searchValue }) => {
             render={({ field }) => (
               <Select
                 {...field}
-                id="blog-category"
+                id="update-blog-category"
                 value={field.value}
                 onValueChange={(value) => field.onChange(value)}
               >
@@ -220,38 +284,11 @@ const UpdatePostForm = ({ userId, postDetails, categoryList, searchValue }) => {
         </div>
       </div>
 
-      {/* Slug */}
-      <div className={`mt-5 ${globalStyleObj.commonInputContainerClass}`}>
-        <LabelText text="Slug" htmlForId="blog-slug" star={true} />
-        <div className="flex flex-col gap-2 w-full max-w-[800px]">
-          <Controller
-            name="slug"
-            control={control}
-            render={({ field }) => (
-              <Input
-                {...field}
-                id="blog-slug"
-                type="text"
-                value={field.value || ""}
-                placeholder="Slug"
-                className={globalStyleObj.commonDefaultInputFieldClass}
-              />
-            )}
-          />
-
-          {errors && errors.slug && (
-            <p className="text-red-500 text-[13px] font-poppins-rg">
-              {errors.slug.message}
-            </p>
-          )}
-        </div>
-      </div>
-
       {/* TODO Banner (1300 x 650) */}
       <div className={`mt-5 ${globalStyleObj.commonInputContainerClass}`}>
         <LabelText
           text="Banner (1300 x 650)"
-          htmlForId="blog-banner-img"
+          htmlForId="update-blog-banner-img"
           star={true}
         />
         <div className="flex flex-col gap-2 w-full max-w-[800px]">
@@ -272,7 +309,7 @@ const UpdatePostForm = ({ userId, postDetails, categoryList, searchValue }) => {
       <div className={`mt-5 ${globalStyleObj.commonInputContainerClass}`}>
         <LabelText
           text="Short Description"
-          htmlForId="blog-short-description"
+          htmlForId="update-blog-short-description"
           star={true}
         />
         <div className="flex flex-col gap-2 w-full max-w-[800px]">
@@ -282,7 +319,7 @@ const UpdatePostForm = ({ userId, postDetails, categoryList, searchValue }) => {
             render={({ field }) => (
               <Textarea
                 {...field}
-                id="blog-short-description"
+                id="update-blog-short-description"
                 value={field.value || ""}
                 className={`h-[100px] ${globalStyleObj.commonDefaultInputFieldClass}`}
               />
@@ -301,7 +338,7 @@ const UpdatePostForm = ({ userId, postDetails, categoryList, searchValue }) => {
       <div className={`mt-5 ${globalStyleObj.commonInputContainerClass}`}>
         <LabelText
           text="Description"
-          htmlForId="blog-description"
+          htmlForId="update-blog-description"
           star={false}
         />
 
@@ -321,7 +358,7 @@ const UpdatePostForm = ({ userId, postDetails, categoryList, searchValue }) => {
               toolbarButtonSize: "middle",
               toolbar: true,
             }}
-            id="blog-description"
+            id="update-blog-description"
             value={watch("description")}
             name="description"
             onBlur={(newContent) => {
@@ -331,19 +368,105 @@ const UpdatePostForm = ({ userId, postDetails, categoryList, searchValue }) => {
         </div>
       </div>
 
+      {/* Tags */}
+      <div className={`mt-5 ${globalStyleObj.commonInputContainerClass}`}>
+        <LabelText text="Tags" htmlForId="update-blog-tags" star={false} />
+        <div className="flex flex-col w-full max-w-[800px]">
+          <Input
+            id="update-blog-tags"
+            placeholder="Enter tag"
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && e.target.value) {
+                e.preventDefault();
+                addTag(e.target.value);
+                e.target.value = "";
+              }
+            }}
+            className={globalStyleObj.commonDefaultInputFieldClass}
+          />
+
+          {watchedTags.length === 0 && (
+            <p className="text-[12px] italic font-poppins-rg text-light-weight-450 mt-1">
+              Press{" "}
+              <span className="text-dark-weight-350 dark:text-light-weight-800 font-poppins-md">
+                ENTER
+              </span>{" "}
+              to add new tag.
+            </p>
+          )}
+
+          <div className="flex items-center gap-2 mt-2 flex-wrap">
+            {watchedTags.map((tag, index) => (
+              <div
+                key={index}
+                className="bg-[#000]/20 text-dark-weight-550 dark:text-light-weight-450 text-[12px] font-poppins-rg px-2 py-1 rounded flex items-center gap-1"
+              >
+                <span>{tag}</span>
+                <button
+                  type="button"
+                  onClick={() => removeTag(index)}
+                  className="text-red-500 hover:scale-[1.2] transition-all duration-300 ease-in-out"
+                >
+                  <MdClose />
+                </button>
+              </div>
+            ))}
+          </div>
+          {errors && errors.tags && (
+            <p className="text-red-500 text-[13px] font-poppins-rg">
+              {errors.tags.message}
+            </p>
+          )}
+        </div>
+      </div>
+
+      {/* Source */}
+      <div className={`mt-5 ${globalStyleObj.commonInputContainerClass}`}>
+        <LabelText
+          text="Blog Source"
+          htmlForId="update-blog-source"
+          star={false}
+        />
+        <div className="flex flex-col gap-2 w-full max-w-[800px]">
+          <Controller
+            name="source"
+            control={control}
+            render={({ field }) => (
+              <Input
+                {...field}
+                id="update-blog-source"
+                type="text"
+                value={field.value || ""}
+                placeholder="Provide Blog Source Link"
+                className={globalStyleObj.commonDefaultInputFieldClass}
+              />
+            )}
+          />
+          {errors && errors.source && (
+            <p className="text-red-500 text-[13px] font-poppins-rg">
+              {errors.source.message}
+            </p>
+          )}
+        </div>
+      </div>
+
       {/* Meta Title */}
       <div className={`mt-5 ${globalStyleObj.commonInputContainerClass}`}>
-        <LabelText text="Meta Title" htmlForId="blog-meta-title" star={false} />
+        <LabelText
+          text="Meta Title"
+          htmlForId="update-blog-meta-title"
+          star={false}
+        />
         <Controller
           name="metaTitle"
           control={control}
           render={({ field }) => (
             <Input
               {...field}
-              id="blog-meta-title"
+              id="update-blog-meta-title"
               type="text"
               value={field.value || ""}
-              placeholder="Meta Title"
+              placeholder="Enter Meta Title"
               className={globalStyleObj.commonDefaultInputFieldClass}
             />
           )}
@@ -354,7 +477,7 @@ const UpdatePostForm = ({ userId, postDetails, categoryList, searchValue }) => {
       <div className={`mt-5 ${globalStyleObj.commonInputContainerClass}`}>
         <LabelText
           text="Meta Image (200 x 200)"
-          htmlForId="blog-meta-img"
+          htmlForId="update-blog-meta-img"
           star={false}
         />
 
@@ -377,7 +500,7 @@ const UpdatePostForm = ({ userId, postDetails, categoryList, searchValue }) => {
       <div className={`mt-5 ${globalStyleObj.commonInputContainerClass}`}>
         <LabelText
           text="Meta Description"
-          htmlForId="blog-meta-description"
+          htmlForId="update-blog-meta-description"
           star={false}
         />
 
@@ -387,7 +510,7 @@ const UpdatePostForm = ({ userId, postDetails, categoryList, searchValue }) => {
           render={({ field }) => (
             <Textarea
               {...field}
-              id="blog-meta-description"
+              id="update-blog-meta-description"
               value={field.value || ""}
               className={`h-[100px] ${globalStyleObj.commonDefaultInputFieldClass}`}
             />

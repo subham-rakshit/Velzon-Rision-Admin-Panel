@@ -154,3 +154,61 @@ export const deletePerticularPost = async (userId, postId) => {
     };
   }
 };
+
+// NOTE ACTIVE A PERTICULAR POST
+export const postToggleActiveStatus = async (userId, postId) => {
+  try {
+    const response = await axios.put(
+      `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/blog/post/change-post-active-status`,
+      {
+        userId,
+        postId,
+      }
+    );
+
+    if (response.data.success && response.status === 200) {
+      return {
+        success: true,
+        message: response.data.message,
+      };
+    }
+  } catch (error) {
+    console.log(`Error in changing post active status CLIENT: ${error}`);
+    return {
+      success: false,
+      message:
+        error.response.data.message ||
+        error.message ||
+        "An unexpected error occurred. Please try again later.",
+    };
+  }
+};
+
+// NOTE FEATURED A PERTICULAR POST
+export const postToggleFeaturedStatus = async (userId, postId) => {
+  try {
+    const response = await axios.put(
+      `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/blog/post/change-post-featured-status`,
+      {
+        userId,
+        postId,
+      }
+    );
+
+    if (response.data.success && response.status === 200) {
+      return {
+        success: true,
+        message: response.data.message,
+      };
+    }
+  } catch (error) {
+    console.log(`Error in changing post featured status CLIENT: ${error}`);
+    return {
+      success: false,
+      message:
+        error.response.data.message ||
+        error.message ||
+        "An unexpected error occurred. Please try again later.",
+    };
+  }
+};

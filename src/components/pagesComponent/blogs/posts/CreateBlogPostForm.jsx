@@ -2,7 +2,7 @@
 
 import JoditEditor from "jodit-react";
 import { useTheme } from "next-themes";
-import { MdErrorOutline } from "react-icons/md";
+import { MdClose, MdErrorOutline } from "react-icons/md";
 import { ClipLoader } from "react-spinners";
 
 import { globalStyleObj } from "@/app/assets/styles";
@@ -36,11 +36,12 @@ import { BiNews } from "react-icons/bi";
 
 const defaultValues = {
   title: "",
-  category: "",
   slug: "",
+  category: "",
   bannerImage: "",
   shortDescription: "",
   description: "",
+  tags: [],
   source: "",
   metaTitle: "",
   metaImage: "",
@@ -70,8 +71,10 @@ const CreateBlogPostForm = ({ userId, searchValue, categoryList }) => {
   const { bgColor, hoverBgColor, textColor, hexCode } = customColor;
   const router = useRouter();
 
-  // NOTE Handle Slug value according to the category name
   const watchedTitle = watch("title");
+  const watchedTags = watch("tags");
+
+  // NOTE Handle Slug value according to the category name
   useEffect(() => {
     if (watchedTitle && watchedTitle.length > 0) {
       setError("slug", "");
@@ -87,6 +90,30 @@ const CreateBlogPostForm = ({ userId, searchValue, categoryList }) => {
       setValue("slug", "");
     }
   }, [watchedTitle, setValue]);
+
+  // NOTE Watched tag value change for add new, delete functionality
+  // Add tag validation
+  const addTag = (tag) => {
+    setError("tags", null);
+    if (watchedTags.length <= 20) {
+      if (tag.length <= 20) {
+        setValue("tags", [...watchedTags, tag]);
+      } else {
+        setError("tags", {
+          message: "Each tag must not exceed 20 characters.",
+        });
+      }
+    } else {
+      setError("tags", { message: "A maximum of 20 tags are allowed." });
+    }
+  };
+  // Remove tag functionality
+  const removeTag = (index) => {
+    setValue(
+      "tags",
+      watchedTags.filter((_, i) => i !== index)
+    );
+  };
 
   // NOTE Handle Banner Image
   const onChangeBannerImage = (url) => {
@@ -143,7 +170,7 @@ const CreateBlogPostForm = ({ userId, searchValue, categoryList }) => {
                 id="blog-title"
                 type="text"
                 value={field.value || ""}
-                placeholder="Blog Title"
+                placeholder="Enter Blog Title"
                 className={globalStyleObj.commonDefaultInputFieldClass}
               />
             )}
@@ -169,7 +196,7 @@ const CreateBlogPostForm = ({ userId, searchValue, categoryList }) => {
                 id="blog-slug"
                 type="text"
                 value={field.value || ""}
-                placeholder="Slug"
+                placeholder="Enter Slug"
                 className={globalStyleObj.commonDefaultInputFieldClass}
               />
             )}
@@ -309,6 +336,57 @@ const CreateBlogPostForm = ({ userId, searchValue, categoryList }) => {
         </div>
       </div>
 
+      {/* Tags */}
+      <div className={`mt-5 ${globalStyleObj.commonInputContainerClass}`}>
+        <LabelText text="Tags" htmlForId="blog-tags" star={false} />
+        <div className="flex flex-col w-full max-w-[800px]">
+          <Input
+            id="blog-tags"
+            placeholder="Enter tag"
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && e.target.value) {
+                e.preventDefault();
+                addTag(e.target.value);
+                e.target.value = "";
+              }
+            }}
+            className={globalStyleObj.commonDefaultInputFieldClass}
+          />
+          {watchedTags.length === 0 && (
+            <p className="text-[12px] italic font-poppins-rg text-light-weight-450 mt-1">
+              Press{" "}
+              <span className="text-dark-weight-350 dark:text-light-weight-800 font-poppins-md">
+                ENTER
+              </span>{" "}
+              to add new tag.
+            </p>
+          )}
+
+          <div className="flex items-center gap-2 mt-2 flex-wrap">
+            {watchedTags.map((tag, index) => (
+              <div
+                key={index}
+                className="bg-[#000]/20 text-dark-weight-550 dark:text-light-weight-450 text-[12px] font-poppins-rg px-2 py-1 rounded flex items-center gap-1"
+              >
+                <span>{tag}</span>
+                <button
+                  type="button"
+                  onClick={() => removeTag(index)}
+                  className="text-red-500 hover:scale-[1.2] transition-all duration-300 ease-in-out"
+                >
+                  <MdClose />
+                </button>
+              </div>
+            ))}
+          </div>
+          {errors && errors.tags && (
+            <p className="text-red-500 text-[13px] font-poppins-rg">
+              {errors.tags.message}
+            </p>
+          )}
+        </div>
+      </div>
+
       {/* Source */}
       <div className={`mt-5 ${globalStyleObj.commonInputContainerClass}`}>
         <LabelText text="Blog Source" htmlForId="blog-source" star={false} />
@@ -322,7 +400,7 @@ const CreateBlogPostForm = ({ userId, searchValue, categoryList }) => {
                 id="blog-source"
                 type="text"
                 value={field.value || ""}
-                placeholder="Blog Source"
+                placeholder="Provide Blog Source Link"
                 className={globalStyleObj.commonDefaultInputFieldClass}
               />
             )}
@@ -347,7 +425,7 @@ const CreateBlogPostForm = ({ userId, searchValue, categoryList }) => {
               id="blog-meta-title"
               type="text"
               value={field.value || ""}
-              placeholder="Meta Title"
+              placeholder="Enter Meta Title"
               className={globalStyleObj.commonDefaultInputFieldClass}
             />
           )}

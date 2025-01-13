@@ -40,6 +40,15 @@ export const AllBlogsSchema = z.object({
       message: "Short Description must be at most 200 characters long",
     }),
   description: z.string().optional(),
+  tags: z
+    .array(
+      z
+        .string()
+        .min(1, { message: "Tag must not be empty." })
+        .max(20, { message: "Each tag must not exceed 20 characters." })
+    )
+    .max(20, { message: "A maximum of 20 tags are allowed." })
+    .optional(),
   source: z.string().optional().default(""),
   metaTitle: z
     .string()

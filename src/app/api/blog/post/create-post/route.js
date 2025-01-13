@@ -21,6 +21,8 @@ export async function POST(request) {
       bannerImage,
       shortDescription,
       description,
+      tags,
+      source,
       metaTitle,
       metaImage,
       metaDescription,
@@ -57,6 +59,8 @@ export async function POST(request) {
       bannerImage,
       shortDescription,
       description,
+      tags,
+      source,
       metaTitle,
       metaImage,
       metaDescription,
@@ -91,11 +95,11 @@ export async function POST(request) {
     // Check if slug is already exists or not
     let newTitle;
     let newSlug;
-    const existsBlogSlug = await AllBlogsModel.findOne({
+    const existingBlogDetails = await AllBlogsModel.findOne({
       $or: [{ slug }, { title }],
     }).exec();
 
-    if (existsBlogSlug && existsBlogSlug.slug === slug) {
+    if (existingBlogDetails && existingBlogDetails.slug === slug) {
       const newCharacters = nanoid(4)
         .toLowerCase()
         .replace(/[^a-z0-9\s-]/g, "r") // Remove invalid characters
@@ -104,7 +108,7 @@ export async function POST(request) {
         .replace(/^-|-$/g, ""); // Remove leading or trailing hyphens
       newSlug = slug + "-" + newCharacters;
     }
-    if (existsBlogSlug && existsBlogSlug.title === title) {
+    if (existingBlogDetails && existingBlogDetails.title === title) {
       const newTitleCharacters = nanoid(4)
         .toUpperCase()
         .replace(/[^a-zA-Z0-9]/g, "0"); // Remove invalid characters
@@ -137,6 +141,8 @@ export async function POST(request) {
       bannerImage,
       shortDescription,
       description,
+      tags,
+      source,
       metaTitle: newMetaTitle || metaTitle,
       metaImage,
       metaDescription: newMetaDescription || metaDescription,
