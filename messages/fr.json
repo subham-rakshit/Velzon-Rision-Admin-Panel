@@ -234,5 +234,8 @@
   "Create Category": "Créer une catégorie",
   "Update Category": "Mettre à jour la catégorie",
   "Image Console": "Console d'images",
-  "Library Controls": "Contrôles de la bibliothèque"
+  "Library Controls": "Contrôles de la bibliothèque",
+  "Files Console": "Console de fichiers",
+  "File Lists": "Listes de fichiers",
+  "Create File": "Créer un fichier"
 }

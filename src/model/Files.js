@@ -1,37 +1,35 @@
 import mongoose from "mongoose";
 
-const imageSchema = new mongoose.Schema(
+const filesSchema = new mongoose.Schema(
   {
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
-    uploaderInfo: {
-      type: Object,
-      required: true,
-    },
-    imageS3Key: {
+    fileS3Key: {
       type: String,
       required: true,
+      defaut: "",
     },
-    imageFileName: {
+    fileName: {
       type: String,
       required: true,
+      index: true,
+      defaut: "",
     },
-    imageType: {
+    fileType: {
       type: String,
       required: true,
+      index: true,
+      defaut: "",
     },
-    minWidth: {
+    fileSize: {
       type: Number,
-      default: 0,
+      required: true,
+      defaut: 0,
     },
-    minHeight: {
-      type: Number,
-      default: 0,
-    },
-    imageUrl: {
+    fileUrl: {
       type: String,
       required: true,
       default: "",
@@ -40,7 +38,6 @@ const imageSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const ImageModel =
-  mongoose.models.Image || mongoose.model("Image", imageSchema);
+const FilesModel = mongoose.models.File || mongoose.model("File", filesSchema);
 
-export default ImageModel;
+export default FilesModel;

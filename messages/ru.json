@@ -234,5 +234,8 @@
   "Create Category": "Создать категорию",
   "Update Category": "Обновить категорию",
   "Image Console": "Консоль изображений",
-  "Library Controls": "Элементы управления библиотекой"
+  "Library Controls": "Элементы управления библиотекой",
+  "Files Console": "Файловая консоль",
+  "File Lists": "Списки файлов",
+  "Create File": "Создать файл"
 }

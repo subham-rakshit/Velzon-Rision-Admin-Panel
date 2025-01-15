@@ -234,5 +234,8 @@
   "Create Category": "建立類別",
   "Update Category": "更新類別",
   "Image Console": "影像控制台",
-  "Library Controls": "庫控件"
+  "Library Controls": "庫控件",
+  "Files Console": "文件控制台",
+  "File Lists": "文件列表",
+  "Create File": "建立文件"
 }

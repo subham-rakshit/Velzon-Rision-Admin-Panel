@@ -1,7 +1,7 @@
 import { awsS3ClientDeleteImage } from "@/lib/aws";
 import dbConnect from "@/lib/db/dbConnect";
 import { validateUserFromToken } from "@/lib/middleware/validateUser";
-import ImageModel from "@/model/Image";
+import ImageModel from "@/model/Files";
 import UserModel from "@/model/User";
 import { NextResponse } from "next/server";
 

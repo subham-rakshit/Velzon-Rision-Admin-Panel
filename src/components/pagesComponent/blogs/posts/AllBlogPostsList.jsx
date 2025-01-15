@@ -12,7 +12,6 @@ import {
 import Image from "next/image";
 
 const AllBlogPostsList = ({ userId, data, paginationDetails }) => {
-  console.log(data);
   return (
     <>
       <div className="mx-3 mt-3 border rounded-sm dark:border-[#fff]/10">

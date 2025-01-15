@@ -234,5 +234,8 @@
   "Create Category": "Δημιουργία κατηγορίας",
   "Update Category": "Ενημέρωση κατηγορίας",
   "Image Console": "Κονσόλα εικόνας",
-  "Library Controls": "Έλεγχοι βιβλιοθήκης"
+  "Library Controls": "Έλεγχοι βιβλιοθήκης",
+  "Files Console": "Κονσόλα αρχείων",
+  "File Lists": "Λίστες αρχείων",
+  "Create File": "Δημιουργία αρχείου"
 }

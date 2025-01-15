@@ -1,4 +1,3 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { titlesObject } from "@/app/assets/data/titlesData/titles";
 import { globalStyleObj } from "@/app/assets/styles";
 import {
@@ -7,11 +6,10 @@ import {
   RowsPerPageSelection,
   SearchInputField,
 } from "@/components";
-import { getAccessTokenData } from "@/lib/middleware/getAccessTokenData";
-import { getServerSession } from "next-auth";
 import Link from "next/link";
 
 import { getAllBlogPosts } from "@/lib/api/blogs/posts";
+import { verifySession } from "@/lib/utils/verifySession";
 import { BsEmojiAstonished } from "react-icons/bs";
 
 export const metadata = {
@@ -19,17 +17,7 @@ export const metadata = {
 };
 
 const AllBlogs = async ({ searchParams }) => {
-  // OAuth Session user data
-  const session = await getServerSession(authOptions);
-  // JWT ACCESS_TOKEN user data
-  const accessTokenData = await getAccessTokenData();
-  // User ID
-  const userId =
-    session || accessTokenData
-      ? session
-        ? session.user._id
-        : accessTokenData._id
-      : null;
+  const { userId } = await verifySession();
 
   const { search, page, limit } = await searchParams;
   let blogPostsList = [];

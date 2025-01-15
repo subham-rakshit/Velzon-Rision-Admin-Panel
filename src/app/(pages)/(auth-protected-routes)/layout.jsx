@@ -1,7 +1,7 @@
 import { globalStyleObj } from "@/app/assets/styles";
 import AuthProtectedLayoutProvider from "@/components/navigation/AuthProtectedLayoutProvider";
 import DarkModeProvider from "@/context/DarkModeProvider";
-import { getAccessTokenData } from "@/lib/middleware/getAccessTokenData";
+import { getAccessTokenData } from "@/lib/utils/getAccessTokenData";
 
 const CommonLayoutForAdminAndUser = async ({ children }) => {
   const accessTokenData = await getAccessTokenData();

@@ -1,13 +1,14 @@
-import localFont from "next/font/local";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
+import localFont from "next/font/local";
 
-import { ToastContainer } from "./clientToastContainer.js";
 import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "./clientToastContainer.js";
 import "./globals.css";
 import StoreProvider from "./StoreProvider.jsx";
 
 import AuthProvider from "@/context/AuthProvider.jsx";
+import { Toaster } from "sonner";
 
 export const metadata = {
   title: "Velzon - Next Admin & Dashboard Template",
@@ -74,6 +75,7 @@ const RootLayout = async ({ children }) => {
             </NextIntlClientProvider>
           </StoreProvider>
 
+          <Toaster richColors />
           <ToastContainer
             position="top-right"
             autoClose={5000}

@@ -1,4 +1,3 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { titlesObject } from "@/app/assets/data/titlesData/titles";
 import { globalStyleObj } from "@/app/assets/styles";
 import {
@@ -7,9 +6,8 @@ import {
   SearchInputField,
 } from "@/components";
 import { getAllCategories } from "@/lib/api/blogs/category";
-import { getAccessTokenData } from "@/lib/middleware/getAccessTokenData";
 import { buildCategoryTree } from "@/lib/utils/blog-categories-tree";
-import { getServerSession } from "next-auth";
+import { verifySession } from "@/lib/utils/verifySession";
 import Link from "next/link";
 import { BsEmojiAstonished } from "react-icons/bs";
 
@@ -18,17 +16,7 @@ export const metadata = {
 };
 
 const BlogSystemCategories = async ({ searchParams }) => {
-  // OAuth Session user data
-  const session = await getServerSession(authOptions);
-  // JWT ACCESS_TOKEN user data
-  const accessTokenData = await getAccessTokenData();
-  // User ID
-  const userId =
-    session || accessTokenData
-      ? session
-        ? session.user._id
-        : accessTokenData._id
-      : null;
+  const { userId } = await verifySession();
 
   // Category List
   let categoryList = [];

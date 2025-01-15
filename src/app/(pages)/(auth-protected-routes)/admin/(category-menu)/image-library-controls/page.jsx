@@ -8,7 +8,7 @@ import {
   ImageSettingButton,
 } from "@/components";
 import { getAllImages } from "@/lib/api/image";
-import { getAccessTokenData } from "@/lib/middleware/getAccessTokenData";
+import { getAccessTokenData } from "@/lib/utils/getAccessTokenData";
 import { getServerSession } from "next-auth";
 import Image from "next/image";
 import { BsEmojiAstonished } from "react-icons/bs";

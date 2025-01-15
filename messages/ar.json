@@ -234,5 +234,8 @@
   "Create Category": "إنشاء فئة",
   "Update Category": "تحديث الفئة",
   "Image Console": "وحدة تحكم الصور",
-  "Library Controls": "ضوابط المكتبة"
+  "Library Controls": "ضوابط المكتبة",
+  "Files Console": "وحدة تحكم الملفات",
+  "File Lists": "قوائم الملفات",
+  "Create File": "إنشاء ملف"
 }

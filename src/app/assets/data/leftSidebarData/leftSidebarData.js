@@ -1,4 +1,4 @@
-import { GrGallery } from "react-icons/gr";
+import { BiFile } from "react-icons/bi";
 import { MdOutlineArticle } from "react-icons/md";
 import { RiApps2Line, RiDashboard2Fill } from "react-icons/ri";
 
@@ -129,15 +129,22 @@ const leftSidebarData = [
       },
 
       {
-        id: "Image-Library",
-        tabName: "Image Console",
-        tabIcon: <GrGallery />,
+        id: "File",
+        tabName: "Files Console",
+        tabIcon: <BiFile />,
         tabDropdownList: [
           {
-            id: "image-library-controls",
-            parentTabId: "Image-Library",
-            tabName: "Library Controls",
-            pathName: "/admin/image-library-controls",
+            id: "file-lists",
+            parentTabId: "File",
+            tabName: "File Lists",
+            pathName: "/admin/file/lists",
+            tabDropdownList: [],
+          },
+          {
+            id: "file-create",
+            parentTabId: "File",
+            tabName: "Create File",
+            pathName: "/admin/file/create",
             tabDropdownList: [],
           },
         ],

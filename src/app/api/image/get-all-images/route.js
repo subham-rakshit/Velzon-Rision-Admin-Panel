@@ -1,5 +1,5 @@
 import dbConnect from "@/lib/db/dbConnect";
-import ImageModel from "@/model/Image";
+import ImageModel from "@/model/Files";
 import UserModel from "@/model/User";
 import { NextResponse } from "next/server";
 

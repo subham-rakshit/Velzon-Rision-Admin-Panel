@@ -41,10 +41,7 @@ export async function GET(request) {
     }
 
     // NOTE Get category details
-    const post = await AllBlogsModel.findOne({
-      _id: postId,
-      userId,
-    }).exec();
+    const post = await AllBlogsModel.findById(postId).exec();
     if (!post) {
       return NextResponse.json(
         {

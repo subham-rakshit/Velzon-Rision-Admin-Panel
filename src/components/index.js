@@ -90,6 +90,16 @@ import ImageSearchBox from "./pagesComponent/imageConsole/ImageSearchBox";
 import ImageSettingButton from "./pagesComponent/imageConsole/ImageSettingButton";
 import ImageDialogContent from "./pagesComponent/imageDialogBox/ImageDialogContent";
 import ImageReuseDialog from "./pagesComponent/imageDialogBox/ImageReuseDialog";
+// Uppy Uploader
+import DownloadFile from "./pagesComponent/uppyUploader/DownloadFile";
+import EmptyCard from "./pagesComponent/uppyUploader/EmptyCard";
+import FileGallery from "./pagesComponent/uppyUploader/FileGallery";
+import FileItemWrapper from "./pagesComponent/uppyUploader/FileItemWrapper";
+import FileTypeFilterDropdown from "./pagesComponent/uppyUploader/FileTypeFilterDropdown";
+import ImageDetailedPreview from "./pagesComponent/uppyUploader/ImageDetailedPreview";
+import SearchByFileName from "./pagesComponent/uppyUploader/SearchByFileName";
+import UploadFiles from "./pagesComponent/uppyUploader/UploadFiles";
+import UppyUploader from "./pagesComponent/uppyUploader/UppyUploader";
 
 export {
   AddNewImageButton,
@@ -114,12 +124,18 @@ export {
   DealsStatus,
   DealType,
   DeletePopup,
+  DownloadFile,
   EachPostActions,
   EcommerceWidgets,
+  EmptyCard,
   ErrorImage,
+  FileGallery,
+  FileItemWrapper,
+  FileTypeFilterDropdown,
   Footer,
   ForgotPasswordForm,
   HorizontalSidebar,
+  ImageDetailedPreview,
   ImageDialogContent,
   ImageReuseDialog,
   ImageSearchBox,
@@ -163,6 +179,7 @@ export {
   RowsPerPageSelection,
   SalesByLocations,
   SalesForecast,
+  SearchByFileName,
   SearchInputField,
   SessionsByCountries,
   SocialAuthForm,
@@ -176,6 +193,8 @@ export {
   UpcomingActivites,
   UpdateCategoryForm,
   UpdatePostForm,
+  UploadFiles,
+  UppyUploader,
   UserByDevice,
   VerifyAccount,
   Widget,

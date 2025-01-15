@@ -1,25 +1,13 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { Breadcrumb, UpdatePostForm } from "@/components";
 import { getAllCategories } from "@/lib/api/blogs/category";
 import { getPerticularPost } from "@/lib/api/blogs/posts";
-import { getAccessTokenData } from "@/lib/middleware/getAccessTokenData";
 import { buildCategoryTree } from "@/lib/utils/blog-categories-tree";
-import { getServerSession } from "next-auth";
+import { verifySession } from "@/lib/utils/verifySession";
 import { BsEmojiAstonished } from "react-icons/bs";
 
 // NOTE Get the post details
 const gettingPostDetails = async (postId) => {
-  // OAuth Session user data
-  const session = await getServerSession(authOptions);
-  // JWT ACCESS_TOKEN user data
-  const accessTokenData = await getAccessTokenData();
-  // User ID
-  const userId =
-    session || accessTokenData
-      ? session
-        ? session.user._id
-        : accessTokenData._id
-      : null;
+  const { userId } = await verifySession();
 
   // Fetch the post details
   const { success, postData, message } = await getPerticularPost(

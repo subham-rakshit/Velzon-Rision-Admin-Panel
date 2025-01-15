@@ -1,27 +1,15 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { titlesObject } from "@/app/assets/data/titlesData/titles";
 import { Breadcrumb, CreateBlogPostForm } from "@/components";
 import { getAllCategories } from "@/lib/api/blogs/category";
-import { getAccessTokenData } from "@/lib/middleware/getAccessTokenData";
 import { buildCategoryTree } from "@/lib/utils/blog-categories-tree";
-import { getServerSession } from "next-auth";
+import { verifySession } from "@/lib/utils/verifySession";
 
 export const metadata = {
   title: titlesObject.createPost.title,
 };
 
 const BlogSystemAllPosts = async ({ searchParams }) => {
-  // OAuth Session user data
-  const session = await getServerSession(authOptions);
-  // JWT ACCESS_TOKEN user data
-  const accessTokenData = await getAccessTokenData();
-  // User ID
-  const userId =
-    session || accessTokenData
-      ? session
-        ? session.user._id
-        : accessTokenData._id
-      : null;
+  const { userId } = await verifySession();
   const { search } = await searchParams;
 
   // Category List

@@ -234,5 +234,8 @@
   "Create Category": "Create Category",
   "Update Category": "Update Category",
   "Image Console": "Image Console",
-  "Library Controls": "Library Controls"
+  "Library Controls": "Library Controls",
+  "Files Console": "Files Console",
+  "File Lists": "File Lists",
+  "Create File": "Create File"
 }

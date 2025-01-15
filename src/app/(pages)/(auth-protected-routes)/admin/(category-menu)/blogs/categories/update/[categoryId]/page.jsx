@@ -1,28 +1,16 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { Breadcrumb, UpdateCategoryForm } from "@/components";
 import {
   getAllCategories,
   getPerticularCategory,
 } from "@/lib/api/blogs/category";
-import { getAccessTokenData } from "@/lib/middleware/getAccessTokenData";
 import { buildCategoryTree } from "@/lib/utils/blog-categories-tree";
-import { getServerSession } from "next-auth";
+import { verifySession } from "@/lib/utils/verifySession";
 import { BsEmojiAstonished } from "react-icons/bs";
 
 // Handle dynamic meta data info
 export const generateMetadata = async ({ params }) => {
   const { categoryId } = await params;
-  // OAuth Session user data
-  const session = await getServerSession(authOptions);
-  // JWT ACCESS_TOKEN user data
-  const accessTokenData = await getAccessTokenData();
-  // User ID
-  const userId =
-    session || accessTokenData
-      ? session
-        ? session.user._id
-        : accessTokenData._id
-      : null;
+  const { userId } = await verifySession();
 
   // If no userId is found, return default metadata
   if (!userId) {
@@ -60,17 +48,7 @@ const UpdateBlogCategory = async ({ params, searchParams }) => {
   const { categoryId } = await params;
   const { search } = await searchParams;
 
-  // OAuth Session user data
-  const session = await getServerSession(authOptions);
-  // JWT ACCESS_TOKEN user data
-  const accessTokenData = await getAccessTokenData();
-  // User ID
-  const userId =
-    session || accessTokenData
-      ? session
-        ? session.user._id
-        : accessTokenData._id
-      : null;
+  const { userId } = await verifySession();
 
   let categoryDetails;
   let categoryList = [];
