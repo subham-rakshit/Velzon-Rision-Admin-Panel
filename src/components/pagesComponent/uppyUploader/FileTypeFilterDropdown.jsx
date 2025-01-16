@@ -23,7 +23,7 @@ const FileTypeFilterDropdown = ({ selectedFileType }) => {
 
   const handleToggle = (type) => {
     router.push(
-      `?page=1&selectedFileType=${encodeURIComponent(type)}`,
+      `?page=1&pageSize=24&selectedFileType=${encodeURIComponent(type)}`,
       undefined,
       {
         shallow: true,
@@ -44,7 +44,7 @@ const FileTypeFilterDropdown = ({ selectedFileType }) => {
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align="start"
-        className={`w-56 p-2 ${globalStyleObj.backgroundLight900Dark200} dark:border-[#fff]/10 text-[10px] font-poppins-rg text-dark-weight-350 dark:text-light-weight-400`}
+        className={`w-56 p-2 ${globalStyleObj.backgroundLight900Dark200} dark:border-[#fff]/10 text-[10px] font-poppins-rg text-dark-weight-350 dark:text-light-weight-400 z-[99]`}
       >
         <DropdownMenuRadioGroup
           value={selectedFileType ? selectedFileType : "all"}

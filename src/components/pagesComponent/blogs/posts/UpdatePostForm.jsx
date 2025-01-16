@@ -7,7 +7,7 @@ import { ClipLoader } from "react-spinners";
 
 import { globalStyleObj } from "@/app/assets/styles";
 import {
-  ImageReuseDialog,
+  FileReuseDialog,
   LabelText,
   RenderCategoryOptions,
 } from "@/components";
@@ -35,7 +35,19 @@ import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { BiNews } from "react-icons/bi";
 
-const UpdatePostForm = ({ userId, postDetails, categoryList, searchValue }) => {
+const UpdatePostForm = ({
+  userId,
+  postDetails,
+  categoryList,
+  searchValue,
+  filesList,
+  paginationDetails,
+  selectedFileType,
+  selectedBannerFileId,
+  selectedBannerFileName,
+  selectedMetaFileId,
+  selectedMetaFileName,
+}) => {
   const { layoutThemePrimaryColorType } = useAppSelector(
     (state) => state.layout
   );
@@ -54,13 +66,14 @@ const UpdatePostForm = ({ userId, postDetails, categoryList, searchValue }) => {
       title: postDetails.title || "",
       slug: postDetails.slug || "",
       category: postDetails.category || "",
-      bannerImage: postDetails.bannerImage || "",
+      bannerImage: postDetails.bannerImage._id || "",
       shortDescription: postDetails.shortDescription || "",
       description: postDetails.description || "",
       tags: postDetails.tags || [],
       source: postDetails.source || "",
       metaTitle: postDetails.metaTitle || "",
-      metaImage: postDetails.metaImage || "",
+      metaImage:
+        postDetails.metaImage !== null ? postDetails.metaImage._id : "",
       metaDescription: postDetails.metaDescription || "",
     },
   });
@@ -80,13 +93,13 @@ const UpdatePostForm = ({ userId, postDetails, categoryList, searchValue }) => {
     title: postDetails.title || "",
     slug: postDetails.slug || "",
     category: postDetails.category || "",
-    bannerImage: postDetails.bannerImage || "",
+    bannerImage: postDetails.bannerImage._id || "",
     shortDescription: postDetails.shortDescription || "",
     description: postDetails.description || "",
     tags: postDetails.tags || [],
     source: postDetails.source || "",
     metaTitle: postDetails.metaTitle || "",
-    metaImage: postDetails.metaImage || "",
+    metaImage: postDetails.metaImage !== null ? postDetails.metaImage._id : "",
     metaDescription: postDetails.metaDescription || "",
   };
 
@@ -292,10 +305,16 @@ const UpdatePostForm = ({ userId, postDetails, categoryList, searchValue }) => {
           star={true}
         />
         <div className="flex flex-col gap-2 w-full max-w-[800px]">
-          <ImageReuseDialog
+          <FileReuseDialog
+            htmlId="update-blog-banner-img"
             userId={userId}
+            filesList={filesList}
+            paginationDetails={paginationDetails}
             searchValue={searchValue}
+            selectedFileType={selectedFileType}
             onChangeBannerImage={onChangeBannerImage}
+            selectedBannerFileId={selectedBannerFileId}
+            selectedBannerFileName={selectedBannerFileName}
           />
           {errors && errors.bannerImage && (
             <p className="text-red-500 text-[13px] font-poppins-rg">
@@ -482,11 +501,16 @@ const UpdatePostForm = ({ userId, postDetails, categoryList, searchValue }) => {
         />
 
         <div className="flex flex-col gap-2 w-full max-w-[800px]">
-          <ImageReuseDialog
+          <FileReuseDialog
+            htmlId="update-blog-meta-img"
             userId={userId}
+            filesList={filesList}
+            paginationDetails={paginationDetails}
             searchValue={searchValue}
-            htmlId="blog-meta-img"
+            selectedFileType={selectedFileType}
             onChangeMetaImage={onChangeMetaImage}
+            selectedMetaFileId={selectedMetaFileId}
+            selectedMetaFileName={selectedMetaFileName}
           />
           {errors && errors.metaImage && (
             <p className="text-red-500 text-[13px] font-poppins-rg">

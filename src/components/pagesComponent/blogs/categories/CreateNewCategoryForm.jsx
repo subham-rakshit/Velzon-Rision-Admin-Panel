@@ -2,7 +2,7 @@
 
 import { globalStyleObj } from "@/app/assets/styles";
 import {
-  ImageReuseDialog,
+  FileReuseDialog,
   LabelText,
   RenderCategoryOptions,
 } from "@/components";
@@ -42,7 +42,14 @@ const defaultValues = {
   metaDescription: "",
 };
 
-const CreateNewCategoryForm = ({ userId, searchValue, categoryList }) => {
+const CreateNewCategoryForm = ({
+  userId,
+  categoryList,
+  filesList,
+  paginationDetails,
+  searchValue,
+  selectedFileType,
+}) => {
   // React Hook Form Instance
   const {
     register,
@@ -85,8 +92,8 @@ const CreateNewCategoryForm = ({ userId, searchValue, categoryList }) => {
   }, [watchedName, setValue]);
 
   // NOTE Handle Meta Image
-  const onChangeMetaImage = (url) => {
-    setValue("metaImage", url);
+  const onChangeMetaImage = (id) => {
+    setValue("metaImage", id);
   };
 
   // NOTE Handle Validation Errors
@@ -261,10 +268,13 @@ const CreateNewCategoryForm = ({ userId, searchValue, categoryList }) => {
         />
 
         <div className="flex flex-col gap-2 w-full max-w-[800px]">
-          <ImageReuseDialog
-            userId={userId}
-            searchValue={searchValue}
+          <FileReuseDialog
             htmlId="blog-category-meta-img"
+            userId={userId}
+            filesList={filesList}
+            paginationDetails={paginationDetails}
+            searchValue={searchValue}
+            selectedFileType={selectedFileType}
             onChangeMetaImage={onChangeMetaImage}
           />
         </div>

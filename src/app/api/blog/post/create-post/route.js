@@ -138,13 +138,13 @@ export async function POST(request) {
       title: newTitle || title,
       category,
       slug: newSlug || slug,
-      bannerImage,
+      bannerImage: bannerImage || null,
       shortDescription,
       description,
       tags,
       source,
       metaTitle: newMetaTitle || metaTitle,
-      metaImage,
+      metaImage: metaImage || null,
       metaDescription: newMetaDescription || metaDescription,
     });
     await newBlogPost.save();

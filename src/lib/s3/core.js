@@ -1,9 +1,11 @@
 import {
   DeleteObjectCommand,
   GetObjectCommand,
+  HeadObjectCommand,
   S3Client,
 } from "@aws-sdk/client-s3";
 import { createPresignedPost } from "@aws-sdk/s3-presigned-post";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { nanoid } from "nanoid";
 
 const s3Client = new S3Client({
@@ -59,7 +61,7 @@ export const getUploadParams = async ({ filename, contentType }) => {
 };
 
 // NOTE DELETE PERTICULAR FILE in AWS S3
-export const deleteFile = async (key) => {
+export const s3DeleteFile = async (key) => {
   try {
     const command = new DeleteObjectCommand({
       Bucket: process.env.NEXT_PUBLIC_AWS_BUCKET_NAME || "",
@@ -82,27 +84,30 @@ export const deleteFile = async (key) => {
 export const s3DownloadFile = async (fileKey) => {
   try {
     // Prepare the S3 upload params
-    const fileParams = {
+    const headCommand = new HeadObjectCommand({
       Bucket: process.env.NEXT_PUBLIC_AWS_BUCKET_NAME || "",
       Key: fileKey,
-    };
+    });
 
     // Download the file from S3
-    const fileResponseData = await s3Client.send(
-      new GetObjectCommand(fileParams)
-    );
+    const headResponse = await s3Client.send(headCommand);
+    const size = headResponse.ContentLength; // This is the file size in bytes
 
-    if (fileResponseData["$metadata"].httpStatusCode === 200) {
-      return {
-        success: true,
-        responseData: fileResponseData,
-      };
-    }
+    // Now, generate the download URL
+    const getCommand = new GetObjectCommand({
+      Bucket: process.env.NEXT_PUBLIC_AWS_BUCKET_NAME || "",
+      Key: fileKey,
+    });
+
+    const url = await getSignedUrl(s3Client, getCommand, {
+      expiresIn: 3600, // 1 hours
+    });
+
+    return { url, size };
   } catch (error) {
     console.log(`Error in downloading image in AWS S3 CLIENT: ${error}`);
     return {
-      success: false,
-      message:
+      error:
         "Something went wrong in downloading image in AWS S3. Please try again later.",
     };
   }

@@ -13,7 +13,7 @@ export async function GET(request) {
     const userId = searchParams.get("userId");
     const search = searchParams.get("search");
     const page = parseInt(searchParams.get("page") || "1", 10);
-    const pageSize = parseInt(searchParams.get("pageSize") || "20", 10);
+    const pageSize = parseInt(searchParams.get("pageSize") || "24", 10);
     const selectedFileType = searchParams.get("selectedFileType");
 
     // NOTE Validate Category and User IDs
@@ -60,6 +60,7 @@ export async function GET(request) {
         break;
       case "pdf":
         actualFileType = { fileType: "application/pdf" };
+        break;
       case "other":
         actualFileType = {
           $and: [

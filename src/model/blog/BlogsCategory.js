@@ -47,8 +47,9 @@ const blogsCategorySchema = new mongoose.Schema(
       trim: true,
     },
     metaImage: {
-      type: String,
-      default: "",
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "File",
+      default: null,
     },
     metaDescription: {
       type: String,

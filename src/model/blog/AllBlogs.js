@@ -27,8 +27,9 @@ const allBlogsSchema = new mongoose.Schema(
       required: true,
     },
     bannerImage: {
-      type: String,
-      default: "/assets/auth-images/auth-one-bg.jpg",
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "File",
+      default: null,
     },
     shortDescription: {
       type: String,
@@ -65,8 +66,9 @@ const allBlogsSchema = new mongoose.Schema(
       default: "",
     },
     metaImage: {
-      type: String,
-      default: "",
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "File",
+      default: null,
     },
     metaDescription: {
       type: String,

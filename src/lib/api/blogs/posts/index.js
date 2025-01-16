@@ -39,10 +39,10 @@ export const createNewBlogPost = async (data, userId) => {
 };
 
 // NOTE GET ALL BLOG POSTS
-export const getAllBlogPosts = async (userId, search, page, limit) => {
+export const getAllBlogPosts = async (userId, search, page, pageSize) => {
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/blog/post/get-all-posts?userId=${userId}&search=${search ? search : ""}&page=${page ? page : 1}&limit=${limit ? limit : 9}`
+      `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/blog/post/get-all-posts?userId=${userId}&search=${search ? search : ""}&page=${page ? page : 1}&pageSize=${pageSize ? pageSize : 9}`
     );
 
     if (response.data.success && response.status === 200) {

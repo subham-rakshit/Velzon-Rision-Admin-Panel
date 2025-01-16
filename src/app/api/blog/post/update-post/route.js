@@ -4,6 +4,7 @@ import AllBlogsModel from "@/model/blog/AllBlogs";
 import UserModel from "@/model/User";
 import { AllBlogsSchema } from "@/schemas";
 import mongoose from "mongoose";
+import { nanoid } from "nanoid";
 import { NextResponse } from "next/server";
 
 export async function PUT(request) {
@@ -164,13 +165,13 @@ export async function PUT(request) {
       title: newTitle || title,
       category,
       slug: newSlug || slug,
-      bannerImage,
+      bannerImage: bannerImage ? bannerImage : null,
       shortDescription,
       description,
       tags,
       source,
       metaTitle: newMetaTitle || metaTitle,
-      metaImage,
+      metaImage: metaImage ? metaImage : null,
       metaDescription: newMetaDescription || metaDescription,
     };
 

@@ -1,11 +1,6 @@
 import { titlesObject } from "@/app/assets/data/titlesData/titles";
 import { globalStyleObj } from "@/app/assets/styles";
-import {
-  AllBlogPostsList,
-  Breadcrumb,
-  RowsPerPageSelection,
-  SearchInputField,
-} from "@/components";
+import { AllBlogPostsList, Breadcrumb, SearchInputField } from "@/components";
 import Link from "next/link";
 
 import { getAllBlogPosts } from "@/lib/api/blogs/posts";
@@ -19,7 +14,7 @@ export const metadata = {
 const AllBlogs = async ({ searchParams }) => {
   const { userId } = await verifySession();
 
-  const { search, page, limit } = await searchParams;
+  const { search, page, pageSize } = await searchParams;
   let blogPostsList = [];
   let paginationDetails = {};
   let errorMessage;
@@ -29,7 +24,7 @@ const AllBlogs = async ({ searchParams }) => {
     userId,
     search || "",
     page,
-    limit
+    pageSize
   );
   if (success) {
     blogPostsList = fetchData;
@@ -52,10 +47,11 @@ const AllBlogs = async ({ searchParams }) => {
       <div
         className={`${globalStyleObj.backgroundLight900Dark300} mt-[40px] rounded-sm pb-3 shadow-light sm:pb-5`}
       >
-        <div className={`${globalStyleObj.flexBetween} gap-5 p-3 sm:p-5`}>
-          <h4 className="font-poppins-md text-[15px] text-dark-weight-550 dark:text-light-weight-550">
+        <div className={`${globalStyleObj.flexBetween} gap-5 p-3`}>
+          {/* <h4 className="font-poppins-md text-[15px] text-dark-weight-550 dark:text-light-weight-550">
             All Blog Posts
-          </h4>
+          </h4> */}
+          <SearchInputField searchValue={search} />
 
           <Link
             href="/admin/blogs/posts/create"
@@ -64,24 +60,6 @@ const AllBlogs = async ({ searchParams }) => {
             Create New Post
           </Link>
         </div>
-
-        {!errorMessage && (
-          <div className="mx-3 rounded-sm border dark:border-[#fff]/10">
-            <div
-              className={`flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-5 p-3 sm:p-5`}
-            >
-              <div className="flex items-center gap-2">
-                <h4 className="font-poppins-md text-[13px] text-dark-weight-550 dark:text-light-weight-550">
-                  Rows per page
-                </h4>
-
-                <RowsPerPageSelection paginationDetails={paginationDetails} />
-              </div>
-
-              <SearchInputField searchValue={search} />
-            </div>
-          </div>
-        )}
 
         {blogPostsList.length > 0 ? (
           <AllBlogPostsList

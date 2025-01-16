@@ -3,6 +3,7 @@ import {
   getAllCategories,
   getPerticularCategory,
 } from "@/lib/api/blogs/category";
+import { getAllFilesFromDB } from "@/lib/api/image";
 import { buildCategoryTree } from "@/lib/utils/blog-categories-tree";
 import { verifySession } from "@/lib/utils/verifySession";
 import { BsEmojiAstonished } from "react-icons/bs";
@@ -46,33 +47,46 @@ export const generateMetadata = async ({ params }) => {
 
 const UpdateBlogCategory = async ({ params, searchParams }) => {
   const { categoryId } = await params;
-  const { search } = await searchParams;
+  const { searchName, page, pageSize, selectedFileType } = await searchParams;
 
   const { userId } = await verifySession();
 
   let categoryDetails;
   let categoryList = [];
+  let filesList = [];
+  let paginationDetails = {};
   let errorMessage;
 
-  // NOTE Fetch all List of Categories
-  const { success, fetchData } = await getAllCategories(userId, search || "");
-  if (success) {
-    categoryList = fetchData;
+  const [categoriesResponse, filesResponse, perticularCategory] =
+    await Promise.all([
+      getAllCategories(userId),
+      getAllFilesFromDB(userId, searchName, page, pageSize, selectedFileType),
+      getPerticularCategory(userId, categoryId),
+    ]);
+
+  // Store Category Lists based on success
+  if (categoriesResponse.success) {
+    categoryList = categoriesResponse.fetchData;
   } else {
     categoryList = [];
   }
 
-  //NOTE Fetch the category details
-  const { successStatus, categoryData, message } = await getPerticularCategory(
-    userId,
-    categoryId
-  );
-  if (successStatus) {
-    categoryDetails = categoryData;
+  // Store File Lists based on success
+  if (filesResponse.success) {
+    filesList = filesResponse.filesList;
+    paginationDetails = filesResponse.paginationData;
+  } else {
+    filesList = [];
+    paginationDetails = {};
+  }
+
+  // Store Category Details based on success
+  if (perticularCategory.successStatus) {
+    categoryDetails = perticularCategory.categoryData;
     errorMessage = "";
   } else {
-    categoryDetails = categoryData;
-    errorMessage = message;
+    categoryDetails = perticularCategory.categoryData;
+    errorMessage = perticularCategory.message;
   }
 
   // NOTE Create category TREE structure
@@ -99,6 +113,12 @@ const UpdateBlogCategory = async ({ params, searchParams }) => {
           userId={userId}
           categoryDetails={categoryDetails}
           categoryList={categoryTree}
+          searchValue={searchName}
+          filesList={filesList}
+          paginationDetails={paginationDetails}
+          selectedFileType={selectedFileType}
+          selectedMetaFileId={categoryDetails.metaImage?._id || ""}
+          selectedMetaFileName={categoryDetails.metaImage?.fileName || ""}
         />
       )}
     </div>

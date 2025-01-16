@@ -16,7 +16,7 @@ const RowsPerPageSelection = ({ paginationDetails }) => {
   const router = useRouter();
 
   const handleSelectRowsPerPage = (value) => {
-    router.push(`?page=1&limit=${encodeURIComponent(value)}`, undefined, {
+    router.push(`?page=1&pageSize=${encodeURIComponent(value)}`, undefined, {
       shallow: true,
     });
   };

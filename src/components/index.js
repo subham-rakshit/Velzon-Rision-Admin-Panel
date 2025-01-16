@@ -49,6 +49,7 @@ import PostActiveButton from "./pagesComponent/blogs/posts/PostActiveButton";
 import PostDeleteButton from "./pagesComponent/blogs/posts/PostDeleteButton";
 import PostFeaturedButton from "./pagesComponent/blogs/posts/PostFeaturedButton";
 import RowsPerPageSelection from "./pagesComponent/blogs/posts/RowsPerPageSelection";
+import SVGBannerImage from "./pagesComponent/blogs/posts/SVGBannerImage";
 import UpdatePostForm from "./pagesComponent/blogs/posts/UpdatePostForm";
 import LabelText from "./pagesComponent/LabelText";
 import PaginationComponent from "./pagesComponent/PaginationComponent";
@@ -100,6 +101,10 @@ import ImageDetailedPreview from "./pagesComponent/uppyUploader/ImageDetailedPre
 import SearchByFileName from "./pagesComponent/uppyUploader/SearchByFileName";
 import UploadFiles from "./pagesComponent/uppyUploader/UploadFiles";
 import UppyUploader from "./pagesComponent/uppyUploader/UppyUploader";
+// Reuse File
+import FileDialogContent from "./pagesComponent/fileReuseComponent/FileDialogContent";
+import FileDialogInner from "./pagesComponent/fileReuseComponent/FileDialogInner";
+import FileReuseDialog from "./pagesComponent/fileReuseComponent/FileReuseDialog";
 
 export {
   AddNewImageButton,
@@ -129,8 +134,11 @@ export {
   EcommerceWidgets,
   EmptyCard,
   ErrorImage,
+  FileDialogContent,
+  FileDialogInner,
   FileGallery,
   FileItemWrapper,
+  FileReuseDialog,
   FileTypeFilterDropdown,
   Footer,
   ForgotPasswordForm,
@@ -184,6 +192,7 @@ export {
   SessionsByCountries,
   SocialAuthForm,
   StoreVisits,
+  SVGBannerImage,
   TextInputFile,
   ToggleButton,
   TopPages,

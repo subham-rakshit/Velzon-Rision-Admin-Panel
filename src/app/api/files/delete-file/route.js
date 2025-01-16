@@ -1,22 +1,20 @@
 import dbConnect from "@/lib/db/dbConnect";
 import { validateUserFromToken } from "@/lib/middleware/validateUser";
-import { s3DownloadFile } from "@/lib/s3/core";
-import FilesModel from "@/model/Files";
+import { s3DeleteFile } from "@/lib/s3/core";
+import { default as FilesModel } from "@/model/Files";
 import UserModel from "@/model/User";
 import mongoose from "mongoose";
 import { NextResponse } from "next/server";
 
-export async function GET(request) {
+export async function DELETE(request) {
   await dbConnect();
 
   try {
     const { searchParams } = new URL(request.url);
     const fileKey = searchParams.get("fileKey");
-    const contentType =
-      searchParams.get("contentType") || "application/octet-stream";
     const userId = searchParams.get("userId");
 
-    if (!userId || !mongoose.Types.ObjectId.isValid(userId) || !fileKey) {
+    if (!userId || !mongoose.Types.ObjectId.isValid(userId)) {
       return NextResponse.json(
         {
           success: false,
@@ -45,7 +43,7 @@ export async function GET(request) {
         {
           success: false,
           message:
-            "You do not have the required permissions to download this file.",
+            "You do not have the required permissions to delete this file.",
         },
         { status: 403 }
       );
@@ -59,66 +57,52 @@ export async function GET(request) {
       return NextResponse.json(
         {
           success: false,
-          message: "File not found.",
+          message: "File not found",
         },
         { status: 404 }
       );
     }
 
-    // NOTE Image AWS key
-    const key = fileRecord.fileS3Key;
-
-    // NOTE Perfome download functionality in AWS S3
-    const { url, size, error } = await s3DownloadFile(key);
-    if (!url || !size || error) {
+    // NOTE Perfome delete functionality in AWS S3
+    const awsS3ClientResponse = await s3DeleteFile(fileRecord.fileS3Key);
+    if (!awsS3ClientResponse.success) {
       return NextResponse.json(
         {
           success: false,
-          message: error,
+          message: awsS3ClientResponse.error,
         },
         { status: 500 }
       );
     }
 
-    // NOTE: You can directly return the signedUrl, but we are fetching the files
-    // from S3 using the signed URL to avoid any unauthorized access to the files.
-    const response = await fetch(url);
-    // Check if the response is valid
-    if (!response.ok) {
+    // NOTE Delete the file from the DB
+    const deletedFile = await FilesModel.findOneAndDelete({
+      fileS3Key: fileRecord.fileS3Key,
+    });
+    if (!deletedFile) {
       return NextResponse.json(
         {
           success: false,
-          message: "Failed to fetch the file from the signed URL.",
+          message:
+            "An error occurred while deleting the file. No file found in the database.",
         },
-        { status: response.status }
+        { status: 400 }
       );
     }
 
-    // Extract file stream
-    const fileStream = response.body;
-    // Determine content type and default to application/octet-stream
-    const detectedContentType =
-      contentType ||
-      response.headers.get("Content-Type") ||
-      "application/octet-stream";
-
-    // Stream the file back to the client
-    return new NextResponse(fileStream, {
-      status: 200,
-      headers: {
-        "Cache-Control": "public, max-age=60", // Catch the data for 60 sec
-        "Content-Type": detectedContentType,
-        "Content-Length": size,
-        "Content-Disposition": `attachment; filename="${fileRecord.fileName}"`,
+    return NextResponse.json(
+      {
+        success: true,
+        message: `${deletedFile.fileName} has been deleted successfully.`,
       },
-    });
+      { status: 200 }
+    );
   } catch (error) {
-    console.log(`Error in downloading perticular image SERVER: ${error}`);
+    console.log(`Error in deleting perticular image SERVER: ${error}`);
     return NextResponse.json(
       {
         success: false,
-        message:
-          "An unexpected error occurred while downloading image. Please try again.",
+        message: "An unexpected error occurred. Please try again later.",
       },
       { status: 500 }
     );

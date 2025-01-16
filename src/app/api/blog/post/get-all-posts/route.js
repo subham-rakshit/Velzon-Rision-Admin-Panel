@@ -1,6 +1,7 @@
 import dbConnect from "@/lib/db/dbConnect";
 import AllBlogsModel from "@/model/blog/AllBlogs";
 import AllBlogsCategoryModel from "@/model/blog/BlogsCategory";
+import FilesModel from "@/model/Files";
 import UserModel from "@/model/User";
 import escapeStringRegexp from "escape-string-regexp";
 import mongoose from "mongoose";
@@ -14,7 +15,7 @@ export async function GET(request) {
     const userId = searchParams.get("userId");
     const search = searchParams.get("search");
     const page = parseInt(searchParams.get("page") || 1);
-    const limit = parseInt(searchParams.get("limit") || 9);
+    const pageSize = parseInt(searchParams.get("pageSize") || 9);
 
     // NOTE Validate Category and User IDs
     if (!userId || !mongoose.Types.ObjectId.isValid(userId)) {
@@ -68,17 +69,22 @@ export async function GET(request) {
         model: AllBlogsCategoryModel,
         select: "name",
       })
+      .populate({
+        path: "bannerImage",
+        model: FilesModel,
+        select: "fileUrl fileName fileType",
+      })
       .sort({ createdAt: -1 })
-      .skip((page - 1) * limit)
-      .limit(limit)
+      .skip((page - 1) * pageSize)
+      .limit(pageSize)
       .exec();
     let totalPosts = await AllBlogsModel.countDocuments(query).exec();
 
     // Pagination
     const paginationData = {
       currentPage: page,
-      currentLimit: limit,
-      totalPages: Math.ceil(totalPosts / limit),
+      currentLimit: pageSize,
+      totalPages: Math.ceil(totalPosts / pageSize),
       totalPosts,
     };
 

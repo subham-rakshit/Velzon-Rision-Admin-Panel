@@ -7,14 +7,15 @@ import {
   UploadFiles,
 } from "@/components";
 import { verifySession } from "@/lib/utils/verifySession";
+import { redirect } from "next/navigation";
 
 const FileLists = async ({ searchParams }) => {
   const { userId } = await verifySession();
 
-  const { search, page, pageSize, selectedFileType } = await searchParams;
+  const { searchName, page, pageSize, selectedFileType } = await searchParams;
 
-  let pageNumber = 1;
-  let pageSizeNumber = 10;
+  let pageNumber;
+  let pageSizeNumber;
 
   // Handle page parameter
   if (page) {
@@ -33,7 +34,7 @@ const FileLists = async ({ searchParams }) => {
       pageSizeNumber = parsedPageSize;
     } else {
       // Redirect to page 1 if an invalid page size is provided
-      redirect("/admin/file/lists?pageSize=10");
+      redirect("/admin/file/lists?pageSize=24");
     }
   }
 
@@ -44,9 +45,9 @@ const FileLists = async ({ searchParams }) => {
       <div
         className={`mt-[40px] ${globalStyleObj.backgroundLight900Dark300} rounded-sm p-3 shadow-light sm:p-5`}
       >
-        <div className="flex justify-between pt-1">
+        <div className="flex flex-col sm:flex-row sm:justify-between gap-2 pt-1">
           <div className="flex items-center gap-2">
-            <SearchByFileName />
+            <SearchByFileName search={searchName} />
             <FileTypeFilterDropdown selectedFileType={selectedFileType} />
           </div>
 
@@ -58,7 +59,7 @@ const FileLists = async ({ searchParams }) => {
             page={pageNumber}
             pageSize={pageSizeNumber}
             selectedFileType={selectedFileType}
-            search={search}
+            search={searchName}
           />
         </div>
       </div>

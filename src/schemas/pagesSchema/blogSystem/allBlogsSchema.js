@@ -29,10 +29,9 @@ export const AllBlogsSchema = z.object({
   category: z.string().refine((value) => isValidId(value), {
     message: "Category must be a valid ObjectId.",
   }),
-  bannerImage: z
-    .string()
-    .url({ message: "Banner image must be a valid URL" })
-    .optional(),
+  bannerImage: z.string().refine((value) => isValidId(value), {
+    message: "Banner Image must be a valid ObjectId.",
+  }),
   shortDescription: z
     .string()
     .min(5, { message: "Short Description must be at least 5 characters long" })
@@ -55,7 +54,7 @@ export const AllBlogsSchema = z.object({
     .max(150, "Meta title must not exceed 150 characters")
     .default("")
     .transform((title) => title.trim()),
-  metaImage: z.string().optional().default(""),
+  metaImage: z.string().optional().default(null),
   metaDescription: z
     .string()
     .max(200, "Meta description must be not exceed 200 characters")

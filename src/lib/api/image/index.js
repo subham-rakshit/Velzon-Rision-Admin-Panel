@@ -52,7 +52,7 @@ export const getAllFilesFromDB = async (
   userId,
   search = "",
   page = 1,
-  pageSize = 10,
+  pageSize = 24,
   selectedFileType = ""
 ) => {
   try {
@@ -94,6 +94,30 @@ export const downloadFile = async (fileKey, contentType, userId) => {
     }
   } catch (error) {
     console.log(`Error in downloading image CLIENT: ${error}`);
+    return {
+      success: false,
+      message:
+        error.response.data.message ||
+        "An unexpected error occurred. Please try again later.",
+    };
+  }
+};
+
+// NOTE UPPY DELETE FILE
+export const deleteFileFromDB = async (fileKey, userId) => {
+  try {
+    const response = await axios.delete(
+      `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/files/delete-file?fileKey=${fileKey}&userId=${userId}`
+    );
+
+    if (response.data.success) {
+      return {
+        success: true,
+        message: response.data.message,
+      };
+    }
+  } catch (error) {
+    console.log(`Error in deleting file CLIENT: ${error}`);
     return {
       success: false,
       message:

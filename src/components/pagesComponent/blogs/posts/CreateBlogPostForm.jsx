@@ -7,7 +7,7 @@ import { ClipLoader } from "react-spinners";
 
 import { globalStyleObj } from "@/app/assets/styles";
 import {
-  ImageReuseDialog,
+  FileReuseDialog,
   LabelText,
   RenderCategoryOptions,
 } from "@/components";
@@ -48,7 +48,14 @@ const defaultValues = {
   metaDescription: "",
 };
 
-const CreateBlogPostForm = ({ userId, searchValue, categoryList }) => {
+const CreateBlogPostForm = ({
+  userId,
+  categoryList,
+  filesList,
+  paginationDetails,
+  searchValue,
+  selectedFileType,
+}) => {
   const { layoutThemePrimaryColorType } = useAppSelector(
     (state) => state.layout
   );
@@ -116,13 +123,13 @@ const CreateBlogPostForm = ({ userId, searchValue, categoryList }) => {
   };
 
   // NOTE Handle Banner Image
-  const onChangeBannerImage = (url) => {
-    setValue("bannerImage", url);
+  const onChangeBannerImage = (id) => {
+    setValue("bannerImage", id);
   };
 
   // NOTE Handle Meta Image
-  const onChangeMetaImage = (url) => {
-    setValue("metaImage", url);
+  const onChangeMetaImage = (id) => {
+    setValue("metaImage", id);
   };
 
   // NOTE Handle Validation Errors
@@ -260,9 +267,13 @@ const CreateBlogPostForm = ({ userId, searchValue, categoryList }) => {
           star={true}
         />
         <div className="flex flex-col gap-2 w-full max-w-[800px]">
-          <ImageReuseDialog
+          <FileReuseDialog
+            htmlId="blog-banner-img"
             userId={userId}
+            filesList={filesList}
+            paginationDetails={paginationDetails}
             searchValue={searchValue}
+            selectedFileType={selectedFileType}
             onChangeBannerImage={onChangeBannerImage}
           />
           {errors && errors.bannerImage && (
@@ -441,10 +452,13 @@ const CreateBlogPostForm = ({ userId, searchValue, categoryList }) => {
         />
 
         <div className="flex flex-col gap-2 w-full max-w-[800px]">
-          <ImageReuseDialog
-            userId={userId}
-            searchValue={searchValue}
+          <FileReuseDialog
             htmlId="blog-meta-img"
+            userId={userId}
+            filesList={filesList}
+            paginationDetails={paginationDetails}
+            searchValue={searchValue}
+            selectedFileType={selectedFileType}
             onChangeMetaImage={onChangeMetaImage}
           />
           {errors && errors.metaImage && (

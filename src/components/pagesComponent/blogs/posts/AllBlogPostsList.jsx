@@ -1,6 +1,10 @@
 "use client";
 
-import { EachPostActions, PaginationComponent } from "@/components";
+import {
+  EachPostActions,
+  PaginationComponent,
+  SVGBannerImage,
+} from "@/components";
 import {
   Table,
   TableBody,
@@ -50,16 +54,24 @@ const AllBlogPostsList = ({ userId, data, paginationDetails }) => {
                 {/* Banner Image */}
                 <TableCell>
                   <div
-                    className={`w-[40px] h-[40px] sm:w-[100px] sm:h-[60px] rounded-full sm:rounded-md overflow-hidden relative ${eachPost.isActive ? "" : "opacity-50"}`}
+                    className={`w-[40px] h-[40px] sm:w-[100px] sm:h-[60px] rounded-full sm:rounded-md overflow-hidden relative ${eachPost.isActive ? "" : "opacity-50"} border dark:border-[#fff]/10`}
                   >
-                    <Image
-                      src={eachPost.bannerImage}
-                      alt={eachPost.title}
-                      fill
-                      sizes="150px"
-                      priority
-                      className="object-cover"
-                    />
+                    {eachPost.bannerImage.fileType.startsWith(
+                      "image/svg+xml"
+                    ) ? (
+                      <SVGBannerImage
+                        bannerUrl={eachPost.bannerImage.fileUrl}
+                      />
+                    ) : (
+                      <Image
+                        src={eachPost.bannerImage.fileUrl}
+                        alt={eachPost.bannerImage.fileName}
+                        fill
+                        sizes="150px"
+                        priority
+                        className="object-cover"
+                      />
+                    )}
                   </div>
                 </TableCell>
                 {/* Title */}
@@ -86,11 +98,9 @@ const AllBlogPostsList = ({ userId, data, paginationDetails }) => {
         </Table>
       </div>
 
-      {paginationDetails.totalPosts > paginationDetails.currentLimit && (
-        <div className="mt-5 font-poppins-rg text-[13px] text-dark-weight-600 dark:text-light-weight-800">
-          <PaginationComponent paginationDetails={paginationDetails} />
-        </div>
-      )}
+      <div className="mt-5 px-3 flex items-center gap-2">
+        <PaginationComponent paginationDetails={paginationDetails} />
+      </div>
     </>
   );
 };

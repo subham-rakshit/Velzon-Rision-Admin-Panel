@@ -2,7 +2,7 @@
 
 import { globalStyleObj } from "@/app/assets/styles";
 import {
-  ImageReuseDialog,
+  FileReuseDialog,
   LabelText,
   RenderCategoryOptions,
 } from "@/components";
@@ -33,7 +33,17 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { RiEdit2Line } from "react-icons/ri";
 
-const UpdateCategoryForm = ({ userId, categoryDetails, categoryList }) => {
+const UpdateCategoryForm = ({
+  userId,
+  categoryDetails,
+  categoryList,
+  searchValue,
+  filesList,
+  paginationDetails,
+  selectedFileType,
+  selectedMetaFileId,
+  selectedMetaFileName,
+}) => {
   // React Hook Form Instance
   const {
     register,
@@ -52,7 +62,7 @@ const UpdateCategoryForm = ({ userId, categoryDetails, categoryList }) => {
       description: categoryDetails.description || "",
       parentCategoryId: categoryDetails.parentCategoryId || "none",
       metaTitle: categoryDetails.metaTitle || "",
-      metaImage: categoryDetails.metaImage || "",
+      metaImage: categoryDetails.metaImage?._id || "",
       metaDescription: categoryDetails.metaDescription || "",
     },
   });
@@ -78,7 +88,7 @@ const UpdateCategoryForm = ({ userId, categoryDetails, categoryList }) => {
     description: categoryDetails.description,
     parentCategoryId: categoryDetails.parentCategoryId || "none",
     metaTitle: categoryDetails.metaTitle,
-    metaImage: categoryDetails.metaImage,
+    metaImage: categoryDetails.metaImage?._id || "",
     metaDescription: categoryDetails.metaDescription,
   };
 
@@ -285,11 +295,16 @@ const UpdateCategoryForm = ({ userId, categoryDetails, categoryList }) => {
           star={false}
         />
         <div className="flex flex-col gap-2 w-full max-w-[800px]">
-          <ImageReuseDialog
-            userId={userId}
-            // searchValue={searchValue}
+          <FileReuseDialog
             htmlId="blog-category-meta-img"
+            userId={userId}
+            filesList={filesList}
+            paginationDetails={paginationDetails}
+            searchValue={searchValue}
+            selectedFileType={selectedFileType}
             onChangeMetaImage={onChangeMetaImage}
+            selectedMetaFileId={selectedMetaFileId}
+            selectedMetaFileName={selectedMetaFileName}
           />
         </div>
       </div>

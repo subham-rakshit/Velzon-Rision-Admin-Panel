@@ -1,5 +1,6 @@
 import dbConnect from "@/lib/db/dbConnect";
 import AllBlogsCategoryModel from "@/model/blog/BlogsCategory";
+import FilesModel from "@/model/Files";
 import UserModel from "@/model/User";
 import mongoose from "mongoose";
 import { NextResponse } from "next/server";
@@ -42,7 +43,14 @@ export async function GET(request) {
     }
 
     // NOTE Get category details
-    const category = await AllBlogsCategoryModel.findById(categoryId).exec();
+    const category = await AllBlogsCategoryModel.findById(categoryId)
+      .populate({
+        path: "metaImage",
+        model: FilesModel,
+        select: "fileUrl fileName fileType",
+        match: { _id: { $nin: [null, ""] } },
+      })
+      .exec();
     if (!category) {
       return NextResponse.json(
         {

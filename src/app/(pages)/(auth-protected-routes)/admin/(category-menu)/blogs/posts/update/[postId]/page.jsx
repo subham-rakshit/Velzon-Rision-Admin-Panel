@@ -1,6 +1,7 @@
 import { Breadcrumb, UpdatePostForm } from "@/components";
 import { getAllCategories } from "@/lib/api/blogs/category";
 import { getPerticularPost } from "@/lib/api/blogs/posts";
+import { getAllFilesFromDB } from "@/lib/api/image";
 import { buildCategoryTree } from "@/lib/utils/blog-categories-tree";
 import { verifySession } from "@/lib/utils/verifySession";
 import { BsEmojiAstonished } from "react-icons/bs";
@@ -8,12 +9,15 @@ import { BsEmojiAstonished } from "react-icons/bs";
 // NOTE Get the post details
 const gettingPostDetails = async (postId) => {
   const { userId } = await verifySession();
+  // console.log("USER ID: ", userId);
 
   // Fetch the post details
   const { success, postData, message } = await getPerticularPost(
     userId,
     postId
   );
+
+  // console.log("POST DATA: ", postData);
 
   if (success) {
     return {
@@ -52,7 +56,7 @@ export const generateMetadata = async ({ params }) => {
 
 const UpdateBlog = async ({ params, searchParams }) => {
   const { postId } = await params;
-  const { search } = await searchParams;
+  const { searchName, page, pageSize, selectedFileType } = await searchParams;
 
   // NOTE Get the post details
   const { postDetails, userId, errorMessage } =
@@ -60,12 +64,32 @@ const UpdateBlog = async ({ params, searchParams }) => {
 
   // NOTE Fetch all List of Categories
   let categoryList = [];
-  const { success, fetchData } = await getAllCategories(userId, search || "");
-  if (success) {
-    categoryList = fetchData;
+  let filesList = [];
+  let paginationDetails = {};
+
+  const [categoriesResponse, filesResponse] = await Promise.all([
+    getAllCategories(userId),
+    getAllFilesFromDB(userId, searchName, page, pageSize, selectedFileType),
+  ]);
+
+  // Store Category Lists based on success
+  if (categoriesResponse.success) {
+    categoryList = categoriesResponse.fetchData;
   } else {
     categoryList = [];
   }
+
+  // Store File Lists based on success
+  if (filesResponse.success) {
+    filesList = filesResponse.filesList;
+    paginationDetails = filesResponse.paginationData;
+  } else {
+    filesList = [];
+    paginationDetails = {};
+  }
+
+  // console.log("FILES LIST: ", filesList);
+  // console.log("PAGINATION DETAILS: ", paginationDetails);
 
   // NOTE Create category TREE structure
   const categoryTree =
@@ -91,7 +115,18 @@ const UpdateBlog = async ({ params, searchParams }) => {
           userId={userId}
           postDetails={postDetails}
           categoryList={categoryTree}
-          searchValue={search}
+          searchValue={searchName}
+          filesList={filesList}
+          paginationDetails={paginationDetails}
+          selectedFileType={selectedFileType}
+          selectedBannerFileId={postDetails.bannerImage._id}
+          selectedBannerFileName={postDetails.bannerImage.fileName}
+          selectedMetaFileId={
+            postDetails.metaImage !== null ? postDetails.metaImage._id : ""
+          }
+          selectedMetaFileName={
+            postDetails.metaImage !== null ? postDetails.metaImage.fileName : ""
+          }
         />
       )}
     </div>

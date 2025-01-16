@@ -1,11 +1,12 @@
 "use server";
 
 import { globalStyleObj } from "@/app/assets/styles";
-import { EmptyCard, FileItemWrapper } from "@/components";
+import { EmptyCard, FileItemWrapper, PaginationComponent } from "@/components";
 import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -65,17 +66,34 @@ const FileGallery = async ({
             />
           )}
         </CardContent>
-        {/* <CardFooter>
-          <PaginationBar
-            currentPage={page}
-            totalPages={totalPages}
-            basePath="/dashboard"
-          />
-        </CardFooter> */}
+        <CardFooter className="flex flex-col items-start md:flex-row md:items-center md:justify-between gap-2">
+          <PaginationComponent paginationDetails={paginationData} />
+        </CardFooter>
       </Card>
     );
   } else {
-    return <div>Error: {errorMessage}</div>;
+    return (
+      <Card
+        className={`${globalStyleObj.backgroundLight900Dark300} dark:border-[#fff]/10`}
+      >
+        <CardHeader>
+          <CardTitle className="font-poppins-rg text-[13px] md:text-[15px] text-dark-weight-400 dark:text-light-weight-800 tracking-wider">
+            File Gallery
+          </CardTitle>
+          <CardDescription className="text-[13px] font-poppins-rg text-light-weight-450">
+            View uploaded files
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="overflow-hidden">
+          <EmptyCard
+            page={paginationData.currentPage}
+            totalPages={paginationData.totalPages}
+            search={search}
+            selectedFileType={selectedFileType}
+          />
+        </CardContent>
+      </Card>
+    );
   }
 };
 

@@ -1,6 +1,7 @@
 import { titlesObject } from "@/app/assets/data/titlesData/titles";
 import { Breadcrumb, CreateBlogPostForm } from "@/components";
 import { getAllCategories } from "@/lib/api/blogs/category";
+import { getAllFilesFromDB } from "@/lib/api/image";
 import { buildCategoryTree } from "@/lib/utils/blog-categories-tree";
 import { verifySession } from "@/lib/utils/verifySession";
 
@@ -10,17 +11,32 @@ export const metadata = {
 
 const BlogSystemAllPosts = async ({ searchParams }) => {
   const { userId } = await verifySession();
-  const { search } = await searchParams;
+  const { searchName, page, pageSize, selectedFileType } = await searchParams;
 
-  // Category List
+  // Data List
   let categoryList = [];
+  let filesList = [];
+  let paginationDetails = {};
 
-  // Fetch all List of Categories
-  const { success, fetchData } = await getAllCategories(userId);
-  if (success) {
-    categoryList = fetchData;
+  const [categoriesResponse, filesResponse] = await Promise.all([
+    getAllCategories(userId),
+    getAllFilesFromDB(userId, searchName, page, pageSize, selectedFileType),
+  ]);
+
+  // Store Category Lists based on success
+  if (categoriesResponse.success) {
+    categoryList = categoriesResponse.fetchData;
   } else {
     categoryList = [];
+  }
+
+  // Store File Lists based on success
+  if (filesResponse.success) {
+    filesList = filesResponse.filesList;
+    paginationDetails = filesResponse.paginationData;
+  } else {
+    filesList = [];
+    paginationDetails = {};
   }
 
   // Create category tree structure
@@ -37,8 +53,11 @@ const BlogSystemAllPosts = async ({ searchParams }) => {
 
       <CreateBlogPostForm
         userId={userId}
-        searchValue={search}
         categoryList={categoryTree}
+        filesList={filesList}
+        paginationDetails={paginationDetails}
+        searchValue={searchName}
+        selectedFileType={selectedFileType}
       />
     </div>
   );

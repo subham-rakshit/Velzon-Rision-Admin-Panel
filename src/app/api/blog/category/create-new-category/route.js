@@ -138,7 +138,7 @@ export async function POST(request) {
           : parentCategoryId
         : null,
       metaTitle: newMetaTitle || metaTitle,
-      metaImage,
+      metaImage: metaIamge ? metaImage : null,
       metaDescription: metaDescription,
     };
 

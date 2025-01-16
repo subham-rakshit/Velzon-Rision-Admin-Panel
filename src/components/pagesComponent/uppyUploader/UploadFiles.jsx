@@ -15,7 +15,7 @@ const UploadFiles = () => {
   return (
     <Link href="/admin/file/create">
       <button
-        className={`${bgColor} ${textColor} ${hoverBgColor} hover:text-light-weight-800 text-[13px] font-poppins-rg transition-all duration-300 ease-in-out px-5 py-2 rounded-md`}
+        className={`${bgColor} ${textColor} ${hoverBgColor} hover:text-light-weight-800 text-[13px] font-poppins-rg transition-all duration-300 ease-in-out px-5 py-2 rounded-md w-full sm:w-fit`}
       >
         Upload Files
       </button>

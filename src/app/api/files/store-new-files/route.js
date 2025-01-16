@@ -1,6 +1,6 @@
 import dbConnect from "@/lib/db/dbConnect";
 import { validateUserFromToken } from "@/lib/middleware/validateUser";
-import { deleteFile } from "@/lib/s3/core";
+import { s3DeleteFile } from "@/lib/s3/core";
 import FilesModel from "@/model/Files";
 import UserModel from "@/model/User";
 import mongoose from "mongoose";
@@ -64,7 +64,7 @@ export async function POST(request) {
       fileSize: parseInt(size),
     });
     if (fileExists) {
-      const { success, error } = await deleteFile(key);
+      const { success, error } = await s3DeleteFile(key);
       if (success) {
         return NextResponse.json(
           {
