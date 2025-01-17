@@ -5,7 +5,7 @@ import {
   RenderAllCategories,
   SearchInputField,
 } from "@/components";
-import { getAllCategories } from "@/lib/api/blogs/category";
+import { getAllCategories } from "@/lib/db/api/blogs/category";
 import { buildCategoryTree } from "@/lib/utils/blog-categories-tree";
 import { verifySession } from "@/lib/utils/verifySession";
 import Link from "next/link";
@@ -57,7 +57,7 @@ const BlogSystemCategories = async ({ searchParams }) => {
       <div
         className={`${globalStyleObj.backgroundLight900Dark300} mt-[40px] rounded-sm pb-3 shadow-light sm:pb-5`}
       >
-        <div className={`${globalStyleObj.flexBetween} gap-5 p-3 sm:p-5`}>
+        <div className={`${globalStyleObj.flexBetween} gap-5 p-3`}>
           <h4 className="font-poppins-md text-[15px] text-dark-weight-550 dark:text-light-weight-550">
             All Blog Categories
           </h4>

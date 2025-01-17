@@ -100,10 +100,7 @@ export async function PUT(request) {
     }
 
     // NOTE Get the post details
-    const existsPost = await AllBlogsModel.findOne({
-      _id: postId,
-      userId: user._id,
-    }).exec();
+    const existsPost = await AllBlogsModel.findById(postId).exec();
     if (!existsPost) {
       return NextResponse.json(
         {
@@ -117,9 +114,8 @@ export async function PUT(request) {
     // NOTE Only check for duplicates if name or slug are changed
     let newSlug;
     let newTitle;
-    if (title !== existsPost.name || slug !== existsPost.slug) {
+    if (title !== existsPost.title || slug !== existsPost.slug) {
       const existingPostDetails = await AllBlogsModel.findOne({
-        userId: user._id,
         $or: [{ slug }, { title }],
       }).exec();
       // Handle Duplicate Post Title (Add Random Characters)

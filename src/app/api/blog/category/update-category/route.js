@@ -181,10 +181,11 @@ export async function PUT(request) {
         );
       }
 
-      // Prevent circular references
+      // Prevent circular references for parent-child only (not sibling relationships)
       const isDescendant = await AllBlogsCategoryModel.findOne({
         parentCategoryId: categoryId,
       }).exec();
+      // Allow sibling category move
       if (isDescendant) {
         return NextResponse.json(
           {
@@ -204,7 +205,7 @@ export async function PUT(request) {
       description,
       parentCategoryId: parentCategoryId === "none" ? null : parentCategoryId,
       metaTitle: newMetaTitle || metaTitle,
-      metaImage,
+      metaImage: metaImage ? metaImage : null,
       metaDescription: metaDescription,
     };
 

@@ -2,8 +2,8 @@ import { Breadcrumb, UpdateCategoryForm } from "@/components";
 import {
   getAllCategories,
   getPerticularCategory,
-} from "@/lib/api/blogs/category";
-import { getAllFilesFromDB } from "@/lib/api/image";
+} from "@/lib/db/api/blogs/category";
+import { getAllFilesFromDB } from "@/lib/db/api/files";
 import { buildCategoryTree } from "@/lib/utils/blog-categories-tree";
 import { verifySession } from "@/lib/utils/verifySession";
 import { BsEmojiAstonished } from "react-icons/bs";

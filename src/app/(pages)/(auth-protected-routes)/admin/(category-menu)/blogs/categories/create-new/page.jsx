@@ -1,7 +1,7 @@
 import { titlesObject } from "@/app/assets/data/titlesData/titles";
 import { Breadcrumb, CreateNewCategoryForm } from "@/components";
-import { getAllCategories } from "@/lib/api/blogs/category";
-import { getAllFilesFromDB } from "@/lib/api/image";
+import { getAllCategories } from "@/lib/db/api/blogs/category";
+import { getAllFilesFromDB } from "@/lib/db/api/files";
 import { buildCategoryTree } from "@/lib/utils/blog-categories-tree";
 import { verifySession } from "@/lib/utils/verifySession";
 

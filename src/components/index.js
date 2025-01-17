@@ -11,8 +11,8 @@ import SocialAuthForm from "./forms/SocialAuthForm";
 import VerifyAccount from "./forms/VerifyAccount";
 import PasswordInputFiled from "./inputs/PasswordInputFiled";
 import TextInputFile from "./inputs/TextInputFile";
-import Footer from "./layoutsStyle/Footer";
-import LoadingUI from "./layoutsStyle/LoadingUI";
+import Footer from "./layouts-style/Footer";
+import LoadingUI from "./layouts-style/LoadingUI";
 import AuthProtectedLayoutProvider from "./navigation/AuthProtectedLayoutProvider";
 import HorizontalSidebar from "./navigation/horizontalNavigationbar/HorizontalSidebar";
 import LeftSidebar from "./navigation/leftSidebar/LeftSidebar";
@@ -34,80 +34,77 @@ import ToggleButton from "./navigation/navbar/ToggleButton";
 import RightSidebar from "./navigation/rightSidebar/RightSidebar";
 import TransitionLink from "./navigation/TransitionLink";
 // Blog System
-import CategoryDefaultdButton from "./pagesComponent/blogs/categories/CategoryDefaultdButton";
-import CategoryDeleteButton from "./pagesComponent/blogs/categories/CategoryDeleteButton";
-import CategoryFeaturedButton from "./pagesComponent/blogs/categories/CategoryFeaturedButton";
-import CategoryStatusButton from "./pagesComponent/blogs/categories/CategoryStatusButton";
-import CreateNewCategoryForm from "./pagesComponent/blogs/categories/CreateNewCategoryForm";
-import RenderAllCategories from "./pagesComponent/blogs/categories/RenderAllCategories";
-import RenderCategoryOptions from "./pagesComponent/blogs/categories/RenderCategoryOptions";
-import UpdateCategoryForm from "./pagesComponent/blogs/categories/UpdateCategoryForm";
-import AllBlogPostsList from "./pagesComponent/blogs/posts/AllBlogPostsList";
-import CreateBlogPostForm from "./pagesComponent/blogs/posts/CreateBlogPostForm";
-import EachPostActions from "./pagesComponent/blogs/posts/EachPostActions";
-import PostActiveButton from "./pagesComponent/blogs/posts/PostActiveButton";
-import PostDeleteButton from "./pagesComponent/blogs/posts/PostDeleteButton";
-import PostFeaturedButton from "./pagesComponent/blogs/posts/PostFeaturedButton";
-import RowsPerPageSelection from "./pagesComponent/blogs/posts/RowsPerPageSelection";
-import SVGBannerImage from "./pagesComponent/blogs/posts/SVGBannerImage";
-import UpdatePostForm from "./pagesComponent/blogs/posts/UpdatePostForm";
-import LabelText from "./pagesComponent/LabelText";
-import PaginationComponent from "./pagesComponent/PaginationComponent";
-import SearchInputField from "./pagesComponent/SearchInputField";
+import CategoryDefaultdButton from "./pages-component/blogs/categories/CategoryDefaultdButton";
+import CategoryDeleteButton from "./pages-component/blogs/categories/CategoryDeleteButton";
+import CategoryFeaturedButton from "./pages-component/blogs/categories/CategoryFeaturedButton";
+import CategoryStatusButton from "./pages-component/blogs/categories/CategoryStatusButton";
+import CreateNewCategoryForm from "./pages-component/blogs/categories/CreateNewCategoryForm";
+import RenderAllCategories from "./pages-component/blogs/categories/RenderAllCategories";
+import RenderCategoryOptions from "./pages-component/blogs/categories/RenderCategoryOptions";
+import UpdateCategoryForm from "./pages-component/blogs/categories/UpdateCategoryForm";
+import AllBlogPostsList from "./pages-component/blogs/posts/AllBlogPostsList";
+import CreateBlogPostForm from "./pages-component/blogs/posts/CreateBlogPostForm";
+import EachPostActions from "./pages-component/blogs/posts/EachPostActions";
+import PostActiveButton from "./pages-component/blogs/posts/PostActiveButton";
+import PostDeleteButton from "./pages-component/blogs/posts/PostDeleteButton";
+import PostFeaturedButton from "./pages-component/blogs/posts/PostFeaturedButton";
+import RowsPerPageSelection from "./pages-component/blogs/posts/RowsPerPageSelection";
+import SVGBannerImage from "./pages-component/blogs/posts/SVGBannerImage";
+import UpdatePostForm from "./pages-component/blogs/posts/UpdatePostForm";
+import LabelText from "./pages-component/LabelText";
+import PaginationComponent from "./pages-component/PaginationComponent";
+import SearchInputField from "./pages-component/SearchInputField";
 // Dashboard Analytics
-import Breadcrumb from "./pagesComponent/Breadcrumb";
-import AudiencesMetrics from "./pagesComponent/dashboardAnalytics/AudiencesMetrics";
-import AudiencesSessionsByCountry from "./pagesComponent/dashboardAnalytics/AudiencesSessionsByCountry";
-import CountupText from "./pagesComponent/dashboardAnalytics/CountupText";
-import CustomExportButton from "./pagesComponent/dashboardAnalytics/CustomExportButton";
-import SessionsByCountries from "./pagesComponent/dashboardAnalytics/SessionsByCountries";
-import TopPages from "./pagesComponent/dashboardAnalytics/TopPages";
-import TopReferralsPages from "./pagesComponent/dashboardAnalytics/TopReferralsPages";
-import UserByDevice from "./pagesComponent/dashboardAnalytics/UserByDevice";
-import Widget from "./pagesComponent/dashboardAnalytics/Widget";
+import Breadcrumb from "./pages-component/Breadcrumb";
+import AudiencesMetrics from "./pages-component/dashboard-analytics/AudiencesMetrics";
+import AudiencesSessionsByCountry from "./pages-component/dashboard-analytics/AudiencesSessionsByCountry";
+import CountupText from "./pages-component/dashboard-analytics/CountupText";
+import CustomExportButton from "./pages-component/dashboard-analytics/CustomExportButton";
+import SessionsByCountries from "./pages-component/dashboard-analytics/SessionsByCountries";
+import TopPages from "./pages-component/dashboard-analytics/TopPages";
+import TopReferralsPages from "./pages-component/dashboard-analytics/TopReferralsPages";
+import UserByDevice from "./pages-component/dashboard-analytics/UserByDevice";
+import Widget from "./pages-component/dashboard-analytics/Widget";
 // Dashboard CRM
-import BalanceOverview from "./pagesComponent/dashboardCRM/BalanceOverview";
-import ClosingDeals from "./pagesComponent/dashboardCRM/ClosingDeals";
-import DealsStatus from "./pagesComponent/dashboardCRM/DealsStatus";
-import DealType from "./pagesComponent/dashboardCRM/DealType";
-import MyTasks from "./pagesComponent/dashboardCRM/MyTasks";
-import SalesForecast from "./pagesComponent/dashboardCRM/SalesForecast";
-import UpcomingActivites from "./pagesComponent/dashboardCRM/UpcomingActivites";
+import BalanceOverview from "./pages-component/dashboard-crm/BalanceOverview";
+import ClosingDeals from "./pages-component/dashboard-crm/ClosingDeals";
+import DealsStatus from "./pages-component/dashboard-crm/DealsStatus";
+import DealType from "./pages-component/dashboard-crm/DealType";
+import MyTasks from "./pages-component/dashboard-crm/MyTasks";
+import SalesForecast from "./pages-component/dashboard-crm/SalesForecast";
+import UpcomingActivites from "./pages-component/dashboard-crm/UpcomingActivites";
 // Dashboard Ecommerce
-import AddPrdocutsAndSheet from "./pagesComponent/dashboardEcommerce/AddPrdocutsAndSheet";
-import BestSellingProducts from "./pagesComponent/dashboardEcommerce/BestSellingProducts";
-import DateRangePicker from "./pagesComponent/dashboardEcommerce/DateRangePicker";
-import EcommerceWidgets from "./pagesComponent/dashboardEcommerce/EcommerceWidgets";
-import ProgressBar from "./pagesComponent/dashboardEcommerce/ProgressBar";
-import RecentOrders from "./pagesComponent/dashboardEcommerce/RecentOrders";
-import RecentOrdersOrderId from "./pagesComponent/dashboardEcommerce/RecentOrdersOrderId";
-import Revenue from "./pagesComponent/dashboardEcommerce/Revenue";
-import SalesByLocations from "./pagesComponent/dashboardEcommerce/SalesByLocations";
-import StoreVisits from "./pagesComponent/dashboardEcommerce/StoreVisits";
-import TopSellers from "./pagesComponent/dashboardEcommerce/TopSellers";
-// Image Console
-import AddNewImageButton from "./pagesComponent/imageConsole/AddNewImageButton";
-import ImageSearchBox from "./pagesComponent/imageConsole/ImageSearchBox";
-import ImageSettingButton from "./pagesComponent/imageConsole/ImageSettingButton";
-import ImageDialogContent from "./pagesComponent/imageDialogBox/ImageDialogContent";
-import ImageReuseDialog from "./pagesComponent/imageDialogBox/ImageReuseDialog";
+import AddPrdocutsAndSheet from "./pages-component/dashboard-ecommerce/AddPrdocutsAndSheet";
+import BestSellingProducts from "./pages-component/dashboard-ecommerce/BestSellingProducts";
+import DateRangePicker from "./pages-component/dashboard-ecommerce/DateRangePicker";
+import EcommerceWidgets from "./pages-component/dashboard-ecommerce/EcommerceWidgets";
+import ProgressBar from "./pages-component/dashboard-ecommerce/ProgressBar";
+import RecentOrders from "./pages-component/dashboard-ecommerce/RecentOrders";
+import RecentOrdersOrderId from "./pages-component/dashboard-ecommerce/RecentOrdersOrderId";
+import Revenue from "./pages-component/dashboard-ecommerce/Revenue";
+import SalesByLocations from "./pages-component/dashboard-ecommerce/SalesByLocations";
+import StoreVisits from "./pages-component/dashboard-ecommerce/StoreVisits";
+import TopSellers from "./pages-component/dashboard-ecommerce/TopSellers";
 // Uppy Uploader
-import DownloadFile from "./pagesComponent/uppyUploader/DownloadFile";
-import EmptyCard from "./pagesComponent/uppyUploader/EmptyCard";
-import FileGallery from "./pagesComponent/uppyUploader/FileGallery";
-import FileItemWrapper from "./pagesComponent/uppyUploader/FileItemWrapper";
-import FileTypeFilterDropdown from "./pagesComponent/uppyUploader/FileTypeFilterDropdown";
-import ImageDetailedPreview from "./pagesComponent/uppyUploader/ImageDetailedPreview";
-import SearchByFileName from "./pagesComponent/uppyUploader/SearchByFileName";
-import UploadFiles from "./pagesComponent/uppyUploader/UploadFiles";
-import UppyUploader from "./pagesComponent/uppyUploader/UppyUploader";
+import DownloadFile from "./pages-component/uppy-uploader/DownloadFile";
+import EmptyCard from "./pages-component/uppy-uploader/EmptyCard";
+import FileGallery from "./pages-component/uppy-uploader/FileGallery";
+import FileItemWrapper from "./pages-component/uppy-uploader/FileItemWrapper";
+import FileTypeFilterDropdown from "./pages-component/uppy-uploader/FileTypeFilterDropdown";
+import ImageDetailedPreview from "./pages-component/uppy-uploader/ImageDetailedPreview";
+import ImagePreview from "./pages-component/uppy-uploader/ImagePreview";
+import OverlayButtons from "./pages-component/uppy-uploader/OverlayButtons";
+import PillTooltip from "./pages-component/uppy-uploader/PillTooltip";
+import SearchByFileName from "./pages-component/uppy-uploader/SearchByFileName";
+import UploadFiles from "./pages-component/uppy-uploader/UploadFiles";
+import UppyUploader from "./pages-component/uppy-uploader/UppyUploader";
+import VideoPreview from "./pages-component/uppy-uploader/VideoPreview";
 // Reuse File
-import FileDialogContent from "./pagesComponent/fileReuseComponent/FileDialogContent";
-import FileDialogInner from "./pagesComponent/fileReuseComponent/FileDialogInner";
-import FileReuseDialog from "./pagesComponent/fileReuseComponent/FileReuseDialog";
+import FileDialogContent from "./pages-component/file-reuse-component/FileDialogContent";
+import FileDialogInner from "./pages-component/file-reuse-component/FileDialogInner";
+import FileReuseDialog from "./pages-component/file-reuse-component/FileReuseDialog";
 
 export {
-  AddNewImageButton,
   AddPrdocutsAndSheet,
   AllBlogPostsList,
   AudiencesMetrics,
@@ -144,10 +141,7 @@ export {
   ForgotPasswordForm,
   HorizontalSidebar,
   ImageDetailedPreview,
-  ImageDialogContent,
-  ImageReuseDialog,
-  ImageSearchBox,
-  ImageSettingButton,
+  ImagePreview,
   LabelText,
   LeftSidebar,
   LeftSidebarSmallIconView,
@@ -167,8 +161,10 @@ export {
   NavProfile,
   NavSearchBox,
   NavSearchBoxRecentSearches,
+  OverlayButtons,
   PaginationComponent,
   PasswordInputFiled,
+  PillTooltip,
   PlayerLordIcon,
   PostActiveButton,
   PostDeleteButton,
@@ -206,5 +202,6 @@ export {
   UppyUploader,
   UserByDevice,
   VerifyAccount,
+  VideoPreview,
   Widget,
 };
