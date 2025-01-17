@@ -12,16 +12,18 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { ListFilterPlus } from "lucide-react";
 import Link from "next/link";
 import { RiEditBoxLine } from "react-icons/ri";
-import { SlOptionsVertical } from "react-icons/sl";
 
 const EachPostActions = ({ userId, postDetails }) => {
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger>
         <div className="flex justify-end items-center rounded-full bg-[#000]/10 dark:bg-[#fff]/10 p-2">
-          <SlOptionsVertical size={13} />
+          {/* <SlOptionsVertical size={13} /> */}
+          {/* <EllipsisVertical className="size-[20px]" /> */}
+          <ListFilterPlus className="size-[16px]" />
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent
