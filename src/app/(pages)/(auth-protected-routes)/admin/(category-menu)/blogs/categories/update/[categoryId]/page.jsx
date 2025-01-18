@@ -16,8 +16,7 @@ export const generateMetadata = async ({ params }) => {
   // If no userId is found, return default metadata
   if (!userId) {
     return {
-      title:
-        "Update Blog Category | Velzon - NEXT.js Admin & Dashboard Template",
+      title: `Update Blog Category ${process.env.NEXT_PUBLIC_META_APP_NAME}`,
       description: "Category details not found.",
     };
   }
@@ -33,14 +32,14 @@ export const generateMetadata = async ({ params }) => {
     return {
       title:
         categoryData.metaTitle ||
-        "Update Blog Category | Velzon - NEXT.js Admin & Dashboard Template",
+        `Update Blog Category ${process.env.NEXT_PUBLIC_META_APP_NAME}`,
       description: categoryData.metaDescription || "Category details page.",
     };
   }
 
   // Default metadata
   return {
-    title: "Update Blog Category | Velzon - NEXT.js Admin & Dashboard Template",
+    title: process.env.NEXT_PUBLIC_DEFAULT_META_APP_NAME,
     description: "Category details not found.",
   };
 };

@@ -1,6 +1,11 @@
 import { titlesObject } from "@/app/assets/data/titlesData/titles";
 import { globalStyleObj } from "@/app/assets/styles";
-import { AllBlogPostsList, Breadcrumb, SearchInputField } from "@/components";
+import {
+  AllBlogPostsList,
+  Breadcrumb,
+  PostFilterDropdown,
+  SearchInputField,
+} from "@/components";
 import Link from "next/link";
 
 import { getAllBlogPosts } from "@/lib/db/api/blogs/posts";
@@ -14,7 +19,9 @@ export const metadata = {
 const AllBlogs = async ({ searchParams }) => {
   const { userId } = await verifySession();
 
-  const { search, page, pageSize } = await searchParams;
+  const { search, page, pageSize, category, status, featured } =
+    await searchParams;
+
   let blogPostsList = [];
   let paginationDetails = {};
   let errorMessage;
@@ -24,7 +31,10 @@ const AllBlogs = async ({ searchParams }) => {
     userId,
     search || "",
     page,
-    pageSize
+    pageSize,
+    category,
+    status,
+    featured
   );
   if (success) {
     blogPostsList = fetchData;
@@ -50,7 +60,10 @@ const AllBlogs = async ({ searchParams }) => {
         <div
           className={`flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 p-3`}
         >
-          <SearchInputField searchValue={search} />
+          <div className="flex items-center gap-2">
+            <SearchInputField />
+            <PostFilterDropdown />
+          </div>
 
           <Link
             href="/admin/blogs/posts/create"
@@ -65,6 +78,7 @@ const AllBlogs = async ({ searchParams }) => {
             userId={userId}
             data={blogPostsList}
             paginationDetails={paginationDetails}
+            search={search}
           />
         ) : (
           <div className="flex flex-col w-full items-center justify-center gap-2 p-3 min-h-[50vh]">

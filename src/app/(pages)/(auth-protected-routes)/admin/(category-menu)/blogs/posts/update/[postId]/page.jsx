@@ -9,15 +9,12 @@ import { BsEmojiAstonished } from "react-icons/bs";
 // NOTE Get the post details
 const gettingPostDetails = async (postId) => {
   const { userId } = await verifySession();
-  // console.log("USER ID: ", userId);
 
   // Fetch the post details
   const { success, postData, message } = await getPerticularPost(
     userId,
     postId
   );
-
-  // console.log("POST DATA: ", postData);
 
   if (success) {
     return {
@@ -42,14 +39,14 @@ export const generateMetadata = async ({ params }) => {
     return {
       title:
         postDetails.metaTitle ||
-        "Update Blog Post | Velzon - NEXT.js Admin & Dashboard Template",
+        `Update Blog Post ${process.env.NEXT_PUBLIC_META_APP_NAME}`,
       description: postDetails.metaDescription || "Post details page.",
     };
   }
 
   // Default metadata
   return {
-    title: "Update Blog Post | Velzon - NEXT.js Admin & Dashboard Template",
+    title: process.env.NEXT_PUBLIC_DEFAULT_META_APP_NAME,
     description: "Post details not found.",
   };
 };

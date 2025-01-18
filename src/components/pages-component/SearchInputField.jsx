@@ -1,44 +1,63 @@
 "use client";
 
+import { Input } from "@/components/ui/input";
 import { getCustomColor } from "@/lib/utils/customColor";
 import { useAppSelector } from "@/store/hooks";
-import { useRouter } from "next/navigation";
-import { MdSearch } from "react-icons/md";
+import { debounce } from "lodash";
+import { Search } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
 
-const SearchInputField = ({ searchValue }) => {
+const SearchInputField = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
   const { layoutThemePrimaryColorType } = useAppSelector(
     (state) => state.layout
   );
   const customColor = getCustomColor({ layoutThemePrimaryColorType });
   const { active, bgColor, hoverBgColor, textColor, hexCode } = customColor;
 
-  const router = useRouter();
+  useEffect(() => {
+    const currentQuery = searchParams.get("search");
+    if (currentQuery) {
+      setSearchQuery(currentQuery);
+    }
+  }, [searchParams]);
 
-  const handleCategorySearchFilter = (e) => {
-    e.preventDefault();
-    const value = e.target.search.value;
-    router.push(`?search=${encodeURIComponent(value)}`, undefined, {
-      shallow: true,
-    });
+  // Debounced search function
+  const debouncedSearch = useCallback(
+    debounce((query) => {
+      const params = new URLSearchParams(searchParams);
+      if (query) {
+        params.set("search", query);
+      } else {
+        params.delete("search");
+      }
+      router.push(`?${params.toString()}`);
+    }, 250),
+    [searchParams, router]
+  );
+
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    debouncedSearch(query);
   };
 
   return (
-    <form
-      onSubmit={handleCategorySearchFilter}
-      className="flex items-center overflow-hidden rounded-sm border border-[#000]/20 dark:border-[#fff]/10"
-    >
-      <input
-        type="text"
-        name="search"
-        defaultValue={searchValue || ""}
-        placeholder="Type name & Enter"
-        className="border-none bg-transparent px-2 py-1 font-poppins-rg text-[13px] text-dark-weight-550 dark:text-light-weight-550 w-full"
-      />
+    <div className="relative w-full sm:max-w-[300px]">
+      <Search className=" h-4 w-4 text-gray-500 absolute left-2 top-1/2 -translate-y-1/2" />
 
-      <button type="submit" className={`${active} p-2`}>
-        <MdSearch size={16} color="#fff" />
-      </button>
-    </form>
+      <Input
+        type="text"
+        name="searchInput"
+        placeholder="Search by name..."
+        value={searchQuery}
+        onChange={(e) => handleSearch(e.target.value)}
+        className="pl-8 pr-4 font-poppins-rg text-dark-weight-500 dark:text-light-weight-450 text-[13px] dark:border-[#fff]/10"
+      />
+    </div>
   );
 };
 

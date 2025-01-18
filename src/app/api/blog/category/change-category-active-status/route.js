@@ -3,7 +3,7 @@ import {
   checkDefaultChildCategoryPresence,
   updateChildCategories,
   updateParentCategories,
-} from "@/lib/middleware/updateCategoriesFeaturedStatus";
+} from "@/lib/middleware/updateTreeParentChild";
 import { validateUserFromToken } from "@/lib/middleware/validateUser";
 import AllBlogsCategoryModel from "@/model/blog/BlogsCategory";
 import UserModel from "@/model/User";

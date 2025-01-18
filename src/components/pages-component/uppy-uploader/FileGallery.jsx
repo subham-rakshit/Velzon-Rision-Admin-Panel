@@ -67,7 +67,10 @@ const FileGallery = async ({
           )}
         </CardContent>
         <CardFooter className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
-          <PaginationComponent paginationDetails={paginationData} />
+          <PaginationComponent
+            paginationDetails={paginationData}
+            searchName={search}
+          />
         </CardFooter>
       </Card>
     );

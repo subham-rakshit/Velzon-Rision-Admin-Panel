@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { globalStyleObj } from "@/app/assets/styles";
 import { Button } from "@/components/ui/button";
@@ -12,23 +12,42 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { debounce } from "lodash";
 import { Filter } from "lucide-react";
 
-const FileTypeFilterDropdown = ({ selectedFileType }) => {
+const FileTypeFilterDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedFileTypeQuery, setSelectedFileTypeQuery] = useState("");
 
   const router = useRouter();
   const searchParams = useSearchParams();
   const fileTypes = ["all", "images", "videos", "pdf", "other"];
 
-  const handleToggle = (type) => {
-    router.push(
-      `?page=1&pageSize=24&selectedFileType=${encodeURIComponent(type)}`,
-      undefined,
-      {
-        shallow: true,
+  useEffect(() => {
+    const currentQuery = searchParams.get("selectedFileType");
+    if (currentQuery) {
+      setSelectedFileTypeQuery(currentQuery);
+    }
+  }, [searchParams]);
+
+  const debouncedSelectedFileType = useCallback(
+    debounce((query) => {
+      const params = new URLSearchParams(searchParams);
+
+      if (query) {
+        params.set("selectedFileType", query);
+      } else {
+        params.delete("selectedFileType");
       }
-    );
+
+      router.push(`?${params.toString()}`);
+    }, 250),
+    [searchParams, router]
+  );
+
+  const handleToggle = (type) => {
+    setSelectedFileTypeQuery(type);
+    debouncedSelectedFileType(type);
   };
 
   return (
@@ -47,8 +66,8 @@ const FileTypeFilterDropdown = ({ selectedFileType }) => {
         className={`w-56 p-2 ${globalStyleObj.backgroundLight900Dark200} dark:border-[#fff]/10 text-[10px] font-poppins-rg text-dark-weight-350 dark:text-light-weight-400 z-[99]`}
       >
         <DropdownMenuRadioGroup
-          value={selectedFileType ? selectedFileType : "all"}
-          onValueChange={handleToggle}
+          value={selectedFileTypeQuery ? selectedFileTypeQuery : "all"}
+          onValueChange={(value) => handleToggle(value)}
         >
           {fileTypes.map((type) => (
             <DropdownMenuRadioItem

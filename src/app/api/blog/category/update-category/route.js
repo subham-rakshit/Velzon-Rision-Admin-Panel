@@ -1,4 +1,5 @@
 import dbConnect from "@/lib/db/dbConnect";
+import { isDescendant } from "@/lib/middleware/updateTreeParentChild";
 import { validateUserFromToken } from "@/lib/middleware/validateUser";
 import AllBlogsCategoryModel from "@/model/blog/BlogsCategory";
 import UserModel from "@/model/User";
@@ -120,7 +121,7 @@ export async function PUT(request) {
           { status: 400 }
         );
       }
-      // Handle Duplicate Category Slug (Add Random Characters)
+      // Handle Duplicate Category Slug (Add Random Characters) // TODO Make it one .replace()
       if (existingCategory && existingCategory.slug === slug) {
         const newCharacters = nanoid(4)
           .toLowerCase()
@@ -140,8 +141,7 @@ export async function PUT(request) {
         .map((word) => `${word[0].toUpperCase()}${word.slice(1)}`)
         .join(" ")
         .slice(0, 50);
-      newMetaTitle =
-        createMetaTile + " | Velzon - NEXT.js Admin & Dashboard Template";
+      newMetaTitle = `${createMetaTile} ${process.env.NEXT_PUBLIC_META_APP_NAME}`;
     }
 
     // Validate parentCategoryId
@@ -182,11 +182,26 @@ export async function PUT(request) {
       }
 
       // Prevent circular references for parent-child only (not sibling relationships)
-      const isDescendant = await AllBlogsCategoryModel.findOne({
-        parentCategoryId: categoryId,
-      }).exec();
-      // Allow sibling category move
-      if (isDescendant) {
+      // const isDescendant = await AllBlogsCategoryModel.findOne({
+      //   parentCategoryId: categoryId,
+      // }).exec();
+      // // Allow sibling category move
+      // if (isDescendant) {
+      //   return NextResponse.json(
+      //     {
+      //       success: false,
+      //       message:
+      //         "Invalid parent category. A category cannot be a child of itself or its descendants.",
+      //     },
+      //     { status: 400 }
+      //   );
+      // }
+      const isCircularReference = await isDescendant(
+        categoryId,
+        parentCategoryId
+      );
+      console.log("IS_DESC", isCircularReference);
+      if (isCircularReference) {
         return NextResponse.json(
           {
             success: false,
@@ -204,6 +219,7 @@ export async function PUT(request) {
       slug: newSlug || slug,
       description,
       parentCategoryId: parentCategoryId === "none" ? null : parentCategoryId,
+      // parentCategoryId: existsCategory.parentCategoryId,
       metaTitle: newMetaTitle || metaTitle,
       metaImage: metaImage ? metaImage : null,
       metaDescription: metaDescription,

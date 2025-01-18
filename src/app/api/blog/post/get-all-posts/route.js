@@ -16,6 +16,9 @@ export async function GET(request) {
     const search = searchParams.get("search");
     const page = parseInt(searchParams.get("page") || 1);
     const pageSize = parseInt(searchParams.get("pageSize") || 9);
+    const category = searchParams.get("category");
+    const status = searchParams.get("status");
+    const featured = searchParams.get("featured");
 
     // NOTE Validate Category and User IDs
     if (!userId || !mongoose.Types.ObjectId.isValid(userId)) {
@@ -52,18 +55,26 @@ export async function GET(request) {
 
     // NOTE Escape special characters - (), ., *, +, ?, [, ], ^, $, \ -> Prevents regex injection attacks. More info: https://www.freeformatter.com/regexp-escape.html [Ex - hello(world) = hello\(world\)]. Ensures your search strings behave as intended in a regular expression. Reduces runtime errors caused by invalid regex patterns.
     const searchQuery = escapeStringRegexp(search || "");
-    const query = searchQuery
-      ? {
-          $or: [
-            { title: { $regex: searchQuery, $options: "i" } },
-            { slug: { $regex: searchQuery, $options: "i" } },
-            { shortDescription: { $regex: searchQuery, $options: "i" } },
-            { description: { $regex: searchQuery, $options: "i" } },
-          ],
-        }
-      : {};
+    const query = {
+      ...(searchQuery && {
+        $or: [
+          { title: { $regex: searchQuery, $options: "i" } },
+          { slug: { $regex: searchQuery, $options: "i" } },
+          { shortDescription: { $regex: searchQuery, $options: "i" } },
+          { description: { $regex: searchQuery, $options: "i" } },
+        ],
+      }),
+      ...(category &&
+        mongoose.Types.ObjectId.isValid(category) && { category }), // Category filter (direct match)
+      ...(status && {
+        isActive: status === "true", // Convert to boolean
+      }),
+      ...(featured && {
+        isFeatured: featured === "true", // Convert to boolean
+      }),
+    };
 
-    let postsList = await AllBlogsModel.find(query)
+    const postsList = await AllBlogsModel.find(query)
       .populate({
         path: "category",
         model: AllBlogsCategoryModel,
@@ -78,14 +89,18 @@ export async function GET(request) {
       .skip((page - 1) * pageSize)
       .limit(pageSize)
       .exec();
-    let totalPosts = await AllBlogsModel.countDocuments(query).exec();
+
+    const paginationTotalPosts =
+      await AllBlogsModel.countDocuments(query).exec();
+    const totalPostsCount = await AllBlogsModel.countDocuments().exec();
 
     // Pagination
     const paginationData = {
       currentPage: page,
       currentLimit: pageSize,
-      totalPages: Math.ceil(totalPosts / pageSize),
-      totalPosts,
+      totalPages: Math.ceil(paginationTotalPosts / pageSize),
+      totalPosts: paginationTotalPosts,
+      totalPostsCount,
     };
 
     return NextResponse.json(

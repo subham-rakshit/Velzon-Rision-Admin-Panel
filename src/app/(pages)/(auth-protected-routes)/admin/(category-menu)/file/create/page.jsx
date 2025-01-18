@@ -1,6 +1,11 @@
+import { titlesObject } from "@/app/assets/data/titlesData/titles";
 import { globalStyleObj } from "@/app/assets/styles";
 import { Breadcrumb, UppyUploader } from "@/components";
 import { verifySession } from "@/lib/utils/verifySession";
+
+export const metadata = {
+  title: titlesObject.createFiles.title,
+};
 
 const CreateFiles = async () => {
   const { userId } = await verifySession();

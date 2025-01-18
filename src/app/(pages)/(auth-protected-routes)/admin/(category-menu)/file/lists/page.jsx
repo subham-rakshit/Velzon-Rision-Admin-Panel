@@ -1,3 +1,4 @@
+import { titlesObject } from "@/app/assets/data/titlesData/titles";
 import { globalStyleObj } from "@/app/assets/styles";
 import {
   Breadcrumb,
@@ -8,6 +9,10 @@ import {
 } from "@/components";
 import { verifySession } from "@/lib/utils/verifySession";
 import { redirect } from "next/navigation";
+
+export const metadata = {
+  title: titlesObject.allFiles.title,
+};
 
 const FileLists = async ({ searchParams }) => {
   const { userId } = await verifySession();
@@ -47,8 +52,8 @@ const FileLists = async ({ searchParams }) => {
       >
         <div className="flex flex-col sm:flex-row sm:justify-between gap-2 pt-1">
           <div className="flex items-center gap-2">
-            <SearchByFileName search={searchName} />
-            <FileTypeFilterDropdown selectedFileType={selectedFileType} />
+            <SearchByFileName />
+            <FileTypeFilterDropdown />
           </div>
 
           <UploadFiles />

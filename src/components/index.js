@@ -48,6 +48,7 @@ import EachPostActions from "./pages-component/blogs/posts/EachPostActions";
 import PostActiveButton from "./pages-component/blogs/posts/PostActiveButton";
 import PostDeleteButton from "./pages-component/blogs/posts/PostDeleteButton";
 import PostFeaturedButton from "./pages-component/blogs/posts/PostFeaturedButton";
+import PostFilterDropdown from "./pages-component/blogs/posts/PostFilterDropdown";
 import RowsPerPageSelection from "./pages-component/blogs/posts/RowsPerPageSelection";
 import SVGBannerImage from "./pages-component/blogs/posts/SVGBannerImage";
 import UpdatePostForm from "./pages-component/blogs/posts/UpdatePostForm";
@@ -169,6 +170,7 @@ export {
   PostActiveButton,
   PostDeleteButton,
   PostFeaturedButton,
+  PostFilterDropdown,
   ProgressBar,
   RecentOrders,
   RecentOrdersOrderId,

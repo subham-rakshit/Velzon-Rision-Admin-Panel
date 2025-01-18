@@ -122,8 +122,7 @@ export async function POST(request) {
         .map((word) => `${word[0].toUpperCase()}${word.slice(1)}`)
         .join(" ")
         .slice(0, 50);
-      newMetaTitle =
-        createMetaTile + " | Velzon - NEXT.js Admin & Dashboard Template";
+      newMetaTitle = `${createMetaTile} ${process.env.NEXT_PUBLIC_META_APP_NAME}`;
     }
 
     // NOTE Set new category object

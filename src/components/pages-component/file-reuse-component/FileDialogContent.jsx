@@ -51,7 +51,7 @@ const FileDialogContent = ({
         <DialogTitle className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 font-poppins-rg mt-5">
           <div className="flex items-center gap-2">
             <SearchByFileName />
-            <FileTypeFilterDropdown selectedFileType={selectedFileType} />
+            <FileTypeFilterDropdown />
           </div>
           <UploadFiles />
         </DialogTitle>

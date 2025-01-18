@@ -39,10 +39,18 @@ export const createNewBlogPost = async (data, userId) => {
 };
 
 // NOTE GET ALL BLOG POSTS
-export const getAllBlogPosts = async (userId, search, page, pageSize) => {
+export const getAllBlogPosts = async (
+  userId,
+  search,
+  page,
+  pageSize,
+  category,
+  status,
+  featured
+) => {
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/blog/post/get-all-posts?userId=${userId}&search=${search ? search : ""}&page=${page ? page : 1}&pageSize=${pageSize ? pageSize : 9}`
+      `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/blog/post/get-all-posts?userId=${userId}&search=${search ? search : ""}&page=${page ? page : 1}&pageSize=${pageSize ? pageSize : 9}&category=${category ? category : ""}&status=${status ? status : ""}&featured=${featured ? featured : ""}`
     );
 
     if (response.data.success && response.status === 200) {
