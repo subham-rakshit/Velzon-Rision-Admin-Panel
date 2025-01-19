@@ -43,6 +43,7 @@ import RenderAllCategories from "./pages-component/blogs/categories/RenderAllCat
 import RenderCategoryOptions from "./pages-component/blogs/categories/RenderCategoryOptions";
 import UpdateCategoryForm from "./pages-component/blogs/categories/UpdateCategoryForm";
 import AllBlogPostsList from "./pages-component/blogs/posts/AllBlogPostsList";
+import CategoriesFilter from "./pages-component/blogs/posts/CategoriesFilter";
 import CreateBlogPostForm from "./pages-component/blogs/posts/CreateBlogPostForm";
 import EachPostActions from "./pages-component/blogs/posts/EachPostActions";
 import PostActiveButton from "./pages-component/blogs/posts/PostActiveButton";
@@ -114,6 +115,7 @@ export {
   BalanceOverview,
   BestSellingProducts,
   Breadcrumb,
+  CategoriesFilter,
   CategoryDefaultdButton,
   CategoryDeleteButton,
   CategoryFeaturedButton,

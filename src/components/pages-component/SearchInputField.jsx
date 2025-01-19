@@ -1,8 +1,6 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
-import { getCustomColor } from "@/lib/utils/customColor";
-import { useAppSelector } from "@/store/hooks";
 import { debounce } from "lodash";
 import { Search } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -12,12 +10,6 @@ const SearchInputField = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const searchParams = useSearchParams();
   const router = useRouter();
-
-  const { layoutThemePrimaryColorType } = useAppSelector(
-    (state) => state.layout
-  );
-  const customColor = getCustomColor({ layoutThemePrimaryColorType });
-  const { active, bgColor, hoverBgColor, textColor, hexCode } = customColor;
 
   useEffect(() => {
     const currentQuery = searchParams.get("search");
@@ -46,7 +38,7 @@ const SearchInputField = () => {
   };
 
   return (
-    <div className="relative w-full sm:max-w-[300px]">
+    <div className="relative w-full sm:min-w-[250px]">
       <Search className=" h-4 w-4 text-gray-500 absolute left-2 top-1/2 -translate-y-1/2" />
 
       <Input

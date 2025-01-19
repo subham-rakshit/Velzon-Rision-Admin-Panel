@@ -82,7 +82,7 @@ const PostFilterDropdown = () => {
         <Button
           variant="outline"
           size="icon"
-          className={`focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 ${globalStyleObj.backgroundLight900Dark200} dark:border-[#fff]/10`}
+          className={`focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 ${globalStyleObj.backgroundLight900Dark200} dark:border-[#fff]/10 px-2`}
         >
           <Filter className="h-4 w-4" />
         </Button>
