@@ -23,7 +23,7 @@ const AllBlogPostsList = ({ userId, data, paginationDetails, search }) => {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="font-poppins-md text-[11px] sm:text-[13px] text-dark-weight-600 dark:text-light-weight-800 hidden sm:table-cell">
+              <TableHead className="font-poppins-md text-[11px] sm:text-[13px] text-dark-weight-600 dark:text-light-weight-800">
                 #
               </TableHead>
               <TableHead className="font-poppins-md text-[11px] sm:text-[13px] text-dark-weight-600 dark:text-light-weight-800 hidden sm:table-cell">

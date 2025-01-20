@@ -4,10 +4,11 @@ import { getPerticularPost } from "@/lib/db/api/blogs/posts";
 import { getAllFilesFromDB } from "@/lib/db/api/files";
 import { buildCategoryTree } from "@/lib/utils/blog-categories-tree";
 import { verifySession } from "@/lib/utils/verifySession";
+import { cache } from "react";
 import { BsEmojiAstonished } from "react-icons/bs";
 
 // NOTE Get the post details
-const gettingPostDetails = async (postId) => {
+const gettingPostDetails = cache(async (postId) => {
   const { userId } = await verifySession();
 
   // Fetch the post details
@@ -26,7 +27,7 @@ const gettingPostDetails = async (postId) => {
       errorMessage: message,
     };
   }
-};
+});
 
 // NOTE Handle dynamic meta data info
 export const generateMetadata = async ({ params }) => {
@@ -59,11 +60,11 @@ const UpdateBlog = async ({ params, searchParams }) => {
   const { postDetails, userId, errorMessage } =
     await gettingPostDetails(postId);
 
-  // NOTE Fetch all List of Categories
   let categoryList = [];
   let filesList = [];
   let paginationDetails = {};
 
+  // Get all Categories and Files from DB simultaneously
   const [categoriesResponse, filesResponse] = await Promise.all([
     getAllCategories(userId),
     getAllFilesFromDB(userId, searchName, page, pageSize, selectedFileType),

@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 
 import dbConnect from "@/lib/db/dbConnect";
-import { validateUserFromToken } from "@/lib/middleware/validateUser";
 import AllBlogsModel from "@/model/blog/AllBlogs";
 import UserModel from "@/model/User";
 import { AllBlogsSchema } from "@/schemas";
@@ -36,18 +35,6 @@ export async function POST(request) {
           message: "Invalid request. Please try again later.",
         },
         { status: 400 }
-      );
-    }
-
-    // Get the user details from the token
-    const requestedUserDetails = await validateUserFromToken({ request });
-    if (!requestedUserDetails || requestedUserDetails._id !== userId) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Unauthorized access. Please log in and try again.",
-        },
-        { status: 403 }
       );
     }
 

@@ -127,7 +127,7 @@ const renderAllCategories = (
         </TableCell>
 
         {/* Status, Featured, Default, Edit, Delete Button for small devices */}
-        <TableCell className="md:hidden text-center">
+        <TableCell className="md:hidden text-right">
           <DropdownMenu modal={false}>
             <DropdownMenuTrigger>
               <div className="flex justify-end items-center rounded-full bg-[#000]/10 dark:bg-[#fff]/10 p-2">
@@ -228,7 +228,7 @@ const RenderAllCategories = ({ categoryTree, userId }) => {
           <TableHead className="font-poppins-md text-[11px] sm:text-[13px] text-dark-weight-600 dark:text-light-weight-800 pl-3">
             # Name
           </TableHead>
-          <TableHead className="font-poppins-md text-[11px] sm:text-[13px] text-dark-weight-600 dark:text-light-weight-800 pl-3 md:hidden">
+          <TableHead className="font-poppins-md text-[11px] sm:text-[13px] text-dark-weight-600 dark:text-light-weight-800 pl-3 md:hidden text-right">
             Actions
           </TableHead>
           <TableHead className="font-poppins-md text-[11px] sm:text-[13px] text-dark-weight-600 dark:text-light-weight-800 hidden md:table-cell">

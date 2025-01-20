@@ -1,5 +1,4 @@
 import dbConnect from "@/lib/db/dbConnect";
-import { validateUserFromToken } from "@/lib/middleware/validateUser";
 import AllBlogsModel from "@/model/blog/AllBlogs";
 import AllBlogsCategoryModel from "@/model/blog/BlogsCategory";
 import UserModel from "@/model/User";
@@ -27,19 +26,6 @@ export async function DELETE(request) {
           message: "Invalid request. Please try again later.",
         },
         { status: 400 }
-      );
-    }
-
-    // NOTE Check request user is a valid user or not
-    const requestedUserDetails = await validateUserFromToken({ request });
-    if (!requestedUserDetails || requestedUserDetails._id !== userId) {
-      return NextResponse.json(
-        {
-          success: false,
-          message:
-            "Access denied. You do not have permission to delete this category.",
-        },
-        { status: 403 }
       );
     }
 

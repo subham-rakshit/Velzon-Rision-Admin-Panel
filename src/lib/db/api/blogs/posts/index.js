@@ -1,7 +1,10 @@
+"use server";
+
 import axios from "axios";
 
 // NOTE CREATE A NEW BLOG POST
 export const createNewBlogPost = async (data, userId) => {
+  console.log("createNewBlogPost");
   try {
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/blog/post/create-post`,
@@ -48,6 +51,7 @@ export const getAllBlogPosts = async (
   status,
   featured
 ) => {
+  console.log("getAllBlogPosts");
   try {
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/blog/post/get-all-posts?userId=${userId}&search=${search ? search : ""}&page=${page ? page : 1}&pageSize=${pageSize ? pageSize : 9}&category=${category ? category : ""}&status=${status ? status : ""}&featured=${featured ? featured : ""}`
@@ -77,6 +81,7 @@ export const getAllBlogPosts = async (
 
 // NOTE GET A PERTICULAR POST
 export const getPerticularPost = async (userId, postId) => {
+  console.log("getPerticularPost");
   try {
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/blog/post/get-post-details?userId=${userId || ""}&postId=${postId || ""}`
@@ -101,6 +106,7 @@ export const getPerticularPost = async (userId, postId) => {
 
 // NOTE UPDATE A PERTICULAR POST
 export const updatePerticularPost = async (userId, postId, data) => {
+  console.log("updatePerticularPost");
   try {
     const response = await axios.put(
       `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/blog/post/update-post`,
@@ -141,6 +147,7 @@ export const updatePerticularPost = async (userId, postId, data) => {
 
 // NOTE DELETE A PERTICULAR POST
 export const deletePerticularPost = async (userId, postId) => {
+  console.log("deletePerticularPost");
   try {
     const response = await axios.delete(
       `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/blog/post/delete-post?userId=${userId}&postId=${postId}`
@@ -165,6 +172,7 @@ export const deletePerticularPost = async (userId, postId) => {
 
 // NOTE ACTIVE A PERTICULAR POST
 export const postToggleActiveStatus = async (userId, postId) => {
+  console.log("postToggleActiveStatus");
   try {
     const response = await axios.put(
       `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/blog/post/change-post-active-status`,
@@ -194,6 +202,7 @@ export const postToggleActiveStatus = async (userId, postId) => {
 
 // NOTE FEATURED A PERTICULAR POST
 export const postToggleFeaturedStatus = async (userId, postId) => {
+  console.log("postToggleFeaturedStatus");
   try {
     const response = await axios.put(
       `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/blog/post/change-post-featured-status`,

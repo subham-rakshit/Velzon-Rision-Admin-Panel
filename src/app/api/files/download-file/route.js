@@ -1,5 +1,4 @@
 import dbConnect from "@/lib/db/dbConnect";
-import { validateUserFromToken } from "@/lib/middleware/validateUser";
 import { s3DownloadFile } from "@/lib/s3/core";
 import FilesModel from "@/model/Files";
 import UserModel from "@/model/User";
@@ -23,18 +22,6 @@ export async function GET(request) {
           message: "Invalid request. Please try again later.",
         },
         { status: 400 }
-      );
-    }
-
-    // NOTE Check request user is a valid user or not
-    const requestedUserDetails = await validateUserFromToken({ request });
-    if (!requestedUserDetails || requestedUserDetails._id !== userId) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Unauthorized access. Please log in and try again.",
-        },
-        { status: 403 }
       );
     }
 

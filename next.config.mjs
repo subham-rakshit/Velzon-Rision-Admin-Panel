@@ -6,8 +6,8 @@ const withNextIntl = createNextIntlPlugin();
 const nextConfig = {
   experimental: {
     staleTimes: {
-      dynamic: 30,
-      static: 180,
+      dynamic: 60,
+      static: 60,
     },
   },
   images: {

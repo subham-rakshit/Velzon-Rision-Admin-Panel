@@ -77,7 +77,11 @@ const BlogSystemCategories = async ({ searchParams }) => {
             <h4 className="font-poppins-md text-[13px] text-dark-weight-550 dark:text-light-weight-550">
               Blog Categories
             </h4>
-            {!errorMessage && <SearchInputField />}
+            {!errorMessage && (
+              <div>
+                <SearchInputField />
+              </div>
+            )}
           </div>
 
           {categoryTree.length > 0 ? (

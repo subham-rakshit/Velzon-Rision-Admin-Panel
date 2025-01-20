@@ -1,7 +1,10 @@
+"use server";
+
 import axios from "axios";
 
 // NOTE CREATE A NEW CATEGORY
 export const createNewCategory = async (data, userId) => {
+  console.log("createNewCategory");
   try {
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/blog/category/create-new-category`,
@@ -40,6 +43,7 @@ export const createNewCategory = async (data, userId) => {
 
 // NOTE GET ALL CATEGORIES
 export const getAllCategories = async (userId, search) => {
+  console.log("getAllCategories");
   try {
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/blog/category/get-all-categories?userId=${userId}&search=${search ? search : ""}`
@@ -68,6 +72,7 @@ export const getAllCategories = async (userId, search) => {
 
 // NOTE Change Category Active Status
 export const changeCategoryStatus = async (userId, categoryId, active) => {
+  console.log("changeCategoryStatus");
   try {
     const response = await axios.put(
       `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/blog/category/change-category-active-status`,
@@ -102,6 +107,7 @@ export const changeCategoryDefaultStatus = async (
   categoryId,
   defaultStatus
 ) => {
+  console.log("changeCategoryDefaultStatus");
   try {
     const response = await axios.put(
       `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/blog/category/change-category-default-status`,
@@ -136,6 +142,7 @@ export const changeCategoryFeaturedStatus = async (
   categoryId,
   featuredStatus
 ) => {
+  console.log("changeCategoryFeaturedStatus");
   try {
     const response = await axios.put(
       `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/blog/category/change-category-featured-status`,
@@ -166,6 +173,7 @@ export const changeCategoryFeaturedStatus = async (
 
 // NOTE GET A PERTICULAR CATEGORY
 export const getPerticularCategory = async (userId, categoryId) => {
+  console.log("getPerticularCategory");
   try {
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/blog/category/get-category-details?userId=${userId}&categoryId=${categoryId ? categoryId : ""}`
@@ -191,6 +199,7 @@ export const getPerticularCategory = async (userId, categoryId) => {
 
 // NOTE UPDATE A PERTICULAR CATEGORY
 export const updatePerticularCategory = async (userId, categoryId, data) => {
+  console.log("updatePerticularCategory");
   try {
     const response = await axios.put(
       `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/blog/category/update-category`,
@@ -230,6 +239,7 @@ export const updatePerticularCategory = async (userId, categoryId, data) => {
 
 // NOTE DELETE A PERTICULAR CATEGORY
 export const deletePerticularCategory = async (userId, categoryId) => {
+  console.log("deletePerticularCategory");
   try {
     const response = await axios.delete(
       `${process.env.NEXT_PUBLIC_DOMAIN_URL}/api/blog/category/delete-category?userId=${userId}&categoryId=${categoryId}`
